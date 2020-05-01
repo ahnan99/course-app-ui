@@ -9,7 +9,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":"", "password":""}
     ``` 
 
-  * output  **status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -33,7 +33,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-  * output  **status：int, 0 成功  1 用户已存在  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  1 用户已存在  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -44,7 +44,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":"", "email":""}
     ``` 
 
-  * output  **status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -55,7 +55,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":"", "password":""}
     ``` 
 
-  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -78,7 +78,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -89,7 +89,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":""}
     ``` 
 
-  * output   **status：int, 0 成功  1 未找到  9 其他**
+  * output   **//status：int, 0 成功  1 未找到  9 其他**
     ```
     {
       "username": "",
@@ -120,8 +120,36 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":""}
     ``` 
 
-  * output
-    >[content: [["lessonNo", "lessonID", "lessonName", "startDate", "endDate", "hours", "lesson_completion", "status", "score", "certNo", "cert_filename", "testNo", "test_score", classList: [["classID", "className","class_completion"],],], status]   **status：int, 0 成功  1 未找到  9 其他**
+  * output   **//status：int, 0 成功  1 未找到  9 其他**
+    ``` 
+    {
+      "content": [
+        {
+          "lessonNo": "",
+          "lessonID": "",
+          "lessonName": "",
+          "startDate": "",
+          "endDate": "",
+          "hours": "",
+          "lesson_completion": "",
+          "lesson_status": "",
+          "score": "",
+          "certNo": "",
+          "cert_filename": "",
+          "testNo": "",
+          "test_score": "",
+          "classList": [
+            {
+              "classID": "",
+              "className": "",
+              "class_completion": ""
+            }
+          ]
+        }
+      ],
+      "status": ""
+    }
+    ``` 
 
 8. 学员证书列表   **student_certificate_list**
   * input
@@ -129,8 +157,28 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":""}
     ``` 
 
-  * output
-    >[content: [[certID, certName, certList: [["certNo", "startDate", "endDate", "issueUnit", "status", "cert_filename"],],], status]   **status：int, 0 成功  1 未找到  9 其他**
+  * output   **//status：int, 0 成功  1 未找到  9 其他**
+    ```
+    {
+      "content": [
+        {
+          "certID": "",
+          "certName": "",
+          "certList": [
+            {
+              "certNo": "",
+              "startDate": "",
+              "endDate": "",
+              "issueUnit": "",
+              "cert_status": "",
+              "cert_filename": ""
+            }
+          ]
+        }
+      ],
+      "status": ""
+    }
+    ```
 
 9. 学员课节信息获取   **student_class_get**
   * input
@@ -138,16 +186,36 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":""}
     ``` 
 
-  * output
-    >[content: ["lessonNo", "classID", "className", "class_completion", "video_filename", "video_fullTime", "video_maxTime", "exerciseNo", "exercise_score", courseware:[["filename", "type", "allowDonlowd"],]], status]   **status：int, 0 成功  1 未找到  9 其他**
-
+  * output   **//status：int, 0 成功  1 未找到  9 其他**
+    ```
+    {
+      "lessonNo": "",
+      "classID": "",
+      "className": "",
+      "class_completion": "",
+      "video_filename": "",
+      "video_fullTime": "",
+      "video_maxTime": "",
+      "exerciseNo": "",
+      "exercise_score": "",
+      "courseware": [
+        {
+          "filename": "",
+          "type": "",
+          "allowDonlowd": ""
+        }
+      ],
+      "status": ""
+    } 
+    ```
+    
 10. 学员视频进度更新   **student_video_maxTime_update**
   * input
     ```
     {"username":"", "lessonNo":"", "classID":"", "currentTime":""}
     ```
 
-  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -158,18 +226,18 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":"", "lessonNo":"", "classID":"", "exerciseNo":"", "exercise_score":""}
     ```
 
-  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
 
 12. 学员练习信息获取   **student_exercise_get**
-  * input  **exerciseNo: int, 0 新练习  >0 已保存练习**
+  * input  **//exerciseNo: int, 0 新练习  >0 已保存练习**
     ```
     {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
     ```    
 
-  * output  **exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他**
+  * output  **//exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他**
     ```
     {
       "exerciseNo": "",
