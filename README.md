@@ -250,12 +250,14 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
           "typeName": "",
           "problemList": [
             {
+              "problemID": "",
               "problem": "",
+              "refAnswer": "",
               "itemList": [
                 {
+                  "itemID": "",
                   "item": "",
-                  "answer": "",
-                  "myAnswer": ""
+                  "answer": ""
                 }
               ]
             }
@@ -265,6 +267,32 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
       "status": ""
     }
     ```
+
+13. 学员练习上传   **student_exercise_save**
+  * input  **//exercise_status: 0 保存 1 提交**
+    ```
+    {
+      "exerciseNo": "",
+      "exercise_status": "",
+      "problemList": [
+        {
+          "problemID": "",
+          "itemList": [
+            {
+              "itemID": "",
+              "answer": ""
+            }
+          ]
+        }
+      ],
+      "status": ""
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
     
 
 
