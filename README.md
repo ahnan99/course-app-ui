@@ -1,11 +1,12 @@
 
 ### user interface for student
 
-1. 学员登录
-   * student_login
-    >input: 
-    username：
-    password：
+1. 学员登录  student_login
+  * input
+    >username：
+    >password：
+  * output
+
 
 2. 学员注册
 3. 学员重置密码
