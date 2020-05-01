@@ -5,86 +5,171 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
 1. 学员登录   **student_login**
   * input
-    >[username, password]
+    ```
+    {"username":"", "password":""}
+    ``` 
 
-  * output
-    >[status, msg]  **status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 2. 学员注册   **student_info_new**
   * input
-    >[content：["username", "name", "password", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "memo"]]
+    ```
+    {
+      "username": "",
+      "name": "",
+      "password": "",
+      "companyID": "",
+      "dept1": "",
+      "dept2": "",
+      "dept3": "",
+      "job": "",
+      "mobile": "",
+      "phone": "",
+      "email": "",
+      "memo": ""
+    }
+    ```
 
-  * output
-    >[status, msg]  **status：int, 0 成功  1 用户已存在  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  1 用户已存在  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 3. 学员重置密码   **student_passwd_reset**
   * input
-    >[username, email]
+    ```
+    {"username":"", "email":""}
+    ``` 
 
-  * output
-    >[status, msg]  **status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 4. 学员修改密码   **student_passwd_change**
   * input
-    >[username, password]
+    ```
+    {"username":"", "password":""}
+    ``` 
 
-  * output
-    >[status, msg]  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 5. 学员修改信息   **student_info_update**
   * input
-    >[username, content：["name", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "memo"]]
+    ```
+    {
+      "username": "",
+      "name": "",
+      "companyID": "",
+      "dept1": "",
+      "dept2": "",
+      "dept3": "",
+      "job": "",
+      "mobile": "",
+      "phone": "",
+      "email": "",
+      "memo": ""
+    }
+    ```
 
-  * output
-    >[status, msg]  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 6. 学员信息获取   **student_info_get**
   * input
-    >[username ]
+    ```
+    {"username":""}
+    ``` 
 
-  * output
-    >[content: ["username", "name", "birthday", "sex", "age", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "status", "limitDate", "memo", "photo_filename", "regDate"], status]   **status：int, 0 成功  1 未找到  9 其他**
+  * output   **status：int, 0 成功  1 未找到  9 其他**
+    ```
+    {
+      "username": "",
+      "name": "",
+      "birthday": "",
+      "sex": "",
+      "age": "",
+      "companyID": "",
+      "dept1": "",
+      "dept2": "",
+      "dept3": "",
+      "job": "",
+      "mobile": "",
+      "phone": "",
+      "email": "",
+      "user_status": "",
+      "birthday": "",
+      "limitDate": "",
+      "photo_filename": "", 
+      "regDate": "",
+      "status": ""
+    }
+    ```
 
 7. 学员课程列表   **student_lesson_list**
   * input
-    >[username ]
+    ```
+    {"username":""}
+    ``` 
 
   * output
     >[content: [["lessonNo", "lessonID", "lessonName", "startDate", "endDate", "hours", "lesson_completion", "status", "score", "certNo", "cert_filename", "testNo", "test_score", classList: [["classID", "className","class_completion"],],], status]   **status：int, 0 成功  1 未找到  9 其他**
 
 8. 学员证书列表   **student_certificate_list**
   * input
-    >[username ]
+    ```
+    {"username":""}
+    ``` 
 
   * output
     >[content: [[certID, certName, certList: [["certNo", "startDate", "endDate", "issueUnit", "status", "cert_filename"],],], status]   **status：int, 0 成功  1 未找到  9 其他**
 
 9. 学员课节信息获取   **student_class_get**
   * input
-    >[username ]
+    ```
+    {"username":""}
+    ``` 
 
   * output
     >[content: ["lessonNo", "classID", "className", "class_completion", "video_filename", "video_fullTime", "video_maxTime", "exerciseNo", "exercise_score", courseware:[["filename", "type", "allowDonlowd"],]], status]   **status：int, 0 成功  1 未找到  9 其他**
 
 10. 学员视频进度更新   **student_video_maxTime_update**
   * input
-    >[username, "lessonNo", "classID", "currentTime"]
+    ```
+    {"username":"", "lessonNo":"", "classID":"", "currentTime":""}
+    ```
 
-  * output
-    >[status, msg]  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 11. 学员练习进度更新   **student_exercise_completion_update**
   * input
-    >[username, "lessonNo", "classID", "exerciseNo", "exercise_score"]
+    ```
+    {"username":"", "lessonNo":"", "classID":"", "exerciseNo":"", "exercise_score":""}
+    ```
 
-  * output
-    >[status, msg]  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
 
 12. 学员练习信息获取   **student_exercise_get**
-  * input
-    >[username, "lessonNo", "classID", "exerciseNo"]    **exerciseNo: int, 0 新练习  >0 已保存练习**
+  * input  **exerciseNo: int, 0 新练习  >0 已保存练习**
+    ```
+    {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
+    ```    
 
-  * output  [exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他]
+  * output  **exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他**
     ```
     {
       "exerciseNo": "",
