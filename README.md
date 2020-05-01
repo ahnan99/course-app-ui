@@ -84,15 +84,6 @@ function checkIDcard(idcard){
 	if(area[parseInt(idcard.substr(0,2))]==null) return Errors[4]; 
 	//身份号码位数及格式检验 
 	switch(idcard.length){ 
-		case 15: 
-			if ( (parseInt(idcard.substr(6,2))+1900) % 4 == 0 || ((parseInt(idcard.substr(6,2))+1900) % 100 == 0 && (parseInt(idcard.substr(6,2))+1900) % 4 == 0 )){ 
-				ereg=/^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$/;//测试出生日期的合法性 
-			} else { 
-				ereg=/^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$/;//测试出生日期的合法性 
-			} 
-			if(ereg.test(idcard)) return Errors[0]; 
-			else return Errors[2]; 
-			break; 
 		case 18: 
 		//18位身份号码检测 
 		//出生日期的合法性检查  
