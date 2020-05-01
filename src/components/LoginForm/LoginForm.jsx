@@ -1,21 +1,11 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { actions as LoginActions } from '../../modules/application'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
-export default class LoginForm extends Component {
+class LoginForm extends Component {
 
 
     onFinish = values => {
@@ -29,50 +19,48 @@ export default class LoginForm extends Component {
     render() {
         return (
             <Form
-                {...layout}
-                name="basic"
-                initialValues={{
-                    remember: true,
-                }}
+                name="normal_login"
+                className="login-form"
+                initialValues={{ remember: true }}
                 onFinish={this.onFinish}
-                onFinishFailed={this.onFinishFailed}
+                
             >
                 <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your username!',
-                        },
-                    ]}
+                    name="用户名"
+                    rules={[{ required: true, message: '请输入用户名' }]}
                 >
-                    <Input />
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" />
                 </Form.Item>
-
                 <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
+                    name="密码"
+                    rules={[{ required: true, message: '请输入密码' }]}
                 >
-                    <Input.Password />
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="密码"
+                    />
+                </Form.Item>
+                <Form.Item>
+
+                    <a className="login-form-forgot" href="">
+                        忘记密码
+                    </a>
                 </Form.Item>
 
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-            </Button>
+                <Form.Item>
+                    <Button onClick={this.props.actions.userLogin} type="primary" htmlType="submit" className="login-form-button">
+                        登陆
+                    </Button>
+                    <span> </span>或 <a href="/register">注册</a>
                 </Form.Item>
             </Form>
         )
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(LoginActions, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(LoginForm)

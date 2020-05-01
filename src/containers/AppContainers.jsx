@@ -1,38 +1,36 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
-import {Layout, Divider } from 'antd'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import routes from '../routes'
 import { connect } from 'react-redux'
 import Login from './Login/Login'
+import Register from './Register/Register'
+
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
     }
 
-    get routes(){
-        return(
-            <Layout>
-                <Switch>
-                    {routes.map(route=>(
-                        <Route key={route.pahtKey} exact {...route}/>
-                    ))}
-                </Switch>
-            </Layout>
+    get routes() {
+        return (
+            routes.map(route => (
+                <Route key={route.pathKey} exact {...route} />
+            ))
         )
     }
 
     render() {
-        return(
-            
-            <div>
-                {this.props.application.loggedIn?this.routes:<Login/>}
-            </div>
+        return (
+            <Switch>
+                <Route key={"register"} exact path="/register" component={Register} />
+                <Route key={"login"} exact path="/login" component={Login} />
+                {this.props.application.loggedIn ? this.routes : <Redirect to="/login" />}
+            </Switch>
         )
     }
 }
 
-const mapStateToProps = state =>({
+const mapStateToProps = state => ({
     application: state.application
 })
 
-export default connect(mapStateToProps,null)(App)
+export default connect(mapStateToProps, null)(App)
