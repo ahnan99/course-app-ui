@@ -10,7 +10,7 @@ https://app.moqups.com/86RO0q4xgE
 
 2. 学员注册   **student_info_new**
   * input
-    >[content：["username", "name", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "memo"]]
+    >[content：["username", "name", "password", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "memo"]]
 
   * output
     >[status, msg]  **status：int, 0 成功  1 用户已存在  9 其他;  msg：string, 提示信息**
