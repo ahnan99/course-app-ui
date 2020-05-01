@@ -86,7 +86,31 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output  [exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他]
     ```
-    {"exerciseNo":"", "exercise_status":"", "exercise_score":"", "lastDate":"", "typeList": [{"typeID":"", "typeName":"", "problemList": [{"problem":"", "itemList": [{"item":"", "answer":"", "myAnswer":""}]}]}], "status":""}
+{
+"exerciseNo":"",
+"exercise_status":"",
+"exercise_score":"",
+"lastDate":"",
+"typeList":[
+{
+"typeID":"",
+"typeName":"",
+"problemList":[
+{
+"problem":"",
+"itemList":[
+{
+"item":"",
+"answer":"",
+"myAnswer":""
+}
+]
+}
+]
+}
+],
+"status":""
+}
     ```
     
 
