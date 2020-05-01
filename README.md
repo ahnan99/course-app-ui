@@ -1,7 +1,7 @@
 
 ### user interface for student
 
-1. 学员登录  student_login
+## 1. 学员登录  student_login
   * input
     >username：
 
@@ -11,13 +11,20 @@
 
     >msg：string, 提示信息
 
-2. 学员注册
-3. 学员重置密码
-4. 学员修改密码
-5. 学员修改信息
-6. 学员信息获取
-7. 学员课程列表
-8. 学员证书列表
+## 2. 学员注册
+
+## 3. 学员重置密码
+
+## 4. 学员修改密码
+
+## 5. 学员修改信息
+
+## 6. 学员信息获取
+
+## 7. 学员课程列表
+
+8. ## 学员证书列表
+
 
 
 This project supports a superset of the latest JavaScript standard.<br>
