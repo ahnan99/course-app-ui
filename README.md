@@ -4,9 +4,12 @@
 1. 学员登录  student_login
   * input
     >username：
+
     >password：
   * output
+    >status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他
 
+    >msg：string, 提示信息
 
 2. 学员注册
 3. 学员重置密码
