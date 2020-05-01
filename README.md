@@ -269,23 +269,30 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ```
 
 13. 学员练习上传   **student_exercise_save**
-  * input  **//exercise_status: 0 保存 1 提交**
+  * input 
     ```
     {
       "exerciseNo": "",
-      "exercise_status": "",
-      "problemList": [
+      "problemID": "",
+      "itemList": [
         {
-          "problemID": "",
-          "itemList": [
-            {
-              "itemID": "",
-              "answer": ""
-            }
-          ]
+          "itemID": "",
+          "answer": ""
         }
-      ],
-      "status": ""
+      ]
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+
+14. 学员练习提交   **student_exercise_submit**
+  * input
+    ```
+    {
+      "exerciseNo": ""
     }
     ```    
 
