@@ -1,19 +1,82 @@
 
-### user interface for student
+## user interface for student
 
-1. 学员登录
-   * student_login
-    >input: 
-    username：
-    password：
+1. 学员登录   **student_login**
+  * input
+    >username：
 
-2. 学员注册
-3. 学员重置密码
-4. 学员修改密码
-5. 学员修改信息
-6. 学员信息获取
-7. 学员课程列表
-8. 学员证书列表
+    >password：
+  * output
+    >status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他
+
+    >msg：string, 提示信息
+
+2. 学员注册   **student_info_new**
+  * input
+    >content：json, ["username", "name", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "memo"]
+
+  * output
+    >status：int, 0 成功  1 用户已存在  9 其他
+
+    >msg：string, 提示信息
+
+3. 学员重置密码   **student_passwd_reset**
+  * input
+    >username：
+
+    >email：
+  * output
+    >status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他
+
+    >msg：string, 提示信息
+
+4. 学员修改密码   **student_passwd_change**
+  * input
+    >username：
+
+    >password：
+  * output
+    >status：int, 0 成功  9 其他
+
+    >msg：string, 提示信息
+
+5. 学员修改信息   **student_info_update**
+  * input
+    >username：
+
+    >content：json, ["name", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "memo"]
+  * output
+    >status：int, 0 成功  9 其他
+
+    >msg：string, 提示信息
+
+6. 学员信息获取   **student_info_get**
+  * input
+    >username：
+
+  * output
+    >re：json, ["username", "name", "birthday", "sex", "age", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "status", "limitDate", "memo", "photo_filename", "regDate"]
+
+    >status：int, 0 成功  1 未找到  9 其他
+
+7. 学员课程列表   **student_lesson_list**
+  * input
+    >username：
+
+  * output
+    >re：json, ["username", "name", "birthday", "sex", "age", "companyID", "dept1", "dept2", "dept3", "job", "mobile", "phone", "email", "status", "limitDate", "memo", "photo_filename", "regDate"]
+
+    >status：int, 0 成功  1 未找到  9 其他
+
+8. 学员证书列表   **student_certificate_list**
+  * input
+    >username：
+
+  * output
+    >re：json, ["certID", "certKindID", "certKindName", "startDate", "endDate", "issueUnit", "status", "statusName"]
+
+    >status：int, 0 成功  1 未找到  9 其他
+
 
 
 This project supports a superset of the latest JavaScript standard.<br>
