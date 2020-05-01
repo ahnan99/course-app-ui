@@ -86,9 +86,9 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output
     ```
-    {"exerciseNo":"", "status":"", "exercise_score":"", "lastDate":"", "typeList": {"typeID":"", "typeName":"", "problemList": {"problem":"", "itemList": {"item":"", "answer":"", "myAnswer":""},},}, "status":""}   **status：int, 0 成功  1 未找到  9 其他**
+    {"exerciseNo":"", "status":"", "exercise_score":"", "lastDate":"", "typeList": {"typeID":"", "typeName":"", "problemList": {"problem":"", "itemList": {"item":"", "answer":"", "myAnswer":""},},}, "status":""}
     ```
-
+    **status：int, 0 成功  1 未找到  9 其他**
 
 
 
