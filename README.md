@@ -237,12 +237,13 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
     ```    
 
-  * output  **//exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他**
+  * output  **//exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他; showAnswer: 0 不立刻显示参考答案  1 立刻显示参考答案**
     ```
     {
       "exerciseNo": "",
       "exercise_status": "",
       "exercise_score": "",
+      "showAnswer": "",
       "lastDate": "",
       "typeList": [
         {
@@ -268,7 +269,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-13. 学员练习上传   **student_exercise_save**
+13. 学员练习答案上传   **student_exercise_save**
   * input 
     ```
     {
