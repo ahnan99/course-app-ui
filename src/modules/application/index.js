@@ -11,7 +11,7 @@ export const actions ={
 }
 
 const initialState = {
-    loggedIn: false,
+    loggedIn: true,
     username: null,
     password: null
 }

@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
 import { Layout, Menu } from 'antd'
 import { Route } from 'react-router-dom'
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
-import routes  from '../routes'
+import {
+    AppstoreOutlined,
+    BarChartOutlined,
+    CloudOutlined,
+    ShopOutlined,
+    TeamOutlined,
+    UserOutlined,
+    UploadOutlined,
+    VideoCameraOutlined,
+} from '@ant-design/icons';
+import 'antd/dist/antd.css'
+import routes from '../routes'
+import './MainView.css'
 
-const { Header, Content, Footer, Sider } = Layout
+const { Content, Footer, Sider, Header } = Layout
 export default class MainView extends Component {
     get routes() {
         return (
@@ -18,14 +29,9 @@ export default class MainView extends Component {
         return (
             <Layout>
                 <Sider
-                    breakpoint="lg"
+                    breakpoint="md"
                     collapsedWidth="0"
-                    onBreakpoint={broken => {
-                        console.log(broken);
-                    }}
-                    onCollapse={(collapsed, type) => {
-                        console.log(collapsed, type);
-                    }}
+                    style={{ position: "fixed"}}
                 >
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
@@ -38,15 +44,26 @@ export default class MainView extends Component {
                         <Menu.Item key="3" icon={<UploadOutlined />}>
                             nav 3
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<UserOutlined />}>
+                        <Menu.Item key="4" icon={<BarChartOutlined />}>
                             nav 4
+                        </Menu.Item>
+                        <Menu.Item key="5" icon={<CloudOutlined />}>
+                            nav 5
+                        </Menu.Item>
+                        <Menu.Item key="6" icon={<AppstoreOutlined />}>
+                            nav 6
+                        </Menu.Item>
+                        <Menu.Item key="7" icon={<TeamOutlined />}>
+                            nav 7
+                         </Menu.Item>
+                        <Menu.Item key="8" icon={<ShopOutlined />}>
+                            nav 8
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                <Layout>
-                    <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
-                    <Content style={{ margin: '24px 16px 0' }}>
-                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                <Layout className="site-layout" style={{ padding: 0 }}>
+                    <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360, textAlign: 'center' }}>
                             {this.routes}
                         </div>
                     </Content>
