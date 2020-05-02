@@ -220,30 +220,22 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-11. 学员练习进度更新   **student_exercise_completion_update**
-  * input
-    ```
-    {"username":"", "lessonNo":"", "classID":"", "exerciseNo":"", "exercise_score":""}
-    ```
-
-  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
-    ```
-    {"status": "", "msg": ""} 
-    ```    
-
-12. 学员练习信息获取   **student_exercise_get**
+11. 学员练习信息获取   **student_exercise_get**
   * input  **//exerciseNo: int, 0 新练习  >0 已保存练习**
     ```
     {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
     ```    
 
-  * output  **//exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他; showAnswer: 0 不立刻显示参考答案  1 立刻显示参考答案**
+  * output  **//exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他; showAnswer: 0 不立刻显示参考答案  1 立刻显示参考答案;  availableTimes: 0 不允许开始新练习  >0 允许开始新练习**
     ```
     {
       "exerciseNo": "",
+      "lessonName": "",
+      "className": "",
       "exercise_status": "",
       "exercise_score": "",
       "showAnswer": "",
+      "availableTimes": "",
       "lastDate": "",
       "typeList": [
         {
@@ -269,7 +261,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-13. 学员练习答案上传   **student_exercise_save**
+12. 学员练习答案上传   **student_exercise_save**
   * input 
     ```
     {
@@ -289,7 +281,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-14. 学员练习提交   **student_exercise_submit**
+13. 学员练习提交   **student_exercise_submit**
   * input
     ```
     {
