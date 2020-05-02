@@ -3,7 +3,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
 ## user interface for student
 
-1. 学员登录   **student_login**
+1. 学员登录   **students/login**
   * input
     ```
     {"username":"", "password":""}
@@ -14,7 +14,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-2. 学员注册   **student_info_new**
+2. 学员注册   **students/new_student**
   * input
     ```
     {
@@ -38,7 +38,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-3. 学员重置密码   **student_passwd_reset**
+3. 学员重置密码   **students/reset_passwd**
   * input
     ```
     {"username":"", "email":""}
@@ -49,7 +49,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-4. 学员修改密码   **student_passwd_change**
+4. 学员修改密码   **students/change_passwd**
   * input
     ```
     {"username":"", "password":""}
@@ -60,7 +60,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-5. 学员修改信息   **student_info_update**
+5. 学员修改信息   **students/update_student**
   * input
     ```
     {
@@ -84,7 +84,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-6. 学员信息获取   **student_info_get**
+6. 学员信息获取   **students/get_student**
   * input
     ```
     {"username":""}
@@ -116,13 +116,13 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-7. 学员课程列表   **student_lesson_list**
+7. 学员课程列表   **students/get_lesson_list**
   * input
     ```
     {"username":""}
     ``` 
 
-  * output   **//status：int, 0 成功  1 未找到  9 其他**
+  * output   **//status：int, 0 成功  1 未找到  9 其他;  lesson_status: int, 0 进行中  1 已完成**
     ``` 
     {
       "content": [
@@ -135,6 +135,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
           "hours": "",
           "lesson_completion": "",
           "lesson_status": "",
+          "lesson_statusName": "",
           "score": "",
           "testNo": "",
           "test_score": "",
@@ -151,13 +152,13 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ``` 
 
-8. 学员已有证书列表   **student_certificate_list**
+8. 学员已有证书列表   **students/get_certificate_list**
   * input
     ```
     {"username":""}
     ``` 
 
-  * output   **//status：int, 0 成功  1 未找到  9 其他**
+  * output   **//status：int, 0 成功  1 未找到  9 其他  cert_status: int, 0 有效  1 失效**
     ```
     {
       "content": [
@@ -171,6 +172,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
               "endDate": "",
               "issueUnit": "",
               "cert_status": "",
+              "cert_statusName": "",
               "cert_filename": ""
             }
           ]
@@ -180,7 +182,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-9. 学员课节信息获取   **student_class_get**
+9. 学员课节信息获取   **students/get_class**
   * input
     ```
     {"username":""}
@@ -209,7 +211,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     } 
     ```
     
-10. 学员视频进度更新   **student_video_maxTime_update**
+10. 学员视频进度保存（定时将当前播放位置上传到服务器）   **students/save_video_maxTime**
   * input
     ```
     {"username":"", "lessonNo":"", "classID":"", "currentTime":""}
@@ -220,7 +222,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-11. 学员练习信息获取   **student_exercise_get**
+11. 学员练习信息获取   **students/get_exercise**
   * input  **//exerciseNo: int, 0 新练习  >0 已保存练习**
     ```
     {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
@@ -261,7 +263,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-12. 学员练习答案上传   **student_exercise_save**
+12. 学员练习答案上传   **students/save_exercise_answer**
   * input 
     ```
     {
@@ -281,7 +283,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-13. 学员练习提交   **student_exercise_submit**
+13. 学员练习提交   **students/submit_exercise**
   * input
     ```
     {
@@ -294,7 +296,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-14. 学员选择证书   **student_certificate_pickup**
+14. 学员选择证书   **students/pickup_certificate**
   * input
     ```
     {
