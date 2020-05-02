@@ -11,7 +11,7 @@ app.get('/student_login', function (req, res) {
   res.send(result);
 })
 
-var server = app.listen(8081, function () {
+var server = app.listen(3000, function () {
  
   var host = server.address().address
   var port = server.address().port
