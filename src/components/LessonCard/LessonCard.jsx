@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Row, Col } from 'antd'
 
-import 'antd/dist/antd.css'
-
-const { Meta } = Card;
 export default class LessonCard extends Component {
     render() {
         const { course } = this.props
