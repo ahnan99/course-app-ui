@@ -31,7 +31,7 @@ export default class MainView extends Component {
                 <Sider
                     breakpoint="md"
                     collapsedWidth="0"
-                    style={{ position: "fixed"}}
+                    style={{ height:"100vh", position: "fixed"}}
                 >
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
