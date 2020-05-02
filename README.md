@@ -296,11 +296,12 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-14. 学员选择证书   **students/pickup_certificate**
+14. 学员添加新证书项目   **students/add_certificate**
   * input
     ```
     {
-      "exerciseNo": ""
+      "username": "",
+      "certID": ""
     }
     ```    
 
@@ -308,7 +309,21 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ```
     {"status": "", "msg": ""} 
     ```    
-    
+ 
+15. 学员删除所选证书项目   **students/remove_certificate**
+  * input
+    ```
+    {
+      "username": "",
+      "certID": ""
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+   
 
 
 
