@@ -19,6 +19,22 @@ export default class ForgetPassword extends Component {
                 >
                     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" />
                 </Form.Item>
+                <Form.Item
+                    name="email"
+                    label="E-mail"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: 'E-mail地址不合法',
+                        },
+                        {
+                            required: true,
+                            message: '请输入email',
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         重置密码
