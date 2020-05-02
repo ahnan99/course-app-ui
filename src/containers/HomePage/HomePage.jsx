@@ -1,105 +1,118 @@
 import React, { Component } from 'react'
+import { Button, Card } from 'antd'
+import { connect } from 'react-redux'
+import {actions as CourseActions} from '../../modules/courses'
+import { bindActionCreators } from 'redux'
 
-export default class HomePage extends Component {
+class HomePage extends Component {
+    componentDidMount(){
+        this.props.actions.getCourseList()
+    }
+
     render() {
         return (
             <div>
                 Homepage
-          <br />
+                <br />
           Really
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           long
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           ...
-          <br />
+                <br />
           content
             </div>
         )
     }
 }
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(CourseActions, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(HomePage);

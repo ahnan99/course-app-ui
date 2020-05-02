@@ -2,14 +2,11 @@ import React, { Component } from 'react'
 import { Layout, Menu } from 'antd'
 import { Route } from 'react-router-dom'
 import {
-    AppstoreOutlined,
+    AuditOutlined,
     BarChartOutlined,
     CloudOutlined,
-    ShopOutlined,
-    TeamOutlined,
     UserOutlined,
-    UploadOutlined,
-    VideoCameraOutlined,
+    AppstoreOutlined
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import routes from '../routes'
@@ -35,29 +32,20 @@ export default class MainView extends Component {
                 >
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                        <Menu.Item key="1" icon={<UserOutlined />}>
-                            nav 1
+                        <Menu.Item key="1" icon={<AppstoreOutlined />}>
+                            我的课程
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                            nav 2
+                        <Menu.Item key="2" icon={<AuditOutlined />}>
+                            我的证书
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<UploadOutlined />}>
-                            nav 3
+                        <Menu.Item key="3" icon={<UserOutlined />}>
+                            个人信息
                         </Menu.Item>
                         <Menu.Item key="4" icon={<BarChartOutlined />}>
-                            nav 4
+                            帮助
                         </Menu.Item>
                         <Menu.Item key="5" icon={<CloudOutlined />}>
-                            nav 5
-                        </Menu.Item>
-                        <Menu.Item key="6" icon={<AppstoreOutlined />}>
-                            nav 6
-                        </Menu.Item>
-                        <Menu.Item key="7" icon={<TeamOutlined />}>
-                            nav 7
-                         </Menu.Item>
-                        <Menu.Item key="8" icon={<ShopOutlined />}>
-                            nav 8
+                            反馈
                         </Menu.Item>
                     </Menu>
                 </Sider>
