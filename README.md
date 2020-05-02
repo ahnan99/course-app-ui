@@ -66,6 +66,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {
       "username": "",
       "name": "",
+      "kindID": "",
       "companyID": "",
       "dept1": "",
       "dept2": "",
@@ -89,7 +90,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":""}
     ``` 
 
-  * output   **//status：int, 0 成功  1 未找到  9 其他**
+  * output   **//status：int, 0 成功  1 未找到  9 其他; kindID: int, 0 系统内单位  1 系统外单位**
     ```
     {
       "username": "",
@@ -97,6 +98,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
       "birthday": "",
       "sex": "",
       "age": "",
+      "kindID": "",
       "companyID": "",
       "dept1": "",
       "dept2": "",
@@ -134,8 +136,6 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
           "lesson_completion": "",
           "lesson_status": "",
           "score": "",
-          "certNo": "",
-          "cert_filename": "",
           "testNo": "",
           "test_score": "",
           "classList": [
@@ -151,7 +151,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ``` 
 
-8. 学员证书列表   **student_certificate_list**
+8. 学员已有证书列表   **student_certificate_list**
   * input
     ```
     {"username":""}
@@ -282,6 +282,19 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ```    
 
 13. 学员练习提交   **student_exercise_submit**
+  * input
+    ```
+    {
+      "exerciseNo": ""
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+
+14. 学员选择证书   **student_certificate_pickup**
   * input
     ```
     {
