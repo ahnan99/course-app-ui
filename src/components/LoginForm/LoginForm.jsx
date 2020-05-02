@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { actions as LoginActions } from '../../modules/application'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
+import { Form, Input, Button } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { withRouter } from 'react-router-dom'
+
+
+const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+};
 
 class LoginForm extends Component {
-
+    constructor(props) {
+        super(props)
+    }
 
     onFinish = values => {
         console.log('Success:', values)
+        this.props.userLogin()
+        this.props.history.push("/homepage")
     }
 
     onFinishFailed = errorInfo => {
@@ -23,16 +31,18 @@ class LoginForm extends Component {
                 className="login-form"
                 initialValues={{ remember: true }}
                 onFinish={this.onFinish}
-                
+                {...layout}
             >
                 <Form.Item
-                    name="用户名"
+                    name="name"
+                    label="用户名"
                     rules={[{ required: true, message: '请输入用户名' }]}
                 >
                     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" />
                 </Form.Item>
                 <Form.Item
-                    name="密码"
+                    name="password"
+                    label="密码"
                     rules={[{ required: true, message: '请输入密码' }]}
                 >
                     <Input
@@ -43,13 +53,13 @@ class LoginForm extends Component {
                 </Form.Item>
                 <Form.Item>
 
-                    <a className="login-form-forgot" href="">
+                    <a className="login-form-forgot" href="/forgetpassword">
                         忘记密码
                     </a>
                 </Form.Item>
 
                 <Form.Item>
-                    <Button onClick={this.props.actions.userLogin} type="primary" htmlType="submit" className="login-form-button">
+                    <Button type="primary" htmlType="submit" className="login-form-button">
                         登陆
                     </Button>
                     <span> </span>或 <a href="/register">注册</a>
@@ -59,8 +69,4 @@ class LoginForm extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(LoginActions, dispatch)
-})
-
-export default connect(null, mapDispatchToProps)(LoginForm)
+export default withRouter(LoginForm)

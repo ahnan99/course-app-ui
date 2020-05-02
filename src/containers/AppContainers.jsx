@@ -4,6 +4,7 @@ import routes from '../routes'
 import { connect } from 'react-redux'
 import Login from './Login/Login'
 import Register from './Register/Register'
+import ForgetPassword from './ForgetPassword/ForgetPassword'
 
 class App extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class App extends Component {
         return (
             <Switch>
                 <Route key={"register"} exact path="/register" component={Register} />
+                <Route key={"resetpassword"} exact path="/forgetpassword" component={ForgetPassword} />
                 <Route key={"login"} exact path="/login" component={Login} />
                 {this.props.application.loggedIn ? this.routes : <Redirect to="/login" />}
             </Switch>
