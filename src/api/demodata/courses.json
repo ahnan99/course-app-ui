@@ -34,7 +34,7 @@
     },
     {
         "lessonNo": "2",
-        "lessonID": 1,
+        "lessonID": 2,
         "lessonName": "Course2",
         "startDate": "2020-08-20",
         "endDate": "2021-08-20",
@@ -67,7 +67,7 @@
     },
     {
         "lessonNo": "3",
-        "lessonID": 1,
+        "lessonID": 3,
         "lessonName": "Course3",
         "startDate": "2020-08-20",
         "endDate": "2021-08-20",
