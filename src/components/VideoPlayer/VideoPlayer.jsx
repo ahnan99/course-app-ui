@@ -1,5 +1,6 @@
 import React from 'react';
 import videojs from 'video.js'
+import 'video.js/dist/video-js.min.css'
 
 export default class VideoPlayer extends React.Component {
     componentDidMount() {
@@ -31,7 +32,7 @@ export default class VideoPlayer extends React.Component {
 
             <div>
                 <div data-vjs-player>
-                    <video ref={node => this.videoNode = node} className="video-js vjs-default-skin video" preload="auto" style={{ width: "100%" }}></video>
+                    <video ref={node => this.videoNode = node} className="video-js vjs-default-skin vjs-16-9" data-setup='{"fluid": true}' preload="auto" style={{ width: "100%" }}></video>
                 </div>
             </div>
         )
