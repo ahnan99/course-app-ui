@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Menu } from 'antd'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import {
     AuditOutlined,
     BarChartOutlined,
@@ -12,14 +12,27 @@ import 'antd/dist/antd.css'
 import routes from '../routes'
 import './MainView.css'
 
-const { Content, Footer, Sider, Header } = Layout
-export default class MainView extends Component {
+const { Content, Footer, Sider } = Layout
+class MainView extends Component {
     get routes() {
         return (
             routes.map(route => (
                 <Route key={route.pathKey} exact {...route} />
             ))
         )
+    }
+
+    onClick = e =>{
+        switch(e.key){
+            case "1":
+                this.props.history.push("/homepage")
+                break
+            case "2":
+                this.props.history.push("/classpage")
+                break
+            default:
+                this.props.history.push("/homepage")
+        }
     }
 
     render() {
@@ -31,7 +44,7 @@ export default class MainView extends Component {
                     style={{ height:"100vh", position: "fixed",zIndex:99}}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                    <Menu onClick={this.onClick} theme="dark" mode="inline" defaultSelectedKeys={['4']}>
                         <Menu.Item key="1" icon={<AppstoreOutlined />}>
                             我的课程
                         </Menu.Item>
@@ -61,3 +74,5 @@ export default class MainView extends Component {
         )
     }
 }
+
+export default withRouter(MainView)

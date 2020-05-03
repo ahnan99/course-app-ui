@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { Card, Row, Col } from 'antd'
+import {withRouter} from 'react-router-dom'
 
-export default class LessonCard extends Component {
+class LessonCard extends Component {
+
+    onClick = () => {
+        this.props.history.push("/classpage")
+    }
+
     render() {
         const { course } = this.props
         return (
@@ -14,7 +20,7 @@ export default class LessonCard extends Component {
                         <p>考试成绩：{course.test_score}</p>
                         <Card type="inner" title="课程内容">
                             {course.classList.map(singleClass => (
-                                <p key={singleClass.classID}>{singleClass.classID}. {singleClass.className} {singleClass.class_completion}</p>
+                                <a onClick={this.onClick} key={singleClass.classID}>{singleClass.classID}. {singleClass.className} {singleClass.class_completion}</a>
                             ))}
                         </Card>
                     </Card>
@@ -23,3 +29,5 @@ export default class LessonCard extends Component {
         )
     }
 }
+
+export default withRouter(LessonCard)
