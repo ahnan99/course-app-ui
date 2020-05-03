@@ -5,6 +5,10 @@ import Login from './Login/Login'
 import Register from './Register/Register'
 import ForgetPassword from './ForgetPassword/ForgetPassword'
 import MainView from './MainView'
+import axios from 'axios'
+
+
+axios.defaults.baseURL = "http://localohost:8081"
 class App extends Component {
     constructor(props) {
         super(props)

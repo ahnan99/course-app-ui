@@ -1,33 +1,50 @@
 //Actions
 const USER_LOGIN = 'user_login'
+const REQUEST_LOGIN = 'request_login'
+
+export const types = {
+    USER_LOGIN,
+    REQUEST_LOGIN
+}
 
 //Action creators
-const userLogin = () =>({
-    type: USER_LOGIN
+const userLogin = response => ({
+    type: USER_LOGIN,
+    response
 });
 
-export const actions ={
-    userLogin
+const requestLogin = payload => ({
+    type: REQUEST_LOGIN,
+    payload
+})
+
+export const actions = {
+    userLogin,
+    requestLogin
 }
 
 const initialState = {
-    loggedIn: true,
+    loggedIn: false,
     username: null,
-    password: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
-    switch(action.type){
-        case USER_LOGIN:
-        return {
-            ...state,
-            loggedIn: true
+    switch (action.type) {
+        case USER_LOGIN: {
+            if (action.response.status === 0){
+                return {
+                    ...state,
+                    loggedIn: true
+                }
+            }
+                
         }
+
         default:
             return state;
     }
-    
-    
-}   
+
+
+}
 
 export default reducer

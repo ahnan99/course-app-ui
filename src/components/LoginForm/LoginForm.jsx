@@ -16,7 +16,7 @@ class LoginForm extends Component {
 
     onFinish = values => {
         console.log('Success:', values)
-        this.props.userLogin()
+        this.props.requestLogin({ username: values.username, password: values.password })
         this.props.history.push("/homepage")
     }
 
@@ -34,7 +34,7 @@ class LoginForm extends Component {
                 {...layout}
             >
                 <Form.Item
-                    name="name"
+                    name="username"
                     label="用户名"
                     rules={[{ required: true, message: '请输入用户名' }]}
                 >

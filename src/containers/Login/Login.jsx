@@ -15,7 +15,7 @@ class Login extends Component {
                 </Col>
                 <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
                     <LoginForm 
-                    userLogin={this.props.actions.userLogin}/>
+                    requestLogin={this.props.actions.requestLogin}/>
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>
                 </Col>
