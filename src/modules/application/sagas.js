@@ -9,23 +9,15 @@ function* loginWatch() {
 
 export function userLoginEndpoint(data) {
     return axios.post('/students/login', data)
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
 }
 
 //workers
 function* userLoginWorker(action) {
     try {
         const response = yield call(userLoginEndpoint, action.payload)
-        yield put(actions.userLogin(response))
+        yield put(actions.userLogin(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield put(actions.userLoginError(response.data))
     }
 }
 
