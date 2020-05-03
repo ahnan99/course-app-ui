@@ -1,11 +1,21 @@
 import React, { Component } from 'react'
-import ReactPlayer from 'react-player'
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 
 
+const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    sources: [{
+      src: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+      type: 'video/mp4'
+    }]
+  }
 export default class ClassPage extends Component {
+
+
     render() {
         return (
-            <ReactPlayer url="https://www.w3schools.com/html/movie.mp4"/>
+            <VideoPlayer { ...videoJsOptions } />
         )
     }
 }
