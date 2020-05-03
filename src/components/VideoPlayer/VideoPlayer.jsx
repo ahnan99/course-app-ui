@@ -21,11 +21,10 @@ export default class VideoPlayer extends React.Component {
   // see https://github.com/videojs/video.js/pull/3856
   render() {
     return (
-      <div>	
+     
         <div data-vjs-player>
-          <video ref={ node => this.videoNode = node } className="video-js"></video>
+          <video ref={ node => this.videoNode = node } className="video-js vjs-default-skin vjs-big-play-centered" data-setup='{"fluid": true}' controls preload="auto" style={{width:"100%"}}></video>
         </div>
-      </div>
     )
   }
 }

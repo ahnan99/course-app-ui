@@ -3,7 +3,7 @@ import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 
 
 const videoJsOptions = {
-    autoplay: true,
+    autoplay: false,
     controls: true,
     sources: [{
       src: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
