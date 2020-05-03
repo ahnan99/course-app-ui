@@ -8,7 +8,7 @@ import MainView from './MainView'
 import axios from 'axios'
 
 
-axios.defaults.baseURL = "http://localohost:8081"
+axios.defaults.baseURL = "http://localhost:8081"
 class App extends Component {
     constructor(props) {
         super(props)

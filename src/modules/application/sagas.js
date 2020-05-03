@@ -8,7 +8,7 @@ function* loginWatch() {
 }
 
 export function userLoginEndpoint(data) {
-    return axios.post('/student/login', data)
+    return axios.post('/students/login', data)
         .then(function (response) {
             // handle success
             console.log(response);
