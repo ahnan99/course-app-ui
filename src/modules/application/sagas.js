@@ -17,7 +17,7 @@ function* userLoginWorker(action) {
         const response = yield call(userLoginEndpoint, action.payload)
         yield put(actions.userLogin(response.data))
     } catch (error) {
-        yield put(actions.userLoginError(response.data))
+        yield put(actions.userLoginError(error))
     }
 }
 

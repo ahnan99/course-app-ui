@@ -15,7 +15,9 @@ class Login extends Component {
                 </Col>
                 <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
                     <LoginForm 
-                    requestLogin={this.props.actions.requestLogin}/>
+                    requestLogin={this.props.actions.requestLogin}
+                    loggedIn={this.props.application.loggedIn}
+                    loginError={this.props.application.loginError}/>
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>
                 </Col>
@@ -24,8 +26,12 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    application: state.application
+})
+
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(LoginActions, dispatch)
 })
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

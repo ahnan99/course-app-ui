@@ -45,7 +45,13 @@ const reducer = (state = initialState, action = {}) => {
             if (action.response.status === 0){
                 return {
                     ...state,
-                    loggedIn: true
+                    loggedIn: true,
+                    loginError: null
+                }
+            }else{
+                return{
+                    ...state,
+                    loginError: action.response.msg
                 }
             }
                 

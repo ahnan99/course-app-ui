@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 
@@ -14,10 +14,24 @@ class LoginForm extends Component {
         super(props)
     }
 
+    componentWillMount = () => {
+        if (this.props.loggedIn) {
+            this.props.history.push('/homepage')
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (nextProps.loggedIn) {
+            this.props.history.push('/homepage')
+        }
+        if (nextProps.loginError){
+            message.error(nextProps.loginError)
+        }
+    }
+
     onFinish = values => {
         console.log('Success:', values)
         this.props.requestLogin({ username: values.username, password: values.password })
-        this.props.history.push("/homepage")
     }
 
     onFinishFailed = errorInfo => {
