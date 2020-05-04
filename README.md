@@ -72,11 +72,12 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
       "mobile": "",
       "phone": "",
       "email": "",
+      "limitDate": "",
       "memo": ""
     }
     ```
 
-  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功 2 用户不存在 9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
