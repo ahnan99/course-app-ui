@@ -177,19 +177,25 @@ export default class RegisterForm extends Component {
                     name="dept1"
                     label="部门1"
                 >
-                    <Select />
+                    <Select>
+                        <Option value="1">1</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     name="dept2"
                     label="部门2"
                 >
-                    <Select />
+                    <Select>
+                        <Option value="1">1</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     name="dept3"
                     label="部门3"
                 >
-                    <Select />
+                    <Select>
+                        <Option value="1">1</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     name="job"
