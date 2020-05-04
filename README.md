@@ -3,10 +3,10 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
 ## user interface for student
 
-1. 学员登录   **students/login**
-  * input
+1. 学员登录   **POST:/students/login** 
+  * input   **//host:子域名 host="sino" when the url=sino.elearning.com/students/login**
     ```
-    {"username":"", "password":""}
+    {"username":"xxx", "password":"123", "host":"sino"}
     ``` 
 
   * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息**
@@ -14,21 +14,22 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-2. 学员注册   **students/new_student**
+2. 学员注册   **POST:/students/new_student**
   * input
     ```
     {
-      "username": "",
-      "name": "",
-      "password": "",
-      "companyID": "",
-      "dept1": "",
-      "dept2": "",
+      "username": "310108199904050011",   //*
+      "name": "张三",   //*
+      "password": "239000wc",   //*
+      "kindID": "0",    //0:系统内单位  1:系统外单位
+      "companyID": "1", //*
+      "dept1": "56",
+      "dept2": "78",
       "dept3": "",
       "job": "",
-      "mobile": "",
+      "mobile": "138018888888",   //*
       "phone": "",
-      "email": "",
+      "email": "xxx.s@www.com",   //*
       "memo": ""
     }
     ```
@@ -38,24 +39,19 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-3. 学员重置密码   **students/reset_passwd**
+3. 学员重置密码   **POST:/ use the same API of /students/change_passwd**
   * input
     ```
-    {"username":"", "email":""}
+ 
+    ```    
+
+4. 学员修改密码   **POST:/students/change_passwd**
+  * input
+    ```
+    {"username":"", "email":"", "password":""}
     ``` 
 
   * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他;  msg：string, 提示信息**
-    ```
-    {"status": "", "msg": ""} 
-    ```    
-
-4. 学员修改密码   **students/change_passwd**
-  * input
-    ```
-    {"username":"", "password":""}
-    ``` 
-
-  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
     {"status": "", "msg": ""} 
     ```    
@@ -64,7 +60,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
   * input
     ```
     {
-      "username": "",
+      "username": "310108199904050011",
       "name": "",
       "kindID": "",
       "companyID": "",
@@ -93,8 +89,8 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
   * output   **//status：int, 0 成功  1 未找到  9 其他; kindID: int, 0 系统内单位  1 系统外单位**
     ```
     {
-      "username": "",
-      "name": "",
+      "username": "310108199904050011",
+      "name": "ccc",
       "birthday": "",
       "sex": "",
       "age": "",
