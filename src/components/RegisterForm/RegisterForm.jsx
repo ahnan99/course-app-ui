@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Select, Radio, message } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
+import {withRouter} from 'react-router-dom'
 
 const formItemLayout = {
     labelCol: {
@@ -21,7 +22,7 @@ const formItemLayout = {
     },
 };
 const { Option } = Select
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
@@ -40,7 +41,7 @@ export default class RegisterForm extends Component {
         if (nextProps.registerError) {
             message.error(nextProps.registerError)
         }
-        if (nextProps.application.registered) {
+        if (nextProps.registered) {
             message.success("注册成功！")
             this.props.resetRegisterStatus()
             this.props.history.push('/login')
@@ -255,3 +256,4 @@ export default class RegisterForm extends Component {
         )
     }
 }
+export default withRouter(RegisterForm)
