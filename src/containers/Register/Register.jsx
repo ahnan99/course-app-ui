@@ -1,23 +1,42 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'antd'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
+import { actions as RegisterActions } from '../../modules/application'
+import { connect } from 'react-redux'
 import 'antd/dist/antd.css'
 import './Register.css'
+import { bindActionCreators } from 'redux'
 
-export default class Register extends Component {
+class Register extends Component {
 
 
     render() {
         return (
             <Row className="form-row">
-            <Col xs={2} sm={4} md={6} lg={8} xl={8}>
-            </Col>
-            <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
-                <RegisterForm />
-            </Col>
-            <Col xs={2} sm={4} md={6} lg={8} xl={8}>
-            </Col>
-        </Row>
+                <Col xs={2} sm={4} md={6} lg={8} xl={8}>
+                </Col>
+                <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
+                    <RegisterForm
+                        requestRegister={this.props.actions.requestRegister}
+                        loggedIn={this.props.application.loggedIn}
+                        registered={this.props.application.registered}
+                        registerError={this.props.application.registerError}
+                        resetRegisterStatus={this.props.actions.resetRegisterStatus}
+                    />
+                </Col>
+                <Col xs={2} sm={4} md={6} lg={8} xl={8}>
+                </Col>
+            </Row>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    application: state.application
+})
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(RegisterActions, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select, Layout } from 'antd'
+import { Form, Input, Button, Select, Radio, message } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 
 const formItemLayout = {
@@ -20,18 +20,59 @@ const formItemLayout = {
         },
     },
 };
-
+const { Option } = Select
 export default class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
     }
 
+    componentWillMount = () => {
+        if (this.props.loggedIn) {
+            this.props.history.push('/homepage')
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (nextProps.loggedIn) {
+            this.props.history.push('/homepage')
+        }
+        if (nextProps.registerError) {
+            message.error(nextProps.registerError)
+        }
+        if (nextProps.application.registered) {
+            message.success("注册成功！")
+            this.props.resetRegisterStatus()
+            this.props.history.push('/login')
+        }
+    }
+
+    onFinish = values => {
+        console.log('Success:', values)
+        this.props.requestRegister({
+            username: values.username,   //*
+            name: values.name,   //*
+            password: values.password,   //*
+            kindID: values.kindID,    //0:系统内单位  1:系统外单位
+            companyID: values.companyID, //*
+            dept1: values.dept1,
+            dept2: values.dept2,
+            dept3: values.dept3,
+            job: values.job,
+            mobile: values.mobile,   
+            phone: values.phone,
+            email: values.email,   //*
+            memo: values.memo
+        })
+    }
+
     render() {
         return (
             <Form
                 {...formItemLayout}
-                scrollToFirstError>
+                onFinish={this.onFinish}
+                scrollToFirstError
+            >
                 <Form.Item
                     name="username"
                     label="身份证"
@@ -58,6 +99,18 @@ export default class RegisterForm extends Component {
                             },
                         }
 
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="name"
+                    label="姓名"
+                    rules={[
+                        {
+                            required: true,
+                            message: '请输入姓名',
+                        },
                     ]}
                 >
                     <Input />
@@ -98,6 +151,15 @@ export default class RegisterForm extends Component {
                     <Input.Password />
                 </Form.Item>
                 <Form.Item
+                    name="kindID"
+                    label="性质"
+                >
+                    <Radio.Group defaultValue="0">
+                        <Radio.Button value="0">系统内单位</Radio.Button>
+                        <Radio.Button value="1">系统外单位</Radio.Button>
+                    </Radio.Group>
+                </Form.Item>
+                <Form.Item
                     name="companyID"
                     label="公司名称"
                     rules={[
@@ -107,7 +169,9 @@ export default class RegisterForm extends Component {
                         },
                     ]}
                 >
-                    <Select />
+                    <Select>
+                        <Option value="1">1</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     name="dept1"
@@ -128,7 +192,13 @@ export default class RegisterForm extends Component {
                     <Select />
                 </Form.Item>
                 <Form.Item
-                    name="moblie"
+                    name="job"
+                    label="岗位"
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="mobile"
                     label="手机号码"
                     rules={[
                         {
@@ -168,7 +238,7 @@ export default class RegisterForm extends Component {
                     <Input />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" >注册</Button>
+                    <Button type="primary" htmlType="submit">注册</Button>
                     <span> </span>
                     <span> </span>
                     <a href="/login">取消</a>
