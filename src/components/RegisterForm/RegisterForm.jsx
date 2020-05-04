@@ -72,6 +72,7 @@ export default class RegisterForm extends Component {
                 {...formItemLayout}
                 onFinish={this.onFinish}
                 scrollToFirstError
+                initialValues={{kindID:"0"}}
             >
                 <Form.Item
                     name="username"
@@ -154,9 +155,9 @@ export default class RegisterForm extends Component {
                     name="kindID"
                     label="性质"
                 >
-                    <Radio.Group defaultValue="0">
-                        <Radio.Button value="0">系统内单位</Radio.Button>
-                        <Radio.Button value="1">系统外单位</Radio.Button>
+                    <Radio.Group>
+                        <Radio value="0">系统内单位</Radio>
+                        <Radio value="1">系统外单位</Radio>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
