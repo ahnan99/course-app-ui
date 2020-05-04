@@ -2,6 +2,7 @@ https://app.moqups.com/86RO0q4xgE
 remote desk:  47.100.186.148  administrator/Shznxfxx119
 
 ## user interface for student
+//respone.sessionExpire: !=1 可用  1 已过期
 
 1. 学员登录   **POST:/students/login** 
   * input   **//host:子域名 host="sino" when the url=sino.elearning.com/students/login**
@@ -9,9 +10,9 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"username":"xxx", "password":"123", "host":"sino"}
     ``` 
 
-  * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息; sessionExpire: !=1 可用  1 已过期**
     ```
-    {"status": "", "msg": ""} 
+    {"status": "", "msg": "", "sessionExpire": 0} 
     ```    
 
 2. 学员注册   **POST:/students/new_student**
