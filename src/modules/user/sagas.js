@@ -21,7 +21,7 @@ export function getDeptEndpoint(data) {
 function* getDept1Worker(action) {
     try {
         const response = yield call(getDeptEndpoint, action.payload)
-        yield put(actions.getDept1(response.data))
+        yield put(actions.updateDept1(response.data))
     } catch (error) {
         yield put(actions.dept1Error(error))
     }
@@ -30,7 +30,7 @@ function* getDept1Worker(action) {
 function* getDept2Worker(action) {
     try {
         const response = yield call(getDeptEndpoint, action.payload)
-        yield put(actions.getDept2(response.data))
+        yield put(actions.updateDept2(response.data))
     } catch (error) {
         yield put(actions.dept2Error(error))
     }

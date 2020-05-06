@@ -32,9 +32,11 @@ class RegisterForm extends Component {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
+        
         this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
-
+        
     }
+
 
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.loggedIn) {

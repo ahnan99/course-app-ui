@@ -7,7 +7,7 @@ const UPDATE_DEPT_2 = 'update_dept_2'
 const DEPT_1_ERROR = 'dept_1_error'
 const DEPT_2_ERROR = 'dept_2_error'
 
-export const types ={
+export const types = {
     SHOW_PASSWORD_RESET_MODAL,
     GET_DEPT_1,
     GET_DEPT_2,
@@ -18,44 +18,44 @@ export const types ={
 }
 
 //Action creators
-const setPasswordResetModal = passwordResetModalVisible =>({
+const setPasswordResetModal = passwordResetModalVisible => ({
     type: SHOW_PASSWORD_RESET_MODAL,
-    payload:{
+    payload: {
         passwordResetModalVisible
     }
 });
 
-const getDept1 = payload =>({
+const getDept1 = payload => ({
     type: GET_DEPT_1,
     payload
 })
 
-const updateDept1 = data =>({
+const updateDept1 = data => ({
     type: UPDATE_DEPT_1,
     data
 })
 
-const dept1Error = data =>({
+const dept1Error = data => ({
     type: DEPT_1_ERROR,
     data
 })
 
-const dept2Error = data =>({
+const dept2Error = data => ({
     type: DEPT_2_ERROR,
     data
 })
 
-const getDept2 = payload =>({
+const getDept2 = payload => ({
     type: GET_DEPT_2,
     payload
 })
 
-const updateDept2 = data =>({
+const updateDept2 = data => ({
     type: UPDATE_DEPT_2,
     data
 })
 
-export const actions ={
+export const actions = {
     setPasswordResetModal,
     getDept1,
     getDept2,
@@ -77,27 +77,30 @@ const initialState = {
 
 //Reducers
 const reducer = (state = initialState, action = {}) => {
-    switch(action.type){
+    switch (action.type) {
         case SHOW_PASSWORD_RESET_MODAL:
-        return {
-            ...state,
-            ...action.payload
-        }
+            return {
+                ...state,
+                ...action.payload
+            }
         case UPDATE_DEPT_1:
-        return {
-            ...state,
-            dept1List: action.data
-        }
+            if (action.data.sessionExpire === 1) {
+                break;
+            }
+            return {
+                ...state,
+                dept1List: action.data
+            }
         case UPDATE_DEPT_2:
-        return {
-            ...state,
-            dept2List: action.data
-        }
+            return {
+                ...state,
+                dept2List: action.data
+            }
         default:
             return state;
     }
-    
-    
-}   
+
+
+}
 
 export default reducer
