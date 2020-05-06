@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Select, Radio, message } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 const formItemLayout = {
     labelCol: {
@@ -32,6 +32,8 @@ class RegisterForm extends Component {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
+        this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
+
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -60,11 +62,20 @@ class RegisterForm extends Component {
             dept2: values.dept2,
             dept3: values.dept3,
             job: values.job,
-            mobile: values.mobile,   
+            mobile: values.mobile,
             phone: values.phone,
             email: values.email,   //*
             memo: values.memo
         })
+    }
+
+    onValuesChange = (changedValue, values) => {
+        if (changedValue.kindID) {
+            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
+        }
+        if (changedValue.dept1) {
+            this.props.userActions.getDept2({ kindID: values.kindID, pID: changedValue.dept1 })
+        }
     }
 
     render() {
@@ -73,7 +84,8 @@ class RegisterForm extends Component {
                 {...formItemLayout}
                 onFinish={this.onFinish}
                 scrollToFirstError
-                initialValues={{kindID:"0"}}
+                initialValues={{ kindID: "0", companyID: this.props.user.companyName }}
+                onValuesChange={this.onValuesChange}
             >
                 <Form.Item
                     name="username"
@@ -171,16 +183,17 @@ class RegisterForm extends Component {
                         },
                     ]}
                 >
-                    <Select>
-                        <Option value="1">1</Option>
-                    </Select>
+                    <Input disabled/>
                 </Form.Item>
                 <Form.Item
                     name="dept1"
                     label="部门1"
                 >
-                    <Select>
-                        <Option value="1">1</Option>
+                    <Select
+                        onSelect={this.onSelectDept1}>
+                        {this.props.user.dept1List.map(dept => (
+                            <Option value={dept.deptID}>{dept.deptName}</Option>
+                        ))}
                     </Select>
                 </Form.Item>
                 <Form.Item
@@ -188,7 +201,9 @@ class RegisterForm extends Component {
                     label="部门2"
                 >
                     <Select>
-                        <Option value="1">1</Option>
+                        {this.props.user.dept2List.map(dept => (
+                            <Option value={dept.deptID}>{dept.deptName}</Option>
+                        ))}
                     </Select>
                 </Form.Item>
                 <Form.Item
@@ -196,7 +211,6 @@ class RegisterForm extends Component {
                     label="部门3"
                 >
                     <Select>
-                        <Option value="1">1</Option>
                     </Select>
                 </Form.Item>
                 <Form.Item

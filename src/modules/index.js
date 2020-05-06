@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux'
 import applicationReducer from './application'
-import loginPageReducer from './loginpage'
+import userReducer from './user'
 import courseReducer from './courses'
 
 const rootReducer = combineReducers({
     application: applicationReducer,
-    loginPage: loginPageReducer,
+    user: userReducer,
     course: courseReducer
 })
 
