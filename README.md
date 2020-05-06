@@ -124,8 +124,8 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ``` 
 
   * output   **kindID: int, 0 系统内单位  1 系统外单位**
-    ```
-[
+    
+```[
     {
         "userID": 1,
         "username": "120107196604032113",
@@ -167,8 +167,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ``` 
 
   * output   **dept_status: int, 0 有效  1 关闭**
-    ```
-[
+```[
     {
         "deptID": 7,
         "pID": 8,
@@ -203,7 +202,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
 ] 
    ``` 
-   
+
 7. 获取学员课程列表   **GET:/students/get_lesson_list**
   * input
     ```
@@ -211,8 +210,8 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ``` 
 
   * output   **//status：int, 0 成功  1 未找到  9 其他;  lesson_status: int, 0 进行中  1 已完成**
-    ``` 
-    {
+     
+    ```{
       "content": [
         {
           "lessonNo": "",
