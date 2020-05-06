@@ -125,7 +125,8 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output   **kindID: int, 0 系统内单位  1 系统外单位**
     
-```[
+```
+[
     {
         "userID": 1,
         "username": "120107196604032113",
