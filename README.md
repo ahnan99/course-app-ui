@@ -158,6 +158,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
         "sexName": "男"
     }
 ]
+
     ```
 
 6a. 获取下级单位列表   **GET:/public/get_deptListByPID**
@@ -202,8 +203,9 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
         "statusName": "有效"
     }
 ] 
+
    ``` 
-   
+
 7. 获取学员课程列表   **GET:/students/get_lesson_list**
   * input
     ```
