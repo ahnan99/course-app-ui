@@ -64,7 +64,7 @@ export const actions = {
 }
 
 const initialState = {
-    loggedIn: true,
+    loggedIn: false,
     username: null,
     isFetching: false,
     loginError: null,

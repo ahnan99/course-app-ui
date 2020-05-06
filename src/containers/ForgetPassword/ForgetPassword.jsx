@@ -3,7 +3,7 @@ import ForgetPasswordForm from '../../components/ForgetPasswordForm/ForgetPasswo
 import NewPasswordModal from '../../components/ForgetPasswordForm/NewPasswordModal'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { actions as LoginActions } from '../../modules/loginpage'
+import { actions as LoginActions } from '../../modules/user'
 import { Row, Col } from 'antd'
 import './ForgetPassword.css'
 
@@ -13,7 +13,7 @@ class ForgetPassword extends Component {
         return (
             <Row className="form-row">
                 <NewPasswordModal
-                    visible={this.props.loginPage.passwordResetModalVisible}
+                    visible={this.props.user.passwordResetModalVisible}
                     handleOk={() => this.props.actions.setPasswordResetModal(false)}
                     handleCancel={() => this.props.actions.setPasswordResetModal(false)}
                     />
@@ -31,7 +31,7 @@ class ForgetPassword extends Component {
 }
 
 const mapStateToProps = state => ({
-    loginPage: state.loginPage
+    user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
