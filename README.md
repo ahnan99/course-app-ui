@@ -3,6 +3,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
 ## user interface for student
 //respone.sessionExpire: !=1 可用  1 已过期
+//*必填  R只读
 
 1. 学员登录   **POST:/students/login** 
   * input   **//host:子域名 host="sino" when the url=sino.elearning.com/students/login**
@@ -15,18 +16,30 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": "", "sessionExpire": 0} 
     ```    
 
+1a. 学员登出   **POST:/students/logout** 
+  * input   
+    ```
+    nothing
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+
 2. 学员注册   **POST:/students/new_student**
   * input
     ```
     {
-      "username": "310108199904050011",   //*
+      "username": "120107196604032113",   //*
       "name": "张三",   //*
       "password": "239000wc",   //*
       "kindID": "0",    //0:系统内单位  1:系统外单位
-      "companyID": "1", //*
-      "dept1": "56",
-      "dept2": "78",
-      "dept3": "",
+      "companyID": "8", //*
+      "dept1": "1",     //*
+      "dept1Name": "公司总部",  //*
+      "dept2": "12",
+      "dept3": "0",
       "job": "",
       "mobile": "138018888888",   //*
       "phone": "",
@@ -57,22 +70,23 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-5. 学员修改信息   **students/update_student**
-  * input
+5. 学员修改信息   **POST:/students/update_student**
+  * input   **当kindID=1(系统外单位)时，允许在dept1中输入新的单位名称(dept1=0, dept1Name名称长度最少为4，提交后系统将自动保存新单位)；kindID=0时dept1/2/3中只能选择列表中的单位**
     ```
     {
-      "username": "310108199904050011",
-      "name": "",
-      "kindID": "",
-      "companyID": "",
-      "dept1": "",
+      "username": "120107196604032113",   //只读
+      "name": "Albert",   //*   
+      "kindID": 0,
+      "companyID": "",    //R
+      "dept1": "",        //*
+      "dept1Name": "",    //*
       "dept2": "",
       "dept3": "",
       "job": "",
-      "mobile": "",
+      "mobile": "",       //*
       "phone": "",
-      "email": "",
-      "limitDate": "",
+      "email": "",        //*
+      "limitDate": "",    //R
       "memo": ""
     }
     ```
@@ -82,42 +96,117 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-6. 学员信息获取   **students/get_student**
-  * input
+5a. 上传学员照片   **POST:/files/uploadSingle**
+  * input   **只能上传一张照片，重复上传将覆盖前文件.**
     ```
-    {"username":""}
+    //username（照片所属学员的身份证号）及upID需要在query中传递。示例中的upID="student_photo", action="/files/uploadSingle", name="avatar", enctype="multipart/form-data"必须遵守。
+    {"username":"120107196604032113", upID="student_photo"}
+<form action="/files/uploadSingle" method="post" enctype="multipart/form-data">
+    <h2>单图上传</h2>
+    <input type="file" name="avatar">
+    <input type="submit" value="提交">
+</form>
     ``` 
 
-  * output   **//status：int, 0 成功  1 未找到  9 其他; kindID: int, 0 系统内单位  1 系统外单位**
+  * output  **//status：int, 0 成功  1 文件格式不支持  2 大小超过限制  3 文件不存在  9 其他;  msg：string, 提示信息**
     ```
-    {
-      "username": "310108199904050011",
-      "name": "ccc",
-      "birthday": "",
-      "sex": "",
-      "age": "",
-      "kindID": "",
-      "companyID": "",
-      "dept1": "",
-      "dept2": "",
-      "dept3": "",
-      "job": "",
-      "mobile": "",
-      "phone": "",
-      "email": "",
-      "user_status": "",
-      "birthday": "",
-      "limitDate": "",
-      "photo_filename": "", 
-      "regDate": "",
-      "status": ""
-    }
-    ```
+{
+    "status":0 ,
+    "msg":"" ,
+    "file": "users\\upload\\students\\photos\\120107196604032113.jpeg"  **//实际保存的路径**
+}
+    ```    
 
-7. 学员课程列表   **students/get_lesson_list**
+6. 学员信息获取   **GET:/students/get_student**
   * input
     ```
-    {"username":""}
+    {"username":"120107196604032113"}
+    ``` 
+
+  * output   **kindID: int, 0 系统内单位  1 系统外单位**
+    ```
+[
+    {
+        "userID": 1,
+        "username": "120107196604032113",
+        "name": "albert",
+        "password": "123",
+        "birthday": "1966-04-03",
+        "sex": 1,
+        "age": 54,
+        "kindID": 0,
+        "companyID": 8,
+        "dept1": 1,
+        "dept2": 11,
+        "dept3": 0,
+        "job": "",
+        "mobile": "13331111222",
+        "phone": "77777",
+        "email": "x.x@x.com",
+        "user_status": 0,
+        "limitDate": "",
+        "host": "sino",
+        "photo_filename": "",
+        "memo": "",
+        "regDate": "2020-05-02",
+        "statusName": "正常",
+        "hostName": "上海石化公司",
+        "dept1Name": "公司本部",
+        "dept2Name": "总经理办公室",
+        "dept3Name": "",
+        "companyName": "上海石化公司",
+        "sexName": "男"
+    }
+]
+    ```
+
+6a. 获取下级单位列表   **GET:/public/get_deptListByPID**
+  * input   **pID: 本单位ID; kindID: 0 系统内单位  1 系统外单位. 取自学员信息中的kindID**
+    ```
+    {"pID":8, "kindID":0}
+    ``` 
+
+  * output   **dept_status: int, 0 有效  1 关闭**
+    ```
+[
+    {
+        "deptID": 7,
+        "pID": 8,
+        "deptName": "松金分公司",
+        "kindID": 0,
+        "liniker": "",
+        "phone": "",
+        "address": "",
+        "email": "",
+        "dept_status": 0,
+        "memo": "",
+        "host": "sino",
+        "regDate": "2017-06-06",
+        "registerID": "albert",
+        "statusName": "有效"
+    },
+    {
+        "deptID": 1,
+        "pID": 8,
+        "deptName": "公司本部",
+        "kindID": 0,
+        "liniker": "",
+        "phone": "",
+        "address": "",
+        "email": "",
+        "dept_status": 0,
+        "memo": "",
+        "host": "sino",
+        "regDate": "2017-06-06",
+        "registerID": "albert",
+        "statusName": "有效"
+    }
+]    ``` 
+
+7. 获取学员课程列表   **GET:/students/get_lesson_list**
+  * input
+    ```
+    {"username":"120107196604032113"}
     ``` 
 
   * output   **//status：int, 0 成功  1 未找到  9 其他;  lesson_status: int, 0 进行中  1 已完成**
@@ -150,10 +239,10 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ``` 
 
-8. 学员已有证书列表   **students/get_certificate_list**
+8. 获取学员已有认证列表   **GET:/students/get_certificate_list**
   * input
     ```
-    {"username":""}
+    {"username":"120107196604032113"}
     ``` 
 
   * output   **//status：int, 0 成功  1 未找到  9 其他  cert_status: int, 0 有效  1 失效**
@@ -180,7 +269,37 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-9. 学员课节信息获取   **students/get_class**
+8a. 获取学员备选认证列表   **GET:/students/get_certificate_list**
+  * input
+    ```
+    {"username":"120107196604032113"}
+    ``` 
+
+  * output   **//status：int, 0 成功  1 未找到  9 其他  cert_status: int, 0 有效  1 失效**
+    ```
+    {
+      "content": [
+        {
+          "certID": "",
+          "certName": "",
+          "certList": [
+            {
+              "certNo": "",
+              "startDate": "",
+              "endDate": "",
+              "issueUnit": "",
+              "cert_status": "",
+              "cert_statusName": "",
+              "cert_filename": ""
+            }
+          ]
+        }
+      ],
+      "status": ""
+    }
+    ```
+
+9. 获取学员课节信息   **GET:/students/get_class**
   * input
     ```
     {"username":""}
@@ -209,7 +328,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     } 
     ```
     
-10. 学员视频进度保存（定时将当前播放位置上传到服务器）   **students/save_video_maxTime**
+10. 学员视频进度保存（定时将当前播放位置上传到服务器）   **POST:/students/save_video_maxTime**
   * input
     ```
     {"username":"", "lessonNo":"", "classID":"", "currentTime":""}
@@ -220,7 +339,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-11. 学员练习信息获取   **students/get_exercise**
+11. 获取学员练习信息   **GET:/students/get_exercise**
   * input  **//exerciseNo: int, 0 新练习  >0 已保存练习**
     ```
     {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
@@ -261,7 +380,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-12. 学员练习答案上传   **students/save_exercise_answer**
+12. 上传学员练习答案   **POST:/students/save_exercise_answer**
   * input 
     ```
     {
@@ -281,7 +400,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-13. 学员练习提交   **students/submit_exercise**
+13. 提交学员练习   **POST:/students/submit_exercise**
   * input
     ```
     {
@@ -294,7 +413,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
 
-14. 学员添加新证书项目   **students/add_certificate**
+14. 学员添加新证书项目   **POST:/students/add_certificate**
   * input
     ```
     {
@@ -308,7 +427,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": ""} 
     ```    
  
-15. 学员删除所选证书项目   **students/remove_certificate**
+15. 学员删除所选证书项目   **POST:/students/remove_certificate**
   * input
     ```
     {
