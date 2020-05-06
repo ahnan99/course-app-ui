@@ -201,8 +201,9 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
         "registerID": "albert",
         "statusName": "有效"
     }
-]    ``` 
-
+] 
+   ``` 
+   
 7. 获取学员课程列表   **GET:/students/get_lesson_list**
   * input
     ```
