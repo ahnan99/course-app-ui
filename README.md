@@ -16,7 +16,18 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     {"status": "", "msg": "", "sessionExpire": 0} 
     ```    
 
-1a. 学员登出   **POST:/students/logout** 
+1a. 获取公司信息   **GET:/public/getCompanyByHost** 
+  * input   
+    ```
+    nothing   //系统将根据学员URL.host自动识别公司属性
+    ``` 
+
+  * output  
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+
+1b. 学员登出   **POST:/students/logout** 
   * input   
     ```
     nothing
@@ -110,11 +121,11 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output  **//status：int, 0 成功  1 文件格式不支持  2 大小超过限制  3 文件不存在  9 其他;  msg：string, 提示信息**
     ```
-{
-    "status":0 ,
-    "msg":"" ,
-    "file": "users\\upload\\students\\photos\\120107196604032113.jpeg"  **//实际保存的路径**
-}
+    {
+        "status":0 ,
+        "msg":"" ,
+        "file": "users\\upload\\students\\photos\\120107196604032113.jpeg"  //实际保存的路径
+    }
     ```    
 
 6. 学员信息获取   **GET:/students/get_student**
@@ -125,41 +136,41 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output   **kindID: int, 0 系统内单位  1 系统外单位**
     
-```
-[
-    {
-        "userID": 1,
-        "username": "120107196604032113",
-        "name": "albert",
-        "password": "123",
-        "birthday": "1966-04-03",
-        "sex": 1,
-        "age": 54,
-        "kindID": 0,
-        "companyID": 8,
-        "dept1": 1,
-        "dept2": 11,
-        "dept3": 0,
-        "job": "",
-        "mobile": "13331111222",
-        "phone": "77777",
-        "email": "x.x@x.com",
-        "user_status": 0,
-        "limitDate": "",
-        "host": "sino",
-        "photo_filename": "",
-        "memo": "",
-        "regDate": "2020-05-02",
-        "statusName": "正常",
-        "hostName": "上海石化公司",
-        "dept1Name": "公司本部",
-        "dept2Name": "总经理办公室",
-        "dept3Name": "",
-        "companyName": "上海石化公司",
-        "sexName": "男"
-    }
-]
-```
+    ```
+    [
+        {
+            "userID": 1,
+            "username": "120107196604032113",
+            "name": "albert",
+            "password": "123",
+            "birthday": "1966-04-03",
+            "sex": 1,
+            "age": 54,
+            "kindID": 0,
+            "companyID": 8,
+            "dept1": 1,
+            "dept2": 11,
+            "dept3": 0,
+            "job": "",
+            "mobile": "13331111222",
+            "phone": "77777",
+            "email": "x.x@x.com",
+            "user_status": 0,
+            "limitDate": "",
+            "host": "sino",
+            "photo_filename": "",
+            "memo": "",
+            "regDate": "2020-05-02",
+            "statusName": "正常",
+            "hostName": "上海石化公司",
+            "dept1Name": "公司本部",
+            "dept2Name": "总经理办公室",
+            "dept3Name": "",
+            "companyName": "上海石化公司",
+            "sexName": "男"
+        }
+    ]
+    ```
 
 6a. 获取下级单位列表   **GET:/public/get_deptListByPID**
   * input   **pID: 本单位ID; kindID: 0 系统内单位  1 系统外单位. 取自学员信息中的kindID**
@@ -168,42 +179,42 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ``` 
 
   * output   **dept_status: int, 0 有效  1 关闭**
-```
-[
-    {
-        "deptID": 7,
-        "pID": 8,
-        "deptName": "松金分公司",
-        "kindID": 0,
-        "liniker": "",
-        "phone": "",
-        "address": "",
-        "email": "",
-        "dept_status": 0,
-        "memo": "",
-        "host": "sino",
-        "regDate": "2017-06-06",
-        "registerID": "albert",
-        "statusName": "有效"
-    },
-    {
-        "deptID": 1,
-        "pID": 8,
-        "deptName": "公司本部",
-        "kindID": 0,
-        "liniker": "",
-        "phone": "",
-        "address": "",
-        "email": "",
-        "dept_status": 0,
-        "memo": "",
-        "host": "sino",
-        "regDate": "2017-06-06",
-        "registerID": "albert",
-        "statusName": "有效"
-    }
-] 
-``` 
+    ```
+    [
+        {
+            "deptID": 7,
+            "pID": 8,
+            "deptName": "松金分公司",
+            "kindID": 0,
+            "liniker": "",
+            "phone": "",
+            "address": "",
+            "email": "",
+            "dept_status": 0,
+            "memo": "",
+            "host": "sino",
+            "regDate": "2017-06-06",
+            "registerID": "albert",
+            "statusName": "有效"
+        },
+        {
+            "deptID": 1,
+            "pID": 8,
+            "deptName": "公司本部",
+            "kindID": 0,
+            "liniker": "",
+            "phone": "",
+            "address": "",
+            "email": "",
+            "dept_status": 0,
+            "memo": "",
+            "host": "sino",
+            "regDate": "2017-06-06",
+            "registerID": "albert",
+            "statusName": "有效"
+        }
+    ] 
+    ``` 
 
 7. 获取学员课程列表   **GET:/students/get_lesson_list**
   * input
