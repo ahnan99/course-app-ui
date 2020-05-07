@@ -101,11 +101,11 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ```
     //username（照片所属学员的身份证号）及upID需要在query中传递。示例中的upID="student_photo", action="/files/uploadSingle", name="avatar", enctype="multipart/form-data"必须遵守。
     {"username":"120107196604032113", upID="student_photo"}
-<form action="/files/uploadSingle" method="post" enctype="multipart/form-data">
-    <h2>单图上传</h2>
-    <input type="file" name="avatar">
-    <input type="submit" value="提交">
-</form>
+    <form action="/files/uploadSingle" method="post" enctype="multipart/form-data">
+        <h2>单图上传</h2>
+        <input type="file" name="avatar">
+        <input type="submit" value="提交">
+    </form>
     ``` 
 
   * output  **//status：int, 0 成功  1 文件格式不支持  2 大小超过限制  3 文件不存在  9 其他;  msg：string, 提示信息**
@@ -159,7 +159,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
         "sexName": "男"
     }
 ]
-    ```
+```
 
 6a. 获取下级单位列表   **GET:/public/get_deptListByPID**
   * input   **pID: 本单位ID; kindID: 0 系统内单位  1 系统外单位. 取自学员信息中的kindID**
@@ -168,7 +168,8 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ``` 
 
   * output   **dept_status: int, 0 有效  1 关闭**
-```[
+```
+[
     {
         "deptID": 7,
         "pID": 8,
@@ -202,7 +203,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
         "statusName": "有效"
     }
 ] 
-   ``` 
+``` 
 
 7. 获取学员课程列表   **GET:/students/get_lesson_list**
   * input
@@ -212,7 +213,8 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output   **//status：int, 0 成功  1 未找到  9 其他;  lesson_status: int, 0 进行中  1 已完成**
      
-    ```{
+    ```
+    {
       "content": [
         {
           "lessonNo": "",

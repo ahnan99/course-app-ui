@@ -13,7 +13,10 @@ function* getDept2Watch() {
 
 
 export function getDeptEndpoint(data) {
-    return axios.post('/public/get_deptListByPID', data)
+    console.log(data)
+    return axios.get('/public/get_deptListByPID', {
+        params:data
+      })
 }
 
 
