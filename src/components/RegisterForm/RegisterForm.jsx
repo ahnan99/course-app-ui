@@ -72,6 +72,14 @@ class RegisterForm extends Component {
         }
     }
 
+    listToOptions = deptList =>{
+        const option = []
+        for(var i = 0 ; i< deptList.length;i++){
+            option.push({value:deptList[i].deptName})
+        }
+        return option
+    }
+
     onFinish = values => {
         console.log('Success:', values)
         this.props.requestRegister({
@@ -97,9 +105,10 @@ class RegisterForm extends Component {
         if (changedValue.kindID) {
             this.setState({ kindID: changedValue.kindID })
             this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
+            this.props.userActions.updateDept2([])
             this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
-        if (changedValue.dept1) {
+        if (values.kindID === "0" && changedValue.dept1) {
             this.props.userActions.getDept2({ kindID: values.kindID, pID: changedValue.dept1 })
             this.formRef.current.setFieldsValue({ dept2: null })
         }
@@ -224,9 +233,9 @@ class RegisterForm extends Component {
                         ))}
                     </Select> :
                         <AutoComplete
-                            options={this.props.user.dept1List}
+                            options={this.listToOptions(this.props.user.dept1List)}
                             filterOption={(inputValue, option) =>
-                                option.deptName.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                option.value.indexOf(inputValue) !== -1
                             } />
                     }
                 </Form.Item>
