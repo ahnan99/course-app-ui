@@ -5,10 +5,11 @@ import { withRouter } from 'react-router-dom'
 import { UploadOutlined } from '@ant-design/icons';
 
 const props = {
-    name: 'file',
-    action: 'http://localhost:8081/files/uploadSingle?username=120107196604032113&upid=student_photo',
+    name: 'avatar',
+    action: 'http://localhost:8081/files/uploadSingle?username=120107196604032113&upID=student_photo',
     headers: {
         authorization: 'authorization-text',
+        
     },
     onChange(info) {
         if (info.file.status !== 'uploading') {
