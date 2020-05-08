@@ -46,7 +46,7 @@ class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
-        this.state = { kindID: 0 }
+        this.state = { kindID: "0" }
     }
 
     componentWillMount = () => {
@@ -217,7 +217,7 @@ class RegisterForm extends Component {
                     name="dept1"
                     label="部门1"
                 >
-                    {kindID === 0 ? <Select showSearch>
+                    {kindID === "0" ? <Select showSearch>
                         {this.props.user.dept1List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
@@ -233,7 +233,7 @@ class RegisterForm extends Component {
                     name="dept2"
                     label="部门2"
                 >
-                    <Select disabled={kindID !== 0}>
+                    <Select disabled={kindID !== "0"}>
                         {this.props.user.dept2List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
