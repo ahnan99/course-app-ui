@@ -24,10 +24,16 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output  
     ```
-    {"status": "", "msg": ""} 
+    [
+        {
+            "hostNo": "spc",
+            "hostName": "中石化上海石化公司",
+            "logo": "users\\upload\\companies\\logo\\spc.png"
+        }
+    ]
     ```    
 
-1b. 学员登出   **POST:/students/logout** 
+1b. 学员登出   **GET:/students/logout** 
   * input   
     ```
     nothing
@@ -35,7 +41,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 
   * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
-    {"status": "", "msg": ""} 
+    {"status": 0, "msg": "成功退出。"} 
     ```    
 
 2. 学员注册   **POST:/students/new_student**
@@ -110,7 +116,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
 5a. 上传学员照片   **POST:/files/uploadSingle**
   * input   **只能上传一张照片，重复上传将覆盖前文件.**
     ```
-    //username（照片所属学员的身份证号）及upID需要在query中传递。示例中的upID="student_photo", action="/files/uploadSingle", name="avatar", enctype="multipart/form-data"必须遵守。
+    //username（照片所属学员的身份证号）及upID需要在query中传递。示例中的upID="student_photo", name="avatar", enctype="multipart/form-data"必须遵守。
     {"username":"120107196604032113", upID="student_photo"}
     <form action="/files/uploadSingle" method="post" enctype="multipart/form-data">
         <h2>单图上传</h2>
@@ -253,7 +259,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ``` 
 
-8. 获取学员已有认证列表   **GET:/students/get_certificate_list**
+8. 获取学员已选认证列表   **GET:/students/get_certificate_list**
   * input
     ```
     {"username":"120107196604032113"}
@@ -283,7 +289,7 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     }
     ```
 
-8a. 获取学员备选认证列表   **GET:/students/get_certificate_list**
+8a. 获取学员可选认证列表   **GET:/students/get_certificate_list**
   * input
     ```
     {"username":"120107196604032113"}

@@ -23,18 +23,18 @@ const formItemLayout = {
 };
 const { Option } = Select
 class RegisterForm extends Component {
+    formRef = React.createRef()
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
     }
-
     componentWillMount = () => {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
-        
+
         this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
-        
+
     }
 
 
@@ -74,9 +74,11 @@ class RegisterForm extends Component {
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
             this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
+            this.formRef.current.setFieldsValue({dept1:null,dept2:null})
         }
         if (changedValue.dept1) {
             this.props.userActions.getDept2({ kindID: values.kindID, pID: changedValue.dept1 })
+            this.formRef.current.setFieldsValue({dept2:null})
         }
     }
 
@@ -88,6 +90,7 @@ class RegisterForm extends Component {
                 scrollToFirstError
                 initialValues={{ kindID: "0", companyID: this.props.user.companyName }}
                 onValuesChange={this.onValuesChange}
+                ref={this.formRef}
             >
                 <Form.Item
                     name="username"
@@ -185,14 +188,13 @@ class RegisterForm extends Component {
                         },
                     ]}
                 >
-                    <Input disabled/>
+                    <Input disabled />
                 </Form.Item>
                 <Form.Item
                     name="dept1"
                     label="部门1"
                 >
-                    <Select
-                        onSelect={this.onSelectDept1}>
+                    <Select>
                         {this.props.user.dept1List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
@@ -212,7 +214,7 @@ class RegisterForm extends Component {
                     name="dept3"
                     label="部门3"
                 >
-                    <Select>
+                    <Select disabled>
                     </Select>
                 </Form.Item>
                 <Form.Item
