@@ -78,7 +78,7 @@ class RegisterForm extends Component {
             name: values.name,   //*
             password: values.password,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
-            companyID: values.companyID, //*
+            companyID: this.props.user.companyID, //*
             dept1: values.dept1,
             dept2: values.dept2,
             dept3: values.dept3,
