@@ -6,7 +6,7 @@ import { UploadOutlined } from '@ant-design/icons';
 
 const props = {
     name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    action: 'http://localhost:8081/files/uploadSingle?username=120107196604032113&upid=student_photo',
     headers: {
         authorization: 'authorization-text',
     },
@@ -47,11 +47,11 @@ class RegisterForm extends Component {
         super(props)
         this.checkIDcard = checkIDcard
     }
+
     componentWillMount = () => {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
-
         this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
 
     }
