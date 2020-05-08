@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select, Radio, message, Upload } from 'antd'
+import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 import { withRouter } from 'react-router-dom'
 import { UploadOutlined } from '@ant-design/icons';
@@ -47,6 +47,7 @@ class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
+        this.state = { kindID: "0" }
     }
 
     componentWillMount = () => {
@@ -56,7 +57,6 @@ class RegisterForm extends Component {
         this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
 
     }
-
 
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.loggedIn) {
@@ -80,7 +80,8 @@ class RegisterForm extends Component {
             password: values.password,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
             companyID: this.props.user.companyID, //*
-            dept1: values.dept1,
+            dept1: values.kindID === 0 ? values.dept1 : 0,
+            deptName: values.kindID === 0 ? null: values.dept1,
             dept2: values.dept2,
             dept3: values.dept3,
             job: values.job,
@@ -91,8 +92,10 @@ class RegisterForm extends Component {
         })
     }
 
+
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
+            this.setState({ kindID: changedValue.kindID })
             this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
             this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
@@ -103,6 +106,7 @@ class RegisterForm extends Component {
     }
 
     render() {
+        const { kindID } = this.state
         return (
             <Form
                 {...formItemLayout}
@@ -214,17 +218,23 @@ class RegisterForm extends Component {
                     name="dept1"
                     label="部门1"
                 >
-                    <Select>
+                    {kindID === "0" ? <Select showSearch>
                         {this.props.user.dept1List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
-                    </Select>
+                    </Select> :
+                        <AutoComplete
+                            options={this.props.user.dept1List}
+                            filterOption={(inputValue, option) =>
+                                option.deptName.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                            } />
+                    }
                 </Form.Item>
                 <Form.Item
                     name="dept2"
                     label="部门2"
                 >
-                    <Select>
+                    <Select disabled={kindID !== "0"}>
                         {this.props.user.dept2List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
@@ -283,7 +293,8 @@ class RegisterForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
+                //ToDo
+                {false ? <Form.Item
                     name="upload"
                     label="上传照片"
                 >
@@ -292,7 +303,7 @@ class RegisterForm extends Component {
                             <UploadOutlined /> Click to Upload
                         </Button>
                     </Upload>
-                </Form.Item>
+                </Form.Item> : null}
                 <Form.Item>
                     <Button type="primary" htmlType="submit">注册</Button>
                     <span> </span>
