@@ -9,7 +9,7 @@ const props = {
     action: 'http://localhost:8081/files/uploadSingle?username=120107196604032113&upID=student_photo',
     headers: {
         authorization: 'authorization-text',
-        
+
     },
     onChange(info) {
         if (info.file.status !== 'uploading') {
@@ -72,10 +72,10 @@ class RegisterForm extends Component {
         }
     }
 
-    listToOptions = deptList =>{
+    listToOptions = deptList => {
         const option = []
-        for(var i = 0 ; i< deptList.length;i++){
-            option.push({value:deptList[i].deptName})
+        for (var i = 0; i < deptList.length; i++) {
+            option.push({ value: deptList[i].deptName })
         }
         return option
     }
@@ -89,8 +89,8 @@ class RegisterForm extends Component {
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
             companyID: this.props.user.companyID, //*
             dept1: values.kindID === 0 ? values.dept1 : 0,
-            deptName: values.kindID === 0 ? null: values.dept1,
-            dept2: values.dept2,
+            dept1Name: values.kindID === 0 ? null : values.dept1,
+            dept2: values.dept2 ? values.dept2 : 0,
             dept3: values.dept3,
             job: values.job,
             mobile: values.mobile,
