@@ -469,19 +469,21 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     [
         {
             "ID": 1,
-            "lessonID": "N001",
+            "videoID": "V001",
             "refID": 1,
             "kindID": 0,
             "status": 0,
-            "hours": 20,
-            "completion": 0,
+            "proportion": 80,
+            "minutes": 90,
+            "maxTime": 0,
+            "lastTime": 0,
             "startDate": "",
+            "lastDate": "",
             "memo": "",
-            "regDate": "2020-05-08T15:19:44.020Z",
-            "registerID": "120107196604032113",
             "statusName": "待执行",
-            "lessonName": "安全概述",
-            "seq": 1
+            "videoName": "安全概述",
+            "type": "mp4",
+            "filename": "users\\upload\\courses\\videos\\v001.mp4"
         }
     ]
     ```
