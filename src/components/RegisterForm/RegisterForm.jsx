@@ -1,7 +1,26 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select, Radio, message } from 'antd'
+import { Form, Input, Button, Select, Radio, message, Upload } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 import { withRouter } from 'react-router-dom'
+import { UploadOutlined } from '@ant-design/icons';
+
+const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+        authorization: 'authorization-text',
+    },
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
 
 const formItemLayout = {
     labelCol: {
@@ -74,11 +93,11 @@ class RegisterForm extends Component {
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
             this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
-            this.formRef.current.setFieldsValue({dept1:null,dept2:null})
+            this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
         if (changedValue.dept1) {
             this.props.userActions.getDept2({ kindID: values.kindID, pID: changedValue.dept1 })
-            this.formRef.current.setFieldsValue({dept2:null})
+            this.formRef.current.setFieldsValue({ dept2: null })
         }
     }
 
@@ -262,6 +281,16 @@ class RegisterForm extends Component {
                     label="备注"
                 >
                     <Input />
+                </Form.Item>
+                <Form.Item
+                    name="upload"
+                    label="上传照片"
+                >
+                    <Upload {...props}>
+                        <Button>
+                            <UploadOutlined /> Click to Upload
+                        </Button>
+                    </Upload>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">注册</Button>
