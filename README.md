@@ -223,7 +223,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ] 
     ``` 
 
-7. 获取学员课程列表   **GET:/students/getStudentCourseDetailList**
+7. 获取学员课程列表   **GET:/students/getStudentCourseList**
   * input
     ```
     {"username":"120107196604032113"}
@@ -232,8 +232,7 @@ video.js: https://www.jb51.net/article/145346.htm
   * output   ****
      
     ```
-    {
-        "courses": [
+    [
             {
                 "ID": 1,
                 "username": "120107196604032113",
@@ -270,58 +269,7 @@ video.js: https://www.jb51.net/article/145346.htm
                 "statusName": "待执行",
                 "courseName": "危险品"
             }
-        ],
-        "lessons": [
-            {
-                "ID": 1,
-                "lessonID": "N001",
-                "refID": 1,
-                "kindID": 0,
-                "status": 0,
-                "hours": 20,
-                "completion": 0,
-                "startDate": "",
-                "memo": "",
-                "regDate": "2020-05-08T15:19:44.020Z",
-                "registerID": "120107196604032113",
-                "statusName": "待执行",
-                "lessonName": "安全概述",
-                "seq": 1
-            },
-            {
-                "ID": 2,
-                "lessonID": "N002",
-                "refID": 1,
-                "kindID": 0,
-                "status": 0,
-                "hours": 20,
-                "completion": 0,
-                "startDate": "",
-                "memo": "",
-                "regDate": "2020-05-08T15:19:44.020Z",
-                "registerID": "120107196604032113",
-                "statusName": "待执行",
-                "lessonName": "安全规范",
-                "seq": 2
-            },
-            {
-                "ID": 3,
-                "lessonID": "N003",
-                "refID": 2,
-                "kindID": 0,
-                "status": 0,
-                "hours": 40,
-                "completion": 0,
-                "startDate": "",
-                "memo": "",
-                "regDate": "2020-05-08T15:19:44.020Z",
-                "registerID": "120107196604032113",
-                "statusName": "待执行",
-                "lessonName": "火灾",
-                "seq": 1
-            }
-        ]
-    }
+    ]
     ```
 
 8a. 获取学员可选认证列表   **GET:/students/getStudentCertRestList**
@@ -407,9 +355,9 @@ video.js: https://www.jb51.net/article/145346.htm
     ```
 
 9. 获取学员课节列表   **GET:/students/getStudentLessonList**
-  * input   **refID = api.7 /students/getStudentCourseList 中的 ID**
+  * input   **by username**
     ```
-    {"refID":1, }
+    {"username":"120107196604032113"}
     ``` 
 
   * output   
@@ -446,6 +394,22 @@ video.js: https://www.jb51.net/article/145346.htm
             "statusName": "待执行",
             "lessonName": "安全规范",
             "seq": 2
+        },
+        {
+            "ID": 3,
+            "lessonID": "N003",
+            "refID": 2,
+            "kindID": 0,
+            "status": 0,
+            "hours": 40,
+            "completion": 0,
+            "startDate": "",
+            "memo": "",
+            "regDate": "2020-05-08T15:19:44.020Z",
+            "registerID": "120107196604032113",
+            "statusName": "待执行",
+            "lessonName": "火灾",
+            "seq": 1
         }
     ]
     ```
