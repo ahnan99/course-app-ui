@@ -2,12 +2,20 @@ import React, { Component } from 'react'
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 import { connect } from 'react-redux'
 import { Row, Col, Layout, Button } from 'antd'
+import { withRouter } from 'react-router-dom'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
 import axios from 'axios'
 
 
 class ClassPage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            PDFVisible: false
+        }
+    }
+
 
     componentWillMount() {
         if (this.props.course.currentLesson) {
@@ -17,10 +25,24 @@ class ClassPage extends Component {
         }
     }
 
+    onClickDoc = async (doc) => {
+        await this.props.actions.updateCurrentPDF(doc)
+        await this.props.history.push('/classpage/pdfView')
+    }
+
+
+    onClickBack = () => {
+        this.props.history.push('/homepage')
+    }
+
     componentWillUnmount() {
         this.props.actions.updateVideo([])
         this.props.actions.updatePDF([])
         this.props.actions.updateCurrentLesson(null)
+    }
+
+    onOk = () =>{
+        this.setState({PDFVisible:false})
     }
 
     render() {
@@ -29,28 +51,28 @@ class ClassPage extends Component {
         }
         return (
             <Layout>
-                <Row gutter={[16,32]}>
+                <Row gutter={[16, 32]}>
                     <Col span={24}>
                         <a>{this.props.course.currentLesson.lessonName}</a>
                     </Col>
                 </Row>
-                <Row gutter={[16,32]}>
+                <Row gutter={[16, 32]}>
                     <Col span={24}>
                         <VideoPlayer actions={this.props.actions} video={this.props.course.video[0]} />
                     </Col>
                 </Row>
-                <Row gutter={[16,32]}>
+                <Row gutter={[16, 32]}>
                     <Col span={24} style={{ textAlign: 'left' }}>
                         <ul>
                             {this.props.course.PDF.map(doc => (<li key={doc.ID}>
-                                <a href={axios.defaults.baseURL + doc.filename}>{doc.coursewareName}</a>
+                                <a onClick={() => this.onClickDoc(doc)}>{doc.coursewareName}</a>
                             </li>))}
                         </ul>
                     </Col>
                 </Row>
-                <Row gutter={[16,32]}>
+                <Row gutter={[16, 32]}>
                     <Col span={24}>
-                       <Button type="primary" href="/homepage">返回</Button>
+                        <Button type="primary" onClick={this.onClickBack}>返回</Button>
                     </Col>
                 </Row>
             </Layout>
@@ -66,4 +88,4 @@ const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(CourseActions, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClassPage)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ClassPage))

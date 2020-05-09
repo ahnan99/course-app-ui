@@ -12,6 +12,7 @@ const UPDATE_MAX_TIME = 'update_max_time'
 const POST_MAX_PAGE = 'post_max_page'
 const UPDATE_MAX_PAGE = 'update_max_page'
 const UPDATE_CURRENT_LESSON = 'update_current_lesson'
+const UPDATE_CURRENT_PDF = 'update_current_pdf'
 
 export const types = {
     UPDATE_COURSELIST,
@@ -26,7 +27,8 @@ export const types = {
     UPDATE_MAX_TIME,
     POST_MAX_PAGE,
     UPDATE_MAX_PAGE,
-    UPDATE_CURRENT_LESSON
+    UPDATE_CURRENT_LESSON,
+    UPDATE_CURRENT_PDF
 }
 
 //Action creators
@@ -95,6 +97,11 @@ const updateCurrentLesson = data =>({
     data
 })
 
+const updateCurrentPDF = data =>({
+    type: UPDATE_CURRENT_PDF,
+    data
+})
+
 export const actions = {
     updateCourseList,
     getCourseList,
@@ -108,7 +115,8 @@ export const actions = {
     updateMaxPage,
     postMaxTime,
     updateMaxTime,
-    updateCurrentLesson
+    updateCurrentLesson,
+    updateCurrentPDF
 }
 
 const initialState = {
@@ -164,6 +172,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 currentLesson: action.data
+            }
+        }
+        case UPDATE_CURRENT_PDF: {
+            return {
+                ...state,
+                currentPDF: action.data
             }
         }
         default:
