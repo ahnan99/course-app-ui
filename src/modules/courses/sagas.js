@@ -11,6 +11,22 @@ function* lessonWatch() {
     yield takeLatest(types.GET_LESSONLIST, loadLessonWorker)
 }
 
+function* videoWatch() {
+    yield takeLatest(types.GET_VIDEO, loadVideoWorker)
+}
+
+function* pdfWatch() {
+    yield takeLatest(types.GET_PDF, loadPDFWorker)
+}
+
+function* maxTimeWatch() {
+    yield takeLatest(types.POST_MAX_TIME, updateMaxTimeWorker)
+}
+
+function* maxPageWatch() {
+    yield takeLatest(types.POST_MAX_PAGE, updateMaxPageWorker)
+}
+
 export function getCourseList(data) {
     return axios.get('/students/getStudentCourseList', {
         params: data
@@ -21,6 +37,27 @@ export function getLessonList(data) {
     return axios.get('/students/getStudentLessonListByUser', {
         params: data
     })
+}
+
+export function getVideo(data) {
+    return axios.get('/students/getStudentVideo', {
+        params: data
+    })
+}
+
+export function getPDF(data) {
+    return axios.get('/students/getStudentCourseware', {
+        params: data
+    })
+}
+
+export function postMaxTime(data) {
+    return axios.post('/students/update_video_currentTime', data)
+}
+
+//ToDo
+export function postMaxPage(data) {
+    return axios.post('/students/update_courseware_currentPage', data)
 }
 
 //workers
@@ -42,11 +79,51 @@ function* loadLessonWorker(action) {
     }
 }
 
+function* loadVideoWorker(action) {
+    try {
+        const response = yield call(getVideo, action.payload)
+        yield put(actions.updateVideo(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
+function* loadPDFWorker(action) {
+    try {
+        const response = yield call(getPDF, action.payload)
+        yield put(actions.updatePDF(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
+function* updateMaxTimeWorker(action) {
+    try {
+        const response = yield call(postMaxTime, action.payload)
+        yield put(actions.updateMaxTime(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
+function* updateMaxPageWorker(action) {
+    try {
+        const response = yield call(postMaxPage, action.payload)
+        yield put(actions.updateMaxPage(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
 export const workers = {
     loadCourseWorker,
-    loadLessonWorker
+    loadLessonWorker,
+    loadVideoWorker,
+    loadPDFWorker,
+    updateMaxTimeWorker,
+    updateMaxPageWorker
 }
 
 export default function* saga() {
-    yield all([courseWatch(),lessonWatch()])
+    yield all([courseWatch(),lessonWatch(),pdfWatch(),videoWatch(),maxTimeWatch(),maxPageWatch()])
 }
