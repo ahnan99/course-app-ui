@@ -50,8 +50,9 @@ class PDFView extends Component {
     this.props.history.push('/classpage')
   }
 
-  previousPage = () => {
+  nextPage = () => {
     const { pageNumber, numPages } = this.state
+    const { currentPDF } = this.props.course
     if (pageNumber < numPages) {
       this.setState({ pageNumber: pageNumber + 1 }, () => {
         this.props.actions.postMaxPage({ ID: currentPDF.ID, currentPage: this.state.pageNumber })
@@ -74,7 +75,7 @@ class PDFView extends Component {
               onLoadSuccess={this.onDocumentLoadSuccess}
             >
               <Page pageNumber={pageNumber}
-                width={width * 0.9} />
+                width={width * 0.9<474?width*0.9:width*0.8} />
             </Document>
           </Col>
         </Row>
@@ -100,4 +101,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(CourseActions, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PDFView);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PDFView));
