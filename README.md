@@ -272,6 +272,39 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
+8. 获取学员已选认证列表   **GET:/students/getStudentCertPickList**
+  * input
+    ```
+    {"username":"120107196604032113"}
+    ``` 
+
+  * output   ****
+    ```
+    [
+        {
+            "ID": 1,
+            "username": "120107196604032113",
+            "certID": "C001",
+            "certName": "危化品安全运输",
+            "agencyName": "安监局",
+            "kindID": 0,
+            "status": 0,
+            "examScore": 0,
+            "diplomaID": "",
+            "host": "spc",
+            "memo": "",
+            "regDate": "2020-05-08",
+            "registerID": "120107196604032113",
+            "statusName": "待执行",
+            "kindName": "公用",
+            "score": 0,
+            "startDate": "",
+            "endDate": "",
+            "filename": ""
+        }
+    ]
+    ```
+
 8a. 获取学员可选认证列表   **GET:/students/getStudentCertRestList**
   * input
     ```
@@ -316,40 +349,56 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
-8b. 获取认证项目所属课程列表   **GET:/course/getCourseListByCertID**
+8b. 获取认证项目所属课程列表   **GET:/course/getStudentCertCourseList**
   * input
     ```
-    {"certID":"C001"}
+    {"username":"120107196604032113"}
     ``` 
 
-  * output   
+  * output   **refID = API.8.ID**
     ```
     [
         {
             "ID": 1,
+            "username": "120107196604032113",
             "courseID": "L001",
-            "courseName": "安全概论",
+            "refID": 1,
             "kindID": 0,
-            "certID": "C001",
-            "hours": 40,
             "status": 0,
+            "hours": 40,
+            "hoursSpend": 0,
+            "startDate": "",
+            "endDate": "",
+            "host": "spc",
             "memo": "",
-            "regDate": "2020-05-08",
-            "registerID": "albert",
-            "statusName": "有效"
+            "regDate": "2020-05-08T15:19:44.020Z",
+            "registerID": "120107196604032113",
+            "statusName": "待执行",
+            "courseName": "安全概论",
+            "completion": 0,
+            "examScore": 0,
+            "certStatus": 0
         },
         {
             "ID": 2,
+            "username": "120107196604032113",
             "courseID": "L002",
-            "courseName": "危险品",
+            "refID": 1,
             "kindID": 0,
-            "certID": "C001",
-            "hours": 40,
             "status": 0,
+            "hours": 40,
+            "hoursSpend": 0,
+            "startDate": "",
+            "endDate": "",
+            "host": "spc",
             "memo": "",
-            "regDate": "2020-05-08",
-            "registerID": "albert",
-            "statusName": "有效"
+            "regDate": "2020-05-08T15:19:44.020Z",
+            "registerID": "120107196604032113",
+            "statusName": "待执行",
+            "courseName": "危险品",
+            "completion": 0,
+            "examScore": null,
+            "certStatus": 0
         }
     ]
     ```
