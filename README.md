@@ -1,5 +1,6 @@
 https://app.moqups.com/86RO0q4xgE
 remote desk:  47.100.186.148  administrator/Shznxfxx119
+video.js: https://www.jb51.net/article/145346.htm
 
 ## user interface for student
 //respone.sessionExpire: !=1 可用  1 已过期
@@ -232,75 +233,42 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
      
     ```
     [
-        {
-            "ID": 1,
-            "username": "120107196604032113",
-            "courseID": "L001",
-            "refID": 1,
-            "kindID": 0,
-            "status": 0,
-            "hours": 40,
-            "hoursSpend": 0,
-            "startDate": "",
-            "endDate": "",
-            "host": "spc",
-            "memo": "",
-            "regDate": "2020-05-08T15:19:44.020Z",
-            "registerID": "120107196604032113",
-            "statusName": "待执行",
-            "courseName": "安全概论"
-        },
-        {
-            "ID": 2,
-            "username": "120107196604032113",
-            "courseID": "L002",
-            "refID": 1,
-            "kindID": 0,
-            "status": 0,
-            "hours": 40,
-            "hoursSpend": 0,
-            "startDate": "",
-            "endDate": "",
-            "host": "spc",
-            "memo": "",
-            "regDate": "2020-05-08T15:19:44.020Z",
-            "registerID": "120107196604032113",
-            "statusName": "待执行",
-            "courseName": "危险品"
-        }
-    ]
-    ``` 
-
-8. 获取学员已选认证列表   **GET:/students/getStudentCertList**
-  * input
-    ```
-    {"username":"120107196604032113"}
-    ``` 
-
-  * output   **you need only [certID, certName]**
-    ```
-    [
-        {
-            "ID": 1,
-            "username": "120107196604032113",
-            "certID": "C001",
-            "kindID": 0,
-            "status": 0,
-            "examScore": 0,
-            "diplomaID": "",
-            "host": "spc",
-            "memo": "",
-            "regDate": "2020-05-08",
-            "registerID": "120107196604032113",
-            "statusName": "待执行",
-            "certName": "危化品安全运输",
-            "kindName": "公用",
-            "agencyName": "安监局\r\n",
-            "score": 0,
-            "startDate": "",
-            "endDate": "",
-            "filename": ""
-        }
+            {
+                "ID": 1,
+                "username": "120107196604032113",
+                "courseID": "L001",
+                "refID": 1,
+                "kindID": 0,
+                "status": 0,
+                "hours": 40,
+                "hoursSpend": 0,
+                "startDate": "",
+                "endDate": "",
+                "host": "spc",
+                "memo": "",
+                "regDate": "2020-05-08T15:19:44.020Z",
+                "registerID": "120107196604032113",
+                "statusName": "待执行",
+                "courseName": "安全概论"
+            },
+            {
+                "ID": 2,
+                "username": "120107196604032113",
+                "courseID": "L002",
+                "refID": 1,
+                "kindID": 0,
+                "status": 0,
+                "hours": 40,
+                "hoursSpend": 0,
+                "startDate": "",
+                "endDate": "",
+                "host": "spc",
+                "memo": "",
+                "regDate": "2020-05-08T15:19:44.020Z",
+                "registerID": "120107196604032113",
+                "statusName": "待执行",
+                "courseName": "危险品"
+            }
     ]
     ```
 
@@ -387,9 +355,9 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
     ```
 
 9. 获取学员课节列表   **GET:/students/getStudentLessonList**
-  * input   **refID = api.7 /students/getStudentCourseList 中的 ID**
+  * input   **by username**
     ```
-    {"refID":1, }
+    {"username":"120107196604032113"}
     ``` 
 
   * output   
@@ -426,6 +394,22 @@ remote desk:  47.100.186.148  administrator/Shznxfxx119
             "statusName": "待执行",
             "lessonName": "安全规范",
             "seq": 2
+        },
+        {
+            "ID": 3,
+            "lessonID": "N003",
+            "refID": 2,
+            "kindID": 0,
+            "status": 0,
+            "hours": 40,
+            "completion": 0,
+            "startDate": "",
+            "memo": "",
+            "regDate": "2020-05-08T15:19:44.020Z",
+            "registerID": "120107196604032113",
+            "statusName": "待执行",
+            "lessonName": "火灾",
+            "seq": 1
         }
     ]
     ```
