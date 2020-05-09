@@ -32,27 +32,31 @@ class PDFView extends Component {
     })
   }
   componentDidMount() {
-    this.update();
+    this.update()
+    this.setState({ pageNumber: this.props.course.currentPDF.lastPage })
   }
 
   previousPage = () => {
     const { pageNumber } = this.state
+    const { currentPDF } = this.props.course
     if (pageNumber > 1) {
-      this.setState({ pageNumber: pageNumber - 1 })
+      this.setState({ pageNumber: pageNumber - 1 }, () => {
+        this.props.actions.postMaxPage({ ID: currentPDF.ID, currentPage: this.state.pageNumber })
+      })
     }
-
   }
 
-  backToLesson = () =>{
+  backToLesson = () => {
     this.props.history.push('/classpage')
   }
 
   previousPage = () => {
     const { pageNumber, numPages } = this.state
     if (pageNumber < numPages) {
-      this.setState({ pageNumber: pageNumber + 1 })
+      this.setState({ pageNumber: pageNumber + 1 }, () => {
+        this.props.actions.postMaxPage({ ID: currentPDF.ID, currentPage: this.state.pageNumber })
+      })
     }
-
   }
 
   render() {
@@ -81,7 +85,7 @@ class PDFView extends Component {
           <p>Page {pageNumber} of {numPages}</p>
         </Row>
         <Row>
-          <Button onClick={()=>this.backToLesson()}>返回课程</Button>
+          <Button onClick={() => this.backToLesson()}>返回课程</Button>
         </Row>
       </div>
     );
