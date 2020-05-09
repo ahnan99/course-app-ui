@@ -6,15 +6,17 @@ import { bindActionCreators } from 'redux'
 
 class HomePage extends Component {
     componentDidMount() {
-        this.props.actions.getCourseList()
+        this.props.actions.getCourseList({username:this.props.application.username})
+        this.props.actions.getLessonList({username:this.props.application.username})
     }
 
     render() {
         const { courses } = this.props.course
+        const { lessons } = this.props.course
         return (
             <div>
                 {courses.map(course => (
-                    <LessonCard key={course.lessonID} course={course}/>
+                    <LessonCard key={course.ID} course={course} lessons={lessons} />
                 ))}
             </div>
         )
@@ -22,7 +24,8 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => ({
-    course: state.course
+    course: state.course,
+    application: state.application
 })
 
 

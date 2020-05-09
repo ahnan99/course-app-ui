@@ -64,12 +64,12 @@ export const actions = {
 }
 
 const initialState = {
-    loggedIn: false,
+    loggedIn: true,
     username: null,
     isFetching: false,
     loginError: null,
     registered: false,
-    registerError: null
+    registerError: null,
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -79,7 +79,8 @@ const reducer = (state = initialState, action = {}) => {
                 return {
                     ...state,
                     loggedIn: true,
-                    loginError: null
+                    loginError: null,
+                    username: action.response.username
                 }
             } else if (action.response.sessionExpire === 1) {
                 return {

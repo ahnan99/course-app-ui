@@ -3,6 +3,10 @@ import videojs from 'video.js'
 import 'video.js/dist/video-js.min.css'
 
 export default class VideoPlayer extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
     componentDidMount() {
         const config = {
             autoplay: false,
@@ -15,6 +19,12 @@ export default class VideoPlayer extends React.Component {
         this.player = videojs(this.videoNode, config, function onPlayerReady() {
             console.log('onPlayerReady', this);
         });
+
+        this.player.on('seeking',()=>{
+            if (this.player.currentTime() > 10){
+                this.player.currentTime(10)
+            }
+        })
     }
 
 
