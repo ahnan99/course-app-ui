@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { Row, Col } from 'antd'
+import { Row, Col, Button } from 'antd'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
 import axios from 'axios'
@@ -31,7 +32,31 @@ class PDFView extends Component {
     })
   }
   componentDidMount() {
-    this.update();
+    this.update()
+    this.setState({ pageNumber: this.props.course.currentPDF.lastPage })
+  }
+
+  previousPage = () => {
+    const { pageNumber } = this.state
+    const { currentPDF } = this.props.course
+    if (pageNumber > 1) {
+      this.setState({ pageNumber: pageNumber - 1 }, () => {
+        this.props.actions.postMaxPage({ ID: currentPDF.ID, currentPage: this.state.pageNumber })
+      })
+    }
+  }
+
+  backToLesson = () => {
+    this.props.history.push('/classpage')
+  }
+
+  previousPage = () => {
+    const { pageNumber, numPages } = this.state
+    if (pageNumber < numPages) {
+      this.setState({ pageNumber: pageNumber + 1 }, () => {
+        this.props.actions.postMaxPage({ ID: currentPDF.ID, currentPage: this.state.pageNumber })
+      })
+    }
   }
 
   render() {
@@ -49,10 +74,18 @@ class PDFView extends Component {
               onLoadSuccess={this.onDocumentLoadSuccess}
             >
               <Page pageNumber={pageNumber}
-                width={width*0.9} />
+                width={width * 0.9} />
             </Document>
-            <p>Page {pageNumber} of {numPages}</p>
           </Col>
+        </Row>
+        <Row>
+          <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
+        </Row>
+        <Row>
+          <p>Page {pageNumber} of {numPages}</p>
+        </Row>
+        <Row>
+          <Button onClick={() => this.backToLesson()}>返回课程</Button>
         </Row>
       </div>
     );
