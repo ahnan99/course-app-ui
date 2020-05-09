@@ -114,7 +114,7 @@ export const actions = {
 const initialState = {
     courses: [],
     lessons: [],
-    currentLesson: {},
+    currentLesson: null,
     maxTimeRes: {},
     maxPageRes: {},
     video: [],

@@ -1,18 +1,23 @@
 import React from 'react';
 import videojs from 'video.js'
 import 'video.js/dist/video-js.min.css'
+import { message } from 'antd'
+import axios from 'axios'
 
 export default class VideoPlayer extends React.Component {
     constructor(props) {
         super(props)
+        this.state = { maxTime: 0 }
     }
 
     componentDidMount() {
+        const { video } = this.props
+        this.setState({ maxTime: video.maxTime })
         const config = {
             autoplay: false,
             controls: true,
             sources: [{
-                src: this.props.src,
+                src: axios.defaults.baseURL + video.filename,
                 type: 'video/mp4'
             }]
         };
@@ -20,9 +25,18 @@ export default class VideoPlayer extends React.Component {
             console.log('onPlayerReady', this);
         });
 
-        this.player.on('seeking',()=>{
-            if (this.player.currentTime() > 10){
-                this.player.currentTime(10)
+        this.timer = setInterval(() => {
+            if (this.player.currentTime() > this.state.maxTime) {
+                this.setState({ maxTime: this.player.currentTime() }, () => {
+                    this.props.actions.postMaxTime({ ID: video.ID, currentTime: this.player.currentTime() })
+                })
+            }
+        }, 5000)
+        this.player.currentTime(video.lastTime)
+        this.player.on('seeking', () => {
+            if (this.player.currentTime() > this.state.maxTime) {
+                this.player.currentTime(this.state.maxTime)
+                message.warning('请不要跳过未观看部分')
             }
         })
     }
@@ -32,6 +46,7 @@ export default class VideoPlayer extends React.Component {
         if (this.player) {
             this.player.dispose();
         }
+        clearInterval(this.timer)
     }
 
     // wrap the player in a div with a `data-vjs-player` attribute

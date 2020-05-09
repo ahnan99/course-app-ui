@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Row, Col, Layout } from 'antd'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
+import axios from 'axios'
 
 
 class ClassPage extends Component {
@@ -23,23 +24,29 @@ class ClassPage extends Component {
     }
 
     render() {
-        if (!this.props.course.currentLesson) {
+        if (!this.props.course.currentLesson || this.props.course.video.length === 0 || !this.props.course.PDF) {
             return (<h2>Not found</h2>)
         }
         return (
             <Layout>
                 <Row>
-                    <a>{this.props.course.currentLesson.lessonName}</a>
+                    <Col span={24}>
+                        <a>{this.props.course.currentLesson.lessonName}</a>
+                    </Col>
                 </Row>
                 <Row>
-                    <VideoPlayer src={this.props.course.video[0].filename} />
+                    <Col span={24}>
+                        <VideoPlayer actions={this.props.actions} video={this.props.course.video[0]} />
+                    </Col>
                 </Row>
                 <Row>
-                    <ul>
-                        {this.props.course.PDF.map(doc => (<li key={doc.ID}>
-                            <a href={doc.filename}>{doc.coursewareName}</a>
-                        </li>))}
-                    </ul>
+                    <Col span={24} style={{ textAlign: 'left' }}>
+                        <ul>
+                            {this.props.course.PDF.map(doc => (<li key={doc.ID}>
+                                <a href={axios.defaults.baseURL + doc.filename}>{doc.coursewareName}</a>
+                            </li>))}
+                        </ul>
+                    </Col>
                 </Row>
             </Layout>
         )

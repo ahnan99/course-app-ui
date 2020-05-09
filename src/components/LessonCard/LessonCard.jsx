@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom'
 
 class LessonCard extends Component {
 
-    onClick = (lesson) => {
+    onClick= (lesson) => {
+
         this.props.actions.updateCurrentLesson(lesson)
         this.props.history.push("/classpage")
     }
@@ -23,7 +24,7 @@ class LessonCard extends Component {
                         <Card type="inner" title="课程内容">
                             <ul>
                             {lessons.filter(lesson => lesson.refID === course.ID).map(lesson => (
-                                <li key={lesson.ID}><a key={lesson.ID} onClick={this.onClick(lesson)}>{lesson.lessonID}. {lesson.lessonName} {lesson.completion}</a></li>
+                                <li key={lesson.ID}><a key={lesson.ID} onClick={()=>this.onClick(lesson)}>{lesson.lessonID}. {lesson.lessonName} {lesson.completion}</a></li>
                             ))}
                             </ul>
                         </Card>
