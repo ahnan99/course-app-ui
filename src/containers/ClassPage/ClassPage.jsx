@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 import { connect } from 'react-redux'
-import { Row, Col, Layout } from 'antd'
+import { Row, Col, Layout, Button } from 'antd'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
 import axios from 'axios'
@@ -29,23 +29,28 @@ class ClassPage extends Component {
         }
         return (
             <Layout>
-                <Row>
+                <Row gutter={[16,32]}>
                     <Col span={24}>
                         <a>{this.props.course.currentLesson.lessonName}</a>
                     </Col>
                 </Row>
-                <Row>
+                <Row gutter={[16,32]}>
                     <Col span={24}>
                         <VideoPlayer actions={this.props.actions} video={this.props.course.video[0]} />
                     </Col>
                 </Row>
-                <Row>
+                <Row gutter={[16,32]}>
                     <Col span={24} style={{ textAlign: 'left' }}>
                         <ul>
                             {this.props.course.PDF.map(doc => (<li key={doc.ID}>
                                 <a href={axios.defaults.baseURL + doc.filename}>{doc.coursewareName}</a>
                             </li>))}
                         </ul>
+                    </Col>
+                </Row>
+                <Row gutter={[16,32]}>
+                    <Col span={24}>
+                       <Button type="primary" href="/homepage">返回</Button>
                     </Col>
                 </Row>
             </Layout>
