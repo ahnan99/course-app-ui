@@ -518,10 +518,21 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
    
-1.  学员视频进度保存（定时将当前播放位置上传到服务器）   **POST:/students/save_video_maxTime**
+10.  学员视频进度保存（每10s将当前播放位置上传到服务器）   **POST:/students/update_video_currentTime**
   * input
     ```
-    {"username":"", "lessonNo":"", "classID":"", "currentTime":""}
+    {"ID":1, "currentTime":"5500"}
+    ```
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+   
+10a.  学员视频进度保存（每次翻页将当前播放位置上传到服务器）   **POST:/students/update_courseware_currentPage**
+  * input
+    ```
+    {"ID":1, "currentPage":"5"}
     ```
 
   * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
