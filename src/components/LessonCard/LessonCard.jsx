@@ -20,9 +20,11 @@ class LessonCard extends Component {
                         <p>结束日期：{course.endDate}</p>
                         <p>考试成绩：{}</p>
                         <Card type="inner" title="课程内容">
+                            <ul>
                             {lessons.filter(lesson => lesson.refID === course.ID).map(lesson => (
-                                <div><a onClick={this.onClick} key={lesson.ID}>{lesson.lessonID}. {lesson.lessonName} {lesson.completion}</a><br /></div>
+                                <li key={lesson.ID}><a onClick={this.onClick}>{lesson.lessonID}. {lesson.lessonName} {lesson.completion}</a></li>
                             ))}
+                            </ul>
                         </Card>
                     </Card>
                 </Col>

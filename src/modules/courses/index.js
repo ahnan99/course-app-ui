@@ -2,7 +2,8 @@
 const GET_COURSELIST = 'get_course_list'
 const UPDATE_COURSELIST = 'update_course_list'
 const GET_LESSONLIST = 'get_lesson_list'
-const UPDATE_LESSONLIST = 'get_course_list'
+const UPDATE_LESSONLIST = 'update_lesson_list'
+
 
 export const types = {
     UPDATE_COURSELIST,
@@ -17,8 +18,9 @@ const updateCourseList = data => ({
     data
 });
 
-const getCourseList = () => ({
-    type: GET_COURSELIST
+const getCourseList = payload => ({
+    type: GET_COURSELIST,
+    payload
 })
 
 const updateLessonList= data => ({
@@ -26,8 +28,9 @@ const updateLessonList= data => ({
     data
 });
 
-const getLessonList = () => ({
-    type: GET_LESSONLIST
+const getLessonList = payload => ({
+    type: GET_LESSONLIST,
+    payload
 })
 
 export const actions = {

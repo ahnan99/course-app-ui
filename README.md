@@ -443,7 +443,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ```
  
 9b. 获取学员课节视频信息   **GET:/students/getStudentVideo**
-  * input   **refID = api.9a /students/getStudentLesson 中的 ID**
+  * input   **refID = api.9/9a 中的 ID**
     ```
     {"refID":1}
     ``` 
@@ -471,8 +471,54 @@ video.js: https://www.jb51.net/article/145346.htm
         }
     ]
     ```
+ 
+9c. 获取学员课节课件信息   **GET:/students/getStudentCourseware**
+  * input   **refID = api.9/9a 中的 ID**
+    ```
+    {"refID":1}
+    ``` 
+
+  * output  
+    ```
+    [
+        {
+            "ID": 1,
+            "coursewareID": "W001",
+            "refID": 1,
+            "kindID": 0,
+            "status": 0,
+            "proportion": 10,
+            "pages": 20,
+            "maxPage": 0,
+            "lastPage": 0,
+            "startDate": "",
+            "lastDate": "",
+            "statusName": "待执行",
+            "coursewareName": "讲义",
+            "filename": "users\\upload\\courses\\coursewares\\W001.pdf",
+            "type": "pdf"
+        },
+        {
+            "ID": 2,
+            "coursewareID": "W002",
+            "refID": 1,
+            "kindID": 0,
+            "status": 0,
+            "proportion": 10,
+            "pages": 35,
+            "maxPage": 0,
+            "lastPage": 0,
+            "startDate": "",
+            "lastDate": "",
+            "statusName": "待执行",
+            "coursewareName": "案例分析",
+            "filename": "users\\upload\\courses\\coursewares\\W002.ppt",
+            "type": "ppt"
+        }
+    ]
+    ```
    
-10. 学员视频进度保存（定时将当前播放位置上传到服务器）   **POST:/students/save_video_maxTime**
+1.  学员视频进度保存（定时将当前播放位置上传到服务器）   **POST:/students/save_video_maxTime**
   * input
     ```
     {"username":"", "lessonNo":"", "classID":"", "currentTime":""}

@@ -15,7 +15,7 @@ export function userLoginEndpoint(data) {
     return axios.post('/students/login', data)
 }
 
-export function userRegisterEndpoint(data){
+export function userRegisterEndpoint(data) {
     return axios.post('/students/new_student', data)
 }
 
@@ -44,5 +44,5 @@ export const workers = {
 }
 
 export default function* saga() {
-    yield all([loginWatch(),registerWatch()])
+    yield all([loginWatch(), registerWatch()])
 }
