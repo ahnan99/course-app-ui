@@ -35,12 +35,6 @@ class ClassPage extends Component {
         this.props.history.push('/homepage')
     }
 
-    componentWillUnmount() {
-        this.props.actions.updateVideo([])
-        this.props.actions.updatePDF([])
-        this.props.actions.updateCurrentLesson(null)
-    }
-
     onOk = () =>{
         this.setState({PDFVisible:false})
     }
