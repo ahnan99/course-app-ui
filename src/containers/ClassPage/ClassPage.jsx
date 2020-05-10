@@ -5,7 +5,6 @@ import { Row, Col, Layout, Button } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
-import axios from 'axios'
 
 
 class ClassPage extends Component {

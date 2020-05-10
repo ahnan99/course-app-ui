@@ -30,7 +30,7 @@ class PDFView extends Component {
 
   update = () => {
     this.setState({
-      width: window.innerWidth
+      width: this.divRef.current.offsetWidth
     })
   }
   componentDidMount() {
@@ -78,18 +78,24 @@ class PDFView extends Component {
                 onLoadSuccess={this.onDocumentLoadSuccess}
               >
                 <Page pageNumber={pageNumber}
-                  width={this.divRef.current.offsetWidth} />
+                  width={width} />
               </Document>
             </Col>
           </Row>
-          <Row style={{ textAlign: 'center' }}>
-            <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
+          <Row >
+            <Col span={24} style={{ textAlign: 'center' }}>
+              <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
+            </Col>
           </Row>
           <Row>
-            <p>Page {pageNumber} of {numPages}</p>
+            <Col span={24} style={{ textAlign: 'center' }}>
+              <p>Page {pageNumber} of {numPages}</p>
+            </Col>
           </Row>
           <Row>
-            <Button onClick={() => this.backToLesson()}>返回课程</Button>
+            <Col span={24} style={{ textAlign: 'center' }}>
+              <Button type='primary' onClick={() => this.backToLesson()}>返回课程</Button>
+            </Col>
           </Row>
         </div>
       </Spin>

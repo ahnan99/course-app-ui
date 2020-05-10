@@ -28,7 +28,7 @@ class MainView extends Component {
                 this.props.history.push("/homepage")
                 break
             case "2":
-                this.props.history.push("/classpage")
+                this.props.history.push("/courseselect")
                 break
             default:
                 this.props.history.push("/homepage")
@@ -48,16 +48,19 @@ class MainView extends Component {
                         <Menu.Item key="1" icon={<AppstoreOutlined />}>
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<AuditOutlined />}>
+                        <Menu.Item key="2" icon={<AppstoreOutlined />}>
+                            课程选择
+                        </Menu.Item>
+                        <Menu.Item key="3" icon={<AuditOutlined />}>
                             我的证书
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<UserOutlined />}>
+                        <Menu.Item key="4" icon={<UserOutlined />}>
                             个人信息
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<BarChartOutlined />}>
+                        <Menu.Item key="5" icon={<BarChartOutlined />}>
                             帮助
                         </Menu.Item>
-                        <Menu.Item key="5" icon={<CloudOutlined />}>
+                        <Menu.Item key="6" icon={<CloudOutlined />}>
                             反馈
                         </Menu.Item>
                     </Menu>
