@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { actions as CertActions } from '../../modules/certificate'
 import { bindActionCreators } from 'redux'
 import { Row, Col } from 'antd'
-import CourseList from '../../components/CourseList/CourseList'
+import CertList from '../../components/CertList/CertList'
+import RestCertList from '../../components/CertList/RestCertList'
 
 class CourseSelect extends Component {
 
@@ -13,9 +14,10 @@ class CourseSelect extends Component {
         return (
             <div>
                 <Row>
-                    <CourseList application={application} cert={cert} actions={actions} />
+                    <CertList application={application} cert={cert} actions={actions} />
                 </Row>
                 <Row>
+                    <RestCertList application={application} cert={cert} actions={actions}/>
                 </Row>
             </div>
         )

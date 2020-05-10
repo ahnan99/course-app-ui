@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import { List, Avatar, Space } from 'antd';
+import { List, Avatar, Space, message } from 'antd';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
-
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
-export default class CourseList extends Component {
+export default class CertList extends Component {
   constructor(props) {
     super(props)
   }
@@ -18,28 +11,40 @@ export default class CourseList extends Component {
     this.props.actions.getCertCourse({ username: this.props.application.username })
   }
 
+  onRemove = cert => {
+    this.props.actions.postDelCert({ ID: cert.ID })
+    this.props.actions.getSelectedCert({ username: this.props.application.username })
+    this.props.actions.getCertCourse({ username: this.props.application.username })
+  }
+
+  componentWillReceiveProps = (nextProps) =>{
+    if(nextProps.cert.delCertRes && nextProps.cert.delCertRes.status ===0){
+      message.success('移除成功')
+    }
+  }
+
   render() {
     return (
       <List
         header={
           <div>
-            <b>已选课程</b>
+            <b>已选证书</b>
           </div>
         }
-        itemLayout="vertical"
+        itemLayout="horizontal"
         size="large"
         dataSource={this.props.cert.selectedCert}
         renderItem={item => (
           <List.Item
             key={item.ID}
             actions={[
-              <IconText icon={StarOutlined} text="移除课程" key="list-vertical-star-o" onClick={()=>console.log('g')}/>,
+              <a key={item.ID} onClick={() => this.onRemove(item)}>移除证书</a>
             ]}
           >
             <List.Item.Meta
               title={<a>{item.certName}</a>}
             />
-            <ul style={{textAlign:'left'}}>
+            <ul style={{ textAlign: 'left' }}>
               {this.props.cert.certCourse.filter(course => course.refID === item.ID).map(course => (
                 <li key={course.ID}><a>{course.courseName}</a>&nbsp;&nbsp;<a>课程时长：{course.hours}小时</a></li>
               ))}
