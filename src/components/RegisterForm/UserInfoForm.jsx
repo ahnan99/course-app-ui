@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete } from 'antd'
+import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete} from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'

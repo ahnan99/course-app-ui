@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 import { connect } from 'react-redux'
-import { Row, Col, Layout, Button } from 'antd'
+import { Row, Col, Layout, Button, Breadcrumb } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
@@ -43,10 +43,18 @@ class ClassPage extends Component {
             return (<h2>Not found</h2>)
         }
         return (
-            <Layout>
+            <div>
                 <Row gutter={[16, 32]}>
-                    <Col span={24}>
-                        <a>{this.props.course.currentLesson.lessonName}</a>
+                    <Col span={24} style={{textAlign:'left'}}>
+                        <Breadcrumb>
+                            <Breadcrumb.Item>我的课程</Breadcrumb.Item>
+                            <Breadcrumb.Item>{this.props.course.currentLesson.lessonName}</Breadcrumb.Item>
+                        </Breadcrumb>
+                    </Col>
+                </Row>
+                <Row gutter={[16, 32]}>
+                    <Col span={24} style={{fontSize:'18px'}}>
+                        <b>{this.props.course.currentLesson.lessonName}</b>
                     </Col>
                 </Row>
                 <Row gutter={[16, 32]}>
@@ -56,6 +64,7 @@ class ClassPage extends Component {
                 </Row>
                 <Row gutter={[16, 32]}>
                     <Col span={24} style={{ textAlign: 'left' }}>
+                        <span>课件:</span><br></br>
                         <ul>
                             {this.props.course.PDF.map(doc => (<li key={doc.ID}>
                                 <a onClick={() => this.onClickDoc(doc)}>{doc.coursewareName}</a>
@@ -65,10 +74,10 @@ class ClassPage extends Component {
                 </Row>
                 <Row gutter={[16, 32]}>
                     <Col span={24}>
-                        <Button type="primary" onClick={this.onClickBack}>返回</Button>
+                        <Button type="primary" onClick={this.onClickBack}>返回我的课程</Button>
                     </Col>
                 </Row>
-            </Layout>
+            </div>
         )
     }
 }

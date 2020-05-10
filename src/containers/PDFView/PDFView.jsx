@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { Row, Col, Button, Spin } from 'antd'
+import { Row, Col, Button, Spin, message, Breadcrumb } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { actions as CourseActions } from '../../modules/courses'
@@ -24,6 +24,12 @@ class PDFView extends Component {
     }
     window.addEventListener("resize", this.update);
   }
+
+  onLoadError = () => {
+    message.error('文档载入失败')
+    this.setState({ loading: false })
+  }
+
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages, loading: false })
   }
@@ -71,11 +77,21 @@ class PDFView extends Component {
     return (
       <Spin spinning={this.state.loading}>
         <div className="document" ref={this.divRef}>
+          <Row gutter={[16, 32]}>
+            <Col span={24} style={{ textAlign: 'left' }}>
+              <Breadcrumb>
+                <Breadcrumb.Item>我的课程</Breadcrumb.Item>
+                <Breadcrumb.Item>{this.props.course.currentLesson.lessonName}</Breadcrumb.Item>
+                <Breadcrumb.Item>{this.props.course.currentPDF.coursewareName}</Breadcrumb.Item>
+              </Breadcrumb>
+            </Col>
+          </Row>
           <Row>
             <Col span={24} ref="parentCol">
               <Document
                 file={axios.defaults.baseURL + this.props.course.currentPDF.filename}
                 onLoadSuccess={this.onDocumentLoadSuccess}
+                onLoadError={this.onLoadError}
               >
                 <Page pageNumber={pageNumber}
                   width={width} />
@@ -94,7 +110,7 @@ class PDFView extends Component {
           </Row>
           <Row>
             <Col span={24} style={{ textAlign: 'center' }}>
-              <Button type='primary' onClick={() => this.backToLesson()}>返回课程</Button>
+              <Button type='primary' onClick={() => this.backToLesson()}>返回课节</Button>
             </Col>
           </Row>
         </div>

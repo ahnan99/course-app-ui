@@ -22,9 +22,9 @@ class LessonCard extends Component {
                         <p>结束日期：{course.endDate}</p>
                         <p>考试成绩：{}</p>
                         <Card type="inner" title="课程内容">
-                            <ul>
+                            <ul style={{textAlign:'left'}}>
                             {lessons.filter(lesson => lesson.refID === course.ID).map(lesson => (
-                                <li key={lesson.ID}><a key={lesson.ID} onClick={()=>this.onClick(lesson)}>{lesson.lessonID}. {lesson.lessonName} {lesson.completion}</a></li>
+                                <li style={{listStyleType:'none'}} key={lesson.ID}><a key={lesson.ID} onClick={()=>this.onClick(lesson)}>{lesson.lessonID}. {lesson.lessonName}&nbsp;&nbsp;完成度：{lesson.completion}%</a></li>
                             ))}
                             </ul>
                         </Card>
