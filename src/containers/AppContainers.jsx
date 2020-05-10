@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import Cookies from 'js-cookie'
 
 
-axios.defaults.baseURL = process.env.aliyunhost?process.env.aliyunhost+":8081":"http://127.0.0.1:8081"
+axios.defaults.baseURL = process.env.REACT_APP_ALIYUNHOST?process.env.REACT_APP_ALIYUNHOST+":8081":"http://127.0.0.1:8081"
 axios.defaults.withCredentials = true
 class App extends Component {
     componentWillMount() {
