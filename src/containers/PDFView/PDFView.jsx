@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Button, Spin } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { actions as CourseActions } from '../../modules/courses'
@@ -15,7 +15,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 class PDFView extends Component {
   constructor(props) {
     super(props)
+    this.divRef = React.createRef()
     this.state = {
+      loading: true,
       numPages: null,
       pageNumber: 1,
       width: 0
@@ -23,7 +25,7 @@ class PDFView extends Component {
     window.addEventListener("resize", this.update);
   }
   onDocumentLoadSuccess = ({ numPages }) => {
-    this.setState({ numPages })
+    this.setState({ numPages, loading: false })
   }
 
   update = () => {
@@ -67,28 +69,30 @@ class PDFView extends Component {
       return (<h2>No PDF found</h2>)
     }
     return (
-      <div className="document">
-        <Row>
-          <Col span={24} ref="parentCol">
-            <Document
-              file={axios.defaults.baseURL + this.props.course.currentPDF.filename}
-              onLoadSuccess={this.onDocumentLoadSuccess}
-            >
-              <Page pageNumber={pageNumber}
-                width={width * 0.9<474?width*0.9:width*0.8} />
-            </Document>
-          </Col>
-        </Row>
-        <Row>
-          <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
-        </Row>
-        <Row>
-          <p>Page {pageNumber} of {numPages}</p>
-        </Row>
-        <Row>
-          <Button onClick={() => this.backToLesson()}>返回课程</Button>
-        </Row>
-      </div>
+      <Spin spinning={this.state.loading}>
+        <div className="document" ref={this.divRef}>
+          <Row>
+            <Col span={24} ref="parentCol">
+              <Document
+                file={axios.defaults.baseURL + this.props.course.currentPDF.filename}
+                onLoadSuccess={this.onDocumentLoadSuccess}
+              >
+                <Page pageNumber={pageNumber}
+                  width={this.divRef.current.offsetWidth} />
+              </Document>
+            </Col>
+          </Row>
+          <Row style={{ textAlign: 'center' }}>
+            <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
+          </Row>
+          <Row>
+            <p>Page {pageNumber} of {numPages}</p>
+          </Row>
+          <Row>
+            <Button onClick={() => this.backToLesson()}>返回课程</Button>
+          </Row>
+        </div>
+      </Spin>
     );
   }
 }
