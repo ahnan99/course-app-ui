@@ -578,7 +578,7 @@ video.js: https://www.jb51.net/article/145346.htm
     {"status": "", "msg": ""} 
     ```    
    
-10a.  学员视频进度保存（每次翻页将当前播放位置上传到服务器）   **POST:/students/update_courseware_currentPage**
+10a.  学员课件进度保存（每次翻页将当前播放位置上传到服务器）   **POST:/students/update_courseware_currentPage**
   * input
     ```
     {"ID":1, "currentPage":"5"}
@@ -663,12 +663,12 @@ video.js: https://www.jb51.net/article/145346.htm
     {"status": "", "msg": ""} 
     ```    
 
-14. 学员添加新证书项目   **POST:/students/add_certificate**
+14. 学员添加新证书项目   **POST:/students/add_student_certificate**
   * input
     ```
     {
-      "username": "",
-      "certID": ""
+      "username": "120107196604032113",
+      "certID": "C001"
     }
     ```    
 
@@ -677,12 +677,11 @@ video.js: https://www.jb51.net/article/145346.htm
     {"status": "", "msg": ""} 
     ```    
  
-15. 学员删除所选证书项目   **POST:/students/remove_certificate**
+15. 学员删除所选证书项目   **POST:/students/remove_student_certificate**
   * input
     ```
     {
-      "username": "",
-      "certID": ""
+      "ID": "1"
     }
     ```    
 
