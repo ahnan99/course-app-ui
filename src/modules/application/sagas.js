@@ -11,6 +11,14 @@ function* registerWatch() {
     yield takeLatest(types.REQUEST_REGISTER, userRegisterWorker)
 }
 
+function* getUserInfoWatch() {
+    yield takeLatest(types.GET_USER_INFO, getUserInfoWorker)
+}
+
+function* postUserInfoWatch() {
+    yield takeLatest(types.POST_USER_INFO, postUserInfoWorker)
+}
+
 export function userLoginEndpoint(data) {
     return axios.post('/students/login', data)
 }
@@ -18,6 +26,17 @@ export function userLoginEndpoint(data) {
 export function userRegisterEndpoint(data) {
     return axios.post('/students/new_student', data)
 }
+
+export function getUserInfoEndpoint(data) {
+    return axios.get('/students/get_student', {
+        params: data
+    })
+}
+
+export function postUserInfoEndpoint(data) {
+    return axios.post('/students/update_student', data)
+}
+
 
 //workers
 function* userLoginWorker(action) {
@@ -38,11 +57,33 @@ function* userRegisterWorker(action) {
     }
 }
 
+function* getUserInfoWorker(action) {
+    try {
+        const response = yield call(getUserInfoEndpoint, action.payload)
+        yield put(actions.updateUserInfo(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+function* postUserInfoWorker(action) {
+    try {
+        const response = yield call(postUserInfoEndpoint, action.payload)
+        yield put(actions.updatePostUserInfo(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
 export const workers = {
     userLoginWorker,
-    userRegisterWorker
+    userRegisterWorker,
+    getUserInfoWorker,
+    postUserInfoWorker
 }
 
 export default function* saga() {
-    yield all([loginWatch(), registerWatch()])
+    yield all([loginWatch(), registerWatch(), getUserInfoWatch(), postUserInfoWatch()])
 }

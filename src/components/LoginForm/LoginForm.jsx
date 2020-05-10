@@ -21,7 +21,8 @@ class LoginForm extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.loggedIn) {
+        if (nextProps.loggedIn && nextProps.username) {
+            this.props.getUserInfo({username:nextProps.username})
             this.props.history.push('/homepage')
         }
         if (nextProps.loginError){

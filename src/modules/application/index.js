@@ -6,6 +6,11 @@ const REQUEST_REGISTER = 'request_register'//submit form
 const USER_REGISTER = 'user_register' //receive repsonse
 const USER_REGISTER_ERROR = 'request_register_error'//receive error
 const RESET_REGISTER_STATUS = 'reset_register_status'
+const GET_USER_INFO = 'get_user_info'
+const UPDATE_USER_INFO = 'update_user_info'
+const POST_USER_INFO = 'post_user_info'
+const UPDATE_POST_USER_INFO = 'update_post_user_info'
+const RESET_POST_USER_INFO = 'reset_post_user_info'
 
 export const types = {
     REQUEST_LOGIN,
@@ -14,7 +19,12 @@ export const types = {
     REQUEST_REGISTER,
     USER_REGISTER,
     USER_REGISTER_ERROR,
-    RESET_REGISTER_STATUS
+    RESET_REGISTER_STATUS,
+    GET_USER_INFO,
+    UPDATE_USER_INFO,
+    POST_USER_INFO,
+    UPDATE_POST_USER_INFO,
+    RESET_POST_USER_INFO
 }
 
 //Action creators
@@ -53,6 +63,30 @@ const resetRegisterStatus = () => ({
     type: RESET_REGISTER_STATUS
 })
 
+const getUserInfo = payload => ({
+    type: GET_USER_INFO,
+    payload
+})
+
+const updateUserInfo = data => ({
+    type: UPDATE_USER_INFO,
+    data
+})
+
+const postUserInfo = payload => ({
+    type: POST_USER_INFO,
+    payload
+})
+
+const updatePostUserInfo = data => ({
+    type: UPDATE_POST_USER_INFO,
+    data
+})
+
+const resetPostUserInfo = () => ({
+    type: RESET_POST_USER_INFO
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -60,7 +94,12 @@ export const actions = {
     requestRegister,
     userRegister,
     userRegisterError,
-    resetRegisterStatus
+    resetRegisterStatus,
+    getUserInfo,
+    postUserInfo,
+    updateUserInfo,
+    updatePostUserInfo,
+    resetPostUserInfo
 }
 
 const initialState = {
@@ -70,6 +109,8 @@ const initialState = {
     loginError: null,
     registered: false,
     registerError: null,
+    userInfo:null,
+    postUserInfoStatus:null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -113,6 +154,24 @@ const reducer = (state = initialState, action = {}) => {
                 ...state,
                 registered: false,
                 registerError: null
+            }
+        }
+        case UPDATE_USER_INFO: {
+            return {
+                ...state,
+                userInfo: action.data[0]
+            }
+        }
+        case UPDATE_POST_USER_INFO: {
+            return {
+                ...state,
+                postUserInfoStatus: action.data
+            }
+        }
+        case RESET_POST_USER_INFO:{
+            return {
+                ...state,
+                postUserInfoStatus: null
             }
         }
         default:

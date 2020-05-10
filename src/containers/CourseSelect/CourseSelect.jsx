@@ -14,10 +14,14 @@ class CourseSelect extends Component {
         return (
             <div>
                 <Row>
-                    <CertList application={application} cert={cert} actions={actions} />
+                    <Col span={24}>
+                        <CertList application={application} cert={cert} actions={actions} />
+                    </Col>
                 </Row>
                 <Row>
-                    <RestCertList application={application} cert={cert} actions={actions}/>
+                    <Col span={24}>
+                        <RestCertList application={application} cert={cert} actions={actions} />
+                    </Col>
                 </Row>
             </div>
         )

@@ -2,26 +2,8 @@ import React, { Component } from 'react'
 import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 import { withRouter } from 'react-router-dom'
-import { UploadOutlined } from '@ant-design/icons';
-
-const props = {
-    name: 'avatar',
-    action: 'http://localhost:8081/files/uploadSingle?username=120107196604032113&upID=student_photo',
-    headers: {
-        authorization: 'authorization-text',
-
-    },
-    onChange(info) {
-        if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+import axios from 'axios'
+import Avatar from './Avatar'
 
 const formItemLayout = {
     labelCol: {
@@ -42,7 +24,7 @@ const formItemLayout = {
     },
 };
 const { Option } = Select
-class RegisterForm extends Component {
+class UserInfoForm extends Component {
     formRef = React.createRef()
     constructor(props) {
         super(props)
@@ -50,25 +32,19 @@ class RegisterForm extends Component {
         this.state = { kindID: "0" }
     }
 
-    componentWillMount = () => {
-        if (this.props.loggedIn) {
-            this.props.history.push('/homepage')
+    componentWillMount() {
+        this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.user.companyID })
+        if(this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0){
+            this.props.userActions.getDept2({kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1})
         }
-        this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
-
+            
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.loggedIn) {
-            this.props.history.push('/homepage')
-        }
-        if (nextProps.registerError) {
-            message.error(nextProps.registerError)
-        }
-        if (nextProps.registered) {
-            message.success("注册成功！")
-            this.props.resetRegisterStatus()
-            this.props.history.push('/login')
+        if (nextProps.application.postUserInfoStatus && nextProps.application.postUserInfoStatus.status === 0) {
+            message.success("学员信息修改成功")
+            this.props.actions.getUserInfo({username:this.props.application.username})
+            this.props.actions.resetPostUserInfo()
         }
     }
 
@@ -82,14 +58,13 @@ class RegisterForm extends Component {
 
     onFinish = values => {
         console.log('Success:', values)
-        this.props.requestRegister({
+        this.props.actions.postUserInfo({
             username: values.username,   //*
             name: values.name,   //*
-            password: values.password,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
             companyID: this.props.user.companyID, //*
-            dept1: values.kindID === 0 ? values.dept1 : 0,
-            dept1Name: values.kindID === 0 ? null : values.dept1,
+            dept1: values.kindID === "0" ? values.dept1 : 0,
+            dept1Name: values.kindID === "0" ? "" : values.dept1,
             dept2: values.dept2 ? values.dept2 : 0,
             dept3: values.dept3,
             job: values.job,
@@ -121,7 +96,12 @@ class RegisterForm extends Component {
                 {...formItemLayout}
                 onFinish={this.onFinish}
                 scrollToFirstError
-                initialValues={{ kindID: "0", companyID: this.props.user.companyName }}
+                initialValues={this.props.application.userInfo ? 
+                    {...this.props.application.userInfo,
+                        kindID:this.props.application.userInfo.kindID.toString(),
+                        companyID:this.props.application.userInfo.companyName
+                    } 
+                    : { kindID: "0", companyID: this.props.user.companyName }}
                 onValuesChange={this.onValuesChange}
                 ref={this.formRef}
             >
@@ -153,7 +133,7 @@ class RegisterForm extends Component {
 
                     ]}
                 >
-                    <Input />
+                    <Input disabled />
                 </Form.Item>
                 <Form.Item
                     name="name"
@@ -166,41 +146,6 @@ class RegisterForm extends Component {
                     ]}
                 >
                     <Input />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    label="密码"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入密码',
-                        },
-                    ]}
-                    hasFeedback
-                >
-                    <Input.Password />
-                </Form.Item>
-                <Form.Item
-                    name="confirm"
-                    label="确认密码"
-                    dependencies={['password']}
-                    hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: '请确认密码',
-                        },
-                        ({ getFieldValue }) => ({
-                            validator(rule, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject('两次输入不匹配');
-                            },
-                        }),
-                    ]}
-                >
-                    <Input.Password />
                 </Form.Item>
                 <Form.Item
                     name="kindID"
@@ -229,7 +174,7 @@ class RegisterForm extends Component {
                 >
                     {kindID === "0" ? <Select showSearch>
                         {this.props.user.dept1List.map(dept => (
-                            <Option value={dept.deptID}>{dept.deptName}</Option>
+                            <Option key={dept.deptID} value={dept.deptID}>{dept.deptName}</Option>
                         ))}
                     </Select> :
                         <AutoComplete
@@ -302,25 +247,20 @@ class RegisterForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                {false ? <Form.Item
+                 <Form.Item
                     name="upload"
                     label="上传照片"
                 >
-                    <Upload {...props}>
-                        <Button>
-                            <UploadOutlined /> Click to Upload
-                        </Button>
-                    </Upload>
-                </Form.Item> : null}
+                    <Avatar action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`}/>
+                </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">注册</Button>
+                    <Button type="primary" htmlType="submit">修改信息</Button>
                     <span> </span>
                     <span> </span>
-                    <a href="/login">取消</a>
                 </Form.Item>
             </Form>
 
         )
     }
 }
-export default withRouter(RegisterForm)
+export default withRouter(UserInfoForm)

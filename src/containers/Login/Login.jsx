@@ -17,7 +17,9 @@ class Login extends Component {
                     <LoginForm 
                     requestLogin={this.props.actions.requestLogin}
                     loggedIn={this.props.application.loggedIn}
-                    loginError={this.props.application.loginError}/>
+                    loginError={this.props.application.loginError}
+                    username={this.props.application.username}
+                    getUserInfo={this.props.actions.getUserInfo}/>
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>
                 </Col>

@@ -349,7 +349,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
-8b. 获取认证项目所属课程列表   **GET:/students/getStudentCertCourseList**
+8b. 获取认证项目所属课程列表   **GET:/course/getStudentCertCourseList**
   * input
     ```
     {"username":"120107196604032113"}

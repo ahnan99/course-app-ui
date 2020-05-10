@@ -30,6 +30,9 @@ class MainView extends Component {
             case "2":
                 this.props.history.push("/courseselect")
                 break
+            case "4":
+                this.props.history.push("/userinfo")
+                break
             default:
                 this.props.history.push("/homepage")
         }
@@ -44,7 +47,7 @@ class MainView extends Component {
                     style={{ height:"100vh", position: "fixed",zIndex:99}}
                 >
                     <div className="logo" />
-                    <Menu onClick={this.onClick} theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                    <Menu onClick={this.onClick} theme="dark" mode="inline">
                         <Menu.Item key="1" icon={<AppstoreOutlined />}>
                             我的课程
                         </Menu.Item>

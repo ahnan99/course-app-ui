@@ -9,6 +9,8 @@ const POST_DEL_CERT = 'post_del_cert'
 const UPDATE_DEL_CERT = 'update_del_cert'
 const POST_ADD_CERT = 'post_add_cert'
 const UPDATE_ADD_CERT = 'update_add_cert'
+const RESET_DEL_CERT = 'reset_del_cert'
+const RESET_ADD_CERT = 'reset_add_cert'
 
 export const types = {
     GET_SELECTED_CERT,
@@ -20,7 +22,9 @@ export const types = {
     POST_DEL_CERT,
     UPDATE_DEL_CERT,
     POST_ADD_CERT,
-    UPDATE_ADD_CERT
+    UPDATE_ADD_CERT,
+    RESET_DEL_CERT,
+    RESET_ADD_CERT
 }
 
 //Action creators
@@ -74,6 +78,14 @@ const updateAddCert = data => ({
     data
 })
 
+const resetDelCert = () => ({
+    type: RESET_DEL_CERT
+})
+
+const resetAddCert = () => ({
+    type: RESET_DEL_CERT
+})
+
 export const actions = {
     getCertCourse,
     getSelectedCert,
@@ -84,7 +96,9 @@ export const actions = {
     postDelCert,
     updateDelCert,
     postAddCert,
-    updateAddCert
+    updateAddCert,
+    resetDelCert,
+    resetAddCert
 }
 
 const initialState = {
@@ -122,6 +136,16 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 addCertRes: action.data
+            }
+        case RESET_ADD_CERT:
+            return {
+                ...state,
+                addCertRes: null
+            }
+        case RESET_DEL_CERT:
+            return {
+                ...state,
+                delCertRes: null
             }
         default:
             return state;
