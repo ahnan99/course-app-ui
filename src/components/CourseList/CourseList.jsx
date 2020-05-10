@@ -39,7 +39,7 @@ export default class CourseList extends Component {
             <List.Item.Meta
               title={<a>{item.certName}</a>}
             />
-            <ul>
+            <ul style={{textAlign:'left'}}>
               {this.props.cert.certCourse.filter(course => course.refID === item.ID).map(course => (
                 <li key={course.ID}><a>{course.courseName}</a>&nbsp;&nbsp;<a>课程时长：{course.hours}小时</a></li>
               ))}

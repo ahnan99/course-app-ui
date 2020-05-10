@@ -31,7 +31,7 @@ export function getSelectedCertEndpoint(data) {
 }
 
 export function getCertCourseEndpoint(data) {
-    return axios.get('/course/getStudentCertCourseList', {
+    return axios.get('/students/getStudentCertCourseList', {
         params:data
       })
 }
