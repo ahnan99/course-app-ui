@@ -11,6 +11,7 @@ const UPDATE_USER_INFO = 'update_user_info'
 const POST_USER_INFO = 'post_user_info'
 const UPDATE_POST_USER_INFO = 'update_post_user_info'
 const RESET_POST_USER_INFO = 'reset_post_user_info'
+const UPDATE_LOGIN_STATUS = 'update_login_status'
 
 export const types = {
     REQUEST_LOGIN,
@@ -24,7 +25,8 @@ export const types = {
     UPDATE_USER_INFO,
     POST_USER_INFO,
     UPDATE_POST_USER_INFO,
-    RESET_POST_USER_INFO
+    RESET_POST_USER_INFO,
+    UPDATE_LOGIN_STATUS
 }
 
 //Action creators
@@ -87,6 +89,11 @@ const resetPostUserInfo = () => ({
     type: RESET_POST_USER_INFO
 })
 
+const updateLoginStatus = data =>({
+    type:UPDATE_LOGIN_STATUS,
+    data
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -99,7 +106,8 @@ export const actions = {
     postUserInfo,
     updateUserInfo,
     updatePostUserInfo,
-    resetPostUserInfo
+    resetPostUserInfo,
+    updateLoginStatus
 }
 
 const initialState = {
@@ -172,6 +180,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 postUserInfoStatus: null
+            }
+        }
+        case UPDATE_LOGIN_STATUS:{
+            return {
+                ...state,
+                loggedIn: action.data
             }
         }
         default:

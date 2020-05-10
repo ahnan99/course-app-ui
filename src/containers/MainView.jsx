@@ -74,7 +74,7 @@ class MainView extends Component {
                             {this.routes}
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    <Footer style={{ textAlign: 'center' }}>NetBlue @2020</Footer>
                 </Layout>
             </Layout>
         )
