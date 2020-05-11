@@ -191,15 +191,8 @@ class UserInfoForm extends Component {
                 >
                     <Select disabled={kindID !== "0"}>
                         {this.props.user.dept2List.map(dept => (
-                            <Option value={dept.deptID}>{dept.deptName}</Option>
+                            <Option key={dept.deptID} value={dept.deptID}>{dept.deptName}</Option>
                         ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    name="dept3"
-                    label="部门3"
-                >
-                    <Select disabled>
                     </Select>
                 </Form.Item>
                 <Form.Item

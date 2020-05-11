@@ -6,7 +6,8 @@ import {
     BarChartOutlined,
     CloudOutlined,
     UserOutlined,
-    AppstoreOutlined
+    AppstoreOutlined,
+    ScheduleOutlined
 } from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import routes from '../routes'
@@ -51,7 +52,7 @@ class MainView extends Component {
                         <Menu.Item key="1" icon={<AppstoreOutlined />}>
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<AppstoreOutlined />}>
+                        <Menu.Item key="2" icon={<ScheduleOutlined />}>
                             课程选择
                         </Menu.Item>
                         <Menu.Item key="3" icon={<AuditOutlined />}>
