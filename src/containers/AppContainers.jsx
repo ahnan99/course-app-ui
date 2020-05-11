@@ -8,18 +8,12 @@ import MainView from './MainView'
 import axios from 'axios'
 import { actions as ApplicationActions } from '../modules/application'
 import { bindActionCreators } from 'redux'
-import Cookies from 'js-cookie'
 
 
 axios.defaults.baseURL = "http://127.0.0.1:8081"
 axios.defaults.withCredentials = true
 class App extends Component {
-    componentWillMount() {
-        if (Cookies.get('elearning')) {
-            Cookies.get('elearning')
-            this.props.actions.updateLoginStatus(true)
-        }
-    }
+  
     constructor(props) {
         super(props)
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete} from 'antd'
+import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
@@ -34,16 +34,16 @@ class UserInfoForm extends Component {
 
     componentWillMount() {
         this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.user.companyID })
-        if(this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0){
-            this.props.userActions.getDept2({kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1})
+        if (this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0) {
+            this.props.userActions.getDept2({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1 })
         }
-            
+
     }
 
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.application.postUserInfoStatus && nextProps.application.postUserInfoStatus.status === 0) {
             message.success("学员信息修改成功")
-            this.props.actions.getUserInfo({username:this.props.application.username})
+            this.props.actions.getUserInfo({ username: this.props.application.username })
             this.props.actions.resetPostUserInfo()
         }
     }
@@ -96,11 +96,12 @@ class UserInfoForm extends Component {
                 {...formItemLayout}
                 onFinish={this.onFinish}
                 scrollToFirstError
-                initialValues={this.props.application.userInfo ? 
-                    {...this.props.application.userInfo,
-                        kindID:this.props.application.userInfo.kindID.toString(),
-                        companyID:this.props.application.userInfo.companyName
-                    } 
+                initialValues={this.props.application.userInfo ?
+                    {
+                        ...this.props.application.userInfo,
+                        kindID: this.props.application.userInfo.kindID.toString(),
+                        companyID: this.props.application.userInfo.companyName
+                    }
                     : { kindID: "0", companyID: this.props.user.companyName }}
                 onValuesChange={this.onValuesChange}
                 ref={this.formRef}
@@ -247,11 +248,11 @@ class UserInfoForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                 <Form.Item
+                <Form.Item
                     name="upload"
                     label="上传照片"
                 >
-                    <Avatar action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`}/>
+                    <Avatar imageUrl={axios.defaults.baseURL + this.props.application.userInfo.photo_filename} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">修改信息</Button>

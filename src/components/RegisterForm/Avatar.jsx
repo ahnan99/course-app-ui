@@ -23,7 +23,10 @@ function beforeUpload(file) {
 export default class Avatar extends Component {
   state = {
     loading: false,
+    imageUrl: null
   };
+
+
 
   handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -49,7 +52,7 @@ export default class Avatar extends Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-    const { imageUrl } = this.state;
+    const { imageUrl } = this.props;
     return (
       <Upload
         name="avatar"

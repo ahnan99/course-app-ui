@@ -365,18 +365,20 @@ video.js: https://www.jb51.net/article/145346.htm
             "refID": 1,
             "kindID": 0,
             "status": 0,
-            "hours": 40,
+            "hours": 40,  //课时
             "hoursSpend": 0,
-            "startDate": "",
-            "endDate": "",
+            "startDate": "",  //开始日期
+            "endDate": "",    //结束日期
             "host": "spc",
             "memo": "",
             "regDate": "2020-05-08T15:19:44.020Z",
             "registerID": "120107196604032113",
             "statusName": "待执行",
             "courseName": "安全概论",
-            "completion": 0,
-            "examScore": 0,
+            "completion": 12.55,  //课程完成度%
+            "examScore": 0, //模拟考试最好成绩
+            "examTimes": 0, //模拟考试次数
+            "paperID": 1,   //模拟考试试卷ID
             "certStatus": 0
         },
         {
@@ -398,6 +400,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "courseName": "危险品",
             "completion": 0,
             "examScore": null,
+            "examTimes": 0, 
+            "paperID": 1,
             "certStatus": 0
         }
     ]
