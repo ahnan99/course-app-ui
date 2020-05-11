@@ -593,59 +593,86 @@ video.js: https://www.jb51.net/article/145346.htm
     {"status": "", "msg": ""} 
     ```    
 
-11. 获取学员练习信息   **GET:/students/get_exercise**
-  * input  **//exerciseNo: int, 0 新练习  >0 已保存练习**
+11. 获取学员模拟试卷信息   **GET:/students/getStudentExamInfo**
+  * input  **paperID = api.8b.paperID**
     ```
-    {"username": "", "lessonNo": "", "classID": "", "exerciseNo": ""} 
+    {"paperID": "", 1} 
     ```    
 
-  * output  **//exercise_status: 0 未提交 1 已提交； status：0 成功  1 未找到  9 其他; showAnswer: 0 不立刻显示参考答案  1 立刻显示参考答案;  availableTimes: 0 不允许开始新练习  >0 允许开始新练习**
+  * output  
     ```
-    {
-      "exerciseNo": "",
-      "lessonName": "",
-      "className": "",
-      "exercise_status": "",
-      "exercise_score": "",
-      "showAnswer": "",
-      "availableTimes": "",
-      "lastDate": "",
-      "typeList": [
+    [
         {
-          "typeID": "",
-          "typeName": "",
-          "problemList": [
-            {
-              "problemID": "",
-              "problem": "",
-              "refAnswer": "",
-              "itemList": [
-                {
-                  "itemID": "",
-                  "item": "",
-                  "answer": ""
-                }
-              ]
-            }
-          ]
+            "paperID": 1,
+            "examID": "T1",
+            "refID": 1,
+            "kindID": 0,
+            "status": 0,            //0 准备中  1 已开始  2 已交卷
+            "minutes": 90,          //考试总时长（分钟）
+            "secondRest": 5400,     //剩余秒数
+            "score": 0,             //学员得分
+            "startDate": "",        //开始时间
+            "endDate": "",          //交卷时间
+            "lastDate": "",         //最后提交时间
+            "scorePass": 80,        //及格分数线
+            "scoreTotal": 100,      //试卷总分
+            "statusName": "认证"
         }
-      ],
-      "status": ""
-    }
+    ]
+    ```    
+
+11a. 获取学员模拟考试题目   **GET:/students/getStudentQuestionList**
+  * input  **paperID = api.11.paperID**
+    ```
+    {"paperID": "", 1} 
+    ```    
+
+  * output  
+    ```
+    [
+        {
+            "ID": 91,
+            "questionID": "P3",
+            "refID": 1,
+            "status": 0,
+            "scorePer": 1,      //标准得分
+            "score": 0,         //实际得分
+            "myAnswer": null,   //学员提交的答案
+            "questionName": "生产劳动过程中，由于生产劳动的客观条件和人的主观状况，造成危害人的安全与健康的因素很多。这些因素归纳起来大体上可以分为两大类，即环境的因素和人为因素。",
+            "kindID": 3,        //1 单选题  2 多选题  3 判断题    列表已经按照kindID排序（升序）
+            "answer": "B",      //标准答案
+            "A": "对",
+            "B": "错",
+            "C": "",
+            "D": "",
+            "E": ""
+        },
+        {
+            "ID": 53,
+            "questionID": "P9",
+            "refID": 1,
+            "status": 0,
+            "scorePer": 1,
+            "score": 0,
+            "myAnswer": null,
+            "questionName": "保护从业人员在生产劳动过程中的生命安全，是我国坚持社会主义制度的本质要求，也是发展社会主义经济，走可持续发展道路的重要内容。",
+            "kindID": 3,
+            "answer": "A",
+            "A": "对",
+            "B": "错",
+            "C": "",
+            "D": "",
+            "E": ""
+        }
+    ]
     ```
 
-12. 上传学员练习答案   **POST:/students/save_exercise_answer**
+12. 上传学员模拟考试答案   **POST:/students/update_student_question_answer**
   * input 
     ```
     {
-      "exerciseNo": "",
-      "problemID": "",
-      "itemList": [
-        {
-          "itemID": "",
-          "answer": ""
-        }
-      ]
+      "ID": 1,            //api.11a.ID
+      "answer": "ABD"
     }
     ```    
 
@@ -654,11 +681,25 @@ video.js: https://www.jb51.net/article/145346.htm
     {"status": "", "msg": ""} 
     ```    
 
-13. 提交学员练习   **POST:/students/submit_exercise**
+12a. 上传学员模拟考试剩余时间   **POST:/students/update_student_exam_secondRest**
+  * input 
+    ```
+    {
+      "paperID": 1,            //api.11.paperID
+      "secondRest": 2300       //当前考试剩余秒数
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "", "msg": ""} 
+    ```    
+
+13. 模拟考试交卷   **POST:/students/submit_student_exam**
   * input
     ```
     {
-      "exerciseNo": ""
+      "paperID": 1    //api.11.paperID  or  api.11a.refID
     }
     ```    
 
