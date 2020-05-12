@@ -125,8 +125,8 @@ const initialState = {
     currentLesson: null,
     maxTimeRes: {},
     maxPageRes: {},
-    video: [],
-    PDF: [],
+    video: null,
+    PDF: null,
     currentPDF: null
 }
 //Reducers

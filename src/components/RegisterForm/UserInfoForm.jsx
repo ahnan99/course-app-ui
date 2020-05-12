@@ -172,6 +172,12 @@ class UserInfoForm extends Component {
                 <Form.Item
                     name="dept1"
                     label="部门1"
+                    rules={[
+                        {
+                            required: true,
+                            message: '请输入一级部门名称',
+                        },
+                    ]}
                 >
                     {kindID === "0" ? <Select showSearch>
                         {this.props.user.dept1List.map(dept => (

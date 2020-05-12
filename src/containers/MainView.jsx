@@ -23,7 +23,12 @@ class MainView extends Component {
         )
     }
 
+    state = {
+        collapsed: true,
+      }
+
     onClick = e =>{
+        this.setState({collapsed:true})
         switch(e.key){
             case "1":
                 this.props.history.push("/homepage")
@@ -39,6 +44,10 @@ class MainView extends Component {
         }
     }
 
+    setCollapse=()=>{
+        this.setState({collapsed:!this.state.collapsed})
+    }
+
     render() {
         return (
             <Layout>
@@ -46,6 +55,8 @@ class MainView extends Component {
                     breakpoint="md"
                     collapsedWidth="0"
                     style={{ height:"100vh", position: "fixed",zIndex:99}}
+                    collapsed={this.state.collapsed}
+                    onClick={this.setCollapse}
                 >
                     <div className="logo" />
                     <Menu onClick={this.onClick} theme="dark" mode="inline">
