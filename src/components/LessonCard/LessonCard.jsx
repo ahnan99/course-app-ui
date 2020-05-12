@@ -25,7 +25,7 @@ class LessonCard extends Component {
                             {lessons.filter(lesson => lesson.refID === course.ID).map((lesson,index) => (
                                 <li style={{listStyleType:'none'}} key={lesson.ID}><p key={lesson.ID} onClick={()=>this.onClick(lesson)}><span>{index+1}. {lesson.lessonName}&nbsp;&nbsp;</span><span style={{color:'lightgray'}}>{lesson.completion}%</span></p></li>
                             ))}
-                            <li key={999} style={{listStyleType:'none'}}><p>模拟考试&nbsp;<span style={{color:'lightgray'}}>{course.examScore}分</span>&nbsp;<span style={{color:'lightgray'}}>{course.examTimes}次</span></p></li>
+                            <li key={999} style={{listStyleType:'none'}}><p>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;<span style={{color:'lightgray'}}>{course.examScore}分&nbsp;&nbsp;</span><span style={{color:'lightgray'}}>{course.examTimes}次</span></p></li>
                             </ul>
                         </Card>
                     </Card>
