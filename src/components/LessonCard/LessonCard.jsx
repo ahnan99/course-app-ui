@@ -25,9 +25,9 @@ class LessonCard extends Component {
                         <Card type="inner" title="课程内容">
                             <ul style={{textAlign:'left',margin: 0, padding:0}}>
                             {lessons.filter(lesson => lesson.refID === course.ID).map((lesson,index) => (
-                                <li style={{listStyleType:'none', clear:'both'}} key={lesson.ID}><p style={{float:'left'}}><span>{index+1}. {lesson.lessonName}&nbsp;&nbsp;</span><span style={{color:'lightgray'}}>{lesson.completion}%</span></p><span style={{float:'right',color:'#1E90FF'}} key={lesson.ID} onClick={()=>this.onClick(lesson)}><RightOutlined /></span></li>
+                                <li style={{listStyleType:'none', clear:'both'}} key={lesson.ID}><p style={{float:'left'}}><span>{index+1}. {lesson.lessonName}&nbsp;&nbsp;</span><span style={{color:'lightgray'}}>{lesson.completion}%</span></p><span style={{float:'right',color:'orange'}} key={lesson.ID} onClick={()=>this.onClick(lesson)}><RightOutlined /></span></li>
                             ))}
-                            <li key={999} style={{listStyleType:'none', clear:'both'}}><p style={{float:'left'}}>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;<span style={{color:'lightgray'}}>{course.examScore}分&nbsp;&nbsp;</span><span style={{color:'lightgray'}}>{course.examTimes}次</span></p><span style={{float:'right',color:'#1E90FF'}}><RightOutlined /></span></li>
+                            <li key={999} style={{listStyleType:'none', clear:'both'}}><p style={{float:'left'}}>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;<span style={{color:'lightgray'}}>{course.examScore}分&nbsp;&nbsp;</span><span style={{color:'lightgray'}}>{course.examTimes}次</span></p><span style={{float:'right',color:'orange'}}><RightOutlined /></span></li>
                             </ul>
                         </Card>
                     </Card>
