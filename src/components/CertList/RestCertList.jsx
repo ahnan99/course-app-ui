@@ -46,7 +46,7 @@ export default class RestCertList extends Component {
         dataSource={this.props.cert.restCert}
         renderItem={item => (
           <List.Item
-            actions={[<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{color:'orange'}}><PlusOutlined /></a>]}
+            actions={[<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{color:'darkOrange'}}><PlusOutlined /></a>]}
           >
             <Skeleton active loading={this.state.loading}>
               <List.Item.Meta

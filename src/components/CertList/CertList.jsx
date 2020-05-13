@@ -60,7 +60,7 @@ render() {
         <List.Item
           key={item.ID}
           actions={[
-            <a key={item.ID} onClick={() => this.onRemove(item)}><MinusOutlined /></a>
+            <a key={item.ID} onClick={() => this.onRemove(item)} style={{color:'darkOrange'}}><MinusOutlined /></a>
           ]}
         >
           <Skeleton active loading={this.state.loading}>
