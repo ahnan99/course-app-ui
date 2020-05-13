@@ -734,3 +734,134 @@ video.js: https://www.jb51.net/article/145346.htm
     ```
     {"status": "", "msg": ""} 
     ```    
+ 
+16. 学员提交反馈意见   **POST:/students/submit_student_feedback**
+  * input
+    ```
+    {
+      "username": "120107196604032113",
+      "mobile": "12222222",
+      "email": "xxx@xx.com",
+      "kindID": "0",
+      "item": "请问这个东西怎么做？",
+      "refID": "0"
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": "0", "msg": ""} 
+    ```    
+ 
+17. 学员反馈意见分类   **GET:/students/getDictionaryList**
+  * input
+    ```
+    {
+      "kind": "feedback"
+    }
+    ```    
+
+  * output  
+    ```
+    [
+        {
+            "ID": "0",
+            "item": "故障报告"
+        },
+        {
+            "ID": "1",
+            "item": "咨询"
+        },
+        {
+            "ID": "2",
+            "item": "投诉"
+        },
+        {
+            "ID": "3",
+            "item": "建议"
+        },
+        {
+            "ID": "9",
+            "item": "其他"
+        }
+    ]    
+    ```    
+ 
+18. 学员消息列表   **GET:/students/get_student_message_List**
+  * input
+    ```
+    {
+      "username": "120107196604032113"
+    }
+    ```    
+
+  * output  
+    ```
+    [
+        {
+            "ID": 2,
+            "username": "120109199305280017",
+            "item": "正在处理中，请耐心地等",
+            "refID": 0,
+            "kindID": 0,      //0 回复  1 通知  9 其他
+            "status": 0,      //0 未读  1 已读  2 撤销
+            "emergency": 0,   //0 一般  1 紧急
+            "readDate": "",
+            "host": "spc",
+            "memo": "",
+            "regDate": "2020-05-13 16:25:19",
+            "registerID": "albert",
+            "kindName": "回复",
+            "statusName": "未读",
+            "emergencyName": "一般"
+        },
+        {
+            "ID": 1,
+            "username": "120109199305280017",
+            "item": "您反馈的信息意见收到",
+            "refID": 0,
+            "kindID": 0,
+            "status": 0,
+            "emergency": 0,
+            "readDate": "",
+            "host": "spc",
+            "memo": "",
+            "regDate": "2020-05-13 16:24:42",
+            "registerID": "albert",
+            "kindName": "回复",
+            "statusName": "未读",
+            "emergencyName": "一般"
+        }
+    ]
+    ```    
+ 
+19. 学员消息   **GET:/students/get_student_message_info**
+  * input
+    ```
+    {
+      "ID": "2"   //api.18.ID
+    }
+    ```    
+
+  * output  
+    ```
+    [
+        {
+            "ID": 2,
+            "username": "120109199305280017",
+            "item": "正在处理中，请耐心地等",
+            "refID": 0,
+            "kindID": 0,      //0 回复  1 通知  9 其他
+            "status": 0,      //0 未读  1 已读  2 撤销
+            "emergency": 0,   //0 一般  1 紧急
+            "readDate": "",
+            "host": "spc",
+            "memo": "",
+            "regDate": "2020-05-13 16:25:19",
+            "registerID": "albert",
+            "kindName": "回复",
+            "statusName": "未读",
+            "emergencyName": "一般"
+        }
+    ]
+    ```    

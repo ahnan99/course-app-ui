@@ -40,12 +40,19 @@ class UserInfoForm extends Component {
 
     }
 
+    componentDidMount() {
+        if (this.props.application.userInfo) {
+            this.setState({ kindID: this.props.application.userInfo.kindID.toString() })
+        }
+    }
+
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.application.postUserInfoStatus && nextProps.application.postUserInfoStatus.status === 0) {
             message.success("学员信息修改成功")
             this.props.actions.getUserInfo({ username: this.props.application.username })
             this.props.actions.resetPostUserInfo()
         }
+
     }
 
     listToOptions = deptList => {
@@ -63,9 +70,9 @@ class UserInfoForm extends Component {
             name: values.name,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
             companyID: this.props.user.companyID, //*
-            dept1: values.kindID === "0" ? values.dept1 : 0,
+            dept1: values.kindID === "0" ? values.dept1 : "",
             dept1Name: values.kindID === "0" ? "" : values.dept1,
-            dept2: values.dept2 ? values.dept2 : 0,
+            dept2: values.dept2 ? values.dept2 : "",
             dept3: values.dept3,
             job: values.job,
             mobile: values.mobile,
@@ -100,7 +107,9 @@ class UserInfoForm extends Component {
                     {
                         ...this.props.application.userInfo,
                         kindID: this.props.application.userInfo.kindID.toString(),
-                        companyID: this.props.application.userInfo.companyName
+                        companyID: this.props.application.userInfo.companyName,
+                        dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
+                        dept2: this.props.application.userInfo.dept2 == 0 ? "" : this.props.application.userInfo.dept2
                     }
                     : { kindID: "0", companyID: this.props.user.companyName }}
                 onValuesChange={this.onValuesChange}
