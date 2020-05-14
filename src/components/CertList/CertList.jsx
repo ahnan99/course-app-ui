@@ -18,9 +18,6 @@ export default class CertList extends Component {
   onRemove = cert => {
     this.setState({ loading: true })
     this.props.actions.postDelCert({ ID: cert.ID })
-    this.props.actions.getRestCert({ username: this.props.application.username })
-    this.props.actions.getSelectedCert({ username: this.props.application.username })
-    this.props.actions.getCertCourse({ username: this.props.application.username })
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -29,12 +26,15 @@ export default class CertList extends Component {
     }
     if (this.props.cert.delCertRes === null && nextProps.cert.delCertRes && nextProps.cert.delCertRes.status === 0) {
       message.success('移除成功')
+      this.props.actions.getRestCert({ username: this.props.application.username })
+      this.props.actions.getSelectedCert({ username: this.props.application.username })
+      this.props.actions.getCertCourse({ username: this.props.application.username })
       this.setState({ loading: false })
       this.props.actions.resetDelCert()
     }
   }
 
-  listItems(item){
+  listItems(item) {
     return (
       <ul>
         {this.props.cert.certCourse.filter(course => course.refID === item.ID).map(course => (
@@ -44,34 +44,34 @@ export default class CertList extends Component {
     )
   }
 
-render() {
-  return (
-    <List
-      header={
-        <div>
-          <b>已选证书</b>
-        </div>
-      }
-      style={{ textAlign: 'left' }}
-      itemLayout="horizontal"
-      size="large"
-      dataSource={this.props.cert.selectedCert}
-      renderItem={item => (
-        <List.Item
-          key={item.ID}
-          actions={[
-            <a key={item.ID} onClick={() => this.onRemove(item)} style={{color:'darkOrange'}}><MinusOutlined /></a>
-          ]}
-        >
-          <Skeleton active loading={this.state.loading}>
-            <List.Item.Meta
-              title={<a>{item.certName}</a>}
-              description={this.listItems(item)}
-            />
-          </Skeleton>
-        </List.Item>
-      )}
-    />
-  )
-}
+  render() {
+    return (
+      <List
+        header={
+          <div>
+            <b>已选证书</b>
+          </div>
+        }
+        style={{ textAlign: 'left' }}
+        itemLayout="horizontal"
+        size="large"
+        dataSource={this.props.cert.selectedCert}
+        renderItem={item => (
+          <List.Item
+            key={item.ID}
+            actions={[
+              <a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
+            ]}
+          >
+            <Skeleton active loading={this.state.loading}>
+              <List.Item.Meta
+                title={<a>{item.certName}</a>}
+                description={this.listItems(item)}
+              />
+            </Skeleton>
+          </List.Item>
+        )}
+      />
+    )
+  }
 }

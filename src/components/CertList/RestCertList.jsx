@@ -15,9 +15,7 @@ export default class RestCertList extends Component {
   onAdd = cert => {
     this.setState({ loading: true })
     this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID })
-    this.props.actions.getRestCert({ username: this.props.application.username })
-    this.props.actions.getSelectedCert({ username: this.props.application.username })
-    this.props.actions.getCertCourse({ username: this.props.application.username })
+  
 
   }
 
@@ -27,6 +25,9 @@ export default class RestCertList extends Component {
     }
     if (this.props.cert.addCertRes === null && nextProps.cert.addCertRes && nextProps.cert.addCertRes.status === 0) {
       message.success('选择成功')
+      this.props.actions.getRestCert({ username: this.props.application.username })
+      this.props.actions.getSelectedCert({ username: this.props.application.username })
+      this.props.actions.getCertCourse({ username: this.props.application.username })
       this.props.actions.resetAddCert()
       this.setState({ loading: false })
     }
