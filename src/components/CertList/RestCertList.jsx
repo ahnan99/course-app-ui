@@ -12,10 +12,7 @@ export default class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.setState({ loading: true })
     this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID })
-  
-
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -29,6 +26,7 @@ export default class RestCertList extends Component {
   }
 
   render() {
+    const { loading } = this.props
     return (
       <List
         header={
@@ -44,7 +42,7 @@ export default class RestCertList extends Component {
           <List.Item
             actions={[<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{color:'darkOrange'}}><PlusOutlined /></a>]}
           >
-            <Skeleton active loading={this.props.loading}>
+            <Skeleton active loading={loading}>
               <List.Item.Meta
                 title={<a>{item.certName}</a>}
               />

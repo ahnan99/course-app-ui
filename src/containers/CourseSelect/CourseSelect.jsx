@@ -11,7 +11,7 @@ class CourseSelect extends Component {
     render() {
         const { cert, application } = this.props
         const { actions } = this.props
-        const {fetchingSelected, fetchingCourse, fetchingRest} =this.props.cert
+        const {fetchingSelected, fetchingCourse, fetchingRest} = cert
         const loading = fetchingSelected || fetchingCourse || fetchingRest
         return (
             <div>

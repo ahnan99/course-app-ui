@@ -83,7 +83,7 @@ const resetDelCert = () => ({
 })
 
 const resetAddCert = () => ({
-    type: RESET_DEL_CERT
+    type: RESET_ADD_CERT
 })
 
 export const actions = {

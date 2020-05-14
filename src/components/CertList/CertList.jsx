@@ -39,6 +39,7 @@ export default class CertList extends Component {
   }
 
   render() {
+    const { loading } = this.props
     return (
       <List
         header={
@@ -57,7 +58,7 @@ export default class CertList extends Component {
               <a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
             ]}
           >
-            <Skeleton active loading={this.porps.loading}>
+            <Skeleton active loading={loading}>
               <List.Item.Meta
                 title={<a>{item.certName}</a>}
                 description={this.listItems(item)}
