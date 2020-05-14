@@ -7,7 +7,6 @@ import 'antd/dist/antd.css'
 export default class CertList extends Component {
   constructor(props) {
     super(props)
-    this.state = { loading: true }
     this.listItems = this.listItems.bind(this)
   }
   componentDidMount() {
@@ -16,20 +15,15 @@ export default class CertList extends Component {
   }
 
   onRemove = cert => {
-    this.setState({ loading: true })
     this.props.actions.postDelCert({ ID: cert.ID })
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.cert.selectedCert) {
-      this.setState({ loading: false })
-    }
     if (this.props.cert.delCertRes === null && nextProps.cert.delCertRes && nextProps.cert.delCertRes.status === 0) {
       message.success('移除成功')
       this.props.actions.getRestCert({ username: this.props.application.username })
       this.props.actions.getSelectedCert({ username: this.props.application.username })
       this.props.actions.getCertCourse({ username: this.props.application.username })
-      this.setState({ loading: false })
       this.props.actions.resetDelCert()
     }
   }
@@ -63,7 +57,7 @@ export default class CertList extends Component {
               <a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
             ]}
           >
-            <Skeleton active loading={this.state.loading}>
+            <Skeleton active loading={this.porps.loading}>
               <List.Item.Meta
                 title={<a>{item.certName}</a>}
                 description={this.listItems(item)}

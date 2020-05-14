@@ -11,16 +11,18 @@ class CourseSelect extends Component {
     render() {
         const { cert, application } = this.props
         const { actions } = this.props
+        const {fetchingSelected, fetchingCourse, fetchingRest} =this.props.cert
+        const loading = fetchingSelected || fetchingCourse || fetchingRest
         return (
             <div>
                 <Row>
                     <Col span={24}>
-                        <CertList application={application} cert={cert} actions={actions} />
+                        <CertList application={application} cert={cert} actions={actions} loading={loading}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <RestCertList application={application} cert={cert} actions={actions} />
+                        <RestCertList application={application} cert={cert} actions={actions} loading={loading}/>
                     </Col>
                 </Row>
             </div>

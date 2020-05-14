@@ -106,26 +106,47 @@ const initialState = {
     certCourse: [],
     restCert: [],
     delCertRes: null,
-    addCertRes: null
+    addCertRes: null,
+    fetchingSelected: false,
+    fetchingCourse: false,
+    fetchingRest: false
 }
 
 //Reducers
 const reducer = (state = initialState, action = {}) => {
     switch (action.type) {
+        case GET_SELECTED_CERT:
+            return {
+                ...state,
+                fetchingSelected: true
+            }
+        case GET_CERT_COURSE:
+            return {
+                ...state,
+                fetchingCourse: true
+            }
+        case GET_REST_CERT:
+            return {
+                ...state,
+                fetchingRest: true
+            }
         case UPDATE_SELECTED_CERT:
             return {
                 ...state,
-                selectedCert: action.data
+                selectedCert: action.data,
+                fetchingSelected: false
             }
         case UPDATE_REST_CERT:
             return {
                 ...state,
-                restCert: action.data
+                restCert: action.data,
+                fetchingRest: false
             }
         case UPDATE_CERT_COURSE:
             return {
                 ...state,
-                certCourse: action.data
+                certCourse: action.data,
+                fetchingCourse: false
             }
         case UPDATE_DEL_CERT:
             return {

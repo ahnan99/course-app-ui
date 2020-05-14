@@ -6,7 +6,6 @@ import 'antd/dist/antd.css'
 export default class RestCertList extends Component {
   constructor(props) {
     super(props)
-    this.state = { loading: true }
   }
   componentDidMount() {
     this.props.actions.getRestCert({ username: this.props.application.username })
@@ -20,16 +19,12 @@ export default class RestCertList extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.cert.restCert) {
-      this.setState({ loading: false })
-    }
     if (this.props.cert.addCertRes === null && nextProps.cert.addCertRes && nextProps.cert.addCertRes.status === 0) {
       message.success('选择成功')
       this.props.actions.getRestCert({ username: this.props.application.username })
       this.props.actions.getSelectedCert({ username: this.props.application.username })
       this.props.actions.getCertCourse({ username: this.props.application.username })
       this.props.actions.resetAddCert()
-      this.setState({ loading: false })
     }
   }
 
@@ -49,7 +44,7 @@ export default class RestCertList extends Component {
           <List.Item
             actions={[<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{color:'darkOrange'}}><PlusOutlined /></a>]}
           >
-            <Skeleton active loading={this.state.loading}>
+            <Skeleton active loading={this.props.loading}>
               <List.Item.Meta
                 title={<a>{item.certName}</a>}
               />
