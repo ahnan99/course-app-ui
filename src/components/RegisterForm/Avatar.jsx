@@ -1,6 +1,10 @@
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import React, {Component} from 'react'
+import { connect } from 'react-redux';
+import { actions as RegisterActions } from '../../modules/application'
+import {bindActionCreators} from 'redux'
+
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -20,7 +24,7 @@ function beforeUpload(file) {
   return isJpgOrPng && isLt2M;
 }
 
-export default class Avatar extends Component {
+class Avatar extends Component {
   state = {
     loading: false,
     imageUrl: null
@@ -36,6 +40,7 @@ export default class Avatar extends Component {
     if (info.file.status === 'done') {
       // Get this url from response in real world.
       message.success('上传完成')
+      this.props.actions.getUserInfo({ username: this.props.application.username })
       getBase64(info.file.originFileObj, imageUrl =>
         this.setState({
           imageUrl,
@@ -69,3 +74,14 @@ export default class Avatar extends Component {
     );
   }
 }
+
+
+const mapStateToProps = state => ({
+  application: state.application,
+})
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(RegisterActions, dispatch)
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Avatar)
