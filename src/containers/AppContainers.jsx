@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { message } from 'antd'
 import Login from './Login/Login'
 import Register from './Register/Register'
 import ForgetPassword from './ForgetPassword/ForgetPassword'
