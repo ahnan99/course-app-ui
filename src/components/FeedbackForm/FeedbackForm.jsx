@@ -37,7 +37,7 @@ class FeedbackForm extends Component {
             <Form
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
+                initialValues={{ mobile: this.props.application.userInfo.mobile, email:this.props.application.userInfo.email}}
                 onFinish={this.onFinish}
                 {...layout}
             >
@@ -63,7 +63,7 @@ class FeedbackForm extends Component {
                 >
                     <Select>
                         {this.props.message.messageTypes.map(type => (
-                            <Option value={type.ID}>{type.item}</Option>
+                            <Select.Option key={type.ID} value={type.ID}>{type.item}</Select.Option>
                         ))}
                     </Select>
                 </Form.Item>
