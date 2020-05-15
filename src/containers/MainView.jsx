@@ -78,7 +78,8 @@ class MainView extends Component {
                     collapsed={this.state.collapsed}
                     onClick={this.setCollapse}
                 >
-                    <div className="logo" />
+                    <div className="logo">
+                    </div>
                     <Menu onClick={this.onClick} theme="dark" mode="inline">
                         <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
                             我的课程

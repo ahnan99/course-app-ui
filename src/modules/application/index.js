@@ -14,6 +14,8 @@ const RESET_POST_USER_INFO = 'reset_post_user_info'
 const UPDATE_LOGIN_STATUS = 'update_login_status'
 const REQUEST_LOGOUT = 'request_logout'
 const USER_LOGOUT = 'user_logout'
+const GET_COMPANY_INFO = 'get_company_info'
+const UPDATE_COMPANY_INFO = 'update_company_info'
 
 export const types = {
     REQUEST_LOGIN,
@@ -30,7 +32,9 @@ export const types = {
     RESET_POST_USER_INFO,
     UPDATE_LOGIN_STATUS,
     USER_LOGOUT,
-    REQUEST_LOGOUT
+    REQUEST_LOGOUT,
+    GET_COMPANY_INFO,
+    UPDATE_COMPANY_INFO
 }
 
 //Action creators
@@ -107,6 +111,16 @@ const userLogout = response => ({
     response
 })
 
+const getCompanyInfo = payload =>({
+    type: GET_COMPANY_INFO,
+    payload
+})
+
+const updateCompanyInfo = data => ({
+    type: UPDATE_COMPANY_INFO,
+    data
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -122,7 +136,9 @@ export const actions = {
     resetPostUserInfo,
     updateLoginStatus,
     requestLogout,
-    userLogout
+    userLogout,
+    updateCompanyInfo,
+    getCompanyInfo
 }
 
 const initialState = {
@@ -133,7 +149,8 @@ const initialState = {
     registered: false,
     registerError: null,
     userInfo: null,
-    postUserInfoStatus: null
+    postUserInfoStatus: null,
+    companyInfo: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -201,6 +218,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 loggedIn: action.data
+            }
+        }
+        case UPDATE_COMPANY_INFO: {
+            return {
+                ...state,
+                companyInfo: action.data
             }
         }
         case USER_LOGOUT: {
