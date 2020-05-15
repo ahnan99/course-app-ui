@@ -47,6 +47,9 @@ class MainView extends Component {
             case "5":
                 this.props.history.push("/feedbackpage")
                 break
+            case "6":
+                this.props.history.push("/messagepage")
+                break
             case "8":
                 this.props.actions.requestLogout()
                 break
