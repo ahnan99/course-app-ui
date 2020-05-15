@@ -4,12 +4,12 @@ const UPDATE_POST_MESSAGE = 'update_post_message'
 const GET_MESSAGE_TYPE = 'get_message_type'
 const UPDATE_MESSAGE_TYPE = 'update_message_type'
 
-export const types = [
+export const types = {
     POST_MESSAGE,
     UPDATE_POST_MESSAGE,
     GET_MESSAGE_TYPE,
     UPDATE_MESSAGE_TYPE
-]
+}
 
 //Action creators
 const postMessage = payload =>({
@@ -32,12 +32,12 @@ const updateMessageType = data =>({
     data
 })
 
-export const actions = [
+export const actions = {
     updateMessageType,
     updatePostMessage,
     getMessageType,
     postMessage
-]
+}
 
 
 const initialState = {
