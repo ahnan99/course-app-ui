@@ -11,7 +11,7 @@ export default class MessageTable extends Component {
             dataIndex: 'item',
             key: 'item',
             ellipsis: true,
-            render: (text, record) => <a key={record.ID} onClick={() => this.onClick(record)}>{text}</a>,
+        render: (text, record) => <a key={record.ID} onClick={() => this.onClick(record)}>{record.status==0?<span style={{color:'red'}}>*</span>:''}{text}</a>,
         },
         {
             title: '日期',
@@ -47,7 +47,7 @@ export default class MessageTable extends Component {
                 <Modal visible={this.state.visible} onCancel={this.onCancel} onOk={this.onCancel} footer={[<Button onClick={this.onCancel}>确定</Button>]}>
                     <p>{this.props.message.singleMessage ? this.props.message.singleMessage[0].item : "Loading"}</p>
                 </Modal>
-                <Table dataSource={this.props.message.messageList} columns={this.columns} />
+                <Table rowKey={record=>record.ID} dataSource={this.props.message.messageList} columns={this.columns} />
             </div>
         )
     }
