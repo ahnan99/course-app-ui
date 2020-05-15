@@ -45,7 +45,7 @@ class MainView extends Component {
                 this.props.history.push("/userinfo")
                 break
             case "8":
-                this.props.actions.userLogout()
+                this.props.actions.requestLogout()
                 break
             default:
                 this.props.history.push("/homepage")
