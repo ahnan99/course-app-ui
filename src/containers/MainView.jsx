@@ -41,6 +41,9 @@ class MainView extends Component {
             case "2":
                 this.props.history.push("/courseselect")
                 break
+            case "3":
+                this.props.history.push("/certpage")
+                break
             case "4":
                 this.props.history.push("/userinfo")
                 break
@@ -49,6 +52,9 @@ class MainView extends Component {
                 break
             case "6":
                 this.props.history.push("/messagepage")
+                break
+            case "7":
+                this.props.history.push("/helppage")
                 break
             case "8":
                 this.props.actions.requestLogout()

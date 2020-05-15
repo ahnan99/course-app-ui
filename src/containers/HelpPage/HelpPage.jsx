@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class CertPage extends Component {
+export default class HelpPage extends Component {
     render() {
         return (
             <div>
-                <h2>暂无数据</h2>
+                <h2>暂无资料</h2>
             </div>
         )
     }

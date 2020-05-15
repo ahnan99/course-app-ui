@@ -5,6 +5,8 @@ import CourseSelect from "../containers/CourseSelect/CourseSelect"
 import UserInfo from "../containers/UserInfo/UserInfo"
 import FeedbackPage from '../containers/FeedbackPage/FeedbackPage'
 import MessagePage from '../containers/MessagePage/MessagePage'
+import CertPage from '../containers/CertPage/CertPage'
+import HelpPage from '../containers/HelpPage/HelpPage'
 
 
 const routes =[{
@@ -41,6 +43,16 @@ const routes =[{
     path: '/messagepage',
     pathKey: 'messagepage',
     component: MessagePage
+},
+{
+    path: '/certpage',
+    pathKey: 'certpage',
+    component: CertPage
+},
+{
+    path: '/helppage',
+    pathKey: 'helppage',
+    component: HelpPage
 }]
 
 
