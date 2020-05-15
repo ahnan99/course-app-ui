@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, message } from 'antd'
 import { Route, withRouter } from 'react-router-dom'
 import {
     AuditOutlined,
@@ -11,6 +11,9 @@ import {
     AppstoreOutlined,
     ScheduleOutlined
 } from '@ant-design/icons';
+import { actions as ApplicationActions } from '../modules/application'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
 import 'antd/dist/antd.css'
 import routes from '../routes'
 import './MainView.css'
@@ -41,8 +44,18 @@ class MainView extends Component {
             case "4":
                 this.props.history.push("/userinfo")
                 break
+            case "8":
+                this.props.actions.userLogout()
+                break
             default:
                 this.props.history.push("/homepage")
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) =>{
+        if(nextProps.application.loggedIn == false){
+            message.success('登出成功')
+            this.props.history.push("/login")
         }
     }
 
@@ -101,4 +114,12 @@ class MainView extends Component {
     }
 }
 
-export default withRouter(MainView)
+const mapStateToProps = state => ({
+    application: state.application
+})
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(ApplicationActions, dispatch)
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainView))

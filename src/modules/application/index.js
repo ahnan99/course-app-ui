@@ -12,6 +12,8 @@ const POST_USER_INFO = 'post_user_info'
 const UPDATE_POST_USER_INFO = 'update_post_user_info'
 const RESET_POST_USER_INFO = 'reset_post_user_info'
 const UPDATE_LOGIN_STATUS = 'update_login_status'
+const REQUEST_LOGOUT = 'request_logout'
+const USER_LOGOUT = 'user_logout'
 
 export const types = {
     REQUEST_LOGIN,
@@ -26,7 +28,9 @@ export const types = {
     POST_USER_INFO,
     UPDATE_POST_USER_INFO,
     RESET_POST_USER_INFO,
-    UPDATE_LOGIN_STATUS
+    UPDATE_LOGIN_STATUS,
+    USER_LOGOUT,
+    REQUEST_LOGOUT
 }
 
 //Action creators
@@ -89,9 +93,18 @@ const resetPostUserInfo = () => ({
     type: RESET_POST_USER_INFO
 })
 
-const updateLoginStatus = data =>({
-    type:UPDATE_LOGIN_STATUS,
+const updateLoginStatus = data => ({
+    type: UPDATE_LOGIN_STATUS,
     data
+})
+
+const requestLogout = () => ({
+    type: REQUEST_LOGOUT
+})
+
+const userLogout = response => ({
+    type: USER_LOGOUT,
+    response
 })
 
 export const actions = {
@@ -107,7 +120,9 @@ export const actions = {
     updateUserInfo,
     updatePostUserInfo,
     resetPostUserInfo,
-    updateLoginStatus
+    updateLoginStatus,
+    requestLogout,
+    userLogout
 }
 
 const initialState = {
@@ -117,8 +132,8 @@ const initialState = {
     loginError: null,
     registered: false,
     registerError: null,
-    userInfo:null,
-    postUserInfoStatus:null
+    userInfo: null,
+    postUserInfoStatus: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -176,17 +191,28 @@ const reducer = (state = initialState, action = {}) => {
                 postUserInfoStatus: action.data
             }
         }
-        case RESET_POST_USER_INFO:{
+        case RESET_POST_USER_INFO: {
             return {
                 ...state,
                 postUserInfoStatus: null
             }
         }
-        case UPDATE_LOGIN_STATUS:{
+        case UPDATE_LOGIN_STATUS: {
             return {
                 ...state,
                 loggedIn: action.data
             }
+        }
+        case USER_LOGOUT: {
+            if (action.response.status === 0) {
+                return {
+                    ...state,
+                    loggedIn: false,
+                    loginError: null,
+                    username: null,
+                    userInfo: null
+                }
+            } 
         }
         default:
             return state;
