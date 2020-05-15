@@ -12,11 +12,11 @@ function* postMessageWatch() {
 }
 
 function* messageWatch() {
-    yield takeLatest(types.GET_MESSAGE, getMessageTypeWorker)
+    yield takeLatest(types.GET_MESSAGE, getMessageWorker)
 }
 
 function* singleMessageWatch() {
-    yield takeLatest(types.GET_SINGLE_MESSAGE, postMessageWorker)
+    yield takeLatest(types.GET_SINGLE_MESSAGE, getSingleMessageWorker)
 }
 
 //endPoints
