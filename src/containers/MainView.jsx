@@ -85,7 +85,7 @@ class MainView extends Component {
                     onClick={this.setCollapse}
                 >
                     <div className="logo">
-                        <b>{this.props.application.userInfo.name}</b>
+                        <b style={{color:'white'}}>{this.props.application.userInfo?this.props.application.userInfo.name:null}</b>
                     </div>
                     <Menu onClick={this.onClick} theme="dark" mode="inline">
                         <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
