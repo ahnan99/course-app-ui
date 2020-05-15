@@ -10,13 +10,13 @@ export default class MessageTable extends Component {
             title: '消息',
             dataIndex: 'item',
             key: 'item',
-            render: (text, record) => <a onClick={() => this.onClick(record)}>{text}</a>,
+            render: (text, record) => <a key={record.ID} onClick={() => this.onClick(record)}>{text}</a>,
         },
         {
             title: '日期',
             dataIndex: 'regDate',
             key: 'regDate',
-        render: text => <p>{text.slice(0,9)}</p>
+        render: (text,record) => <p key={record.ID}>{text.slice(0,9)}</p>
         },
     ]
 
@@ -44,7 +44,7 @@ export default class MessageTable extends Component {
         return (
             <div>
                 <Modal visible={this.state.visible} onCancel={this.onCancel}>
-                    <span>{this.props.message.singleMessage ? this.props.message.singleMessage : "No conetent"}</span>
+                    <p>{this.props.message.singleMessage ? this.props.message.singleMessage : "No conetent"}</p>
                 </Modal>
                 <Table dataSource={this.props.message.messageList} columns={this.columns} />
             </div>
