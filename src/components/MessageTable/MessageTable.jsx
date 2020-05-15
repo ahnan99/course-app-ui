@@ -16,7 +16,7 @@ export default class MessageTable extends Component {
             title: '日期',
             dataIndex: 'regDate',
             key: 'regDate',
-        render: (text,record) => <p key={record.ID}>{text.slice(0,9)}</p>
+        render: (text,record) => <p key={record.ID}>{text.slice(0,10)}</p>
         },
     ]
 
