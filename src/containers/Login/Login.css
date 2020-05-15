@@ -5,3 +5,9 @@
 .form-row{
     height: 100vh;
 }
+.title{
+    font-size: 20px;
+}
+.title-div{
+    padding-bottom: 10%;
+}

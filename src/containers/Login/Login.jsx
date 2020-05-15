@@ -21,25 +21,23 @@ class Login extends Component {
                 </Col>
                 <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
                     {this.props.application.companyInfo ?
-                        <Row gutter={[16, 16]} style={{textAlign: "center"}}>
-                            <Row gutter={[16, 16]}>
-                                {<img src={axios.defaults.baseURL + this.props.application.companyInfo[0].logo} />}
-                            </Row>
-                            <Row gutter={[16, 16]}>
-                                <b>{this.props.application.companyInfo[0].hostName}</b>
-                            </Row>
-                        </Row>
+                        <div className="title-div">
+                            <div>
+                                {<img src={axios.defaults.baseURL + this.props.application.companyInfo[0].logo} width={60} heigth={60}/>}
+                            </div>
+                            <div>
+                                <b class="title">{this.props.application.companyInfo[0].hostName}</b>
+                            </div>
+                        </div>
                         : null
                     }
-
-                    <Row gutter={[16, 16]}>
                         <LoginForm
                             requestLogin={this.props.actions.requestLogin}
                             loggedIn={this.props.application.loggedIn}
                             loginError={this.props.application.loginError}
                             username={this.props.application.username}
                             getUserInfo={this.props.actions.getUserInfo} />
-                    </Row>
+                 
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>
                 </Col>
