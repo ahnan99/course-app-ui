@@ -28,10 +28,7 @@ class App extends Component {
         if (this.props.application.loggedIn === false && nextProps.application.loggedIn === true) {
             message.success('登陆成功')
         }
-        if (this.props.message.postMessageRes === null && nextProps.message.postMessageRes && nextProps.message.postMessageRes.status === 0) {
-            message.success('反馈提交成功')
-            this.props.messageActions.updatePostMessage(null)
-        }
+        
     }
 
     render() {

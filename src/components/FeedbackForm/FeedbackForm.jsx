@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select } from 'antd'
+import { Form, Input, Button, Select,message } from 'antd'
 import {  LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 
@@ -10,11 +10,17 @@ const layout = {
 };
 
 class FeedbackForm extends Component {
+    formRef = React.createRef()
     constructor(props) {
         super(props)
     }
 
     componentWillReceiveProps = (nextProps) => {
+        if (this.props.message.postMessageRes === null && nextProps.message.postMessageRes && nextProps.message.postMessageRes.status === 0) {
+            message.success('反馈提交成功')
+            this.formRef.current.resetFields()
+            this.props.actions.updatePostMessage(null)
+        }
     }
 
     onFinish = values => {
@@ -40,6 +46,7 @@ class FeedbackForm extends Component {
                 initialValues={{ mobile: this.props.application.userInfo.mobile, email:this.props.application.userInfo.email}}
                 onFinish={this.onFinish}
                 {...layout}
+                ref={this.formRef}
             >
                 <Form.Item
                     name="mobile"
@@ -54,7 +61,6 @@ class FeedbackForm extends Component {
                     rules={[{ required: true, message: '请输入邮箱' }]}
                 >
                     <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
                     />
                 </Form.Item>
                 <Form.Item
@@ -72,9 +78,7 @@ class FeedbackForm extends Component {
                     label="反馈内容"
                     rules={[{ required: true, message: '请输入反馈内容' }]}
                 >
-                    <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                    />
+                    <Input.TextArea  autoSize={{minRows: 3}}/>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
