@@ -10,6 +10,7 @@ export default class MessageTable extends Component {
             title: '消息',
             dataIndex: 'item',
             key: 'item',
+            ellipsis: true,
             render: (text, record) => <a key={record.ID} onClick={() => this.onClick(record)}>{text}</a>,
         },
         {
