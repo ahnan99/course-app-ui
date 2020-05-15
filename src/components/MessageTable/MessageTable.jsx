@@ -35,6 +35,7 @@ export default class MessageTable extends Component {
 
     onClick = (record) => {
         this.props.actions.getSingleMessage({ ID: record.ID })
+        this.props.actions.getMessage({username: this.props.application.userInfo.username})
     }
 
     onCancel = () => {
@@ -45,7 +46,7 @@ export default class MessageTable extends Component {
         return (
             <div>
                 <Modal visible={this.state.visible} onCancel={this.onCancel} onOk={this.onCancel} footer={[<Button onClick={this.onCancel}>确定</Button>]}>
-                    <p>{this.props.message.singleMessage ? this.props.message.singleMessage[0].item : "Loading"}</p>
+                    <p key={1}>{this.props.message.singleMessage ? this.props.message.singleMessage[0].item : "Loading"}</p>
                 </Modal>
                 <Table rowKey={record=>record.ID} dataSource={this.props.message.messageList} columns={this.columns} />
             </div>
