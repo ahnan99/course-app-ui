@@ -35,11 +35,12 @@ export default class MessageTable extends Component {
 
     onClick = (record) => {
         this.props.actions.getSingleMessage({ ID: record.ID })
-        this.props.actions.getMessage({username: this.props.application.userInfo.username})
+        
     }
 
     onCancel = () => {
         this.props.actions.updateSingleMessage(null)
+        this.props.actions.getMessage({username: this.props.application.userInfo.username})
     }
 
     render() {
