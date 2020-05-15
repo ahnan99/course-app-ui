@@ -54,7 +54,6 @@ class MainView extends Component {
 
     componentWillReceiveProps = (nextProps) =>{
         if(nextProps.application.loggedIn == false){
-            message.success('登出成功')
             this.props.history.push("/login")
         }
     }
