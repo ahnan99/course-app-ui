@@ -2,21 +2,23 @@ import React, { Component } from 'react'
 import { Table, Modal } from 'antd'
 
 
-const columns = [
-    {
-        title: '消息',
-        dataIndex: 'item',
-        key: 'item',
-        render: (text, record) => <a onClick={() => this.onClick(record)}>{text}</a>,
-    },
-    {
-        title: '日期',
-        dataIndex: 'regDate',
-        key: 'regDate',
-    },
-]
 
 export default class MessageTable extends Component {
+
+    columns = [
+        {
+            title: '消息',
+            dataIndex: 'item',
+            key: 'item',
+            render: (text, record) => <a onClick={() => this.onClick(record)}>{text}</a>,
+        },
+        {
+            title: '日期',
+            dataIndex: 'regDate',
+            key: 'regDate',
+        render: text => <p>{text.slice(0,9)}</p>
+        },
+    ]
 
     state = {
         visible: false
@@ -44,7 +46,7 @@ export default class MessageTable extends Component {
                 <Modal visible={this.state.visible} onCancel={this.onCancel}>
                     <span>{this.props.message.singleMessage ? this.props.message.singleMessage : "No conetent"}</span>
                 </Modal>
-                <Table dataSource={this.props.message.messageList} columns={columns} />
+                <Table dataSource={this.props.message.messageList} columns={this.columns} />
             </div>
         )
     }
