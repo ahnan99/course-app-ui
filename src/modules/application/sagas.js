@@ -42,7 +42,7 @@ export function postUserInfoEndpoint(data) {
 }
 
 export function userLogoutEndpoint() {
-    return axios.post('/students/logout')
+    return axios.get('/students/logout')
 }
 
 //workers
