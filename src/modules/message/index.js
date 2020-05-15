@@ -3,12 +3,20 @@ const POST_MESSAGE = 'post_message'
 const UPDATE_POST_MESSAGE = 'update_post_message'
 const GET_MESSAGE_TYPE = 'get_message_type'
 const UPDATE_MESSAGE_TYPE = 'update_message_type'
+const GET_MESSAGE = 'get_message'
+const UPDATE_MESSAGE = 'update_message'
+const GET_SINGLE_MESSAGE = 'get_single_message'
+const UPDATE_SINGLE_MESSAGE = 'update_single_message'
 
 export const types = {
     POST_MESSAGE,
     UPDATE_POST_MESSAGE,
     GET_MESSAGE_TYPE,
-    UPDATE_MESSAGE_TYPE
+    UPDATE_MESSAGE_TYPE,
+    GET_MESSAGE,
+    UPDATE_MESSAGE,
+    GET_SINGLE_MESSAGE,
+    UPDATE_SINGLE_MESSAGE
 }
 
 //Action creators
@@ -32,17 +40,45 @@ const updateMessageType = data =>({
     data
 })
 
+const getSingleMessage = payload =>({
+    type: GET_SINGLE_MESSAGE,
+    payload
+})
+
+const updateSingleMessage = data =>({
+    type: UPDATE_SINGLE_MESSAGE,
+    data
+})
+
+const getMessage = payload =>({
+    type: GET_MESSAGE,
+    payload
+})
+
+const updateMessage = data => ({
+    type:UPDATE_MESSAGE,
+    data
+})
+
+
+
 export const actions = {
     updateMessageType,
     updatePostMessage,
     getMessageType,
-    postMessage
+    postMessage,
+    getMessage,
+    updateMessage,
+    getSingleMessage,
+    updateSingleMessage
 }
 
 
 const initialState = {
     postMessageRes: null,
-    messageTypes: []
+    messageTypes: [],
+    singleMessage: null,
+    messageList: []
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -57,6 +93,18 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 postMessageRes: action.response
+            }
+        }
+        case UPDATE_MESSAGE: {
+            return {
+                ...state,
+                messageList: action.data
+            }
+        }
+        case UPDATE_SINGLE_MESSAGE: {
+            return {
+                ...state,
+                singleMessage: action.data
             }
         }
         default:
