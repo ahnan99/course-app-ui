@@ -13,6 +13,11 @@ class HomePage extends Component {
     render() {
         const { courses, lessons } = this.props.course
         const { actions } = this.props
+        if(courses.length === 0){
+            return <div>
+                <h3>还未选择课程</h3>
+            </div>
+        }
         return (
             <div>
                 {courses.map(course => (
