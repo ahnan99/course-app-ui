@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Modal } from 'antd'
+import { Table, Modal, Button } from 'antd'
 
 
 
@@ -43,8 +43,8 @@ export default class MessageTable extends Component {
     render() {
         return (
             <div>
-                <Modal visible={this.state.visible} onCancel={this.onCancel}>
-                    <p>{this.props.message.singleMessage ? this.props.message.singleMessage : "No conetent"}</p>
+                <Modal visible={this.state.visible} onCancel={this.onCancel} onOk={this.onCancel} footer={[<Button onClick={this.onCancel}>确定</Button>]}>
+                    <p>{this.props.message.singleMessage ? this.props.message.singleMessage[0].item : "No conetent"}</p>
                 </Modal>
                 <Table dataSource={this.props.message.messageList} columns={this.columns} />
             </div>
