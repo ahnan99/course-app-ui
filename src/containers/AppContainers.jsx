@@ -8,6 +8,7 @@ import ForgetPassword from './ForgetPassword/ForgetPassword'
 import MainView from './MainView'
 import axios from 'axios'
 import { actions as ApplicationActions } from '../modules/application'
+import { actions as MessageActions} from '../modules/message'
 import { bindActionCreators } from 'redux'
 
 
@@ -27,6 +28,10 @@ class App extends Component {
         if (this.props.application.loggedIn === false && nextProps.application.loggedIn === true) {
             message.success('登陆成功')
         }
+        if (this.props.message.postMessageRes === null && nextProps.message.postMessageRes && nextProps.message.postMessageRes.status === 0) {
+            message.success('反馈提交成功')
+            this.props.messageActions.updatePostMessage(null)
+        }
     }
 
     render() {
@@ -42,11 +47,13 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    application: state.application
+    application: state.application,
+    message: state.message
 })
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(ApplicationActions, dispatch),
+    messageActions: bindActionCreators(MessageActions,dispatch)
 
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App)

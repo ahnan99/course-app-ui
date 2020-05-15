@@ -12,7 +12,7 @@ import {
     ScheduleOutlined
 } from '@ant-design/icons';
 import { actions as ApplicationActions } from '../modules/application'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import 'antd/dist/antd.css'
 import routes from '../routes'
@@ -30,11 +30,11 @@ class MainView extends Component {
 
     state = {
         collapsed: true,
-      }
+    }
 
-    onClick = e =>{
-        this.setState({collapsed:true})
-        switch(e.key){
+    onClick = e => {
+        this.setState({ collapsed: true })
+        switch (e.key) {
             case "1":
                 this.props.history.push("/homepage")
                 break
@@ -44,6 +44,9 @@ class MainView extends Component {
             case "4":
                 this.props.history.push("/userinfo")
                 break
+            case "5":
+                this.props.history.push("/feedbackpage")
+                break
             case "8":
                 this.props.actions.requestLogout()
                 break
@@ -52,14 +55,14 @@ class MainView extends Component {
         }
     }
 
-    componentWillReceiveProps = (nextProps) =>{
-        if(nextProps.application.loggedIn == false){
+    componentWillReceiveProps = (nextProps) => {
+        if (nextProps.application.loggedIn == false) {
             this.props.history.push("/login")
         }
     }
 
-    setCollapse=()=>{
-        this.setState({collapsed:!this.state.collapsed})
+    setCollapse = () => {
+        this.setState({ collapsed: !this.state.collapsed })
     }
 
     render() {
@@ -68,7 +71,7 @@ class MainView extends Component {
                 <Sider
                     breakpoint="md"
                     collapsedWidth="0"
-                    style={{ height:"100vh", position: "fixed",zIndex:99}}
+                    style={{ height: "100vh", position: "fixed", zIndex: 99 }}
                     collapsed={this.state.collapsed}
                     onClick={this.setCollapse}
                 >

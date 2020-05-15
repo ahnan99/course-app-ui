@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, message } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { Form, Input, Button, Select } from 'antd'
+import {  LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 
 
@@ -14,31 +14,24 @@ class FeedbackForm extends Component {
         super(props)
     }
 
-    componentWillMount = () => {
-        if (this.props.loggedIn) {
-            this.props.history.push('/homepage')
-        }
-    }
-
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.loggedIn && nextProps.username) {
-            this.props.getUserInfo({username:nextProps.username})
-            this.props.history.push('/homepage')
-        }
-        if (nextProps.loginError){
-            message.error(nextProps.loginError)
-        }
     }
 
     onFinish = values => {
         console.log('Success:', values)
-        this.props.requestLogin({ username: values.username, password: values.password })
+        this.props.actions.postMessage({
+            username: this.props.application.userInfo.username,
+            mobile: values.mobile,
+            email: values.email,
+            kindID: values.kindID,
+            item: values.item,
+            refID: "0"
+        })
     }
 
     onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo)
     }
-
     render() {
         return (
             <Form
@@ -49,35 +42,44 @@ class FeedbackForm extends Component {
                 {...layout}
             >
                 <Form.Item
-                    name="username"
-                    label="用户名"
-                    rules={[{ required: true, message: '请输入用户名' }]}
+                    name="mobile"
+                    label="手机"
+                    rules={[{ required: true, message: '请输入手机' }]}
                 >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" />
+                    <Input placeholder="手机号码" />
                 </Form.Item>
                 <Form.Item
-                    name="password"
-                    label="密码"
-                    rules={[{ required: true, message: '请输入密码' }]}
+                    name="email"
+                    label="邮箱"
+                    rules={[{ required: true, message: '请输入邮箱' }]}
                 >
                     <Input
                         prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
-                        placeholder="密码"
                     />
                 </Form.Item>
-                <Form.Item>
-
-                    <a className="login-form-forgot" href="/forgetpassword">
-                        忘记密码
-                    </a>
+                <Form.Item
+                    name="kindID"
+                    label="问题类型"
+                >
+                    <Select>
+                        {this.props.message.messageTypes.map(type => (
+                            <Option value={type.ID}>{type.item}</Option>
+                        ))}
+                    </Select>
                 </Form.Item>
-
+                <Form.Item
+                    name="item"
+                    label="反馈内容"
+                    rules={[{ required: true, message: '请输入反馈内容' }]}
+                >
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                    />
+                </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         提交
                     </Button>
-                    <span> </span>或 <a href="/register">注册</a>
                 </Form.Item>
             </Form>
         )

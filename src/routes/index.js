@@ -3,6 +3,7 @@ import ClassPage from "../containers/ClassPage/ClassPage"
 import PDFView from "../containers/PDFView/PDFView"
 import CourseSelect from "../containers/CourseSelect/CourseSelect"
 import UserInfo from "../containers/UserInfo/UserInfo"
+import FeedbackPage from '../containers/FeedbackPage/FeedbackPage'
 
 
 const routes =[{
@@ -29,6 +30,10 @@ const routes =[{
     path: '/userinfo',
     pathKey: 'userinfo',
     component: UserInfo
+},{
+    path: '/feedbackpage',
+    pathKey: 'feedbackpage',
+    component: FeedbackPage
 }]
 
 
