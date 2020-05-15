@@ -21,7 +21,7 @@ class Login extends Component {
                 </Col>
                 <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
                     {this.props.application.companyInfo ?
-                        <Row gutter={[16, 16]}>
+                        <Row gutter={[16, 16]} style={{textAlign: "center"}}>
                             <Row gutter={[16, 16]}>
                                 {<img src={axios.defaults.baseURL + this.props.application.companyInfo[0].logo} />}
                             </Row>
