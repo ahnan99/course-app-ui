@@ -262,6 +262,18 @@ class UserInfoForm extends Component {
                 >
                     <Avatar imageUrl={axios.defaults.baseURL + this.props.application.userInfo.photo_filename} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
                 </Form.Item>
+                <Form.Item
+                    name="upload2"
+                    label="上传身份证正面"
+                >
+                    <Avatar imageUrl={axios.defaults.baseURL + this.props.application.userInfo.IDa_filename} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
+                </Form.Item>
+                <Form.Item
+                    name="upload3"
+                    label="上传身份证反面"
+                >
+                    <Avatar imageUrl={axios.defaults.baseURL + this.props.application.userInfo.IDb_filename} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
+                </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">修改信息</Button>
                     <span> </span>

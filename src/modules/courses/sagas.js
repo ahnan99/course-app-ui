@@ -55,7 +55,6 @@ export function postMaxTime(data) {
     return axios.post('/students/update_video_currentTime', data)
 }
 
-//ToDo
 export function postMaxPage(data) {
     return axios.post('/students/update_courseware_currentPage', data)
 }

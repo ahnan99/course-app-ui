@@ -19,6 +19,15 @@ function* postUserInfoWatch() {
     yield takeLatest(types.POST_USER_INFO, postUserInfoWorker)
 }
 
+function* logoutWatch(){
+    yield takeLatest(types.REQUEST_LOGOUT, userLogoutWorker)
+}
+
+function* companyInfoWatch(){
+    yield takeLatest(types.GET_COMPANY_INFO, getCompanyInfoWorker)
+}
+
+
 export function userLoginEndpoint(data) {
     return axios.post('/students/login', data)
 }
@@ -37,6 +46,13 @@ export function postUserInfoEndpoint(data) {
     return axios.post('/students/update_student', data)
 }
 
+export function userLogoutEndpoint() {
+    return axios.get('/students/logout')
+}
+
+export function getCompanyInfoEndpoint() {
+    return axios.get('/public/getCompanyByHost')
+}
 
 //workers
 function* userLoginWorker(action) {
@@ -66,6 +82,16 @@ function* getUserInfoWorker(action) {
     }
 }
 
+function* getCompanyInfoWorker(action) {
+    try {
+        const response = yield call(getCompanyInfoEndpoint, action.payload)
+        yield put(actions.updateCompanyInfo(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 function* postUserInfoWorker(action) {
     try {
         const response = yield call(postUserInfoEndpoint, action.payload)
@@ -75,15 +101,23 @@ function* postUserInfoWorker(action) {
     }
 }
 
-
+function* userLogoutWorker() {
+    try {
+        const response = yield call(userLogoutEndpoint)
+        yield put(actions.userLogout(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const workers = {
     userLoginWorker,
     userRegisterWorker,
     getUserInfoWorker,
-    postUserInfoWorker
+    postUserInfoWorker,
+    userLogoutWorker
 }
 
 export default function* saga() {
-    yield all([loginWatch(), registerWatch(), getUserInfoWatch(), postUserInfoWatch()])
+    yield all([loginWatch(), registerWatch(), getUserInfoWatch(), postUserInfoWatch(), logoutWatch(),companyInfoWatch()])
 }

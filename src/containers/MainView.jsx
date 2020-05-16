@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, message } from 'antd'
 import { Route, withRouter } from 'react-router-dom'
 import {
     AuditOutlined,
@@ -11,6 +11,9 @@ import {
     AppstoreOutlined,
     ScheduleOutlined
 } from '@ant-design/icons';
+import { actions as ApplicationActions } from '../modules/application'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import 'antd/dist/antd.css'
 import routes from '../routes'
 import './MainView.css'
@@ -27,27 +30,48 @@ class MainView extends Component {
 
     state = {
         collapsed: true,
-      }
+    }
 
-    onClick = e =>{
-        this.setState({collapsed:true})
-        switch(e.key){
+    onClick = e => {
+        this.setState({ collapsed: true })
+        switch (e.key) {
             case "1":
                 this.props.history.push("/homepage")
                 break
             case "2":
                 this.props.history.push("/courseselect")
                 break
+            case "3":
+                this.props.history.push("/certpage")
+                break
             case "4":
                 this.props.history.push("/userinfo")
+                break
+            case "5":
+                this.props.history.push("/feedbackpage")
+                break
+            case "6":
+                this.props.history.push("/messagepage")
+                break
+            case "7":
+                this.props.history.push("/helppage")
+                break
+            case "8":
+                this.props.actions.requestLogout()
                 break
             default:
                 this.props.history.push("/homepage")
         }
     }
 
-    setCollapse=()=>{
-        this.setState({collapsed:!this.state.collapsed})
+    componentWillReceiveProps = (nextProps) => {
+        if (nextProps.application.loggedIn == false) {
+            this.props.history.push("/login")
+        }
+    }
+
+    setCollapse = () => {
+        this.setState({ collapsed: !this.state.collapsed })
     }
 
     render() {
@@ -56,11 +80,13 @@ class MainView extends Component {
                 <Sider
                     breakpoint="md"
                     collapsedWidth="0"
-                    style={{ height:"100vh", position: "fixed",zIndex:99}}
+                    style={{ height: "100vh", position: "fixed", zIndex: 99 }}
                     collapsed={this.state.collapsed}
                     onClick={this.setCollapse}
                 >
-                    <div className="logo" />
+                    <div className="logo">
+                        <b style={{color:'white'}}>{this.props.application.userInfo?this.props.application.userInfo.name:null}</b>
+                    </div>
                     <Menu onClick={this.onClick} theme="dark" mode="inline">
                         <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
                             我的课程
@@ -101,4 +127,12 @@ class MainView extends Component {
     }
 }
 
-export default withRouter(MainView)
+const mapStateToProps = state => ({
+    application: state.application
+})
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(ApplicationActions, dispatch)
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainView))
