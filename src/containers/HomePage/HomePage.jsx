@@ -11,18 +11,16 @@ class HomePage extends Component {
         this.props.actions.getLessonList({ username: this.props.application.username })
     }
 
-    componentWillReceiveProps = nextProps =>{
-        if (nextProps.application.userInfo && nextProps.application.userInfo.newMessage > 0) {
-            this.openNotification('topRight')
+    componentWillReceiveProps = nextProps => {
+        if (nextProps.application.userInfo && this.props.application.userInfo !== nextProps.application.userInfo && nextProps.application.userInfo.newMessage > 0) {
+            notification.info({
+                message: `你有${nextProps.application.userInfo.newMessage}条新信息`,
+                placement: 'topRight'
+            })
         }
     }
 
-    openNotification = placement => {
-        notification.info({
-            message: `你有${this.props.application.userInfo.newMessage}条新信息`,
-            placement,
-        });
-    };
+
 
     render() {
         const { courses, lessons } = this.props.course
