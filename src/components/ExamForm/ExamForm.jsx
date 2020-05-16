@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Radio, message, Checkbox } from 'antd'
+import { Form, Input, Button, Radio, message, Checkbox, Spin } from 'antd'
 
 const layout = {
     labelCol: { span: 8 },
@@ -18,7 +18,7 @@ export default class ExamForm extends Component {
 
     render() {
         if(!this.props.exam.examQuestion){
-            return (<div></div>)
+            return (<div style={{height: '100vh',verticalAlign:'middle',lineHeight: '100vh'}}><Spin spinning></Spin></div>)
         }
         return (
             <Form
