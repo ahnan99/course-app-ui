@@ -629,7 +629,10 @@ video.js: https://www.jb51.net/article/145346.htm
 11a. 获取学员模拟考试题目   **GET:/students/getStudentQuestionList**
   * input  **paperID = api.11.paperID**
     ```
-    {"paperID": "", 1} 
+    {
+      "paperID": 1, 
+      "mark": 0     //0 获取现有题目  1 重新生成题目
+    } 
     ```    
 
   * output  
