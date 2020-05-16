@@ -26,7 +26,7 @@ class Login extends Component {
                                 {<img src={axios.defaults.baseURL + this.props.application.companyInfo[0].logo} width={60} heigth={60}/>}
                             </div>
                             <div>
-                                <b class="title">{this.props.application.companyInfo[0].hostName}</b>
+                                <b className="title">{this.props.application.companyInfo[0].hostName}</b>
                             </div>
                         </div>
                         : null
