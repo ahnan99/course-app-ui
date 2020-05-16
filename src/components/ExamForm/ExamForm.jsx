@@ -17,6 +17,9 @@ export default class ExamForm extends Component {
     }
 
     render() {
+        if(!this.props.exam.examQuestion){
+            return (<div></div>)
+        }
         return (
             <Form
                 name="exam_form"
@@ -28,7 +31,7 @@ export default class ExamForm extends Component {
                 onValuesChange={this.onValuesChange}
             >
                 {
-                    this.props.exam.examQuestion.map(question => {
+                    this.props.exam.examQuestion.map(question => (
                         <Form.Item name={question.ID}
                             label={question.questionName}>
                             {
@@ -49,7 +52,7 @@ export default class ExamForm extends Component {
                                     </Checkbox.Group>
                             }
                         </Form.Item>
-                    })
+                    ))
                 }
                 <Form.Item>
                     <Button type="primary" htmlType="submit">交卷</Button>
