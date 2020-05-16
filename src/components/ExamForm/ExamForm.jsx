@@ -26,6 +26,18 @@ export default class ExamForm extends Component {
         }
     }
 
+    toInitialValues = questions =>{
+        const res = {}
+        for(var question in questions){
+            if(question.kindID !== 2){
+                res[question.ID] = questions.myAnswer
+            }else{
+                res[question.ID] = Array.from(questions.myAnswer)
+            }
+        }
+        return res
+    }
+
     onFinish = values => {
 
     }
@@ -68,7 +80,7 @@ export default class ExamForm extends Component {
                 <Form
                     name="exam_form"
                     className="login-form"
-                    initialValues={{}}
+                    initialValues={this.toInitialValues(this.props.exam.examQuestion)}
                     onFinish={this.onFinish}
                     {...layout}
                     layout={"vertical"}
