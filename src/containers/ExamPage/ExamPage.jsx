@@ -10,7 +10,7 @@ class ExamPage extends Component {
     render() {
         const {exam,actions} = this.props
         return (
-            <ExamForm exam={exam}/>
+            <ExamForm exam={exam} actions={actions}/>
         )
     }
 }
