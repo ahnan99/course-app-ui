@@ -55,7 +55,7 @@ const updateExamQuestion = data =>({
 })
 
 const postTime = payload => ({
-    type: UPDATE_POST_TIME,
+    type: POST_TIME,
     payload
 })
 
