@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Radio, message, Checkbox, Spin } from 'antd'
+import moment from 'moment'
 
 const layout = {
     labelCol: { span: 8 },
@@ -7,6 +8,8 @@ const layout = {
 };
 export default class ExamForm extends Component {
     formRef = React.createRef()
+
+    state = {time:0}
 
     onValuesChange = (changedValue, values) => {
         for(var key in changedValue){
@@ -24,6 +27,15 @@ export default class ExamForm extends Component {
 
     onFinish = values => {
 
+    }
+
+    componentWillReceiveProps = nextProps =>{
+        if (!this.props.exam.exam && nextProps.exam.exam){
+            this.setState({time:nextProps.exam.exam.secondRest},()=>{
+                message.info(moment({}).seconds(this.state.time).format("H:mm:ss"), 0)
+            })
+            
+        }
     }
 
     render() {
