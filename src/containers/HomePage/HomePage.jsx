@@ -9,8 +9,11 @@ class HomePage extends Component {
     componentDidMount() {
         this.props.actions.getCourseList({ username: this.props.application.username })
         this.props.actions.getLessonList({ username: this.props.application.username })
-        if (this.props.application.userInfo && this.props.application.userInfo.newMessage > 0) {
-            this.openNotification('bottomRight')
+    }
+
+    componentWillReceiveProps = nextProps =>{
+        if (nextProps.application.userInfo && nextProps.application.userInfo.newMessage > 0) {
+            this.openNotification('topRight')
         }
     }
 
