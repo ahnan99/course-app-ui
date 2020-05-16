@@ -148,7 +148,7 @@ video.js: https://www.jb51.net/article/145346.htm
         {
             "userID": 1,
             "username": "120107196604032113",
-            "name": "albert",
+            "name": "刘禹锡",
             "password": "123",
             "birthday": "1966-04-03",
             "sex": 1,
@@ -156,7 +156,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "kindID": 0,
             "companyID": 8,
             "dept1": 1,
-            "dept2": 11,
+            "dept2": 16,
             "dept3": 0,
             "job": "",
             "mobile": "13331111222",
@@ -164,17 +164,22 @@ video.js: https://www.jb51.net/article/145346.htm
             "email": "x.x@x.com",
             "user_status": 0,
             "limitDate": "",
-            "host": "sino",
-            "photo_filename": "",
+            "host": "spc",
+            "photo_filename": "\\upload\\students\\photos\\120107196604032113.png",
             "memo": "",
             "regDate": "2020-05-02",
             "statusName": "正常",
-            "hostName": "上海石化公司",
+            "hostName": "中石化上海石化公司",
             "dept1Name": "公司本部",
-            "dept2Name": "总经理办公室",
+            "dept2Name": "发展规划部",
             "dept3Name": "",
-            "companyName": "上海石化公司",
-            "sexName": "男"
+            "companyName": "中石化上海石化公司",
+            "sexName": "男",
+            "IDa_filename": "",
+            "IDb_filename": "",
+            "kindName": "系统内",
+            "photo": 1,
+            "newMessage": 0
         }
     ]
     ```
