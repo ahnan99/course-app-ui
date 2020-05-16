@@ -7,6 +7,7 @@ import FeedbackPage from '../containers/FeedbackPage/FeedbackPage'
 import MessagePage from '../containers/MessagePage/MessagePage'
 import CertPage from '../containers/CertPage/CertPage'
 import HelpPage from '../containers/HelpPage/HelpPage'
+import ExamPage from '../containers/ExamPage/ExamPage'
 
 
 const routes =[{
@@ -53,6 +54,11 @@ const routes =[{
     path: '/helppage',
     pathKey: 'helppage',
     component: HelpPage
+},
+{
+    path: '/exampage',
+    pathKey: 'exampage',
+    component: ExamPage
 }]
 
 

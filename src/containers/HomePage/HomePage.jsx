@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import LessonCard from '../../components/LessonCard/LessonCard'
 import { connect } from 'react-redux'
 import { actions as CourseActions } from '../../modules/courses'
+import { actions as ExamActions } from '../../modules/exam'
 import { bindActionCreators } from 'redux'
 import { notification } from 'antd'
 
@@ -24,7 +25,7 @@ class HomePage extends Component {
 
     render() {
         const { courses, lessons } = this.props.course
-        const { actions } = this.props
+        const { actions, examActions } = this.props
         if (courses.length === 0) {
             return <div>
                 <h3>还未选择课程</h3>
@@ -33,7 +34,7 @@ class HomePage extends Component {
         return (
             <div>
                 {courses.map(course => (
-                    <LessonCard key={course.ID} course={course} lessons={lessons} actions={actions} />
+                    <LessonCard key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions}/>
                 ))}
             </div>
         )
@@ -47,7 +48,8 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(CourseActions, dispatch)
+    actions: bindActionCreators(CourseActions, dispatch),
+    examActions: bindActionCreators(ExamActions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
