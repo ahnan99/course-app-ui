@@ -41,6 +41,7 @@ export default class MessageTable extends Component {
     onCancel = () => {
         this.props.actions.updateSingleMessage(null)
         this.props.actions.getMessage({username: this.props.application.userInfo.username})
+        this.props.userActions.getUserInfo({username:this.props.application.userInfo.username})
     }
 
     render() {

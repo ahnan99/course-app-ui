@@ -8,7 +8,17 @@ class HomePage extends Component {
     componentDidMount() {
         this.props.actions.getCourseList({ username: this.props.application.username })
         this.props.actions.getLessonList({ username: this.props.application.username })
+        if(this.props.application.userInfo && this.props.application.userInfo.newMessage>0){
+            this.openNotification('bottomRight')
+        }
     }
+
+    openNotification = placement => {
+        notification.info({
+          message: `你有${this.props.application.userInfo.newMessage}条新信息`,
+          placement,
+        });
+      };
 
     render() {
         const { courses, lessons } = this.props.course
