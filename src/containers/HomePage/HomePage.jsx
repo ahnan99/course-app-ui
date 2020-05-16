@@ -3,6 +3,7 @@ import LessonCard from '../../components/LessonCard/LessonCard'
 import { connect } from 'react-redux'
 import { actions as CourseActions } from '../../modules/courses'
 import { bindActionCreators } from 'redux'
+import { notification } from 'antd'
 
 class HomePage extends Component {
     componentDidMount() {
@@ -10,10 +11,21 @@ class HomePage extends Component {
         this.props.actions.getLessonList({ username: this.props.application.username })
     }
 
+    componentWillReceiveProps = nextProps => {
+        if (nextProps.application.userInfo && this.props.application.userInfo !== nextProps.application.userInfo && nextProps.application.userInfo.newMessage > 0) {
+            notification.info({
+                message: `你有${nextProps.application.userInfo.newMessage}条新信息`,
+                placement: 'topRight'
+            })
+        }
+    }
+
+
+
     render() {
         const { courses, lessons } = this.props.course
         const { actions } = this.props
-        if(courses.length === 0){
+        if (courses.length === 0) {
             return <div>
                 <h3>还未选择课程</h3>
             </div>
@@ -21,7 +33,7 @@ class HomePage extends Component {
         return (
             <div>
                 {courses.map(course => (
-                    <LessonCard key={course.ID} course={course} lessons={lessons} actions={actions}/>
+                    <LessonCard key={course.ID} course={course} lessons={lessons} actions={actions} />
                 ))}
             </div>
         )
