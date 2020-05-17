@@ -86,9 +86,8 @@ export default class ExamForm extends Component {
             this.setState({loading:false})
             this.props.actions.updatePostExam(null)
         }
-        if(this.props.exam.examQuestion && prevProps.exam.examQuestion === null){
+        if(this.props.exam.exam && this.props.exam.examQuestion && prevProps.exam.examQuestion === null){
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
-            message.success('重新开始成功')
         }
         
     }
@@ -100,7 +99,7 @@ export default class ExamForm extends Component {
         return (<div>
             <Affix offsetTop={10}>
                 <div className='alert-container'>
-                    <Alert message={'剩余时间：' + moment.utc(this.state.time * 1000).format("H:mm:ss")} type='info' />
+                    <Alert message={this.props.exam.exam[0].status === 2?'得分: ' + this.props.exam.exam[0].score:'剩余时间：' + moment.utc(this.state.time * 1000).format("H:mm:ss")} type='info' />
                 </div>
             </Affix>
             <p> </p>
