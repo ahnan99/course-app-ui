@@ -3,12 +3,13 @@ import { Form, Input, Button, Radio, message, Checkbox, Spin, Alert, Affix, Row 
 import moment from 'moment'
 import './ExamForm.css'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { withRouter } from 'react-router-dom'
 
 const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
 };
-export default class ExamForm extends Component {
+class ExamForm extends Component {
     formRef = React.createRef()
 
     state = { time: 0, loading: false }
@@ -70,6 +71,10 @@ export default class ExamForm extends Component {
         }, 1000)
     }
 
+    leave = () => {
+        this.props.history.push('/homepage')
+    }
+
     componentWillUnmount() {
         this.props.actions.updateExam(null)
         this.props.actions.updateExamQuestion(null)
@@ -82,6 +87,7 @@ export default class ExamForm extends Component {
         }
         if (this.props.exam.postExamRes) {
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
+            this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
             message.success('提交成功')
             this.setState({ loading: false })
             this.props.actions.updatePostExam(null)
@@ -124,7 +130,7 @@ export default class ExamForm extends Component {
                                 key={question.ID}
                                 label={<span>
                                     <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}</span>
-                                    &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}</span>
+                                    &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score > 0 ? { color: 'green' } : { color: 'red' }} /> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 ? '正确答案: ' + question.answer : null}</span>
                                 </span>
                                 }>
@@ -151,7 +157,8 @@ export default class ExamForm extends Component {
                     <Form.Item>
                         <Button type="primary" htmlType="submit" loading={this.state.loading}>{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button>
                         <span> </span>
-                        <span> </span>
+                        <span>&nbsp;&nbsp;</span>
+                        <Button onClick={() => this.leave()}>离开</Button>
                     </Form.Item>
                 </Form>
             </div>
@@ -159,3 +166,4 @@ export default class ExamForm extends Component {
         )
     }
 }
+export default withRouter(ExamForm)
