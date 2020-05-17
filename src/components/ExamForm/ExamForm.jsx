@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, Button, Radio, message, Checkbox, Spin, Alert, Affix } from 'antd'
 import moment from 'moment'
 import './ExamForm.css'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 const layout = {
     labelCol: { span: 8 },
@@ -26,27 +27,36 @@ export default class ExamForm extends Component {
         }
     }
 
-    toInitialValues = questions =>{
-        const res = {}
-        for(var question in questions){
-            if(question.kindID !== 2){
-                res[question.ID] = questions.myAnswer
-            }else{
-                res[question.ID] = Array.from(questions.myAnswer)
+    toInitialValues = questions => {
+        if (questions) {
+            const res = {}
+            for (var i = 0; i < questions.length; i++) {
+                const question = questions[i]
+                if (question.myAnswer && question.myAnswer !== '') {
+                    if (question.kindID !== 2) {
+                        res[question.ID] = question.myAnswer
+                    } else {
+                        res[question.ID] = Array.from(question.myAnswer)
+                    }
+                }
+
             }
+            return res
         }
-        return res
     }
 
     onFinish = values => {
-
+        this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID, mark:this.props.exam.exam[0].status === 2?"1":"0" })
     }
 
     componentDidMount() {
         this.timer = setInterval(() => {
-            if (this.state.time > 0) {
+            if (this.state.time > 0 && this.props.exam.exam &&this.props.exam.exam[0].status !== 2) {
                 const { time } = this.state
                 this.setState({ time: time - 1 }, () => {
+                    if(this.state.time === 0){
+                        this.onFinish()
+                    }
                     this.props.actions.postTime({ paperID: this.props.exam.exam[0].paperID, secondRest: this.state.time })
                 })
             }
@@ -63,10 +73,14 @@ export default class ExamForm extends Component {
         if (!prevProps.exam.exam && this.props.exam.exam) {
             this.setState({ time: this.props.exam.exam[0].secondRest })
         }
+        if (this.props.exam.postExamRes) {
+            this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
+            this.props.actions.updatePostExam(null)
+        }
     }
 
     render() {
-        if (!this.props.exam.examQuestion) {
+        if (!this.props.exam.examQuestion || !this.props.exam.exam) {
             return (<div style={{ height: '100vh', verticalAlign: 'middle', lineHeight: '100vh' }}><Spin spinning></Spin></div>)
         }
         return (<div>
@@ -80,7 +94,7 @@ export default class ExamForm extends Component {
                 <Form
                     name="exam_form"
                     className="login-form"
-                    initialValues={this.toInitialValues(this.props.exam.examQuestion)}
+                    initialValues={this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
                     onFinish={this.onFinish}
                     {...layout}
                     layout={"vertical"}
@@ -92,7 +106,12 @@ export default class ExamForm extends Component {
                             <Form.Item style={{ textAlign: 'left' }}
                                 name={question.ID}
                                 key={question.ID}
-                                label={(index + 1) + '. ' + question.questionName}>
+                                label={<span>
+                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}</span>
+                                    &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score>1?{color:'green'}:{color:'red'}}/> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score>1?{color:'green'}:{color:'red'}}/> : null}</span>
+                                    &nbsp;<span>{this.props.exam.exam[0].status === 2 ? '正确答案: ' + question.answer : null}</span>
+                                </span>
+                                }>
                                 {
                                     question.kindID !== 2 ?
                                         <Radio.Group>
@@ -114,7 +133,7 @@ export default class ExamForm extends Component {
                         ))
                     }
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">交卷</Button>
+                        <Button type="primary" htmlType="submit">{this.props.exam.exam[0].status !==2?'交卷':'重新开始'}</Button>
                         <span> </span>
                         <span> </span>
                     </Form.Item>
