@@ -89,6 +89,9 @@ export default class ExamForm extends Component {
         if(this.props.exam.exam && this.props.exam.examQuestion && prevProps.exam.examQuestion === null){
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
         }
+        if(prevProps.exam.exam && this.props.exam.exam && prevProps.exam.exam !== this.props.exam.exam){
+            this.setState({ time: this.props.exam.exam[0].secondRest })
+        }
         
     }
 
