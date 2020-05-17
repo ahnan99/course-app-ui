@@ -33,25 +33,18 @@ class LessonCard extends Component {
                                 {lessons.filter(lesson => lesson.refID === course.ID).map((lesson, index) => (
                                     <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
                                         <p style={{ float: 'left' }}>
-                                            <span>{index + 1}. {lesson.lessonName}&nbsp;&nbsp;</span>
+                                            <a onClick={() => this.onClick(lesson)}>{index + 1}. {lesson.lessonName}&nbsp;&nbsp;</a>
                                             <span style={{ color: 'lightgray' }}>{lesson.completion}%</span>
                                         </p>
-                                        <span style={{ float: 'right', color: 'darkOrange' }}
-                                            key={lesson.ID}
-                                            onClick={() => this.onClick(lesson)}>
-                                            <RightOutlined />
-                                        </span>
+
                                     </li>
                                 ))}
                                 <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
                                     <p style={{ float: 'left' }}>
-                                        *&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;<span style={{ color: 'lightgray' }}>
+                                        <a onClick={()=> this.onClickExam(course)}>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
                                             {course.examScore}分&nbsp;&nbsp;</span>
                                         <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
                                     </p>
-                                    <span style={{ float: 'right', color: 'darkOrange' }} onClick={()=> this.onClickExam(course)}>
-                                        <RightOutlined />
-                                    </span>
                                 </li>
                             </ul>
                         </Card>
