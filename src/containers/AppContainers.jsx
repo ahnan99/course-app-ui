@@ -26,7 +26,7 @@ class App extends Component {
             message.success('登出成功')
         }
         if (this.props.application.loggedIn === false && nextProps.application.loggedIn === true) {
-            message.success('登陆成功')
+            message.success('登录成功')
         }
         
     }
