@@ -75,7 +75,7 @@ class LoginForm extends Component {
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                        登陆
+                        登录
                     </Button>
                     <span> </span>或 <a href="/register">注册</a>
                 </Form.Item>
