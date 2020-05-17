@@ -12,23 +12,33 @@ class LessonCard extends Component {
         this.props.history.push("/classpage")
     }
 
-    onClickExam = course =>{
-        this.props.examActions.getExam({paperID:course.paperID})
-        this.props.examActions.getExamQuestion({paperID:course.paperID})
+    onClickExam = course => {
+        this.props.examActions.getExam({ paperID: course.paperID })
+        this.props.examActions.getExamQuestion({ paperID: course.paperID })
         this.props.history.push("/exampage")
     }
+
+    gridStyle = {
+        width: '100%',
+        textAlign: 'left',
+    };
 
     render() {
         const { course } = this.props
         const { lessons } = this.props
+
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
                 <Col span={24}>
                     <Card title={course.courseName} style={{ textAlign: 'left' }} extra={<a>{course.statusName}</a>}>
-                        <Progress percent={course.completion} size="small" /><p>时长：{course.hours}</p>
-                        <p>开始日期：{course.startDate}</p>
-                        <p>结束日期：{course.endDate}</p>
-                        <Card type="inner" title="课程内容">
+                        <Card.Grid style={this.gridStyle}>
+                            <Progress percent={course.completion} size="small" /><p>时长：{course.hours}</p>
+                            <p>开始日期：{course.startDate}</p>
+                            <p>结束日期：{course.endDate}</p>
+                        </Card.Grid>
+                        <Card.Grid style={this.gridStyle}>
+                            <b>课程内容</b>
+                            <p> </p>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
                                 {lessons.filter(lesson => lesson.refID === course.ID).map((lesson, index) => (
                                     <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
@@ -41,13 +51,14 @@ class LessonCard extends Component {
                                 ))}
                                 <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
                                     <p style={{ float: 'left' }}>
-                                        <a onClick={()=> this.onClickExam(course)}>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
+                                        <a onClick={() => this.onClickExam(course)}>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
                                             {course.examScore}分&nbsp;&nbsp;</span>
                                         <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
                                     </p>
                                 </li>
                             </ul>
-                        </Card>
+
+                        </Card.Grid>
                     </Card>
                 </Col>
             </Row>
