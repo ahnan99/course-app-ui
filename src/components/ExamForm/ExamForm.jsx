@@ -46,7 +46,13 @@ export default class ExamForm extends Component {
     }
 
     onFinish = values => {
-        this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID, mark:this.props.exam.exam[0].status === 2?"1":"0" })
+        if(this.props.exam.exam[0].status === 2){
+            this.props.actions.updateExamQuestion(null)
+            this.props.actions.updatePostExam({status:0})
+            this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, mark: 1 })
+        }else{
+            this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID})
+        } 
     }
 
     componentDidMount() {
@@ -77,6 +83,7 @@ export default class ExamForm extends Component {
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
             this.props.actions.updatePostExam(null)
         }
+        
     }
 
     render() {
