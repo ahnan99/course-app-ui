@@ -11,7 +11,8 @@ const layout = {
 export default class ExamForm extends Component {
     formRef = React.createRef()
 
-    state = { time: 0 }
+    state = { time: 0,loading:false }
+
 
     onValuesChange = (changedValue, values) => {
         for (var key in changedValue) {
@@ -48,10 +49,10 @@ export default class ExamForm extends Component {
     onFinish = values => {
         if(this.props.exam.exam[0].status === 2){
             this.props.actions.updateExamQuestion(null)
-            this.props.actions.updatePostExam({status:0})
             this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, mark: 1 })
         }else{
             this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID})
+            this.setState({loading:true})
         } 
     }
 
@@ -81,7 +82,13 @@ export default class ExamForm extends Component {
         }
         if (this.props.exam.postExamRes) {
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
+            message.success('提交成功')
+            this.setState({loading:false})
             this.props.actions.updatePostExam(null)
+        }
+        if(this.props.exam.examQuestion && prevProps.exam.examQuestion === null){
+            this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
+            message.success('重新开始成功')
         }
         
     }
@@ -140,7 +147,7 @@ export default class ExamForm extends Component {
                         ))
                     }
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">{this.props.exam.exam[0].status !==2?'交卷':'重新开始'}</Button>
+                        <Button type="primary" htmlType="submit" loading={this.state.loading}>{this.props.exam.exam[0].status !==2?'交卷':'重新开始'}</Button>
                         <span> </span>
                         <span> </span>
                     </Form.Item>
