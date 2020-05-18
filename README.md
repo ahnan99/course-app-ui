@@ -312,7 +312,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "score": 0,
             "startDate": "",
             "endDate": "",
-            "filename": ""
+            "filename": "",
+            "completion": 0
         }
     ]
     ```
