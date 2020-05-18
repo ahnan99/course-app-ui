@@ -16,6 +16,7 @@ const REQUEST_LOGOUT = 'request_logout'
 const USER_LOGOUT = 'user_logout'
 const GET_COMPANY_INFO = 'get_company_info'
 const UPDATE_COMPANY_INFO = 'update_company_info'
+const UPDATE_NEW_COURSE = 'update_new_course'
 
 export const types = {
     REQUEST_LOGIN,
@@ -34,7 +35,8 @@ export const types = {
     USER_LOGOUT,
     REQUEST_LOGOUT,
     GET_COMPANY_INFO,
-    UPDATE_COMPANY_INFO
+    UPDATE_COMPANY_INFO,
+    UPDATE_NEW_COURSE
 }
 
 //Action creators
@@ -121,6 +123,11 @@ const updateCompanyInfo = data => ({
     data
 })
 
+const updateNewCourse = data => ({
+    type: UPDATE_NEW_COURSE,
+    data
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -138,7 +145,8 @@ export const actions = {
     requestLogout,
     userLogout,
     updateCompanyInfo,
-    getCompanyInfo
+    getCompanyInfo,
+    updateNewCourse
 }
 
 const initialState = {
@@ -150,7 +158,8 @@ const initialState = {
     registerError: null,
     userInfo: null,
     postUserInfoStatus: null,
-    companyInfo: null
+    companyInfo: null,
+    newCourse: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -161,7 +170,8 @@ const reducer = (state = initialState, action = {}) => {
                     ...state,
                     loggedIn: true,
                     loginError: null,
-                    username: action.response.username
+                    username: action.response.username,
+                    newCourse: action.response.newCourse
                 }
             } else if (action.response.sessionExpire === 1) {
                 return {
@@ -236,6 +246,12 @@ const reducer = (state = initialState, action = {}) => {
                     userInfo: null
                 }
             } 
+        }
+        case UPDATE_NEW_COURSE:{
+            return{
+                ...state,
+                newCourse: action.data
+            }
         }
         default:
             return state;
