@@ -41,6 +41,7 @@ class Avatar extends Component {
       // Get this url from response in real world.
       message.success('上传完成')
       this.props.actions.getUserInfo({ username: this.props.application.username })
+      this.forceUpdate()
       getBase64(info.file.originFileObj, imageUrl =>
         this.setState({
           imageUrl,
