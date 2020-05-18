@@ -27,7 +27,8 @@ function beforeUpload(file) {
 class Avatar extends Component {
   state = {
     loading: false,
-    imageUrl: null
+    imageUrl: null,
+    imageHash: Date.now()
   };
 
 
@@ -37,11 +38,11 @@ class Avatar extends Component {
       this.setState({ loading: true });
       return;
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === 'done' && info.file.response && info.file.response.status === 0) {
       // Get this url from response in real world.
       message.success('上传完成')
-      this.props.actions.getUserInfo({ username: this.props.application.username })
-      this.forceUpdate()
+      this.props.actions.getUserInfo({ username: this.props.application.username })    
+      this.setState({imageHash:Date.now()})
       getBase64(info.file.originFileObj, imageUrl =>
         this.setState({
           imageUrl,
@@ -59,6 +60,7 @@ class Avatar extends Component {
       </div>
     );
     const { imageUrl } = this.props;
+    const { imageHash } = this.state
     return (
       <Upload
         name="avatar"
@@ -70,7 +72,7 @@ class Avatar extends Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        {imageUrl ? <img key={imageHash} src={`${imageUrl}?${imageHash}`} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
     );
   }
