@@ -179,7 +179,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "IDb_filename": "",
             "kindName": "系统内",
             "photo": 1,
-            "newMessage": 0
+            "newMessage": 0,
+            "newCourse": 0
         }
     ]
     ```
