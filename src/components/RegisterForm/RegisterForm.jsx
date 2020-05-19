@@ -163,6 +163,7 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入姓名',
                         },
+                        
                     ]}
                 >
                     <Input />
@@ -175,6 +176,10 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入密码',
                         },
+                        {
+                            min: 6,
+                            message: '密码至少六位'
+                        }
                     ]}
                     hasFeedback
                 >
