@@ -256,13 +256,6 @@ class RegisterForm extends Component {
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    name="dept3"
-                    label="三级部门"
-                >
-                    <Select disabled>
-                    </Select>
-                </Form.Item>
-                <Form.Item
                     name="job"
                     label="岗位"
                 >
