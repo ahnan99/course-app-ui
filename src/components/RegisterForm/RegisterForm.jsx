@@ -225,7 +225,7 @@ class RegisterForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="dept1"
-                    label="部门1"
+                    label="一级部门"
                     rules={[
                         {
                             required: true,
@@ -247,7 +247,7 @@ class RegisterForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="dept2"
-                    label="部门2"
+                    label="二级部门"
                 >
                     <Select disabled={kindID !== "0"}>
                         {this.props.user.dept2List.map(dept => (
@@ -257,7 +257,7 @@ class RegisterForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="dept3"
-                    label="部门3"
+                    label="三级部门"
                 >
                     <Select disabled>
                     </Select>
