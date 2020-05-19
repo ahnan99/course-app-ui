@@ -59,7 +59,7 @@ export default class CertList extends Component {
           <List.Item
             key={item.ID}
             actions={item.completion>0?[<Popconfirm
-                title="证书已有进度，确认删除？"
+                title="该课程已有的学习记录将被清空，确认要删除吗？"
                 onConfirm={() => this.onRemove(item)}
                 onCancel={this.onCancel}
                 okText="Yes"
