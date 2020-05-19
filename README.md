@@ -14,7 +14,13 @@ video.js: https://www.jb51.net/article/145346.htm
 
   * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息; sessionExpire: !=1 可用  1 已过期**
     ```
-    {"status": "", "msg": "", "sessionExpire": 0} 
+    {
+        "status": 0,
+        "msg": "登录成功",
+        "username": "120107196604032113",
+        "hostName": "中石化上海石化公司",
+        "newCourse": 1
+    }
     ```    
 
 1a. 获取公司信息   **GET:/public/getCompanyByHost** 
@@ -179,7 +185,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "IDb_filename": "",
             "kindName": "系统内",
             "photo": 1,
-            "newMessage": 0
+            "newMessage": 0,
+            "newCourse": 0
         }
     ]
     ```
@@ -305,7 +312,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "score": 0,
             "startDate": "",
             "endDate": "",
-            "filename": ""
+            "filename": "",
+            "completion": 0
         }
     ]
     ```
