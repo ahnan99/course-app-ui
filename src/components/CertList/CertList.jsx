@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message } from 'antd';
+import { List, Skeleton, message,Popconfirm } from 'antd';
 import { MinusOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 
@@ -16,6 +16,10 @@ export default class CertList extends Component {
 
   onRemove = cert => {
     this.props.actions.postDelCert({ ID: cert.ID })
+  }
+
+  onCancel = () =>{
+
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -54,9 +58,18 @@ export default class CertList extends Component {
         renderItem={item => (
           <List.Item
             key={item.ID}
-            actions={[
-              <a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
-            ]}
+            actions={item.completion>0?[<Popconfirm
+                title="证书已有进度，确认删除？"
+                onConfirm={() => this.onRemove(item)}
+                onCancel={this.onCancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a key={item.ID} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
+              </Popconfirm>
+              
+
+            ]:[<a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>]}
           >
             <Skeleton active loading={loading}>
               <List.Item.Meta
