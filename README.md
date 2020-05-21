@@ -6,6 +6,20 @@ video.js: https://www.jb51.net/article/145346.htm
 //respone.sessionExpire: !=1 可用  1 已过期
 //*必填  R只读
 
+0. 询问过期  **POST:/knock_door**
+  * input   
+    ```
+    nothing
+    ``` 
+
+  * output  **//if username > "" is alive, == "" is dead**
+    ```
+    {
+        "username": "120107196604032113"
+    }
+    ```    
+
+
 1. 学员登录   **POST:/students/login** 
   * input   **//host:子域名 host="sino" when the url=sino.elearning.com/students/login**
     ```
