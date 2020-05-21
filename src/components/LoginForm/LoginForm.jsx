@@ -28,7 +28,6 @@ class LoginForm extends Component {
             }else{
                 this.props.history.push('/courseselect')
             }
-            
         }
         if (nextProps.loginError){
             message.error(nextProps.loginError)
