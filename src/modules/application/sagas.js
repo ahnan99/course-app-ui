@@ -7,6 +7,10 @@ function* loginWatch() {
     yield takeLatest(types.REQUEST_LOGIN, userLoginWorker)
 }
 
+function* confirmLoginWatch() {
+    yield takeLatest(types.CONFIRM_LOGIN, confirmLoginWorker)
+}
+
 function* registerWatch() {
     yield takeLatest(types.REQUEST_REGISTER, userRegisterWorker)
 }
@@ -19,11 +23,11 @@ function* postUserInfoWatch() {
     yield takeLatest(types.POST_USER_INFO, postUserInfoWorker)
 }
 
-function* logoutWatch(){
+function* logoutWatch() {
     yield takeLatest(types.REQUEST_LOGOUT, userLogoutWorker)
 }
 
-function* companyInfoWatch(){
+function* companyInfoWatch() {
     yield takeLatest(types.GET_COMPANY_INFO, getCompanyInfoWorker)
 }
 
@@ -34,6 +38,10 @@ export function userLoginEndpoint(data) {
 
 export function userRegisterEndpoint(data) {
     return axios.post('/students/new_student', data)
+}
+
+export function confirmLoginEndpoint() {
+    return axios.post('/knock_door')
 }
 
 export function getUserInfoEndpoint(data) {
@@ -61,6 +69,15 @@ function* userLoginWorker(action) {
         yield put(actions.userLogin(response.data))
     } catch (error) {
         yield put(actions.userLoginError(error))
+    }
+}
+
+function* confirmLoginWorker(action) {
+    try {
+        const response = yield call(confirmLoginEndpoint)
+        yield put(actions.updateConfirmLogin(response.data))
+    } catch (error) {
+        yield console.log(error)
     }
 }
 
@@ -115,9 +132,10 @@ export const workers = {
     userRegisterWorker,
     getUserInfoWorker,
     postUserInfoWorker,
-    userLogoutWorker
+    userLogoutWorker,
+    confirmLoginWorker
 }
 
 export default function* saga() {
-    yield all([loginWatch(), registerWatch(), getUserInfoWatch(), postUserInfoWatch(), logoutWatch(),companyInfoWatch()])
+    yield all([loginWatch(), confirmLoginWatch(), registerWatch(), getUserInfoWatch(), postUserInfoWatch(), logoutWatch(), companyInfoWatch()])
 }

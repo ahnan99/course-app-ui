@@ -17,6 +17,8 @@ const USER_LOGOUT = 'user_logout'
 const GET_COMPANY_INFO = 'get_company_info'
 const UPDATE_COMPANY_INFO = 'update_company_info'
 const UPDATE_NEW_COURSE = 'update_new_course'
+const CONFIRM_LOGIN = 'confirm_login'
+const UPDATE_CONFIRM_LOGIN = 'update_confirm_login'
 
 export const types = {
     REQUEST_LOGIN,
@@ -36,7 +38,9 @@ export const types = {
     REQUEST_LOGOUT,
     GET_COMPANY_INFO,
     UPDATE_COMPANY_INFO,
-    UPDATE_NEW_COURSE
+    UPDATE_NEW_COURSE,
+    CONFIRM_LOGIN,
+    UPDATE_CONFIRM_LOGIN
 }
 
 //Action creators
@@ -113,7 +117,7 @@ const userLogout = response => ({
     response
 })
 
-const getCompanyInfo = payload =>({
+const getCompanyInfo = payload => ({
     type: GET_COMPANY_INFO,
     payload
 })
@@ -126,6 +130,15 @@ const updateCompanyInfo = data => ({
 const updateNewCourse = data => ({
     type: UPDATE_NEW_COURSE,
     data
+})
+
+const confirmLogin = () => ({
+    type: CONFIRM_LOGIN
+})
+
+const updateConfirmLogin = response => ({
+    type: UPDATE_CONFIRM_LOGIN,
+    response
 })
 
 export const actions = {
@@ -146,7 +159,9 @@ export const actions = {
     userLogout,
     updateCompanyInfo,
     getCompanyInfo,
-    updateNewCourse
+    updateNewCourse,
+    confirmLogin,
+    updateConfirmLogin
 }
 
 const initialState = {
@@ -245,14 +260,26 @@ const reducer = (state = initialState, action = {}) => {
                     username: null,
                     userInfo: null
                 }
-            } 
+            }
         }
-        case UPDATE_NEW_COURSE:{
-            return{
+        case UPDATE_NEW_COURSE: {
+            return {
                 ...state,
                 newCourse: action.data
             }
         }
+        case UPDATE_CONFIRM_LOGIN: {
+            if (action.response.username !== '') {
+                return {
+                    loggedIn: true,
+                    username: action.response.username
+                }
+
+            } else {
+                return { ...state, loggedIn: false }
+            }
+        }
+
         default:
             return state;
     }
