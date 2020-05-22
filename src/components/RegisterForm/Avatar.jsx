@@ -40,7 +40,7 @@ class Avatar extends Component {
     }
     if (info.file.status === 'done' && info.file.response && info.file.response.status === 0) {
       // Get this url from response in real world.
-      message.success('上传完成')
+      message.success('上传成功已保存')
       this.props.actions.getUserInfo({ username: this.props.application.username })    
       this.setState({imageHash:Date.now()})
       getBase64(info.file.originFileObj, imageUrl =>
