@@ -15,6 +15,10 @@ function* getRestCertWatch() {
     yield takeLatest(types.GET_REST_CERT, getRestCertWorker)
 }
 
+function* getAccomplishedWatch() {
+    yield takeLatest(types.GET_ACCOMPLISHED, getAccomplishedWorker)
+}
+
 function* postDelCertWatch() {
     yield takeLatest(types.POST_DEL_CERT, postDelCertWorker)
 }
@@ -48,6 +52,10 @@ export function postDelCertEndpoint(data) {
 
 export function postAddCertEndpoint(data) {
     return axios.post('/students/add_student_certificate', data)
+}
+
+export function getAccomplishedEndpoint(data) {
+    return axios.post('/students/get_student_diploma_list', data)
 }
 
 
@@ -97,15 +105,24 @@ function* postAddCertWorker(action) {
     }
 }
 
+function* getAccomplishedWorker(action) {
+    try {
+        const response = yield call(getAccomplishedEndpoint, action.payload)
+        yield put(actions.updateAccomplished(response.data))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const workers = {
     getCertCourseWorker,
     getRestCertWorker,
     getSelectedCertWorker,
     postDelCertWorker,
-    postAddCertWorker
+    postAddCertWorker,
+    getAccomplishedWorker
 }
 
 export default function* saga() {
-    yield all([getCertCourseWatch(),getRestCertWatch(),getSelectedCertWatch(),postAddCertWatch(),postDelCertWatch()])
+    yield all([getAccomplishedWatch(),getCertCourseWatch(),getRestCertWatch(),getSelectedCertWatch(),postAddCertWatch(),postDelCertWatch()])
 }
