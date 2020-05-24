@@ -895,3 +895,167 @@ video.js: https://www.jb51.net/article/145346.htm
         }
     ]
     ```    
+20. 学员证书列表   **GET:/students/get_student_diploma_list**
+  * input
+    ```
+    {
+      "username": "120107196604032113"
+    }
+    ```    
+
+  * output  **//D 显示  M标识**
+    ```
+    [
+        {
+            "ID": 3,
+            "diplomaID": "SH2034232-201",
+            "username": "120107196604032113",
+            "certID": "C1",
+            "status": 0,                          //M 0 有效 1 失效  不同颜色标识
+            "score": 0,
+            "term": 3,
+            "startDate": "2018-01-02",
+            "endDate": "2021-01-01",              //D有期限
+            "filename": "",                       //D图片文件链接
+            "memo": "",
+            "regDate": "2020-05-19",
+            "registerID": "albert",
+            "name": "刘禹锡",
+            "sex": 1,
+            "age": 54,
+            "host": "spc",
+            "dept1": 1,
+            "dept2": 16,
+            "mobile": "13331111222",
+            "email": "x.x@x.com",
+            "hostName": "中石化上海石化公司",
+            "dept1Name": "公司本部",
+            "dept2Name": "发展规划部",
+            "sexName": "男",
+            "kindName": "系统内",
+            "kindID": 0,
+            "certName": "危险化学品从业人员",     //D
+            "agencyName": "应急管理局\r\n",
+            "agencyID": "1",
+            "statusName": "有效",               //D
+            "registerName": "李嘉图"
+        },
+        {
+            "ID": 2,
+            "diplomaID": "SH2032232-232",
+            "username": "120107196604032113",
+            "certID": "C1",
+            "status": 1,
+            "score": 0,
+            "term": 3,
+            "startDate": "2013-12-02",
+            "endDate": "2017-12-01",
+            "filename": "",
+            "memo": "",
+            "regDate": "2013-12-02",
+            "registerID": "albert",
+            "name": "刘禹锡",
+            "sex": 1,
+            "age": 54,
+            "host": "spc",
+            "dept1": 1,
+            "dept2": 16,
+            "mobile": "13331111222",
+            "email": "x.x@x.com",
+            "hostName": "中石化上海石化公司",
+            "dept1Name": "公司本部",
+            "dept2Name": "发展规划部",
+            "sexName": "男",
+            "kindName": "系统内",
+            "kindID": 0,
+            "certName": "危险化学品从业人员",
+            "agencyName": "应急管理局\r\n",
+            "agencyID": "1",
+            "statusName": "失效",
+            "registerName": "李嘉图"
+        },
+        {
+            "ID": 4,
+            "diplomaID": "SDS-2323-0001",
+            "username": "120107196604032113",
+            "certID": "C2",
+            "status": 0,
+            "score": 0,
+            "term": 3,
+            "startDate": "2019-04-02",
+            "endDate": "2022-04-01",
+            "filename": "",
+            "memo": "",
+            "regDate": "2020-05-19",
+            "registerID": "albert",
+            "name": "刘禹锡",
+            "sex": 1,
+            "age": 54,
+            "host": "spc",
+            "dept1": 1,
+            "dept2": 16,
+            "mobile": "13331111222",
+            "email": "x.x@x.com",
+            "hostName": "中石化上海石化公司",
+            "dept1Name": "公司本部",
+            "dept2Name": "发展规划部",
+            "sexName": "男",
+            "kindName": "系统内",
+            "kindID": 0,
+            "certName": "危险化学品消防\r\n",
+            "agencyName": "上海智能消防学校\r\n",
+            "agencyID": "4",
+            "statusName": "有效",
+            "registerName": "李嘉图"
+        }
+    ]
+    ```    
+21. 学员证书信息   **GET:/students/get_student_diploma_info**
+  * input
+    ```
+    {
+      "ID": 3
+    }
+    ```   
+
+  * output  **显示内容D**
+    ```
+    [
+        {
+            "ID": 3,
+            "diplomaID": "SH2034232-201",       //D
+            "username": "120107196604032113",
+            "certID": "C1",
+            "status": 0,
+            "score": 0,
+            "term": 3,                          //D 有效期
+            "startDate": "2018-01-02",          //D 发证日期
+            "endDate": "2021-01-01",            //D 有效日期
+            "filename": "",                     //D 电子证书link
+            "memo": "",
+            "regDate": "2020-05-19",
+            "registerID": "albert",
+            "name": "刘禹锡",
+            "sex": 1,
+            "age": 54,
+            "host": "spc",
+            "dept1": 1,
+            "dept2": 16,
+            "mobile": "13331111222",
+            "email": "x.x@x.com",
+            "hostName": "中石化上海石化公司",
+            "dept1Name": "公司本部",
+            "dept2Name": "发展规划部",
+            "sexName": "男",
+            "kindName": "系统内",
+            "kindID": 0,
+            "certName": "危险化学品从业人员",      //D 证书名称
+            "agencyName": "应急管理局\r\n",       //D 发证机构
+            "agencyID": "1",
+            "statusName": "有效",                 //D 证书状态
+            "registerName": "李嘉图"
+        }
+    ]
+    ```    
+
+
