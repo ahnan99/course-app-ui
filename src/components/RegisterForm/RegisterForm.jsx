@@ -163,6 +163,7 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入姓名',
                         },
+                        
                     ]}
                 >
                     <Input />
@@ -175,6 +176,10 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入密码',
                         },
+                        {
+                            min: 6,
+                            message: '密码至少六位'
+                        }
                     ]}
                     hasFeedback
                 >
@@ -253,13 +258,6 @@ class RegisterForm extends Component {
                         {this.props.user.dept2List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    name="dept3"
-                    label="三级部门"
-                >
-                    <Select disabled>
                     </Select>
                 </Form.Item>
                 <Form.Item

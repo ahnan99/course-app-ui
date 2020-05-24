@@ -21,6 +21,10 @@ class App extends Component {
         super(props)
     }
 
+    componentDidMount(){
+        this.props.actions.confirmLogin()
+    }
+
     componentWillReceiveProps = (nextProps) => {
         if (this.props.application.loggedIn === true && nextProps.application.loggedIn === false) {
             message.success('登出成功')
