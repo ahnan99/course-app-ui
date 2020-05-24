@@ -55,7 +55,9 @@ export function postAddCertEndpoint(data) {
 }
 
 export function getAccomplishedEndpoint(data) {
-    return axios.post('/students/get_student_diploma_list', data)
+    return axios.get('/students/get_student_diploma_list',  {
+        params:data
+      })
 }
 
 

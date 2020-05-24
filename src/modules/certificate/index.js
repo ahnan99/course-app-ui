@@ -90,9 +90,9 @@ const resetAddCert = () => ({
     type: RESET_ADD_CERT
 })
 
-const getAccomplished = data => ({
+const getAccomplished = payload => ({
     type: GET_ACCOMPLISHED,
-    data
+    payload
 })
 
 const updateAccomplished = data => ({

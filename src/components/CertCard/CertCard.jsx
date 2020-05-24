@@ -21,7 +21,8 @@ class LessonCard extends Component {
                     <Card title={cert.certName} style={{ textAlign: 'left' }} extra={<a>{cert.statusName}</a>}>
                         <Card.Grid style={this.gridStyle}>
                         <p>有效期至：{cert.endDate}</p>
-                        <a href={axios.defaults.baseURL+cert.filename}></a>
+                        <br/>
+                        {cert.filename!==''?<a href={axios.defaults.baseURL+cert.filename} target="blank">下载证书</a>:null}
                         </Card.Grid>
                     </Card>
                 </Col>

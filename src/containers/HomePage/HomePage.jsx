@@ -16,7 +16,8 @@ class HomePage extends Component {
         if (nextProps.application.userInfo && this.props.application.userInfo !== nextProps.application.userInfo && nextProps.application.userInfo.newMessage > 0) {
             notification.info({
                 message: `你有${nextProps.application.userInfo.newMessage}条新信息`,
-                placement: 'topRight'
+                placement: 'topRight',
+                duration: 2
             })
         }
     }
