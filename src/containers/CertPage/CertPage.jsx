@@ -23,7 +23,7 @@ class CertPage extends Component {
         return (
             <div>
                 {accomplished.map(cert => (
-                    <CertCard cert={cert}/>
+                    <CertCard key={cert.ID} cert={cert}/>
                 ))}
             </div>
         )
