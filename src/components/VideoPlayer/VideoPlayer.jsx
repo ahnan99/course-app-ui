@@ -56,6 +56,14 @@ export default class VideoPlayer extends React.Component {
     // so videojs won't create additional wrapper in the DOM
     // see https://github.com/videojs/video.js/pull/3856
     render() {
+        const { video } = this.props
+        if(!video){
+            return (
+                <div>
+                   <p>本节课无视频资料</p> 
+                </div>
+            )
+        }
         return (
 
             <div>
