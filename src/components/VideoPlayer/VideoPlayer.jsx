@@ -12,33 +12,36 @@ export default class VideoPlayer extends React.Component {
 
     componentDidMount() {
         const { video } = this.props
-        this.setState({ maxTime: video.maxTime })
-        const config = {
-            autoplay: false,
-            controls: true,
-            sources: [{
-                src: axios.defaults.baseURL + video.filename,
-                type: 'video/mp4'
-            }]
-        };
-        this.player = videojs(this.videoNode, config, function onPlayerReady() {
-            console.log('onPlayerReady', this);
-        });
+        if (video) {
+            this.setState({ maxTime: video.maxTime })
 
-        this.timer = setInterval(() => {
-            if (this.player.currentTime() > this.state.maxTime) {
-                this.setState({ maxTime: this.player.currentTime() }, () => {
-                    this.props.actions.postMaxTime({ ID: video.ID, currentTime: this.player.currentTime() })
-                })
-            }
-        }, 5000)
-        this.player.currentTime(video.lastTime)
-        this.player.on('seeking', () => {
-            if (this.player.currentTime() > this.state.maxTime) {
-                this.player.currentTime(this.state.maxTime)
-                message.warning('请不要跳过未观看部分')
-            }
-        })
+            const config = {
+                autoplay: false,
+                controls: true,
+                sources: [{
+                    src: axios.defaults.baseURL + video.filename,
+                    type: 'video/mp4'
+                }]
+            };
+            this.player = videojs(this.videoNode, config, function onPlayerReady() {
+                console.log('onPlayerReady', this);
+            });
+
+            this.timer = setInterval(() => {
+                if (this.player.currentTime() > this.state.maxTime) {
+                    this.setState({ maxTime: this.player.currentTime() }, () => {
+                        this.props.actions.postMaxTime({ ID: video.ID, currentTime: this.player.currentTime() })
+                    })
+                }
+            }, 5000)
+            this.player.currentTime(video.lastTime)
+            this.player.on('seeking', () => {
+                if (this.player.currentTime() > this.state.maxTime) {
+                    this.player.currentTime(this.state.maxTime)
+                    message.warning('请不要跳过未观看部分')
+                }
+            })
+        }
     }
 
 

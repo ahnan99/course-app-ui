@@ -18,10 +18,10 @@ class LessonCard extends Component {
         return (
             <Row key={cert.ID} gutter={[16, 32]}>
                 <Col span={24}>
-                    <Card title={cert.certName} style={cert.status !== 0 ? { textAlign: 'left', background: '#F8F8FF' } : { textAlign: 'left' }} extra={<a>{cert.statusName}</a>}>
+                    <Card title={cert.certName} style={cert.status !== 0 ? { textAlign: 'left', background: '#FCFCFC' } : { textAlign: 'left', background: '#FCFFFC' }} extra={<a>{cert.statusName}</a>}>
                         <Card.Grid style={this.gridStyle}>
                             <p>有效期至：{cert.endDate}</p>
-                            {cert.filename !== '' ? <a href={axios.defaults.baseURL + cert.filename} target="blank">下载证书</a> : null}
+                            {cert.filename !== '' ? <a href={axios.defaults.baseURL + cert.filename} target="blank">查看证书</a> : null}
                         </Card.Grid>
                     </Card>
                 </Col>
