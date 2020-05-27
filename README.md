@@ -753,7 +753,8 @@ video.js: https://www.jb51.net/article/145346.htm
     ```
     {
       "username": "120107196604032113",
-      "certID": "C001"
+      "certID": "C001",
+      "mark": 0     //0 证书  1 课程
     }
     ```    
 
@@ -766,7 +767,8 @@ video.js: https://www.jb51.net/article/145346.htm
   * input
     ```
     {
-      "ID": "1"
+      "ID": "1",
+      "mark": 0     //0 证书  1 课程
     }
     ```    
 
