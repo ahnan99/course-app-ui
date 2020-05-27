@@ -15,7 +15,7 @@ export default class CertList extends Component {
   }
 
   onRemove = cert => {
-    this.props.actions.postDelCert({ ID: cert.ID })
+    this.props.actions.postDelCert({ ID: cert.ID, mark: 0 })
   }
 
   onCancel = () =>{

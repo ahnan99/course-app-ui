@@ -6,6 +6,7 @@ import { Row, Col, Tabs } from 'antd'
 import CertList from '../../components/CertList/CertList'
 import CourseList from '../../components/CertList/CourseList'
 import RestCertList from '../../components/CertList/RestCertList'
+import RestCourseList from '../../components/CertList/RestCourseList'
 
 
 const { TabPane } = Tabs;
@@ -39,7 +40,7 @@ class CourseSelect extends Component {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <RestCertList application={application} cert={cert} actions={actions} loading={loading} />
+                                <RestCourseList application={application} cert={cert} actions={actions} loading={loading} />
                             </Col>
                         </Row>
                     </TabPane>

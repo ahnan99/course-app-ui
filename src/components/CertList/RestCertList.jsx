@@ -12,7 +12,7 @@ export default class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark:0 })
   }
 
   componentWillReceiveProps = (nextProps) => {
