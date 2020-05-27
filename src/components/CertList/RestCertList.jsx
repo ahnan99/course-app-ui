@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { List, Skeleton, message } from 'antd';
-import {PlusOutlined} from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 
 export default class RestCertList extends Component {
@@ -34,13 +34,13 @@ export default class RestCertList extends Component {
             <b>可选证书</b>
           </div>
         }
-        style={{textAlign: 'left'}}
+        style={{ textAlign: 'left' }}
         itemLayout="horizontal"
         size="large"
-        dataSource={this.props.cert.restCert}
+        dataSource={this.props.cert.restCert.filter(restCert => restCert.mark === 0)}
         renderItem={item => (
           <List.Item
-            actions={[<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{color:'darkOrange'}}><PlusOutlined /></a>]}
+            actions={[<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{ color: 'darkOrange' }}><PlusOutlined /></a>]}
           >
             <Skeleton active loading={loading}>
               <List.Item.Meta
