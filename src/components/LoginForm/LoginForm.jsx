@@ -21,16 +21,17 @@ class LoginForm extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        const {history} = this.props
         if (nextProps.loggedIn && nextProps.username) {
-            this.props.getUserInfo({username:nextProps.username})
-            if(history.location.pathname ==='/login' && nextProps.newCourse && nextProps.newCourse === 0){
+            this.props.getUserInfo({ username: nextProps.username })
+            if (nextProps.userInfo && nextProps.userInfo.newCourse === 0) {
                 this.props.history.push('/courseselect')
-            }else if(history.location.pathname ==='/login'){
+            } else if (nextProps.userInfo) {
+                console.log(nextProps.userInfo)
                 this.props.history.push('/homepage')
             }
         }
-        if (nextProps.loginError){
+
+        if (nextProps.loginError) {
             message.error(nextProps.loginError)
         }
     }

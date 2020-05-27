@@ -37,7 +37,7 @@ class Login extends Component {
                             loginError={this.props.application.loginError}
                             username={this.props.application.username}
                             getUserInfo={this.props.actions.getUserInfo}
-                            newCourse={this.props.application.newCourse} />
+                            userInfo={this.props.application.userInfo} />
                  
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>
