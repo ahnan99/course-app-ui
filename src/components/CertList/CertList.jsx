@@ -34,9 +34,9 @@ export default class CertList extends Component {
 
   listItems(item) {
     return (
-      <ul>
+      <ul style={{textAlign: 'left', padding: 0}}>
         {this.props.cert.certCourse.filter(course => course.refID === item.ID).map(course => (
-          <li style={{ listStyleType: 'none', margin: 0, padding: 0 }} key={course.ID}><p style={{ fontSize: '10px' }}>{course.courseName}&nbsp;&nbsp;课时：{course.hours}小时</p></li>
+          <li style={{ listStyleType: 'none', margin: 0, padding: 0 }} key={course.ID}><p style={{ fontSize: '10px',textAlign: 'left' }}>{course.courseName}&nbsp;&nbsp;课时：{course.hours}小时</p></li>
         ))}
       </ul>
     )

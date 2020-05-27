@@ -38,7 +38,7 @@ export default class CertList extends Component {
       <List
         header={
           <div>
-            <b>课程</b>
+            <b>已选课程</b>
           </div>
         }
         style={{ textAlign: 'left' }}
@@ -64,6 +64,7 @@ export default class CertList extends Component {
             <Skeleton active loading={loading}>
               <List.Item.Meta
                 title={<a>{item.courseName}</a>}
+                description={<p style={{ fontSize: '10px' }}>课时：{item.hours}小时</p>}
               />
             </Skeleton>
           </List.Item>
