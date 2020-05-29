@@ -762,10 +762,10 @@ video.js: https://www.jb51.net/article/145346.htm
     }
     ```    
 
-  * output  **//status：int, 0 成功  1 已有相同项目不能重复添加  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 成功  1 已有相同项目不能重复添加  2 缺少材料  9 其他;  msg：string, 提示信息**
     ```
     {
-      "status": 9, 
+      "status": 2, 
       "msg": "请先上传照片，然后再来选课。"
     } 
     ```    
