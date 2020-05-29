@@ -50,17 +50,13 @@ export default class ForgetPassword extends Component {
                     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" />
                 </Form.Item>
                 <Form.Item
-                    name="email"
-                    label="E-mail"
+                    name="mobile"
+                    label="手機號"
                     rules={[
                         {
-                            type: 'email',
-                            message: 'E-mail地址不合法',
-                        },
-                        {
                             required: true,
-                            message: '请输入email',
-                        },
+                            message: '请输入手機',
+                        }
                     ]}
                 >
                     <Input />

@@ -23,6 +23,7 @@ export default class RestCertList extends Component {
       this.props.actions.resetAddCert()
     } else if (this.props.cert.addCertRes === null && nextProps.cert.addCertRes && nextProps.cert.addCertRes.status !== 0) {
       message.error(nextProps.cert.addCertRes.msg)
+      this.props.actions.resetAddCert()
     }
   }
 

@@ -241,11 +241,7 @@ class UserInfoForm extends Component {
                         {
                             type: 'email',
                             message: 'E-mail地址不合法',
-                        },
-                        {
-                            required: true,
-                            message: '请输入email',
-                        },
+                        }
                     ]}
                 >
                     <Input />
