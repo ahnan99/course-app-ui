@@ -764,7 +764,10 @@ video.js: https://www.jb51.net/article/145346.htm
 
   * output  **//status：int, 0 成功  1 已有相同项目不能重复添加  9 其他;  msg：string, 提示信息**
     ```
-    {"status": "", "msg": ""} 
+    {
+      "status": 9, 
+      "msg": "请先上传照片，然后再来选课。"
+    } 
     ```    
  
 15. 学员删除所选证书项目   **POST:/students/remove_student_certificate**
