@@ -12,7 +12,7 @@ export default class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark:0 })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0 })
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -22,6 +22,8 @@ export default class RestCertList extends Component {
       this.props.actions.getSelectedCert({ username: this.props.application.username })
       this.props.actions.getCertCourse({ username: this.props.application.username })
       this.props.actions.resetAddCert()
+    } else if (this.props.cert.addCertRes === null && nextProps.cert.addCertRes && nextProps.cert.addCertRes.status !== 0) {
+      message.error(nextProps.cert.addCertRes.msg)
     }
   }
 
