@@ -100,7 +100,11 @@ video.js: https://www.jb51.net/article/145346.htm
 4. 学员修改密码   **POST:/students/change_passwd**
   * input
     ```
-    {"username":"", "email":"", "password":""}
+    {
+      "username":"",
+      "mobile":"",
+      "password":""
+    }
     ``` 
 
   * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 邮箱错误  9 其他;  msg：string, 提示信息**
