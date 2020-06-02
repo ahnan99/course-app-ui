@@ -331,7 +331,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "startDate": "",
             "endDate": "",
             "filename": "",
-            "completion": 0
+            "completion": 0,    //0 取消时不提示  >0 取消时提示（先判断cancelAllow）
+            "cancelAllow": 0    //0 允许取消  1 不允许取消
         }
     ]
     ```
@@ -420,7 +421,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "examScore": 0, //模拟考试最好成绩
             "examTimes": 0, //模拟考试次数
             "paperID": 1,   //模拟考试试卷ID
-            "certStatus": 0
+            "certStatus": 0,
+            "cancelAllow": 0
         },
         {
             "ID": 2,
@@ -443,7 +445,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "examScore": null,
             "examTimes": 0, 
             "paperID": 1,
-            "certStatus": 0
+            "certStatus": 0,
+            "cancelAllow": 0
         }
     ]
     ```
