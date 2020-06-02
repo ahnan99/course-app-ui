@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { List, Skeleton, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons'
+import {withRouter} from 'react-router-dom'
 import 'antd/dist/antd.css'
 
-export default class RestCertList extends Component {
+class RestCourseList extends Component {
   constructor(props) {
     super(props)
   }
@@ -22,7 +23,6 @@ export default class RestCertList extends Component {
       this.props.actions.getCertCourse({ username: this.props.application.username })
       this.props.actions.resetAddCert()
     } else if (this.props.cert.addCertRes === null && nextProps.cert.addCertRes && nextProps.cert.addCertRes.status !== 0) {
-      message.error(nextProps.cert.addCertRes.msg)
       this.props.actions.resetAddCert()
     }
   }
@@ -55,3 +55,5 @@ export default class RestCertList extends Component {
     )
   }
 }
+
+export default withRouter(RestCourseList)
