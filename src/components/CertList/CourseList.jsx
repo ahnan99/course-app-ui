@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message,Popconfirm } from 'antd';
+import { List, Skeleton, message, Popconfirm } from 'antd';
 import { MinusOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 
@@ -14,10 +14,14 @@ export default class CertList extends Component {
   }
 
   onRemove = cert => {
-    this.props.actions.postDelCert({ ID: cert.ID, mark:1 })
+    if (cert.cancelAllow === 0) {
+      this.props.actions.postDelCert({ ID: cert.ID, mark: 1 })
+    } else {
+      message.error('無法刪除')
+    }
   }
 
-  onCancel = () =>{
+  onCancel = () => {
 
   }
 
@@ -30,7 +34,7 @@ export default class CertList extends Component {
     }
   }
 
-  
+
 
   render() {
     const { loading } = this.props
@@ -48,18 +52,18 @@ export default class CertList extends Component {
         renderItem={item => (
           <List.Item
             key={item.ID}
-            actions={item.completion>0?[<Popconfirm
-                title="该课程已有的学习记录将被清空，确认要删除吗？"
-                onConfirm={() => this.onRemove(item)}
-                onCancel={this.onCancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <a key={item.ID} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
-              </Popconfirm>
-              
+            actions={item.completion > 0 && item.cancelAllow === 0 ? [<Popconfirm
+              title="该课程已有的学习记录将被清空，确认要删除吗？"
+              onConfirm={() => this.onRemove(item)}
+              onCancel={this.onCancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <a key={item.ID} style={{ color: 'darkOrange' }}><MinusOutlined /></a>
+            </Popconfirm>
 
-            ]:[<a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>]}
+
+            ] : [<a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>]}
           >
             <Skeleton active loading={loading}>
               <List.Item.Meta

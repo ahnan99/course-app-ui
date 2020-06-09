@@ -420,7 +420,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "completion": 12.55,  //课程完成度%
             "examScore": 0, //模拟考试最好成绩
             "examTimes": 0, //模拟考试次数
-            "paperID": 1,   //模拟考试试卷ID
+            "paperID": 1,   //试卷ID  0 不顯示考試鏈接  >0 顯示考試鏈接
+            "type": 0,      //0 模拟考试  1 考試
             "certStatus": 0,
             "cancelAllow": 0
         },
@@ -444,7 +445,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "completion": 0,
             "examScore": null,
             "examTimes": 0, 
-            "paperID": 1,
+            "paperID": 1,   //试卷ID  0 不顯示考試鏈接  >0 顯示考試鏈接
+            "type": 0,      //0 模拟考试  1 考試
             "certStatus": 0,
             "cancelAllow": 0
         }

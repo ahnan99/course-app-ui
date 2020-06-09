@@ -51,7 +51,7 @@ class LessonCard extends Component {
                                 ))}
                                 {course.paperID !== 0 ? <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
                                     <p style={{ float: 'left' }}>
-                                        <a onClick={() => this.onClickExam(course)}>*&nbsp;&nbsp;模拟考试&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
+                                        <a onClick={() => this.onClickExam(course)}>*&nbsp;&nbsp;{course.type===0?'模拟考试':'考试'}&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
                                             {course.examScore}分&nbsp;&nbsp;</span>
                                         <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
                                     </p>
