@@ -1084,5 +1084,25 @@ video.js: https://www.jb51.net/article/145346.htm
         }
     ]
     ```    
+ 
+22. 为通过考试的学员批量生成证书   **POST:/outfiles/generate_diploma_byCertID**
+  * input
+    ```
+    {
+      "certID": "C1",
+      "host": "spc",
+      "username": "admin.spc" 
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {
+      "status": "", 
+      "msg": "",
+      "filename": "/upload/students/genDiploma/diploma1.pdf"
+    } 
+    ```    
+
 
 
