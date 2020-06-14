@@ -69,10 +69,7 @@ const initialState = {
     passwordResetModalVisible: false,
     email: 'email@email.com',
     dept1List: [],
-    dept2List: [],
-    companyID: 8,
-    companyName: "中石化公司"
-
+    dept2List: []
 }
 
 //Reducers

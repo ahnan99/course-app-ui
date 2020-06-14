@@ -10,6 +10,9 @@ import { bindActionCreators } from 'redux'
 
 class Register extends Component {
 
+    componentWillMount(){
+        this.props.actions.getCompanyInfo()
+    }
 
     render() {
         return (
@@ -24,6 +27,7 @@ class Register extends Component {
                         registered={this.props.application.registered}
                         registerError={this.props.application.registerError}
                         resetRegisterStatus={this.props.actions.resetRegisterStatus}
+                        application={this.props.application}
                         user={this.props.user}
                     />
                 </Col>

@@ -174,7 +174,7 @@ const initialState = {
     userInfo: null,
     postUserInfoStatus: null,
     companyInfo: null,
-    newCourse: null
+    newCourse: null,
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {

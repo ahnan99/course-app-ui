@@ -54,7 +54,7 @@ class RegisterForm extends Component {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
-        this.props.userActions.getDept1({ kindID: 0, pID: this.props.user.companyID })
+        
 
     }
 
@@ -64,6 +64,9 @@ class RegisterForm extends Component {
         }
         if (nextProps.registerError) {
             message.error(nextProps.registerError)
+        }
+        if(!this.props.application.companyInfo && nextProps.application.companyInfo){
+            this.props.userActions.getDept1({ kindID: 0, pID: nextProps.application.companyInfo[0].deptID })
         }
         if (nextProps.registered) {
             message.success("注册成功！")
@@ -87,7 +90,7 @@ class RegisterForm extends Component {
             name: values.name,   //*
             password: values.password,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
-            companyID: this.props.user.companyID, //*
+            companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : 0,
             dept1Name: values.kindID === "0" ? null : values.dept1,
             dept2: values.dept2 ? values.dept2 : 0,
@@ -104,7 +107,7 @@ class RegisterForm extends Component {
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
             this.setState({ kindID: changedValue.kindID })
-            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
+            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.application.companyInfo.deptID })
             this.props.userActions.updateDept2([])
             this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
@@ -116,12 +119,15 @@ class RegisterForm extends Component {
 
     render() {
         const { kindID } = this.state
+        if(!this.props.application.companyInfo){
+            return(<div/>)
+        }
         return (
             <Form
                 {...formItemLayout}
                 onFinish={this.onFinish}
                 scrollToFirstError
-                initialValues={{ kindID: "0", companyID: this.props.user.companyName }}
+                initialValues={{ kindID: "0", companyID: this.props.application.companyInfo[0].deptName }}
                 onValuesChange={this.onValuesChange}
                 ref={this.formRef}
             >
