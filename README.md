@@ -49,7 +49,9 @@ video.js: https://www.jb51.net/article/145346.htm
         {
             "hostNo": "spc",
             "hostName": "中石化上海石化公司",
-            "logo": "users\\upload\\companies\\logo\\spc.png"
+            "logo": "users\\upload\\companies\\logo\\spc.png",
+            "deptID": 8,
+            "deptName": "中石化上海石化公司"
         }
     ]
     ```    
