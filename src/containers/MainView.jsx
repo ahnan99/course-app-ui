@@ -85,15 +85,15 @@ class MainView extends Component {
                     onClick={this.setCollapse}
                 >
                     <div className="logo">
-                        <b style={{color:'white'}}>{this.props.application.userInfo?this.props.application.userInfo.name:null}</b>
+                        <b style={{ color: 'white' }}>{this.props.application.userInfo ? this.props.application.userInfo.name : null}</b>
                     </div>
                     <Menu onClick={this.onClick} theme="dark" mode="inline">
                         <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
                             我的课程
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
+                        {this.props.application.userInfo && this.props.application.userInfo.host_kindID === 0 ? <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
                             我要选课
-                        </Menu.Item>
+                        </Menu.Item> : null}
                         <Menu.Item key="3" icon={<AuditOutlined />} title={""}>
                             我的证书
                         </Menu.Item>
