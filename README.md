@@ -204,7 +204,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "kindName": "系统内",
             "photo": 1,
             "newMessage": 0,
-            "newCourse": 0
+            "newCourse": 0,
+            "host_kindID": 0    //0 集團用戶 可選課  1 其他用戶 不能選課
         }
     ]
     ```
