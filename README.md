@@ -191,7 +191,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "user_status": 0,
             "limitDate": "",
             "host": "spc",
-            "photo_filename": "\\upload\\students\\photos\\120107196604032113.png",
+            "photo_filename": "\\upload\\students\\photos\\120107196604032113.png",  //if photo is null, show the default picture as "/public/images/guy.png"
             "memo": "",
             "regDate": "2020-05-02",
             "statusName": "正常",
