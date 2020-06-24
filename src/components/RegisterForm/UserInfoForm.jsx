@@ -266,7 +266,7 @@ class UserInfoForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="upload3"
-                    label="上传身份证反面"
+                    label="上传身份证背面"
                 >
                     <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
                 </Form.Item>
