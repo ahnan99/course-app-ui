@@ -33,7 +33,7 @@ class UserInfoForm extends Component {
     }
 
     componentWillMount() {
-        this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.user.companyID })
+        this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.companyInfo[0].deptID })
         if (this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0) {
             this.props.userActions.getDept2({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1 })
         }
@@ -69,7 +69,7 @@ class UserInfoForm extends Component {
             username: values.username,   //*
             name: values.name,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
-            companyID: this.props.user.companyID, //*
+            companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : "",
             dept1Name: values.kindID === "0" ? "" : values.dept1,
             dept2: values.dept2 ? values.dept2 : "",
@@ -86,7 +86,7 @@ class UserInfoForm extends Component {
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
             this.setState({ kindID: changedValue.kindID })
-            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
+            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.application.companyInfo[0].deptID })
             this.props.userActions.updateDept2([])
             this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
@@ -107,7 +107,7 @@ class UserInfoForm extends Component {
                     {
                         ...this.props.application.userInfo,
                         kindID: this.props.application.userInfo.kindID.toString(),
-                        companyID: this.props.application.userInfo.companyName,
+                        companyID: this.props.application.companyInfo[0].deptName,
                         dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
                         dept2: this.props.application.userInfo.dept2 == 0 ? "" : this.props.application.userInfo.dept2
                     }
@@ -254,7 +254,7 @@ class UserInfoForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="upload"
-                    label="上传证件照(自拍头像)"
+                    label="上传照片(自拍头像)"
                 >
                     <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
                 </Form.Item>
