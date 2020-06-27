@@ -224,6 +224,18 @@ class UserInfoForm extends Component {
                             required: true,
                             message: '请输入手机号码',
                         },
+                        {
+
+                            validator: (rule, value) => {
+                                console.log(this.checkIDcard(value))
+                                if (!value || value.length === 11) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject('手机号不合法')
+                                }
+                            },
+
+                        }
                     ]}
                 >
                     <Input />
