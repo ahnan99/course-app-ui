@@ -289,7 +289,7 @@ class RegisterForm extends Component {
                                     return Promise.reject('手机号不合法')
                                 }
                             },
-
+                        }
                     ]}
                 >
                     <Input />
