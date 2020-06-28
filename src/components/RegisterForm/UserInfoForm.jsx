@@ -162,8 +162,8 @@ class UserInfoForm extends Component {
                     label="性质"
                 >
                     <Radio.Group>
-                        <Radio value="0">系统内单位</Radio>
-                        <Radio value="1">系统外单位</Radio>
+                        <Radio value="0">石化系统员工</Radio>
+                        <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
