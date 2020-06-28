@@ -33,7 +33,7 @@ class UserInfoForm extends Component {
     }
 
     componentWillMount() {
-        this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.user.companyID })
+        this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.companyInfo[0].deptID })
         if (this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0) {
             this.props.userActions.getDept2({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1 })
         }
@@ -69,7 +69,7 @@ class UserInfoForm extends Component {
             username: values.username,   //*
             name: values.name,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
-            companyID: this.props.user.companyID, //*
+            companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : "",
             dept1Name: values.kindID === "0" ? "" : values.dept1,
             dept2: values.dept2 ? values.dept2 : "",
@@ -86,7 +86,7 @@ class UserInfoForm extends Component {
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
             this.setState({ kindID: changedValue.kindID })
-            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.user.companyID })
+            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.application.companyInfo[0].deptID })
             this.props.userActions.updateDept2([])
             this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
@@ -107,7 +107,7 @@ class UserInfoForm extends Component {
                     {
                         ...this.props.application.userInfo,
                         kindID: this.props.application.userInfo.kindID.toString(),
-                        companyID: this.props.application.userInfo.companyName,
+                        companyID: this.props.application.companyInfo[0].deptName,
                         dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
                         dept2: this.props.application.userInfo.dept2 == 0 ? "" : this.props.application.userInfo.dept2
                     }
@@ -162,8 +162,8 @@ class UserInfoForm extends Component {
                     label="性质"
                 >
                     <Radio.Group>
-                        <Radio value="0">系统内单位</Radio>
-                        <Radio value="1">系统外单位</Radio>
+                        <Radio value="0">石化系统员工</Radio>
+                        <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
@@ -224,6 +224,18 @@ class UserInfoForm extends Component {
                             required: true,
                             message: '请输入手机号码',
                         },
+                        {
+
+                            validator: (rule, value) => {
+                                console.log(this.checkIDcard(value))
+                                if (!value || value.length === 11) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject('手机号不合法')
+                                }
+                            },
+
+                        }
                     ]}
                 >
                     <Input />
@@ -254,21 +266,21 @@ class UserInfoForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="upload"
-                    label="上传照片"
+                    label="上传照片(自拍头像)"
                 >
-                    <Avatar imageUrl={this.props.application.userInfo.photo_filename?axios.defaults.baseURL + this.props.application.userInfo.photo_filename:null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
+                    <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
                 </Form.Item>
                 <Form.Item
                     name="upload2"
                     label="上传身份证正面"
                 >
-                    <Avatar imageUrl={this.props.application.userInfo.IDa_filename?axios.defaults.baseURL + this.props.application.userInfo.IDa_filename:null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
+                    <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
                 </Form.Item>
                 <Form.Item
                     name="upload3"
-                    label="上传身份证反面"
+                    label="上传身份证背面"
                 >
-                    <Avatar imageUrl={this.props.application.userInfo.IDb_filename?axios.defaults.baseURL + this.props.application.userInfo.IDb_filename:null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
+                    <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">修改信息</Button>

@@ -54,7 +54,7 @@ class RegisterForm extends Component {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
-        
+
 
     }
 
@@ -65,7 +65,7 @@ class RegisterForm extends Component {
         if (nextProps.registerError) {
             message.error(nextProps.registerError)
         }
-        if(!this.props.application.companyInfo && nextProps.application.companyInfo){
+        if (!this.props.application.companyInfo && nextProps.application.companyInfo) {
             this.props.userActions.getDept1({ kindID: 0, pID: nextProps.application.companyInfo[0].deptID })
         }
         if (nextProps.registered) {
@@ -119,8 +119,8 @@ class RegisterForm extends Component {
 
     render() {
         const { kindID } = this.state
-        if(!this.props.application.companyInfo){
-            return(<div/>)
+        if (!this.props.application.companyInfo) {
+            return (<div />)
         }
         return (
             <Form
@@ -169,7 +169,7 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入姓名',
                         },
-                        
+
                     ]}
                 >
                     <Input />
@@ -218,8 +218,8 @@ class RegisterForm extends Component {
                     label="性质"
                 >
                     <Radio.Group>
-                        <Radio value="0">系统内单位</Radio>
-                        <Radio value="1">系统外单位</Radio>
+                        <Radio value="0">石化系统员工</Radio>
+                        <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
@@ -280,6 +280,16 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入手机号码',
                         },
+                        {
+                            validator: (rule, value) => {
+                                console.log(this.checkIDcard(value))
+                                if (!value || value.length === 11) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject('手机号不合法')
+                                }
+                            },
+                        }
                     ]}
                 >
                     <Input />
