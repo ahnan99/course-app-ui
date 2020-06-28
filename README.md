@@ -921,12 +921,14 @@ video.js: https://www.jb51.net/article/145346.htm
             "emergencyName": "一般"
         }
     ]
-    ```    
+    ```   
+
 20. 学员证书列表   **GET:/students/get_student_diploma_list**
   * input
     ```
     {
-      "username": "120107196604032113"
+      "username": "120107196604032113",
+      "certID": "C1"  //可以是空值，将返回所有证书
     }
     ```    
 
@@ -970,6 +972,7 @@ video.js: https://www.jb51.net/article/145346.htm
         }
     ]
     ```    
+
 21. 学员证书信息   **GET:/students/get_student_diploma_info**
   * input
     ```
