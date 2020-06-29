@@ -921,12 +921,14 @@ video.js: https://www.jb51.net/article/145346.htm
             "emergencyName": "一般"
         }
     ]
-    ```    
+    ```   
+
 20. 学员证书列表   **GET:/students/get_student_diploma_list**
   * input
     ```
     {
-      "username": "120107196604032113"
+      "username": "120107196604032113",
+      "certID": "C1"  //可以是空值，将返回所有证书
     }
     ```    
 
@@ -965,78 +967,12 @@ video.js: https://www.jb51.net/article/145346.htm
             "agencyName": "应急管理局\r\n",
             "agencyID": "1",
             "statusName": "有效",               //D
-            "registerName": "李嘉图"
-        },
-        {
-            "ID": 2,
-            "diplomaID": "SH2032232-232",
-            "username": "120107196604032113",
-            "certID": "C1",
-            "status": 1,
-            "score": 0,
-            "term": 3,
-            "startDate": "2013-12-02",
-            "endDate": "2017-12-01",
-            "filename": "",
-            "memo": "",
-            "regDate": "2013-12-02",
-            "registerID": "albert",
-            "name": "刘禹锡",
-            "sex": 1,
-            "age": 54,
-            "host": "spc",
-            "dept1": 1,
-            "dept2": 16,
-            "mobile": "13331111222",
-            "email": "x.x@x.com",
-            "hostName": "中石化上海石化公司",
-            "dept1Name": "公司本部",
-            "dept2Name": "发展规划部",
-            "sexName": "男",
-            "kindName": "系统内",
-            "kindID": 0,
-            "certName": "危险化学品从业人员",
-            "agencyName": "应急管理局\r\n",
-            "agencyID": "1",
-            "statusName": "失效",
-            "registerName": "李嘉图"
-        },
-        {
-            "ID": 4,
-            "diplomaID": "SDS-2323-0001",
-            "username": "120107196604032113",
-            "certID": "C2",
-            "status": 0,
-            "score": 0,
-            "term": 3,
-            "startDate": "2019-04-02",
-            "endDate": "2022-04-01",
-            "filename": "",
-            "memo": "",
-            "regDate": "2020-05-19",
-            "registerID": "albert",
-            "name": "刘禹锡",
-            "sex": 1,
-            "age": 54,
-            "host": "spc",
-            "dept1": 1,
-            "dept2": 16,
-            "mobile": "13331111222",
-            "email": "x.x@x.com",
-            "hostName": "中石化上海石化公司",
-            "dept1Name": "公司本部",
-            "dept2Name": "发展规划部",
-            "sexName": "男",
-            "kindName": "系统内",
-            "kindID": 0,
-            "certName": "危险化学品消防\r\n",
-            "agencyName": "上海智能消防学校\r\n",
-            "agencyID": "4",
-            "statusName": "有效",
-            "registerName": "李嘉图"
+            "registerName": "李嘉图",               //D
+            "filename": "/upload/students/diplomas/SPCC5--00051.pdf"
         }
     ]
     ```    
+
 21. 学员证书信息   **GET:/students/get_student_diploma_info**
   * input
     ```
@@ -1053,7 +989,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "diplomaID": "SH2034232-201",       //D
             "username": "120107196604032113",
             "certID": "C1",
-            "status": 0,
+            "status": 0,                        //0 有效  1 失效
             "score": 0,
             "term": 3,                          //D 有效期
             "startDate": "2018-01-02",          //D 发证日期
@@ -1103,6 +1039,120 @@ video.js: https://www.jb51.net/article/145346.htm
       "filename": "/upload/students/genDiploma/diploma1.pdf"
     } 
     ```    
+ 
+23. 返回某个批次的证书列表   **GET:/public/getDiplomaListByBatchID**
+  * input
+    ```
+    {
+      "batchID": 1
+    }
+    ```    
+
+  * output  **//记录集**
+    ```
+    recordset 
+    ```    
+ 
+24. 返回学员注册报表   **GET:/public/getRptList**
+  * input
+    ```
+    {
+      "op": "student",
+      "mark":"data",    //'data':json data, 'file':excel file
+      "host": "spc",
+      "startDate":"",
+      "endDate":"",
+      "kindID":"",
+      "groupHost":1,
+      "groupDept1":0,
+      "groupKindID":0,
+      "groupDate":"month"
+    }
+    ```    
+
+  * output  **//记录集**
+    ```
+    recordset 
+    ```    
+
+25. 查找学员   **GET:/students/find_student**
+  * input
+    ```
+    {"find":"120107196604032113"}   //可以输入姓名、身份证，模糊查询
+    ``` 
+
+  * output   
+    
+    ```
+    [
+        {
+            "username": "120107196604032113",
+            "name": "刘禹锡",
+            "hostName": "中石化上海石化公司"
+        }
+    ]
+    ```
+
+26. 获取证书项目列表   **GET:/students/get_cert_list**
+  * input
+    ```
+    {
+      
+    } 
+    ``` 
+
+  * output   
+    
+    ```
+    [
+        {
+            "certID": "C1",
+            "certName": "危险化学品从业人员"
+        },
+        {
+            "certID": "C2",
+            "certName": "危险化学品消防"
+        },
+        {
+            "certID": "C3",
+            "certName": "作业票审批资格证"
+        },
+        {
+            "certID": "C4",
+            "certName": "施工作业现场监护证"
+        },
+        {
+            "certID": "C5",
+            "certName": "施工作业上岗证"
+        }
+    ]
+    ```
 
 
+101. 用户登录   **POST:/users/login** 
+  * input   **//host:子域名 host="sino" when the url=sino.elearning.com/students/login**
+    ```
+    {"username":"xxx", "password":"123", "host":"spc"}
+    ``` 
 
+  * output  **//status：int, 0 成功  1 用户不存在  2 用户禁用  3 密码错误  9 其他;  msg：string, 提示信息; sessionExpire: !=1 可用  1 已过期**
+    ```
+    {
+        "status": 0,
+        "msg": "登录成功",
+        "username": "albert",
+        "name": "林冲",
+        "hostName": "中石化上海石化公司"
+    }
+    ```    
+
+102. 用户登出   **GET:/users/logout** 
+  * input   
+    ```
+    nothing
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": 0, "msg": "成功退出。"} 
+    ```    
