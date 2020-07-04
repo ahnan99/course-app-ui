@@ -21,10 +21,10 @@ class LoginForm extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.loggedIn && nextProps.username && nextProps.auditor) {
+        if (nextProps.loggedIn && nextProps.username && nextProps.auditor === 1) {
             this.props.history.push('/auditpage')
         }
-        else if (nextProps.loggedIn && nextProps.username && nextProps.username !== 'admin.spc') {
+        else if (nextProps.loggedIn && nextProps.username) {
             this.props.getUserInfo({ username: nextProps.username })
             if (nextProps.userInfo && nextProps.userInfo.newCourse === 0 && nextProps.userInfo.host_kindID === 0) {
                 this.props.history.push('/courseselect')

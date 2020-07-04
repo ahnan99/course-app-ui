@@ -332,7 +332,8 @@ const reducer = (state = initialState, action = {}) => {
             if (action.response.username !== '') {
                 return {
                     loggedIn: true,
-                    username: action.response.username
+                    username: action.response.username,
+                    auditor: action.response.auditor
                 }
             } else {
                 return { ...state, loggedIn: false }
