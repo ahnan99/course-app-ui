@@ -37,7 +37,9 @@ class Login extends Component {
                             loginError={this.props.application.loginError}
                             username={this.props.application.username}
                             getUserInfo={this.props.actions.getUserInfo}
-                            userInfo={this.props.application.userInfo} />
+                            userInfo={this.props.application.userInfo}
+                            auditorRequestLogin={this.props.actions.auditorRequestLogin}
+                            auditor={this.props.application.auditor} />
                  
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>

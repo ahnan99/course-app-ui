@@ -30,20 +30,20 @@ function* postAddCertWatch() {
 
 export function getSelectedCertEndpoint(data) {
     return axios.get('/students/getStudentCertPickList', {
-        params:data
-      })
+        params: data
+    })
 }
 
 export function getCertCourseEndpoint(data) {
     return axios.get('/students/getStudentCertCourseList', {
-        params:data
-      })
+        params: data
+    })
 }
 
 export function getRestCertEndpoint(data) {
     return axios.get('/students/getStudentCertRestList', {
-        params:data
-      })
+        params: data
+    })
 }
 
 export function postDelCertEndpoint(data) {
@@ -55,9 +55,9 @@ export function postAddCertEndpoint(data) {
 }
 
 export function getAccomplishedEndpoint(data) {
-    return axios.get('/students/get_student_diploma_list',  {
-        params:data
-      })
+    return axios.get('/students/get_student_diploma_list', {
+        params: data
+    })
 }
 
 
@@ -110,7 +110,7 @@ function* postAddCertWorker(action) {
 function* getAccomplishedWorker(action) {
     try {
         const response = yield call(getAccomplishedEndpoint, action.payload)
-        yield put(actions.updateAccomplished(response.data))
+        yield all([put(actions.updateEmptyAccomplished(response.data.length === 0)), put(actions.updateAccomplished(response.data))])
     } catch (error) {
         console.log(error)
     }
@@ -126,5 +126,5 @@ export const workers = {
 }
 
 export default function* saga() {
-    yield all([getAccomplishedWatch(),getCertCourseWatch(),getRestCertWatch(),getSelectedCertWatch(),postAddCertWatch(),postDelCertWatch()])
+    yield all([getAccomplishedWatch(), getCertCourseWatch(), getRestCertWatch(), getSelectedCertWatch(), postAddCertWatch(), postDelCertWatch()])
 }

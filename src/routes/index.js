@@ -8,9 +8,11 @@ import MessagePage from '../containers/MessagePage/MessagePage'
 import CertPage from '../containers/CertPage/CertPage'
 import HelpPage from '../containers/HelpPage/HelpPage'
 import ExamPage from '../containers/ExamPage/ExamPage'
+import AuditPage from '../containers/Audit/AuditPage'
+import CertList from '../containers/Audit/CertList'
+import CertImage from '../containers/Audit/CertImage'
 
-
-const routes =[{
+const routes = [{
     path: '/homepage',
     pathKey: 'homepage',
     component: HomePage
@@ -59,6 +61,23 @@ const routes =[{
     path: '/exampage',
     pathKey: 'exampage',
     component: ExamPage
+},
+{
+    path: '/auditpage',
+    pathKey: 'auditpage',
+    component: AuditPage
+
+},
+{
+    path: '/auditpage/certlist',
+    pathKey: 'auditcertlist',
+    component: CertList
+
+},
+{
+    path: '/auditpage/certlist/certimage',
+    pathKey: 'certimage',
+    component: CertImage
 }]
 
 

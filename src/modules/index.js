@@ -5,6 +5,7 @@ import courseReducer from './courses'
 import certReducer from './certificate'
 import messageReducer from './message'
 import examReducer from './exam'
+import auditReducer from './audit'
 
 const rootReducer = combineReducers({
     application: applicationReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     course: courseReducer,
     cert: certReducer,
     message: messageReducer,
-    exam: examReducer
+    exam: examReducer,
+    audit: auditReducer
 })
 
 export default rootReducer

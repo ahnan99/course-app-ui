@@ -22,7 +22,7 @@ const UPDATE_CONFIRM_LOGIN = 'update_confirm_login'
 const AUDITOR_LOGIN = 'auditor_login'
 const AUDITOR_LOGIN_ERROR = 'auditor_login_error'
 const UPDATE_AUDITOR = 'update_auditor'
-
+const AUDITOR_REQUEST_LOGIN = 'auditor_request_login'
 
 export const types = {
     REQUEST_LOGIN,
@@ -47,7 +47,8 @@ export const types = {
     UPDATE_CONFIRM_LOGIN,
     AUDITOR_LOGIN,
     AUDITOR_LOGIN_ERROR,
-    UPDATE_AUDITOR
+    UPDATE_AUDITOR,
+    AUDITOR_REQUEST_LOGIN
 }
 
 //Action creators
@@ -163,6 +164,11 @@ const updateConfirmLogin = response => ({
     response
 })
 
+const auditorRequestLogin = payload => ({
+    type: AUDITOR_REQUEST_LOGIN,
+    payload
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -186,7 +192,8 @@ export const actions = {
     updateConfirmLogin,
     auditorLogin,
     auditorLoginError,
-    updateAuditor
+    updateAuditor,
+    auditorRequestLogin
 }
 
 const initialState = {
@@ -327,17 +334,13 @@ const reducer = (state = initialState, action = {}) => {
                     loggedIn: true,
                     username: action.response.username
                 }
-
             } else {
                 return { ...state, loggedIn: false }
             }
         }
-
         default:
             return state;
     }
-
-
 }
 
 export default reducer

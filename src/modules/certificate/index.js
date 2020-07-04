@@ -13,6 +13,7 @@ const RESET_DEL_CERT = 'reset_del_cert'
 const RESET_ADD_CERT = 'reset_add_cert'
 const GET_ACCOMPLISHED = 'get accomplished'
 const UPDATE_ACCOMPLISHED = 'update accomplished'
+const UPDATE_EMPTY_ACCOMPLISHED = 'update_empty_accomplished'
 
 export const types = {
     GET_SELECTED_CERT,
@@ -28,7 +29,8 @@ export const types = {
     RESET_DEL_CERT,
     RESET_ADD_CERT,
     GET_ACCOMPLISHED,
-    UPDATE_ACCOMPLISHED
+    UPDATE_ACCOMPLISHED,
+    UPDATE_EMPTY_ACCOMPLISHED
 }
 
 //Action creators
@@ -100,6 +102,12 @@ const updateAccomplished = data => ({
     data
 })
 
+
+const updateEmptyAccomplished = data => ({
+    type: UPDATE_EMPTY_ACCOMPLISHED,
+    data
+})
+
 export const actions = {
     getCertCourse,
     getSelectedCert,
@@ -114,7 +122,8 @@ export const actions = {
     resetDelCert,
     resetAddCert,
     getAccomplished,
-    updateAccomplished
+    updateAccomplished,
+    updateEmptyAccomplished
 }
 
 const initialState = {
@@ -126,7 +135,8 @@ const initialState = {
     fetchingSelected: false,
     fetchingCourse: false,
     fetchingRest: false,
-    accomplished: []
+    accomplished: [],
+    emptyAccomplished: false
 }
 
 //Reducers
@@ -185,10 +195,16 @@ const reducer = (state = initialState, action = {}) => {
                 ...state,
                 delCertRes: null
             }
-        case UPDATE_ACCOMPLISHED:
+        case UPDATE_ACCOMPLISHED: {
             return {
                 ...state,
                 accomplished: action.data
+            }
+        }
+        case UPDATE_EMPTY_ACCOMPLISHED:
+            return {
+                ...state,
+                emptyAccomplished: action.data
             }
         default:
             return state;

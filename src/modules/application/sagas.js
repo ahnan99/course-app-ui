@@ -31,6 +31,9 @@ function* companyInfoWatch() {
     yield takeLatest(types.GET_COMPANY_INFO, getCompanyInfoWorker)
 }
 
+function* auditorLoginWatch() {
+    yield takeLatest(types.AUDITOR_REQUEST_LOGIN, auditorLoginWorker)
+}
 
 export function userLoginEndpoint(data) {
     return axios.post('/students/login', data)
@@ -60,6 +63,10 @@ export function userLogoutEndpoint() {
 
 export function getCompanyInfoEndpoint() {
     return axios.get('/public/getCompanyByHost')
+}
+
+export function auditorLoginEndpoint(data) {
+    return axios.post('/users/login', data)
 }
 
 //workers
@@ -127,15 +134,34 @@ function* userLogoutWorker() {
     }
 }
 
+function* auditorLoginWorker(action) {
+    try {
+        const response = yield call(auditorLoginEndpoint, action.payload)
+        yield put(actions.auditorLogin(response.data))
+    } catch (error) {
+        yield put(actions.auditorLoginError(error))
+    }
+}
+
 export const workers = {
     userLoginWorker,
     userRegisterWorker,
     getUserInfoWorker,
     postUserInfoWorker,
     userLogoutWorker,
-    confirmLoginWorker
+    confirmLoginWorker,
+    auditorLoginWorker
 }
 
 export default function* saga() {
-    yield all([loginWatch(), confirmLoginWatch(), registerWatch(), getUserInfoWatch(), postUserInfoWatch(), logoutWatch(), companyInfoWatch()])
+    yield all([
+        loginWatch(),
+        confirmLoginWatch(),
+        registerWatch(),
+        getUserInfoWatch(),
+        postUserInfoWatch(),
+        logoutWatch(),
+        companyInfoWatch(),
+        auditorLoginWatch()
+    ])
 }

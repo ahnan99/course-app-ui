@@ -88,27 +88,27 @@ class MainView extends Component {
                         <b style={{ color: 'white' }}>{this.props.application.userInfo ? this.props.application.userInfo.name : null}</b>
                     </div>
                     <Menu onClick={this.onClick} theme="dark" mode="inline">
-                        <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
                             我的课程
-                        </Menu.Item>
-                        {this.props.application.userInfo && this.props.application.userInfo.host_kindID === 0 ? <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
+                        </Menu.Item> : null}
+                        {this.props.application.userInfo && !this.props.application.userInfo.host_kindID === 0 ? <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
                             我要选课
                         </Menu.Item> : null}
-                        <Menu.Item key="3" icon={<AuditOutlined />} title={""}>
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="3" icon={<AuditOutlined />} title={""}>
                             我的证书
-                        </Menu.Item>
-                        <Menu.Item key="4" icon={<UserOutlined />} title={""}>
+                        </Menu.Item> : null}
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="4" icon={<UserOutlined />} title={""}>
                             个人信息
-                        </Menu.Item>
-                        <Menu.Item key="5" icon={<InfoCircleOutlined />} title={""}>
+                        </Menu.Item> : null}
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="5" icon={<InfoCircleOutlined />} title={""}>
                             反馈
-                        </Menu.Item>
-                        <Menu.Item key="6" icon={<MailOutlined />} title={""}>
+                        </Menu.Item> : null}
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="6" icon={<MailOutlined />} title={""}>
                             消息
-                        </Menu.Item>
-                        <Menu.Item key="7" icon={<QuestionCircleOutlined />} title={""}>
+                        </Menu.Item> : null}
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="7" icon={<QuestionCircleOutlined />} title={""}>
                             帮助
-                        </Menu.Item>
+                        </Menu.Item> : null}
                         <Menu.Item key="8" icon={<LogoutOutlined />} title={""}>
                             退出
                         </Menu.Item>

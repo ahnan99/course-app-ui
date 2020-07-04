@@ -6,6 +6,7 @@ import userSaga from './user/sagas'
 import certSaga from './certificate/sagas'
 import messageSaga from './message/sagas'
 import examSaga from './exam/sagas'
+import auditSaga from './audit/sagas'
 
 const sagas = [
     courseSaga,
@@ -13,7 +14,8 @@ const sagas = [
     userSaga,
     certSaga,
     messageSaga,
-    examSaga
+    examSaga,
+    auditSaga
 ]
 
 function* rootSaga(){

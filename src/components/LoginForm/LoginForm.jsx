@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, message } from 'antd'
+import { Form, Input, Button, message, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 
@@ -21,7 +21,10 @@ class LoginForm extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.loggedIn && nextProps.username) {
+        if (nextProps.loggedIn && nextProps.username && nextProps.auditor) {
+            this.props.history.push('/auditpage')
+        }
+        else if (nextProps.loggedIn && nextProps.username && nextProps.username !== 'admin.spc') {
             this.props.getUserInfo({ username: nextProps.username })
             if (nextProps.userInfo && nextProps.userInfo.newCourse === 0 && nextProps.userInfo.host_kindID === 0) {
                 this.props.history.push('/courseselect')
@@ -30,7 +33,6 @@ class LoginForm extends Component {
                 this.props.history.push('/homepage')
             }
         }
-
         if (nextProps.loginError) {
             message.error(nextProps.loginError)
         }
@@ -38,13 +40,20 @@ class LoginForm extends Component {
 
     onFinish = values => {
         console.log('Success:', values)
-        this.props.requestLogin({ username: values.username, password: values.password })
+        if (values.auditor) {
+            this.props.auditorRequestLogin({ username: values.username, password: values.password })
+        } else {
+            this.props.requestLogin({ username: values.username, password: values.password })
+        }
     }
 
     onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo)
     }
 
+    onChange = (e) => {
+        console.log(`checked = ${e.target.checked}`);
+    }
     render() {
         return (
             <Form
@@ -72,13 +81,16 @@ class LoginForm extends Component {
                         placeholder="密码"
                     />
                 </Form.Item>
+                <Form.Item name="auditor">
+                    <Checkbox.Group>
+                        <Checkbox value="1" onChange={this.onChange}>督查登录</Checkbox>
+                    </Checkbox.Group>
+                </Form.Item>
                 <Form.Item>
-
                     <a className="login-form-forgot" href="/forgetpassword">
                         忘记密码
                     </a>
                 </Form.Item>
-
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
