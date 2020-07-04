@@ -107,7 +107,7 @@ class RegisterForm extends Component {
     onValuesChange = (changedValue, values) => {
         if (changedValue.kindID) {
             this.setState({ kindID: changedValue.kindID })
-            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.application.companyInfo.deptID })
+            this.props.userActions.getDept1({ kindID: changedValue.kindID, pID: this.props.application.companyInfo[0].deptID })
             this.props.userActions.updateDept2([])
             this.formRef.current.setFieldsValue({ dept1: null, dept2: null })
         }
