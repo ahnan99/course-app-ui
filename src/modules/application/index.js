@@ -19,6 +19,10 @@ const UPDATE_COMPANY_INFO = 'update_company_info'
 const UPDATE_NEW_COURSE = 'update_new_course'
 const CONFIRM_LOGIN = 'confirm_login'
 const UPDATE_CONFIRM_LOGIN = 'update_confirm_login'
+const AUDITOR_LOGIN = 'auditor_login'
+const AUDITOR_LOGIN_ERROR = 'auditor_login_error'
+const UPDATE_AUDITOR = 'update_auditor'
+
 
 export const types = {
     REQUEST_LOGIN,
@@ -40,7 +44,10 @@ export const types = {
     UPDATE_COMPANY_INFO,
     UPDATE_NEW_COURSE,
     CONFIRM_LOGIN,
-    UPDATE_CONFIRM_LOGIN
+    UPDATE_CONFIRM_LOGIN,
+    AUDITOR_LOGIN,
+    AUDITOR_LOGIN_ERROR,
+    UPDATE_AUDITOR
 }
 
 //Action creators
@@ -54,6 +61,16 @@ const userLogin = response => ({
     type: USER_LOGIN,
     response
 });
+
+const auditorLogin = response => ({
+    type: AUDITOR_LOGIN,
+    response
+});
+
+const auditorLoginError = response => ({
+    type: AUDITOR_LOGIN_ERROR,
+    response
+})
 
 const userLoginError = response => ({
     type: USER_LOGIN_ERROR,
@@ -132,6 +149,11 @@ const updateNewCourse = data => ({
     data
 })
 
+const updateAuditor = data => ({
+    type: UPDATE_AUDITOR,
+    data
+})
+
 const confirmLogin = () => ({
     type: CONFIRM_LOGIN
 })
@@ -161,7 +183,10 @@ export const actions = {
     getCompanyInfo,
     updateNewCourse,
     confirmLogin,
-    updateConfirmLogin
+    updateConfirmLogin,
+    auditorLogin,
+    auditorLoginError,
+    updateAuditor
 }
 
 const initialState = {
@@ -175,6 +200,7 @@ const initialState = {
     postUserInfoStatus: null,
     companyInfo: null,
     newCourse: null,
+    auditor: null,
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -187,6 +213,27 @@ const reducer = (state = initialState, action = {}) => {
                     loginError: null,
                     username: action.response.username,
                     newCourse: action.response.newCourse
+                }
+            } else if (action.response.sessionExpire === 1) {
+                return {
+                    ...state,
+                    loggedIn: false
+                }
+            } else {
+                return {
+                    ...state,
+                    loginError: action.response.msg
+                }
+            }
+        }
+        case AUDITOR_LOGIN: {
+            if (action.response.status === 0) {
+                return {
+                    ...state,
+                    loggedIn: true,
+                    loginError: null,
+                    username: action.response.username,
+                    auditor: action.response.auditor
                 }
             } else if (action.response.sessionExpire === 1) {
                 return {
@@ -266,6 +313,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 newCourse: action.data
+            }
+        }
+        case UPDATE_AUDITOR: {
+            return {
+                ...state,
+                auditor: action.data
             }
         }
         case UPDATE_CONFIRM_LOGIN: {
