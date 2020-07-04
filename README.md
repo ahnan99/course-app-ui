@@ -1142,7 +1142,8 @@ video.js: https://www.jb51.net/article/145346.htm
         "msg": "登录成功",
         "username": "albert",
         "name": "林冲",
-        "hostName": "中石化上海石化公司"
+        "hostName": "中石化上海石化公司",
+        "auditor": 1
     }
     ```    
 
