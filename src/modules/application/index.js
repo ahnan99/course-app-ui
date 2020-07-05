@@ -312,7 +312,8 @@ const reducer = (state = initialState, action = {}) => {
                     loggedIn: false,
                     loginError: null,
                     username: null,
-                    userInfo: null
+                    userInfo: null,
+                    auditor: null
                 }
             }
         }
