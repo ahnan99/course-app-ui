@@ -83,7 +83,7 @@ class LoginForm extends Component {
                 </Form.Item>
                 <Form.Item name="auditor">
                     <Checkbox.Group>
-                        <Checkbox value="1" onChange={this.onChange}>督查登录</Checkbox>
+                        <Checkbox value="1" onChange={this.onChange}>督查</Checkbox>
                     </Checkbox.Group>
                 </Form.Item>
                 <Form.Item>
