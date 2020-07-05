@@ -57,7 +57,7 @@ class AuditPage extends Component {
                 <Row gutter={[16, 32]}>
                     <Col span={24} style={{ textAlign: 'left' }}>
                         <Breadcrumb>
-                            <Breadcrumb.Item>学员筛选</Breadcrumb.Item>
+                            <Breadcrumb.Item>人员查找</Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
                 </Row>
