@@ -73,7 +73,7 @@ class AuditPage extends Component {
                 <Row gutter={[16,32]}>
                     <Col sapn={24} className="form-container">
                         <Search
-                            placeholder="输入名字或身份证"
+                            placeholder="输入姓名或身份证"
                             onSearch={value => this.onSearch(value)}
                             style={{ width: 200 }}
                             enterButton
