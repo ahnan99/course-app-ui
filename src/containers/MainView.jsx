@@ -91,7 +91,7 @@ class MainView extends Component {
                         {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="1" icon={<AppstoreOutlined />} title={""}>
                             我的课程
                         </Menu.Item> : null}
-                        {this.props.application.userInfo && !this.props.application.userInfo.host_kindID === 0 ? <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
+                        {this.props.application.userInfo && this.props.application.userInfo.host_kindID === 0 ? <Menu.Item key="2" icon={<ScheduleOutlined />} title={""}>
                             我要选课
                         </Menu.Item> : null}
                         {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="3" icon={<AuditOutlined />} title={""}>
