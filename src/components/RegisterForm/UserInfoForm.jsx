@@ -107,7 +107,6 @@ class UserInfoForm extends Component {
                     {
                         ...this.props.application.userInfo,
                         kindID: this.props.application.userInfo.kindID.toString(),
-                        companyID: this.props.application.companyInfo[0].deptName,
                         dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
                         dept2: this.props.application.userInfo.dept2 == 0 ? "" : this.props.application.userInfo.dept2
                     }
@@ -167,20 +166,8 @@ class UserInfoForm extends Component {
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
-                    name="companyID"
-                    label="公司名称"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入公司名称',
-                        },
-                    ]}
-                >
-                    <Input disabled />
-                </Form.Item>
-                <Form.Item
                     name="dept1"
-                    label="一级部门"
+                    label={kindID === "0" ? "一级部门" : "公司名称"}
                     rules={[
                         {
                             required: true,

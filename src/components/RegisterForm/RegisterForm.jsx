@@ -127,7 +127,7 @@ class RegisterForm extends Component {
                 {...formItemLayout}
                 onFinish={this.onFinish}
                 scrollToFirstError
-                initialValues={{ kindID: "0", companyID: this.props.application.companyInfo[0].deptName }}
+                initialValues={{ kindID: "0" }}
                 onValuesChange={this.onValuesChange}
                 ref={this.formRef}
             >
@@ -223,20 +223,8 @@ class RegisterForm extends Component {
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
-                    name="companyID"
-                    label="公司名称"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入公司名称',
-                        },
-                    ]}
-                >
-                    <Input disabled />
-                </Form.Item>
-                <Form.Item
                     name="dept1"
-                    label="一级部门"
+                    label={kindID === "0" ? "一级部门" : "公司名称"}
                     rules={[
                         {
                             required: true,
