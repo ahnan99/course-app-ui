@@ -68,7 +68,7 @@ class ExamForm extends Component {
                     this.props.actions.postTime({ paperID: this.props.exam.exam[0].paperID, secondRest: this.state.time })
                 })
             }
-        }, 1000)
+        }, 3000)    //exam submission Interval
     }
 
     leave = () => {
