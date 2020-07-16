@@ -35,6 +35,7 @@ class LessonCard extends Component {
                         <Progress percent={course.completion} size="small" /><p>时长：{course.hours}</p>
                         <p>开始日期：{course.startDate}</p>
                         <p>结束日期：{course.endDate}</p>
+                        <p>完成条件：{course.pass_condition}</p>
                     </Card.Grid>:null}
                    { course.status < 2 ?<Card.Grid style={this.gridStyle}>
                         <b>课程内容</b>
