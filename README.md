@@ -282,7 +282,8 @@ video.js: https://www.jb51.net/article/145346.htm
                 "regDate": "2020-05-08T15:19:44.020Z",
                 "registerID": "120107196604032113",
                 "statusName": "待执行",
-                "courseName": "安全概论"
+                "courseName": "安全概论",
+                "pass_condition": "考试成绩达到80分"
             },
             {
                 "ID": 2,
@@ -300,7 +301,8 @@ video.js: https://www.jb51.net/article/145346.htm
                 "regDate": "2020-05-08T15:19:44.020Z",
                 "registerID": "120107196604032113",
                 "statusName": "待执行",
-                "courseName": "危险品"
+                "courseName": "危险品",
+                "pass_condition": "完成率达到98%"
             }
     ]
     ```
