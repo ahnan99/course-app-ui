@@ -8,9 +8,10 @@ import ForgetPassword from './ForgetPassword/ForgetPassword'
 import MainView from './MainView'
 import axios from 'axios'
 import { actions as ApplicationActions } from '../modules/application'
-import { actions as MessageActions} from '../modules/message'
+import { actions as MessageActions } from '../modules/message'
+import { actions as UserActions } from '../modules/user'
 import { bindActionCreators } from 'redux'
-
+import {withRouter} from 'react-router-dom'
 
 axios.defaults.baseURL = process.env.REACT_APP_ALIYUNHOST ? process.env.REACT_APP_ALIYUNHOST + ":8081" : "http://127.0.0.1:8081"
 //axios.defaults.baseURL = "http://spc.shznxfxx.cn:8081"
@@ -21,7 +22,7 @@ class App extends Component {
         super(props)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.actions.confirmLogin()
     }
 
@@ -32,7 +33,17 @@ class App extends Component {
         if (this.props.application.loggedIn === false && nextProps.application.loggedIn === true) {
             message.success('登录成功')
         }
-        
+        if (this.props.application.loggedIn === false && nextProps.user.resetStatus !== null) {
+            if (nextProps.user.resetStatus === 0) {
+                message.success(nextProps.user.resetMessage)
+                this.props.history.push('/login')
+            } else {
+                console.log('shibai')
+                message.error(nextProps.user.resetMessage)
+            }
+            this.props.userActions.updateResetPassword({ status: null, msg: null })
+            
+        }
     }
 
     render() {
@@ -49,12 +60,13 @@ class App extends Component {
 
 const mapStateToProps = state => ({
     application: state.application,
-    message: state.message
+    message: state.message,
+    user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(ApplicationActions, dispatch),
-    messageActions: bindActionCreators(MessageActions,dispatch)
-
+    messageActions: bindActionCreators(MessageActions, dispatch),
+    userActions: bindActionCreators(UserActions, dispatch)
 })
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

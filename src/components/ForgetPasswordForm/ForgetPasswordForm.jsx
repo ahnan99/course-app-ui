@@ -5,20 +5,20 @@ import checkIDcard from '../../modules/function/checkID'
 
 
 export default class ForgetPassword extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
     }
 
     onFinish = values => {
-        this.props.handleClick()
+        this.props.actions.postResetPassword({ username: values.name, mobile: values.mobile })
     }
 
 
     render() {
         return (
             <Form
-            onFinish={values => this.onFinish(values)}>
+                onFinish={values => this.onFinish(values)}>
                 <Form.Item
                     name="name"
                     label="用户名"

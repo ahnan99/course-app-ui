@@ -6,6 +6,8 @@ const UPDATE_DEPT_1 = 'update_dept_1'
 const UPDATE_DEPT_2 = 'update_dept_2'
 const DEPT_1_ERROR = 'dept_1_error'
 const DEPT_2_ERROR = 'dept_2_error'
+const POST_RESET_PASSWORD = 'post_reset_password'
+const UPDATE_RESET_PASSWORD = 'update_reset_password'
 
 export const types = {
     SHOW_PASSWORD_RESET_MODAL,
@@ -14,7 +16,9 @@ export const types = {
     UPDATE_DEPT_1,
     UPDATE_DEPT_2,
     DEPT_1_ERROR,
-    DEPT_2_ERROR
+    DEPT_2_ERROR,
+    POST_RESET_PASSWORD,
+    UPDATE_RESET_PASSWORD
 }
 
 //Action creators
@@ -55,6 +59,16 @@ const updateDept2 = data => ({
     data
 })
 
+const updateResetPassword = data =>({
+    type: UPDATE_RESET_PASSWORD,
+    data
+})
+
+const postResetPassword = payload => ({
+    type: POST_RESET_PASSWORD,
+    payload
+})
+
 export const actions = {
     setPasswordResetModal,
     getDept1,
@@ -62,14 +76,18 @@ export const actions = {
     updateDept1,
     updateDept2,
     dept1Error,
-    dept2Error
+    dept2Error,
+    updateResetPassword,
+    postResetPassword
 }
 
 const initialState = {
     passwordResetModalVisible: false,
     email: 'email@email.com',
     dept1List: [],
-    dept2List: []
+    dept2List: [],
+    resetMessage: null,
+    resetStatus: null
 }
 
 //Reducers
@@ -88,6 +106,13 @@ const reducer = (state = initialState, action = {}) => {
                 ...state,
                 dept1List: action.data
             }
+        case UPDATE_RESET_PASSWORD:{
+            return{
+                ...state,
+                resetMessage: action.data.msg,
+                resetStatus: action.data.status
+            }
+        }    
         case UPDATE_DEPT_2:
             return {
                 ...state,

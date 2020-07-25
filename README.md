@@ -93,10 +93,21 @@ video.js: https://www.jb51.net/article/145346.htm
     {"status": "", "msg": ""} 
     ```    
 
-3. 学员重置密码   **POST:/ use the same API of /students/change_passwd**
+3. 学员重置密码   **POST:/public/reset_student_password**
   * input
     ```
- 
+    {
+      "username":"",
+      "mobile":""
+    }
+    ```    
+
+  * output  **//status：int, 0 成功  1 用户不存在  2 手机错误;  msg：string, 提示信息   成功后返回登录页面**
+    ```
+    {
+      "status": "0", 
+      "msg": "密码重置成功，请注意接收短信。"
+    } 
     ```    
 
 4. 学员修改密码   **POST:/students/change_passwd**
