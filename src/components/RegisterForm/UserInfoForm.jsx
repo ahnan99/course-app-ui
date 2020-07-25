@@ -66,7 +66,8 @@ class UserInfoForm extends Component {
     onFinish = values => {
         console.log('Success:', values)
         this.props.actions.postUserInfo({
-            username: values.username,   //*
+            username: values.username, 
+            password: values.password,  //*
             name: values.name,   //*
             kindID: values.kindID,    //0:系统内单位  1:系统外单位
             companyID: this.props.application.companyInfo[0].deptID, //*
@@ -106,6 +107,7 @@ class UserInfoForm extends Component {
                 initialValues={this.props.application.userInfo ?
                     {
                         ...this.props.application.userInfo,
+                        password: null,
                         kindID: this.props.application.userInfo.kindID.toString(),
                         dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
                         dept2: this.props.application.userInfo.dept2 == 0 ? "" : this.props.application.userInfo.dept2
@@ -155,6 +157,45 @@ class UserInfoForm extends Component {
                     ]}
                 >
                     <Input />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    label="密码"
+                    rules={[
+                        {
+                            required: false,
+                            message: '请输入密码',
+                        },
+                        {
+                            min: 6,
+                            message: '密码至少六位'
+                        }
+                    ]}
+                    hasFeedback
+                >
+                    <Input.Password />
+                </Form.Item>
+                <Form.Item
+                    name="confirm"
+                    label="确认密码"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                        {
+                            required: false,
+                            message: '请确认密码',
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(rule, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('两次输入不匹配');
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password />
                 </Form.Item>
                 <Form.Item
                     name="kindID"

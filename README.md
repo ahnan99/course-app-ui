@@ -132,6 +132,7 @@ video.js: https://www.jb51.net/article/145346.htm
       "username": "120107196604032113",   //只读
       "name": "Albert",   //*   
       "kindID": 0,
+      "password": "123",  //*   
       "companyID": "",    //R
       "dept1": "",        //*
       "dept1Name": "",    //*
