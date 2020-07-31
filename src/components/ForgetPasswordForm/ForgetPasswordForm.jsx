@@ -51,11 +51,11 @@ export default class ForgetPassword extends Component {
                 </Form.Item>
                 <Form.Item
                     name="mobile"
-                    label="手機號"
+                    label="手机号"
                     rules={[
                         {
                             required: true,
-                            message: '请输入手機',
+                            message: '请输入手机',
                         }
                     ]}
                 >
