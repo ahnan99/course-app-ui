@@ -66,10 +66,10 @@ class UserInfoForm extends Component {
     onFinish = values => {
         console.log('Success:', values)
         this.props.actions.postUserInfo({
-            username: values.username, 
+            username: values.username,
             password: values.password,  //*
             name: values.name,   //*
-            kindID: values.kindID,    //0:系统内单位  1:系统外单位
+            kindID: this.props.application.userInfo.host !== 'spc' ? values.kindID : this.props.application.userInfo.kindID.toString(),    //0:系统内单位  1:系统外单位
             companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : "",
             dept1Name: values.kindID === "0" ? "" : values.dept1,
@@ -197,7 +197,7 @@ class UserInfoForm extends Component {
                 >
                     <Input.Password />
                 </Form.Item>
-                <Form.Item
+                {this.props.application.userInfo.host === 'spc' ? <Form.Item
                     name="kindID"
                     label="性质"
                 >
@@ -205,7 +205,7 @@ class UserInfoForm extends Component {
                         <Radio value="0">石化系统员工</Radio>
                         <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
-                </Form.Item>
+                </Form.Item> : null}
                 <Form.Item
                     name="dept1"
                     label={kindID === "0" ? "一级部门" : "公司名称"}

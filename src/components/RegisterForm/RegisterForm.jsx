@@ -89,7 +89,7 @@ class RegisterForm extends Component {
             username: values.username,   //*
             name: values.name,   //*
             password: values.password,   //*
-            kindID: values.kindID,    //0:系统内单位  1:系统外单位
+            kindID: this.props.application.companyInfo[0].hostNo !== 'spc' ? 0 : values.kindID,    //0:系统内单位  1:系统外单位
             companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : 0,
             dept1Name: values.kindID === "0" ? null : values.dept1,
@@ -213,7 +213,7 @@ class RegisterForm extends Component {
                 >
                     <Input.Password />
                 </Form.Item>
-                <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc'?<Form.Item
                     name="kindID"
                     label="性质"
                 >
@@ -221,7 +221,7 @@ class RegisterForm extends Component {
                         <Radio value="0">石化系统员工</Radio>
                         <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
-                </Form.Item>
+                </Form.Item>:null}
                 <Form.Item
                     name="dept1"
                     label={kindID === "0" ? "一级部门" : "公司名称"}
