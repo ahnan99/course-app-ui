@@ -69,7 +69,7 @@ class UserInfoForm extends Component {
             username: values.username,
             password: values.password,  //*
             name: values.name,   //*
-            kindID: this.props.application.userInfo.host !== 'spc' ? values.kindID : this.props.application.userInfo.kindID.toString(),    //0:系统内单位  1:系统外单位
+            kindID: this.props.application.userInfo.host === 'spc' ? values.kindID : 0,    //0:系统内单位  1:系统外单位
             companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : "",
             dept1Name: values.kindID === "0" ? "" : values.dept1,
