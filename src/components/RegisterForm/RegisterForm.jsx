@@ -213,7 +213,7 @@ class RegisterForm extends Component {
                 >
                     <Input.Password />
                 </Form.Item>
-                {this.props.application.companyInfo[0].hostNo !== 'spc'?<Form.Item
+                {this.props.application.companyInfo[0].hostNo === 'spc'?<Form.Item
                     name="kindID"
                     label="性质"
                 >
