@@ -84,6 +84,7 @@ video.js: https://www.jb51.net/article/145346.htm
       "mobile": "138018888888",   //*
       "phone": "",
       "email": "xxx.s@www.com",   //*
+      "education": 2,             //*学历
       "memo": ""
     }
     ```
@@ -143,6 +144,7 @@ video.js: https://www.jb51.net/article/145346.htm
       "phone": "",
       "email": "",        //*
       "limitDate": "",    //R
+      "education": 1,     //*
       "memo": ""
     }
     ```
@@ -202,6 +204,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "email": "x.x@x.com",
             "user_status": 0,
             "limitDate": "",
+            "education": 3,
+            "educationName": "高中",
             "host": "spc",
             "photo_filename": "\\upload\\students\\photos\\120107196604032113.png",  //if photo is null, show the default picture as "/public/images/guy.png"
             "memo": "",
@@ -224,7 +228,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
-6a. 获取下级单位列表   **GET:/public/get_deptListByPID**
+6a. 获取下级单位列表   **GET:/public/getDeptListByPID**
   * input   **pID: 本单位ID; kindID: 0 系统内单位  1 系统外单位. 取自学员信息中的kindID**
     ```
     {"pID":8, "kindID":0}
@@ -264,6 +268,30 @@ video.js: https://www.jb51.net/article/145346.htm
             "regDate": "2017-06-06",
             "registerID": "albert",
             "statusName": "有效"
+        }
+    ] 
+    ``` 
+
+6b. 获取学历列表   **GET:/public/getDicListByKind**
+  * input   **kindID: 'education'**
+    ```
+    {"kindID": "education"}
+    ``` 
+
+  * output   ****
+    ```
+    [
+        {
+            "ID": 0,
+            "item": ''
+        },
+        {
+            "ID": 1,
+            "item": '小学'
+        },
+        {
+            "ID": 2,
+            "item": '初中'
         }
     ] 
     ``` 
