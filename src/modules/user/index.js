@@ -8,6 +8,8 @@ const DEPT_1_ERROR = 'dept_1_error'
 const DEPT_2_ERROR = 'dept_2_error'
 const POST_RESET_PASSWORD = 'post_reset_password'
 const UPDATE_RESET_PASSWORD = 'update_reset_password'
+const GET_EDUCATION = 'get_education'
+const UPDATE_EDUCATION = 'update_education'
 
 export const types = {
     SHOW_PASSWORD_RESET_MODAL,
@@ -18,7 +20,9 @@ export const types = {
     DEPT_1_ERROR,
     DEPT_2_ERROR,
     POST_RESET_PASSWORD,
-    UPDATE_RESET_PASSWORD
+    UPDATE_RESET_PASSWORD,
+    GET_EDUCATION,
+    UPDATE_EDUCATION
 }
 
 //Action creators
@@ -59,7 +63,7 @@ const updateDept2 = data => ({
     data
 })
 
-const updateResetPassword = data =>({
+const updateResetPassword = data => ({
     type: UPDATE_RESET_PASSWORD,
     data
 })
@@ -67,6 +71,16 @@ const updateResetPassword = data =>({
 const postResetPassword = payload => ({
     type: POST_RESET_PASSWORD,
     payload
+})
+
+const getEducation = payload => ({
+    type: GET_EDUCATION,
+    payload
+})
+
+const updateEducation = data => ({
+    type: UPDATE_EDUCATION,
+    data
 })
 
 export const actions = {
@@ -78,7 +92,9 @@ export const actions = {
     dept1Error,
     dept2Error,
     updateResetPassword,
-    postResetPassword
+    postResetPassword,
+    getEducation,
+    updateEducation
 }
 
 const initialState = {
@@ -87,7 +103,8 @@ const initialState = {
     dept1List: [],
     dept2List: [],
     resetMessage: null,
-    resetStatus: null
+    resetStatus: null,
+    educationList: []
 }
 
 //Reducers
@@ -106,17 +123,22 @@ const reducer = (state = initialState, action = {}) => {
                 ...state,
                 dept1List: action.data
             }
-        case UPDATE_RESET_PASSWORD:{
-            return{
+        case UPDATE_RESET_PASSWORD: {
+            return {
                 ...state,
                 resetMessage: action.data.msg,
                 resetStatus: action.data.status
             }
-        }    
+        }
         case UPDATE_DEPT_2:
             return {
                 ...state,
                 dept2List: action.data
+            }
+        case UPDATE_EDUCATION:
+            return {
+                ...state,
+                educationList: action.data
             }
         default:
             return state;

@@ -15,6 +15,10 @@ function* postResetPasswordWatch() {
     yield takeLatest(types.POST_RESET_PASSWORD, postResetPasswordWorker)
 }
 
+function* getEducationWatch() {
+    yield takeLatest(types.GET_EDUCATION, getEducationWorker)
+}
+
 export function getDeptEndpoint(data) {
     console.log(data)
     return axios.get('/public/getDeptListByPID', {
@@ -24,6 +28,13 @@ export function getDeptEndpoint(data) {
 
 export function postResetPasswordEndpoint(data) {
     return axios.post('/public/reset_student_password', data)
+}
+
+export function getEducationEndpoint(data) {
+    console.log(data)
+    return axios.get('/public/getDicListByKind', {
+        params: data
+    })
 }
 
 //workers
@@ -54,12 +65,22 @@ function* postResetPasswordWorker(action) {
     }
 }
 
+function* getEducationWorker(action) {
+    try {
+        const response = yield call(getEducationEndpoint, action.payload)
+        yield put(actions.updateEducation(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
 export const workers = {
     getDept1Worker,
     getDept2Worker,
-    postResetPasswordWorker
+    postResetPasswordWorker,
+    getEducationWorker
 }
 
 export default function* saga() {
-    yield all([getDept1Watch(), getDept2Watch(), postResetPasswordWatch()])
+    yield all([getDept1Watch(), getDept2Watch(), postResetPasswordWatch(),getEducationWatch()])
 }
