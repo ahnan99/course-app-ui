@@ -203,6 +203,7 @@ class UserInfoForm extends Component {
                 <Form.Item
                     name="education"
                     label="学历"
+                    rules={[{ required: true, message: '请输入学历' }]}
                 >
                     <Select>
                         {this.props.user.educationList.map(item => (
@@ -322,6 +323,12 @@ class UserInfoForm extends Component {
                     label="上传身份证背面"
                 >
                     <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
+                </Form.Item>
+                <Form.Item
+                    name="upload4"
+                    label="上传学历证明"
+                >
+                    <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">修改信息</Button>

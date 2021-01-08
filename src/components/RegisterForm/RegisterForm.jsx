@@ -54,12 +54,13 @@ class RegisterForm extends Component {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
+        this.props.userActions.getEducation({ kindID: 'education' })
 
 
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.props.userActions.getEducation({ kindID: 'education' })
+        
         if (nextProps.loggedIn) {
             this.props.history.push('/homepage')
         }
@@ -218,6 +219,7 @@ class RegisterForm extends Component {
                 <Form.Item
                     name="education"
                     label="学历"
+                    rules={[{ required: true, message: '请输入学历' }]}
                 >
                     <Select>
                         {this.props.user.educationList.map(item => (

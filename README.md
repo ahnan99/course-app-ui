@@ -175,6 +175,49 @@ video.js: https://www.jb51.net/article/145346.htm
     }
     ```    
 
+5b. 上传学员身份证正面   **POST:/files/uploadSingle**
+  * input   **只能上传一张照片，重复上传将覆盖前文件.**
+    ```
+    //username（照片所属学员的身份证号）及upID需要在query中传递。示例中的upID="student_IDcardA", name="avatar", enctype="multipart/form-data"必须遵守。
+    {"username":"120107196604032113", upID="student_IDcardA"}
+    <form action="/files/uploadSingle" method="post" enctype="multipart/form-data">
+        <h2>单图上传</h2>
+        <input type="file" name="avatar">
+        <input type="submit" value="提交">
+    </form>
+    ``` 
+
+  * output  **//status：int, 0 成功  1 文件格式不支持  2 大小超过限制  3 文件不存在  9 其他;  msg：string, 提示信息**
+    ```
+    {
+        "status":0 ,
+        "msg":"" ,
+        "file": "users\\upload\\students\\IDcards\\120107196604032113.jpeg"  //实际保存的路径
+    }
+    ```    
+
+5c. 上传学员学历证明   **POST:/files/uploadSingle**
+  * input   **只能上传一张照片，重复上传将覆盖前文件.**
+    ```
+    //username（照片所属学员的身份证号）及upID需要在query中传递。示例中的upID="student_education", name="avatar", enctype="multipart/form-data"必须遵守。
+    {"username":"120107196604032113", upID="student_education"}
+    <form action="/files/uploadSingle" method="post" enctype="multipart/form-data">
+        <h2>单图上传</h2>
+        <input type="file" name="avatar">
+        <input type="submit" value="提交">
+    </form>
+    ``` 
+
+  * output  **//status：int, 0 成功  1 文件格式不支持  2 大小超过限制  3 文件不存在  9 其他;  msg：string, 提示信息**
+    ```
+    {
+        "status":0 ,
+        "msg":"" ,
+        "file": "users\\upload\\students\\educations\\120107196604032113.jpeg"  //实际保存的路径
+    }
+    ```    
+
+
 6. 学员信息获取   **GET:/students/get_student**
   * input
     ```
