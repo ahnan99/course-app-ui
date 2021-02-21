@@ -314,7 +314,7 @@ class UserInfoForm extends Component {
                         <Col span={12}>
                             <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
                         </Col>
-                        <Col span={12} style={{ textAlign: "left;" }}>
+                        <Col span={12} style={{ textAlign: "left"}}>
                             <span>
                                 正面免冠彩色近照, 头部占画面的2/3，图像清晰，无明显畸变。照片高宽比为7:5。不合格者将无法获得证书。
                             </span>
@@ -328,7 +328,7 @@ class UserInfoForm extends Component {
                         <Col span={12}>
                     <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
                     </Col>
-                        <Col span={12} style={{ textalign: "left;" }}>
+                        <Col span={12} style={{ textalign: "left"}}>
                             <span>
                                 水平放置, 身份证充满画面至少4/5，图像清晰，无明显畸变。高宽比为5:8。
                             </span>
