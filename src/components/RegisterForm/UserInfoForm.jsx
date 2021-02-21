@@ -33,6 +33,7 @@ class UserInfoForm extends Component {
     }
 
     componentWillMount() {
+        this.props.userActions.getEducation({ kindID: 'education' })
         this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.companyInfo[0].deptID })
         if (this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0) {
             this.props.userActions.getDept2({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1 })
@@ -70,6 +71,7 @@ class UserInfoForm extends Component {
             password: values.password,  //*
             name: values.name,   //*
             kindID: this.props.application.userInfo.host === 'spc' ? values.kindID : 0,    //0:系统内单位  1:系统外单位
+            education: values.education,
             companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : "",
             dept1Name: values.kindID === "0" ? "" : values.dept1,
@@ -109,6 +111,7 @@ class UserInfoForm extends Component {
                         ...this.props.application.userInfo,
                         password: null,
                         kindID: this.props.application.userInfo.kindID.toString(),
+                        education: this.props.application.userInfo.education.toString(),
                         dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
                         dept2: this.props.application.userInfo.dept2 == 0 ? "" : this.props.application.userInfo.dept2
                     }
@@ -196,6 +199,17 @@ class UserInfoForm extends Component {
                     ]}
                 >
                     <Input.Password />
+                </Form.Item>
+                <Form.Item
+                    name="education"
+                    label="学历"
+                    rules={[{ required: true, message: '请输入学历' }]}
+                >
+                    <Select>
+                        {this.props.user.educationList.map(item => (
+                            <Option key={item.ID} value={item.ID}>{item.item}</Option>
+                        ))}
+                    </Select>
                 </Form.Item>
                 {this.props.application.userInfo.host === 'spc' ? <Form.Item
                     name="kindID"
@@ -333,6 +347,12 @@ class UserInfoForm extends Component {
                                 同上。
                             </span>
                         </Col></Row>
+                </Form.Item>
+                <Form.Item
+                    name="upload4"
+                    label="上传学历证明"
+                >
+                    <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">修改信息</Button>

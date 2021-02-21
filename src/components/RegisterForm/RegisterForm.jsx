@@ -54,11 +54,13 @@ class RegisterForm extends Component {
         if (this.props.loggedIn) {
             this.props.history.push('/homepage')
         }
+        this.props.userActions.getEducation({ kindID: 'education' })
 
 
     }
 
     componentWillReceiveProps = (nextProps) => {
+        
         if (nextProps.loggedIn) {
             this.props.history.push('/homepage')
         }
@@ -89,7 +91,8 @@ class RegisterForm extends Component {
             username: values.username,   //*
             name: values.name,   //*
             password: values.password,   //*
-            kindID: this.props.application.companyInfo[0].hostNo !== 'spc' ? 0 : values.kindID,    //0:系统内单位  1:系统外单位
+            kindID: this.props.application.companyInfo[0].hostNo !== 'spc' ? 0 : values.kindID,
+            education: values.education,    //0:系统内单位  1:系统外单位
             companyID: this.props.application.companyInfo[0].deptID, //*
             dept1: values.kindID === "0" ? values.dept1 : 0,
             dept1Name: values.kindID === "0" ? null : values.dept1,
@@ -212,6 +215,17 @@ class RegisterForm extends Component {
                     ]}
                 >
                     <Input.Password />
+                </Form.Item>
+                <Form.Item
+                    name="education"
+                    label="学历"
+                    rules={[{ required: true, message: '请输入学历' }]}
+                >
+                    <Select>
+                        {this.props.user.educationList.map(item => (
+                            <Option value={item.ID}>{item.item}</Option>
+                        ))}
+                    </Select>
                 </Form.Item>
                 {this.props.application.companyInfo[0].hostNo === 'spc'?<Form.Item
                     name="kindID"
