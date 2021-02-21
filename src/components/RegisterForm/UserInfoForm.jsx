@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete } from 'antd'
+import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete, Row, Col } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
@@ -296,19 +296,43 @@ class UserInfoForm extends Component {
                     name="upload"
                     label="上传照片(仅供制作证件)"
                 >
-                    <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
+                        </Col>
+                        <Col span={12} style={{ textAlign: "left;" }}>
+                            <span>
+                                正面免冠彩色头像, 头部占照片尺寸的2/3，图像清晰，无明显畸变。照片高宽比为7:5。
+                            </span>
+                        </Col></Row>
                 </Form.Item>
                 <Form.Item
                     name="upload2"
                     label="上传身份证正面"
                 >
+                    <Row>
+                        <Col span={12}>
                     <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
+                    </Col>
+                        <Col span={12} style={{ textalign: "left;" }}>
+                            <span>
+                                水平放置, 身份证充满画面至少4/5，图像清晰，无明显畸变。高宽比为5:8。
+                            </span>
+                        </Col></Row>
                 </Form.Item>
                 <Form.Item
                     name="upload3"
                     label="上传身份证背面"
                 >
+                    <Row>
+                        <Col span={12}>
                     <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
+                    </Col>
+                        <Col span={12} style={{ textalign: "left;" }}>
+                            <span>
+                                同上。
+                            </span>
+                        </Col></Row>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">修改信息</Button>
