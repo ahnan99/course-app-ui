@@ -316,7 +316,7 @@ class UserInfoForm extends Component {
                         </Col>
                         <Col span={12} style={{ textAlign: "left"}}>
                             <span>
-                                正面免冠彩色近照, 头部占画面的2/3，图像清晰，无明显畸变。照片高宽比为7:5。不合格者将无法获得证书。
+                                正面免冠彩色近照, 头部占画面的2/3，图像清晰无畸变。照片高宽比为7:5。请适当裁剪，不合格者无法取证。
                             </span>
                         </Col></Row>
                 </Form.Item>
