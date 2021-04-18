@@ -102,7 +102,8 @@ class RegisterForm extends Component {
             mobile: values.mobile,
             phone: values.phone,
             email: values.email,   //*
-            memo: values.memo
+            memo: values.memo,
+            address: values.address
         })
     }
 
@@ -298,7 +299,13 @@ class RegisterForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="phone"
-                    label="固定电话"
+                    label="单位电话"
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="address"
+                    label="联系地址"
                 >
                     <Input />
                 </Form.Item>

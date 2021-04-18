@@ -82,8 +82,9 @@ video.js: https://www.jb51.net/article/145346.htm
       "dept3": "0",
       "job": "",
       "mobile": "138018888888",   //*
-      "phone": "",
+      "phone": "",                //单位电话
       "email": "xxx.s@www.com",   //*
+      "address": "",              //联系地址
       "education": 2,             //*学历
       "memo": ""
     }
@@ -143,6 +144,7 @@ video.js: https://www.jb51.net/article/145346.htm
       "mobile": "",       //*
       "phone": "",
       "email": "",        //*
+      "address": "",        
       "limitDate": "",    //R
       "education": 1,     //*
       "memo": ""
@@ -245,6 +247,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "mobile": "13331111222",
             "phone": "77777",
             "email": "x.x@x.com",
+            "address": "湖里毛路300号",
             "user_status": 0,
             "limitDate": "",
             "education": 3,
