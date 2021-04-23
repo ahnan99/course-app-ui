@@ -60,7 +60,7 @@ class RegisterForm extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        
+
         if (nextProps.loggedIn) {
             this.props.history.push('/homepage')
         }
@@ -103,7 +103,10 @@ class RegisterForm extends Component {
             phone: values.phone,
             email: values.email,   //*
             memo: values.memo,
-            address: values.address
+            address: values.address,
+            unit: values.unit,
+            experience: values.experience,
+            dept: values.dept
         })
     }
 
@@ -228,7 +231,7 @@ class RegisterForm extends Component {
                         ))}
                     </Select>
                 </Form.Item>
-                {this.props.application.companyInfo[0].hostNo === 'spc'?<Form.Item
+                {this.props.application.companyInfo[0].hostNo === 'spc' ? <Form.Item
                     name="kindID"
                     label="性质"
                 >
@@ -236,8 +239,8 @@ class RegisterForm extends Component {
                         <Radio value="0">石化系统员工</Radio>
                         <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
-                </Form.Item>:null}
-                <Form.Item
+                </Form.Item> : null}
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
                     name="dept1"
                     label={kindID === "0" ? "一级部门" : "公司名称"}
                     rules={[
@@ -258,8 +261,8 @@ class RegisterForm extends Component {
                                 option.value.indexOf(inputValue) !== -1
                             } />
                     }
-                </Form.Item>
-                <Form.Item
+                </Form.Item>}
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
                     name="dept2"
                     label="二级部门"
                 >
@@ -268,6 +271,25 @@ class RegisterForm extends Component {
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
                     </Select>
+                </Form.Item>}
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                    name="unit"
+                    label="单位"
+                    rules={[{ required: true, message: '请输入单位'}]}
+                >
+                    <Input />
+                </Form.Item> : null}
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                    name="dept"
+                    label="部门"
+                >
+                    <Input />
+                </Form.Item> : null}
+                <Form.Item
+                    name="experience"
+                    label="工作经历"
+                >
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     name="job"

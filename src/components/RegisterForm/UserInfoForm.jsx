@@ -82,7 +82,10 @@ class UserInfoForm extends Component {
             phone: values.phone,
             email: values.email,   //*
             memo: values.memo,
-            address: values.address
+            address: values.address,
+            unit: values.unit,
+            experience: values.experience,
+            dept: values.dept
         })
     }
 
@@ -221,7 +224,7 @@ class UserInfoForm extends Component {
                         <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
                 </Form.Item> : null}
-                <Form.Item
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
                     name="dept1"
                     label={kindID === "0" ? "一级部门" : "公司名称"}
                     rules={[
@@ -242,8 +245,8 @@ class UserInfoForm extends Component {
                                 option.value.indexOf(inputValue) !== -1
                             } />
                     }
-                </Form.Item>
-                <Form.Item
+                </Form.Item>}
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
                     name="dept2"
                     label="二级部门"
                 >
@@ -252,6 +255,26 @@ class UserInfoForm extends Component {
                             <Option key={dept.deptID} value={dept.deptID}>{dept.deptName}</Option>
                         ))}
                     </Select>
+                </Form.Item>}
+
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                    name="unit"
+                    label="单位"
+                    rules={[{ required: true, message: '请输入单位' }]}
+                >
+                    <Input />
+                </Form.Item> : null}
+                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                    name="dept"
+                    label="部门"
+                >
+                    <Input />
+                </Form.Item> : null}
+                <Form.Item
+                    name="experience"
+                    label="工作经历"
+                >
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     name="job"
@@ -321,7 +344,7 @@ class UserInfoForm extends Component {
                         <Col span={12}>
                             <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
                         </Col>
-                        <Col span={12} style={{ textAlign: "left"}}>
+                        <Col span={12} style={{ textAlign: "left" }}>
                             <span>
                                 正面免冠彩色近照, 头部占画面的2/3，图像清晰无畸变。照片高宽比为7:5。请适当裁剪，不合格者无法取证。
                             </span>
@@ -333,9 +356,9 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                    <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
-                    </Col>
-                        <Col span={12} style={{ textalign: "left"}}>
+                            <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
                             <span>
                                 水平放置, 身份证充满画面至少4/5，图像清晰，无明显畸变。高宽比为5:8。
                             </span>
@@ -347,8 +370,8 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                    <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
-                    </Col>
+                            <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
+                        </Col>
                         <Col span={12} style={{ textalign: "left;" }}>
                             <span>
                                 同上。

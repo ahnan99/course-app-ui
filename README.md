@@ -68,7 +68,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ```    
 
 2. 学员注册   **POST:/students/new_student**
-  * input
+  * input **//如果host='znxf', 不显示companyID, dept1, dept2, dept3，显示unit, dept. 否则相反。**
     ```
     {
       "username": "120107196604032113",   //*
@@ -81,11 +81,14 @@ video.js: https://www.jb51.net/article/145346.htm
       "dept2": "12",
       "dept3": "0",
       "job": "",
+      "unit": "上海地铁公司",  //单位
+      "dept": "第一运营公司",
       "mobile": "138018888888",   //*
       "phone": "",                //单位电话
       "email": "xxx.s@www.com",   //*
       "address": "",              //联系地址
       "education": 2,             //*学历
+      "experience": "2002年-2021年在上海地铁公司从事电工检修工作。",      
       "memo": ""
     }
     ```
@@ -141,12 +144,15 @@ video.js: https://www.jb51.net/article/145346.htm
       "dept2": "",
       "dept3": "",
       "job": "",
+      "unit": "上海地铁公司",
+      "dept": "第一运营公司",
       "mobile": "",       //*
       "phone": "",
       "email": "",        //*
       "address": "",        
       "limitDate": "",    //R
       "education": 1,     //*
+      "experience": "2002年-2021年在上海地铁公司从事电工检修工作。",        
       "memo": ""
     }
     ```
@@ -244,6 +250,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "dept2": 16,
             "dept3": 0,
             "job": "",
+            "unit": "上海地铁公司",
+            "dept": "第一运营公司",
             "mobile": "13331111222",
             "phone": "77777",
             "email": "x.x@x.com",
@@ -267,6 +275,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "IDb_filename": "",
             "kindName": "系统内",
             "photo": 1,
+            "experience": "2002年-2021年在上海地铁公司从事电工检修工作。",      
             "newMessage": 0,
             "newCourse": 0,
             "host_kindID": 0    //0 集團用戶 可選課  1 其他用戶 不能選課
