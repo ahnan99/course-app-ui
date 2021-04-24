@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, Button, message, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
+import qs from 'qs'
 
 
 const layout = {
@@ -10,9 +11,6 @@ const layout = {
 };
 
 class LoginForm extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     componentWillMount = () => {
         if (this.props.loggedIn) {
@@ -59,7 +57,7 @@ class LoginForm extends Component {
             <Form
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
+                initialValues={{ username: qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username, remember: true }}
                 onFinish={this.onFinish}
                 {...layout}
             >

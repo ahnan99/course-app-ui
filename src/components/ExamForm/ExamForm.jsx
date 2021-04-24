@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Radio, message, Checkbox, Spin, Alert, Affix, Row } from 'antd'
+import { Form, Input, Button, Radio, message, Checkbox, Spin, Alert, Affix, Row, Col } from 'antd'
 import moment from 'moment'
 import './ExamForm.css'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
@@ -61,14 +61,17 @@ class ExamForm extends Component {
         this.timer = setInterval(() => {
             if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].status !== 2) {
                 const { time } = this.state
-                this.setState({ time: time - 1 }, () => {
-                    if (this.state.time === 0) {
-                        this.onFinish()
-                    }
-                    this.props.actions.postTime({ paperID: this.props.exam.exam[0].paperID, secondRest: this.state.time })
-                })
+
+                if (this.state.time === 0) {
+                    this.onFinish()
+                }
+                this.props.actions.postTime({ paperID: this.props.exam.exam[0].paperID, secondRest: this.state.time })
             }
-        }, 3000)    //exam submission Interval
+        }, 5000)    //exam submission Interval
+
+        this.timer2 = setInterval(() => {
+            this.setState({ time: this.state.time - 1 })
+        }, 1000)
     }
 
     leave = () => {
@@ -79,6 +82,7 @@ class ExamForm extends Component {
         this.props.actions.updateExam(null)
         this.props.actions.updateExamQuestion(null)
         clearInterval(this.timer)
+        clearInterval(this.timer2)
     }
 
     componentDidUpdate = prevProps => {
@@ -105,64 +109,65 @@ class ExamForm extends Component {
         if (!this.props.exam.examQuestion || !this.props.exam.exam) {
             return (<div style={{ height: '100vh', verticalAlign: 'middle', lineHeight: '100vh' }}><Spin spinning></Spin></div>)
         }
-        return (<div>
+        return (<Form
+            name="exam_form"
+            className="login-form"
+            initialValues={this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
+            onFinish={this.onFinish}
+            {...layout}
+            layout={"vertical"}
+            ref={this.formRef}
+            onValuesChange={this.onValuesChange}
+        >
             <Affix offsetTop={10}>
                 <div className='alert-container'>
-                    <Alert message={this.props.exam.exam[0].status === 2 ? '得分: ' + this.props.exam.exam[0].score : '剩余时间：' + moment.utc(this.state.time * 1000).format("H:mm:ss")} type='info' />
+                    <Form.Item>
+                        <Row gutter={4} style={{ textAlign: 'center' }}>
+                            <Col span={10}><Alert message={this.props.exam.exam[0].status === 2 ? '得分: ' + this.props.exam.exam[0].score : '' + moment.utc(this.state.time * 1000).format("H:mm:ss")} type='info' /></Col>
+                            <Col span={7}><Button style={{ height: '100%' }} type="primary" htmlType="submit" loading={this.state.loading}>{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button></Col>
+                            <Col span={7}><Button style={{ height: '100%' }} onClick={() => this.leave()}>离开</Button></Col>
+                        </Row>
+                    </Form.Item>
                 </div>
             </Affix>
             <p> </p>
             <div>
-                <Form
-                    name="exam_form"
-                    className="login-form"
-                    initialValues={this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
-                    onFinish={this.onFinish}
-                    {...layout}
-                    layout={"vertical"}
-                    ref={this.formRef}
-                    onValuesChange={this.onValuesChange}
-                >
-                    {
-                        this.props.exam.examQuestion.map((question, index) => (
-                            <Form.Item style={{ textAlign: 'left' }}
-                                name={question.ID}
-                                key={question.ID}
-                                label={<span>
-                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}</span>
+
+                {
+                    this.props.exam.examQuestion.map((question, index) => (
+                        <Form.Item style={{ textAlign: 'left' }}
+                            name={question.ID}
+                            key={question.ID}
+                            label={<span>
+                                <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score > 0 ? { color: 'green' } : { color: 'red' }} /> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 ? '正确答案: ' + question.answer : null}</span>
-                                </span>
-                                }>
-                                {
-                                    question.kindID !== 2 ?
-                                        <Radio.Group>
-                                            <Row>{question.A !== '' ? <Radio key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Radio> : null}</Row>
-                                            <Row>{question.B !== '' ? <Radio key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Radio> : null}</Row>
-                                            <Row>{question.C !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Radio> : null}</Row>
-                                            <Row>{question.D !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Radio> : null}</Row>
-                                            <Row>{question.E !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Radio> : null}</Row>
-                                        </Radio.Group> :
-                                        <Checkbox.Group>
-                                            <Row>{question.A !== '' ? <Checkbox key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Checkbox> : null}</Row>
-                                            <Row>{question.B !== '' ? <Checkbox key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Checkbox> : null}</Row>
-                                            <Row>{question.C !== '' ? <Checkbox key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Checkbox> : null}</Row>
-                                            <Row>{question.D !== '' ? <Checkbox key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Checkbox> : null}</Row>
-                                            <Row>{question.E !== '' ? <Checkbox key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Checkbox> : null}</Row>
-                                        </Checkbox.Group>
-                                }
-                            </Form.Item>
-                        ))
-                    }
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" loading={this.state.loading}>{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button>
-                        <span> </span>
-                        <span>&nbsp;&nbsp;</span>
-                        <Button onClick={() => this.leave()}>离开</Button>
-                    </Form.Item>
-                </Form>
+                            </span>
+                            }>
+                            {
+                                question.kindID !== 2 ?
+                                    <Radio.Group>
+                                        <Row>{question.A !== '' ? <Radio key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Radio> : null}</Row>
+                                        <Row>{question.B !== '' ? <Radio key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Radio> : null}</Row>
+                                        <Row>{question.C !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Radio> : null}</Row>
+                                        <Row>{question.D !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Radio> : null}</Row>
+                                        <Row>{question.E !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Radio> : null}</Row>
+                                    </Radio.Group> :
+                                    <Checkbox.Group>
+                                        <Row>{question.A !== '' ? <Checkbox key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Checkbox> : null}</Row>
+                                        <Row>{question.B !== '' ? <Checkbox key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Checkbox> : null}</Row>
+                                        <Row>{question.C !== '' ? <Checkbox key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Checkbox> : null}</Row>
+                                        <Row>{question.D !== '' ? <Checkbox key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Checkbox> : null}</Row>
+                                        <Row>{question.E !== '' ? <Checkbox key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Checkbox> : null}</Row>
+                                    </Checkbox.Group>
+                            }
+                        </Form.Item>
+                    ))
+                }
+
+
             </div>
-        </div>
+        </Form>
         )
     }
 }

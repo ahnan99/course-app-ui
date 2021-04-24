@@ -11,16 +11,13 @@ import { actions as ApplicationActions } from '../modules/application'
 import { actions as MessageActions } from '../modules/message'
 import { actions as UserActions } from '../modules/user'
 import { bindActionCreators } from 'redux'
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import qs from 'qs'
 
 axios.defaults.baseURL = process.env.REACT_APP_ALIYUNHOST ? process.env.REACT_APP_ALIYUNHOST + ":8081" : "http://127.0.0.1:8081"
 //axios.defaults.baseURL = "http://spc.shznxfxx.cn:8081"
 axios.defaults.withCredentials = true
 class App extends Component {
-
-    constructor(props) {
-        super(props)
-    }
 
     componentDidMount() {
         this.props.actions.confirmLogin()
@@ -36,13 +33,13 @@ class App extends Component {
         if (this.props.application.loggedIn === false && nextProps.user.resetStatus !== null) {
             if (nextProps.user.resetStatus === 0) {
                 message.success(nextProps.user.resetMessage)
-                this.props.history.push('/login')
+                this.props.history.push('/login?username=' + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username)
             } else {
                 console.log('shibai')
                 message.error(nextProps.user.resetMessage)
             }
             this.props.userActions.updateResetPassword({ status: null, msg: null })
-            
+
         }
     }
 
@@ -52,7 +49,7 @@ class App extends Component {
                 <Route key={"register"} exact path="/register" component={Register} />
                 <Route key={"resetpassword"} exact path="/forgetpassword" component={ForgetPassword} />
                 <Route key={"login"} exact path="/login" component={Login} />
-                {this.props.application.loggedIn ? <MainView /> : <Redirect to="/login" />}
+                {this.props.application.loggedIn ? <MainView /> : <Redirect to={'/login?username=' + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username} />}
             </Switch>
         )
     }

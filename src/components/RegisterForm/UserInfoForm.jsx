@@ -372,7 +372,7 @@ class UserInfoForm extends Component {
                         <Col span={12}>
                             <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
                         </Col>
-                        <Col span={12} style={{ textalign: "left;" }}>
+                        <Col span={12} style={{ textalign: "left" }}>
                             <span>
                                 同上。
                             </span>
