@@ -327,7 +327,7 @@ class RegisterForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="address"
-                    label="联系地址"
+                    label="单位地址"
                 >
                     <Input />
                 </Form.Item>
