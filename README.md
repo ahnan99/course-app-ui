@@ -1225,6 +1225,70 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
+27. 获取缺失证书编号列表   **GET:/students/get_reexamine_diploma_list**
+  * input
+    ```
+    {
+        "username": "120107196604032113"
+    } 
+    ``` 
+
+  * output   
+    
+    ```
+    [
+        {
+            "enterID": 11,
+            "item": "参加复审的危险化学品消防证书编号"
+        },
+        {
+            "enterID": 18,
+            "item": "参加复审的危险化学品从业人员证书编号"
+       }
+    ]
+    ```
+
+28. 获取漏填项目信息   **GET:/students/get_student_need2complete**
+  * input
+    ```
+    {
+        "enterID": 23   //8b.ID  getStudentCertCourseList
+    } 
+    ``` 
+
+  * output   
+    
+    ```
+    "学历，单位名称，单位电话"
+    ```
+
+29. 保存缺失证书编号列表   **POST:/students/set_reexamine_diploma**
+  * input
+    ```
+    {
+      "list":
+      [
+          {
+              "enterID": 11,
+              "item": "3102308439-232-01"
+          },
+          {
+              "enterID": 18,
+              "item": "FXS2303-2323323X"
+        }
+      ]
+    }
+    ``` 
+
+  * output   
+    
+    ```
+    {
+        "status": 0,
+        "msg": ""
+    } 
+    ```
+
 
 101. 用户登录   **POST:/users/login** 
   * input   **//host:子域名 host="sino" when the url=sino.elearning.com/students/login**
