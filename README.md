@@ -491,7 +491,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
-8b. 获取认证项目所属课程列表   **GET:/course/getStudentCertCourseList**
+8b. 获取认证项目所属课程列表   **GET:/students/getStudentCertCourseList**
   * input
     ```
     {"username":"120107196604032113"}
@@ -523,7 +523,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "paperID": 1,   //试卷ID  0 不顯示考試鏈接  >0 顯示考試鏈接
             "type": 0,      //0 模拟考试  1 考試
             "certStatus": 0,
-            "cancelAllow": 0
+            "cancelAllow": 0,
+            "projectID": "P-21-004"
         },
         {
             "ID": 2,
@@ -762,7 +763,8 @@ video.js: https://www.jb51.net/article/145346.htm
             "lastDate": "",         //最后提交时间
             "scorePass": 80,        //及格分数线
             "scoreTotal": 100,      //试卷总分
-            "statusName": "认证"
+            "statusName": "认证",
+            "missingItems": "学历, 单位电话, 手机号码, 单位地址, 工作岗位"
         }
     ]
     ```    
@@ -1259,7 +1261,7 @@ video.js: https://www.jb51.net/article/145346.htm
   * output   
     
     ```
-    "学历，单位名称，单位电话"
+    "学历, 单位电话, 手机号码, 单位地址, 工作岗位"
     ```
 
 29. 保存缺失证书编号列表   **POST:/students/set_reexamine_diploma**

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Progress } from 'antd'
+import { Card, Row, Col, Progress, message } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { RightOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
@@ -14,8 +14,18 @@ class LessonCard extends Component {
 
     onClickExam = course => {
         this.props.examActions.getExam({ paperID: course.paperID })
-        this.props.examActions.getExamQuestion({ paperID: course.paperID })
-        this.props.history.push("/exampage")
+    }
+
+    componentDidUpdate = prevProps => {
+        if (prevProps.exam.exam !== this.props.exam.exam && this.props.exam.exam) {
+            if (this.props.exam.exam[0].missingItems) {
+                message.info('请填写' + this.props.exam.exam[0].missingItems)
+                this.props.history.push("/userinfo")
+            } else {
+                this.props.history.push("/exampage")
+                this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
+            }
+        }
     }
 
     gridStyle = {

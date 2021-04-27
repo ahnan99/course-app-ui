@@ -26,7 +26,7 @@ class HomePage extends Component {
 
     render() {
         const { courses, lessons } = this.props.course
-        const { actions, examActions } = this.props
+        const { actions, examActions, exam } = this.props
         if (courses.length === 0) {
             return <div>
                 <h3>还未选择课程</h3>
@@ -35,7 +35,7 @@ class HomePage extends Component {
         return (
             <div>
                 {courses.map(course => (
-                    <LessonCard key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions}/>
+                    <LessonCard exam={exam} key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions}/>
                 ))}
             </div>
         )
@@ -44,7 +44,8 @@ class HomePage extends Component {
 
 const mapStateToProps = state => ({
     course: state.course,
-    application: state.application
+    application: state.application,
+    exam: state.exam
 })
 
 
