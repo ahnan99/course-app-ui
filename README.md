@@ -520,7 +520,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "completion": 12.55,  //课程完成度%
             "examScore": 0, //模拟考试最好成绩
             "examTimes": 0, //模拟考试次数
-            "paperID": 1,   //试卷ID  0 不顯示考試鏈接  >0 顯示考試鏈接
+            "paperID": "[{paperID:6846,item:'应知(初训)'},{paperID:6844,item:'应会(识别判断)'}]",   //试卷ID  0 不顯示考試鏈接  >0 顯示考試鏈接
             "type": 0,      //0 模拟考试  1 考試
             "certStatus": 0,
             "cancelAllow": 0,
@@ -796,7 +796,13 @@ video.js: https://www.jb51.net/article/145346.htm
             "B": "错",
             "C": "",
             "D": "",
-            "E": ""
+            "E": "",
+            "image": "/upload/students/diplomas/S8D003.jpg",
+            "imageA": "",
+            "imageB": "",
+            "imageC": "",
+            "imageD": "",
+            "imageE": ""
         },
         {
             "ID": 53,
@@ -813,7 +819,13 @@ video.js: https://www.jb51.net/article/145346.htm
             "B": "错",
             "C": "",
             "D": "",
-            "E": ""
+            "E": "",
+            "image": "",
+            "imageA": "",
+            "imageB": "",
+            "imageC": "",
+            "imageD": "",
+            "imageE": ""
         }
     ]
     ```

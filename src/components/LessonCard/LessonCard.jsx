@@ -12,8 +12,8 @@ class LessonCard extends Component {
         this.props.history.push("/classpage")
     }
 
-    onClickExam = course => {
-        this.props.examActions.getExam({ paperID: course.paperID })
+    onClickExam = paperID => {
+        this.props.examActions.getExam({ paperID })
     }
 
     componentDidUpdate = prevProps => {
@@ -60,13 +60,30 @@ class LessonCard extends Component {
 
                                     </li>
                                 ))}
-                                {course.paperID !== 0 ? <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
+                                <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
+                                    <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
+                                    <span>{course.type === 0 ? '模拟考试' : '考试'}</span>
+                                    <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
+                                        {
+                                            course.paperID !== null && course.paperID !== '' ? JSON.parse(course.paperID)
+                                                .map(singlePaperID => (
+                                                    <li key={singlePaperID.paperID} style={{ listStyleType: 'none', clear: 'both' }}>
+                                                        <p style={{ float: 'left' }}>
+                                                            <a onClick={() => this.onClickExam(singlePaperID.paperID)}>*&nbsp;&nbsp;{singlePaperID.item}&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
+                                                                {singlePaperID.examScore}分&nbsp;&nbsp;</span>
+                                                        </p>
+                                                    </li>
+                                                ))
+                                                : null}
+                                    </ul>
+                                </li>
+                                {/* {course.paperID !== null && course.paperID !== '' ? <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
                                     <p style={{ float: 'left' }}>
                                         <a onClick={() => this.onClickExam(course)}>*&nbsp;&nbsp;{course.type === 0 ? '模拟考试' : '考试'}&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
                                             {course.examScore}分&nbsp;&nbsp;</span>
                                         <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
                                     </p>
-                                </li> : null}
+                                </li> : null} */}
                             </ul>
 
                         </Card.Grid> : null}
