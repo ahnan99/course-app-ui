@@ -141,7 +141,7 @@ class ExamForm extends Component {
                             key={question.ID}
                             label={
                                 <div>
-                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}{question.image !== '' ? <img src={axios.defaults.baseURL + question.image} /> : null}</span>
+                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}{question.image !== '' ? <Image src={axios.defaults.baseURL + question.image} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score > 0 ? { color: 'green' } : { color: 'red' }} /> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 ? '正确答案: ' + question.answer : null}</span>
                                 </div>
@@ -149,24 +149,24 @@ class ExamForm extends Component {
                             {
                                 question.kindID !== 2 ?
                                     <Radio.Group>
-                                        <Row>{question.A !== '' || question.imageA !== '' ? <Radio key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Radio> : null}{question.imageA !== '' ? <img src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
-                                        <Row>{question.B !== '' || question.imageB !== '' ? <Radio key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Radio> : null}{question.imageB !== '' ? <img src={axios.defaults.baseURL + question.imageB} /> : null}</Row>
-                                        <Row>{question.C !== '' || question.imageC !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Radio> : null}{question.imageC !== '' ? <img src={axios.defaults.baseURL + question.imageC} /> : null}</Row>
-                                        <Row>{question.D !== '' || question.imageD !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Radio> : null}{question.imageD !== '' ? <img src={axios.defaults.baseURL + question.imageD} /> : null}</Row>
-                                        <Row>{question.E !== '' || question.imageE !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Radio> : null}{question.imageE !== '' ? <img src={axios.defaults.baseURL + question.imageE} /> : null}</Row>
-                                        <Row>{question.F !== '' || question.imageF !== '' ? <Radio key={question.ID + 'F'} value='F'>{'F. ' + question.F}</Radio> : null}{question.imageF !== '' ? <img src={axios.defaults.baseURL + question.imageF} /> : null}</Row>
+                                        <Row>{question.A !== '' || question.imageA !== '' ? <Radio key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Radio> : null}{question.imageA !== '' ? <Image src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
+                                        <Row>{question.B !== '' || question.imageB !== '' ? <Radio key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Radio> : null}{question.imageB !== '' ? <Image src={axios.defaults.baseURL + question.imageB} /> : null}</Row>
+                                        <Row>{question.C !== '' || question.imageC !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Radio> : null}{question.imageC !== '' ? <Image src={axios.defaults.baseURL + question.imageC} /> : null}</Row>
+                                        <Row>{question.D !== '' || question.imageD !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Radio> : null}{question.imageD !== '' ? <Image src={axios.defaults.baseURL + question.imageD} /> : null}</Row>
+                                        <Row>{question.E !== '' || question.imageE !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Radio> : null}{question.imageE !== '' ? <Image src={axios.defaults.baseURL + question.imageE} /> : null}</Row>
+                                        <Row>{question.F !== '' || question.imageF !== '' ? <Radio key={question.ID + 'F'} value='F'>{'F. ' + question.F}</Radio> : null}{question.imageF !== '' ? <Image src={axios.defaults.baseURL + question.imageF} /> : null}</Row>
                                         {/* <Row>{question.C !== '' || question.imageC !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C + question.imageC !== '' ? <Image src={question.imageC} /> : null}</Radio> : null}</Row>
                                         <Row>{question.D !== '' || question.imageD !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D + question.imageD !== '' ? <Image src={question.imageD} /> : null}</Radio> : null}</Row>
                                         <Row>{question.E !== '' || question.imageE !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E + question.imageE !== '' ? <Image src={question.imageE} /> : null}</Radio> : null}</Row>
                                         <Row>{question.F !== '' || question.imageF !== '' ? <Radio key={question.ID + 'F'} value='F'>{'F. ' + question.F + question.imageF !== '' ? <Image src={question.imageF} /> : null}</Radio> : null}</Row> */}
                                     </Radio.Group> :
                                     <Checkbox.Group>
-                                        <Row>{question.A !== '' || question.imageA !== '' ? <Checkbox key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Checkbox> : null}{question.imageA !== '' ? <img src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
-                                        <Row>{question.B !== '' || question.imageB !== '' ? <Checkbox key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Checkbox> : null}{question.imageB !== '' ? <img src={axios.defaults.baseURL + question.imageB} /> : null}</Row>
-                                        <Row>{question.C !== '' || question.imageC !== '' ? <Checkbox key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Checkbox> : null}{question.imageC !== '' ? <img src={axios.defaults.baseURL + question.imageC} /> : null}</Row>
-                                        <Row>{question.D !== '' || question.imageD !== '' ? <Checkbox key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Checkbox> : null}{question.imageD !== '' ? <img src={axios.defaults.baseURL + question.imageD} /> : null}</Row>
-                                        <Row>{question.E !== '' || question.imageE !== '' ? <Checkbox key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Checkbox> : null}{question.imageE !== '' ? <img src={axios.defaults.baseURL + question.imageE} /> : null}</Row>
-                                        <Row>{question.F !== '' || question.imageF !== '' ? <Checkbox key={question.ID + 'F'} value='F'>{'F. ' + question.F}</Checkbox> : null}{question.imageF !== '' ? <img src={axios.defaults.baseURL + question.imageF} /> : null}</Row>
+                                        <Row>{question.A !== '' || question.imageA !== '' ? <Checkbox key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Checkbox> : null}{question.imageA !== '' ? <Image src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
+                                        <Row>{question.B !== '' || question.imageB !== '' ? <Checkbox key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Checkbox> : null}{question.imageB !== '' ? <Image src={axios.defaults.baseURL + question.imageB} /> : null}</Row>
+                                        <Row>{question.C !== '' || question.imageC !== '' ? <Checkbox key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Checkbox> : null}{question.imageC !== '' ? <Image src={axios.defaults.baseURL + question.imageC} /> : null}</Row>
+                                        <Row>{question.D !== '' || question.imageD !== '' ? <Checkbox key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Checkbox> : null}{question.imageD !== '' ? <Image src={axios.defaults.baseURL + question.imageD} /> : null}</Row>
+                                        <Row>{question.E !== '' || question.imageE !== '' ? <Checkbox key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Checkbox> : null}{question.imageE !== '' ? <Image src={axios.defaults.baseURL + question.imageE} /> : null}</Row>
+                                        <Row>{question.F !== '' || question.imageF !== '' ? <Checkbox key={question.ID + 'F'} value='F'>{'F. ' + question.F}</Checkbox> : null}{question.imageF !== '' ? <Image src={axios.defaults.baseURL + question.imageF} /> : null}</Row>
                                     </Checkbox.Group>
                             }
                         </Form.Item>
