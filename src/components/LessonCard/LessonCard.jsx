@@ -19,7 +19,15 @@ class LessonCard extends Component {
     componentDidUpdate = prevProps => {
         if (prevProps.exam.exam !== this.props.exam.exam && this.props.exam.exam) {
             if (this.props.exam.exam[0].missingItems) {
-                message.info('请填写' + this.props.exam.exam[0].missingItems)
+                message.info({
+                    content: '请填写' + this.props.exam.exam[0].missingItems,
+                    style: {
+                        marginTop: '50%',
+                        color: 'red',
+                        textAlign: 'left'
+                    },
+                    duration: 10,
+                })
                 this.props.history.push("/userinfo")
             } else {
                 this.props.history.push("/exampage")
