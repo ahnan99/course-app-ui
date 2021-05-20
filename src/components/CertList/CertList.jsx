@@ -15,9 +15,9 @@ export default class CertList extends Component {
   }
 
   onRemove = cert => {
-    if(cert.cancelAllow === 0){
+    if (cert.cancelAllow === 0) {
       this.props.actions.postDelCert({ ID: cert.ID, mark: 0 })
-    }else{
+    } else {
       message.error('無法刪除')
     }
   }
@@ -62,7 +62,7 @@ export default class CertList extends Component {
         renderItem={item => (
           <List.Item
             key={item.ID}
-            actions={item.completion > 0 && item.cancelAllow === 0 ? [<Popconfirm
+            actions={item.username === item.registerID ? [item.completion > 0 && item.cancelAllow === 0 ? [<Popconfirm
               title="该课程已有的学习记录将被清空，确认要删除吗？"
               onConfirm={() => this.onRemove(item)}
               onCancel={this.onCancel}
@@ -73,7 +73,7 @@ export default class CertList extends Component {
             </Popconfirm>
 
 
-            ] : [<a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>]}
+            ] : [<a key={item.ID} onClick={() => this.onRemove(item)} style={{ color: 'darkOrange' }}><MinusOutlined /></a>]] : null}
           >
             <Skeleton active loading={loading}>
               <List.Item.Meta

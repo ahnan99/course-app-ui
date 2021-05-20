@@ -385,7 +385,7 @@ class UserInfoForm extends Component {
                     <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">修改信息</Button>
+                    <Button type="primary" htmlType="submit">保存</Button>
                     <span> </span>
                     <span> </span>
                 </Form.Item>
