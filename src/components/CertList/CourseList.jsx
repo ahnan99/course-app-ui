@@ -67,7 +67,7 @@ export default class CertList extends Component {
           >
             <Skeleton active loading={loading}>
               <List.Item.Meta
-                title={<a>{item.courseName}</a>}
+                title={<a>{item.courseName + [item.re !== 0 ? '(' + item.reexamineName + ')' : null]}</a>}
                 description={<p style={{ fontSize: '10px' }}>课时：{item.hours}小时</p>}
               />
             </Skeleton>

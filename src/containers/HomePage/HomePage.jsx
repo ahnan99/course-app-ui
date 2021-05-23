@@ -35,7 +35,7 @@ class HomePage extends Component {
         return (
             <div>
                 {courses.map(course => (
-                    <LessonCard exam={exam} key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions}/>
+                    <LessonCard key={course.id} exam={exam} key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions} />
                 ))}
             </div>
         )

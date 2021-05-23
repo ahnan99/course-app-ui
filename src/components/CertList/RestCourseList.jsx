@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { List, Skeleton, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons'
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
 
 class RestCourseList extends Component {
@@ -13,7 +13,7 @@ class RestCourseList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 1 })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 1, reexamine: 0 })
   }
 
   componentWillReceiveProps = (nextProps) => {

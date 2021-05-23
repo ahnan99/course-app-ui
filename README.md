@@ -378,7 +378,9 @@ video.js: https://www.jb51.net/article/145346.htm
                 "registerID": "120107196604032113",
                 "statusName": "待执行",
                 "courseName": "安全概论",
-                "pass_condition": "考试成绩达到80分"
+                "pass_condition": "考试成绩达到80分",
+                "re": 0,    //如果re=1, 课程名称显示为courseName(reexamineName)格式：安全概论(初训)
+                "reexamineName": "初训"
             },
             {
                 "ID": 2,
@@ -398,7 +400,9 @@ video.js: https://www.jb51.net/article/145346.htm
                 "statusName": "待执行",
                 "courseName": "危险品",
                 "pass_condition": "完成率达到98%"
-            }
+                "re": 1,    
+                "reexamineName": "初训"
+             }
     ]
     ```
 
@@ -432,8 +436,10 @@ video.js: https://www.jb51.net/article/145346.htm
             "endDate": "",
             "filename": "",
             "completion": 0,    //0 取消时不提示  >0 取消时提示（先判断cancelAllow）
-            "cancelAllow": 0    //0 允许取消  1 不允许取消
-        }
+            "cancelAllow": 0,    //0 允许取消  1 不允许取消
+            "re": 0,    //如果re=1, 课程名称显示为certName(reexamineName)危化品安全运输(初训)
+            "reexamineName": "初训"
+         }
     ]
     ```
 
@@ -443,50 +449,29 @@ video.js: https://www.jb51.net/article/145346.htm
     {"username":"120107196604032113"}
     ``` 
 
-  * output   **you need only [certID, certName]**
+  * output   **you need only [certID, certName, reexamine] **
     ```
     [
         {
             "ID": 2,
             "certID": "C2",
             "certName": "危险化学品消防",
-            "mark": 0
+            "mark": 0,
+            "reexamine": 0    //0 普通  1 选择“初训/复训”  初训0 复训 1
         },
         {
             "ID": 4,
             "certID": "C3",
             "certName": "作业审批及监护培训",
-            "mark": 0
-        },
-        {
-            "ID": 8,
-            "certID": "C7",
-            "certName": "施工作业安全培训",
-            "mark": 0
-        },
-        {
-            "ID": 4,
-            "certID": "L4",
-            "certName": "LNG加气站安全设备设施培训",
-            "mark": 1
-        },
-        {
-            "ID": 5,
-            "certID": "L5",
-            "certName": "安全管理人员培训",
-            "mark": 1
-        },
-        {
-            "ID": 6,
-            "certID": "L6",
-            "certName": "入职员工",
-            "mark": 1
+            "mark": 0,
+            "reexamine": 0
         },
         {
             "ID": 8,
             "certID": "L8",
             "certName": "应急管理",
-            "mark": 1
+            "mark": 1,
+            "reexamine": 1
         }
     ]
     ```
@@ -877,7 +862,8 @@ video.js: https://www.jb51.net/article/145346.htm
     {
       "username": "120107196604032113",
       "certID": "C001",
-      "mark": 0     //0 证书  1 课程
+      "mark": 0,     //0 证书  1 课程
+      "reexamine": 0   //0 初训  1 复训
     }
     ```    
 

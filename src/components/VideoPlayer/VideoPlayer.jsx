@@ -67,7 +67,7 @@ export default class VideoPlayer extends React.Component {
         return (
 
             <div>
-                <div data-vjs-player>
+                <div data-vjs-player onContextMenu={e => e.preventDefault()}>
                     <video ref={node => this.videoNode = node} className="video-js vjs-default-skin vjs-16-9" data-setup='{"fluid": true}' preload="auto" style={{ width: "100%" }}></video>
                 </div>
             </div>
