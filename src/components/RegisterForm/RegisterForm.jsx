@@ -282,7 +282,8 @@ class RegisterForm extends Component {
                 {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
                     name="dept"
                     label="部门"
-                >
+                    rules={[{ required: true, message: '请输入部门' }]}
+                 >
                     <Input />
                 </Form.Item> : null}
                 <Form.Item
@@ -294,7 +295,8 @@ class RegisterForm extends Component {
                 <Form.Item
                     name="job"
                     label="岗位"
-                >
+                    rules={[{ required: true, message: '请输入岗位' }]}
+                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
@@ -322,12 +324,14 @@ class RegisterForm extends Component {
                 <Form.Item
                     name="phone"
                     label="单位电话"
+                    rules={[{ required: true, message: '请输入单位电话' }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
                     name="address"
                     label="单位地址"
+                    rules={[{ required: true, message: '请输入单位地址' }]}
                 >
                     <Input />
                 </Form.Item>

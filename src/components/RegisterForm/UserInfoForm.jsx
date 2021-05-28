@@ -267,6 +267,7 @@ class UserInfoForm extends Component {
                 {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
                     name="dept"
                     label="部门"
+                    rules={[{ required: true, message: '请输入部门' }]}
                 >
                     <Input />
                 </Form.Item> : null}
@@ -279,6 +280,7 @@ class UserInfoForm extends Component {
                 <Form.Item
                     name="job"
                     label="岗位"
+                    rules={[{ required: true, message: '请输入岗位' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -309,12 +311,14 @@ class UserInfoForm extends Component {
                 <Form.Item
                     name="phone"
                     label="单位电话"
+                    rules={[{ required: true, message: '请输入单位电话' }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
                     name="address"
                     label="单位地址"
+                    rules={[{ required: true, message: '请输入单位地址' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -382,7 +386,14 @@ class UserInfoForm extends Component {
                     name="upload4"
                     label="上传学历证明"
                 >
-                    <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">保存</Button>
