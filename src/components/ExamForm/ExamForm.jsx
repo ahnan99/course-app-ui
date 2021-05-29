@@ -17,15 +17,17 @@ class ExamForm extends Component {
 
 
     onValuesChange = (changedValue, values) => {
-        for (var key in changedValue) {
-            if (Array.isArray(changedValue[key])) {
-                var aggre = ''
-                for (var i = 0; i < changedValue[key].length; i++) {
-                    aggre += changedValue[key][i]
+        if(this.props.exam.exam && this.props.exam.exam[0] && this.props.exam.exam[0].status !== 2){
+            for (var key in changedValue) {
+                if (Array.isArray(changedValue[key])) {
+                    var aggre = ''
+                    for (var i = 0; i < changedValue[key].length; i++) {
+                        aggre += changedValue[key][i]
+                    }
+                    this.props.actions.postSingleQuestion({ ID: key, answer: aggre })
+                } else {
+                    this.props.actions.postSingleQuestion({ ID: key, answer: changedValue[key] })
                 }
-                this.props.actions.postSingleQuestion({ ID: key, answer: aggre })
-            } else {
-                this.props.actions.postSingleQuestion({ ID: key, answer: changedValue[key] })
             }
         }
     }
