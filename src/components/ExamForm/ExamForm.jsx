@@ -41,6 +41,8 @@ class ExamForm extends Component {
                     } else {
                         res[question.ID] = Array.from(question.myAnswer)
                     }
+                }else{
+                    res[question.ID] = null
                 }
 
             }
