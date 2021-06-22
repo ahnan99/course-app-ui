@@ -276,6 +276,13 @@ const reducer = (state = initialState, action = {}) => {
             }
         }
         case UPDATE_USER_INFO: {
+            if(action.data.username === ""){
+                return {
+                    ...state,
+                    loggedIn: false,
+                    loginError: "登录失败"
+                }
+            }
             return {
                 ...state,
                 userInfo: action.data[0]

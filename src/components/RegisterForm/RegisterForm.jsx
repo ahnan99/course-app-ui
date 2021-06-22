@@ -94,8 +94,8 @@ class RegisterForm extends Component {
             kindID: this.props.application.companyInfo[0].hostNo !== 'spc' ? 0 : values.kindID,
             education: values.education,    //0:系统内单位  1:系统外单位
             companyID: this.props.application.companyInfo[0].deptID, //*
-            dept1: values.kindID === "0" ? values.dept1 : 0,
-            dept1Name: values.kindID === "0" ? null : values.dept1,
+            dept1: !values.kindID || values.kindID === "0" ? values.dept1 : 0,
+            dept1Name: !values.kindID || values.kindID === "0" ? null : values.dept1,
             dept2: values.dept2 ? values.dept2 : 0,
             dept3: values.dept3,
             job: values.job,
