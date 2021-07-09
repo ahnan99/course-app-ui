@@ -62,7 +62,7 @@ class AuditPage extends Component {
                     </Col>
                 </Row>
                 <Row gutter={[16,32]}>
-                    <Col sapn={24} className="form-container">
+                    <Col span={24} className="form-container">
                         <Select defaultValue={this.props.audit.filter} style={{ width: 200 }} onChange={this.handleFilterChange} placeholder='选择证书类型'>
                             {
                                 this.props.audit.certList.map(item => (<Option key={item.certID} value={item.certID}>{item.certName}</Option>))
@@ -71,7 +71,7 @@ class AuditPage extends Component {
                     </Col>
                 </Row>
                 <Row gutter={[16,32]}>
-                    <Col sapn={24} className="form-container">
+                    <Col span={24} className="form-container">
                         <Search
                             placeholder="输入姓名或身份证"
                             onSearch={value => this.onSearch(value)}
@@ -80,8 +80,8 @@ class AuditPage extends Component {
                         />
                     </Col>
                 </Row>
-                <Row gutter={[16,32]}>
-                    <Col sapn={24} className="form-container">
+                <Row gutter={[8,8]}>
+                    <Col span={24} className="form-container">
                         <List
                             itemLayout="horizontal"
                             dataSource={this.props.audit.findStudent}
