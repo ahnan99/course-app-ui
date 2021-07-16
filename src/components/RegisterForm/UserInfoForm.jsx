@@ -265,7 +265,10 @@ class UserInfoForm extends Component {
                         },
                     ]}
                 >
-                    {kindID === "0" ? <Select showSearch>
+                    {kindID === "0" ? <Select showSearch
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }>
                         {this.props.user.dept1List.map(dept => (
                             <Option key={dept.deptID} value={dept.deptID}>{dept.deptName}</Option>
                         ))}
@@ -281,7 +284,10 @@ class UserInfoForm extends Component {
                     name="dept2"
                     label="二级部门"
                 >
-                    <Select disabled={kindID !== "0"}>
+                    <Select disabled={kindID !== "0"}
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }>
                         {this.props.user.dept2List.map(dept => (
                             <Option key={dept.deptID} value={dept.deptID}>{dept.deptName}</Option>
                         ))}
