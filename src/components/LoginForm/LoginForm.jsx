@@ -18,6 +18,10 @@ class LoginForm extends Component {
         }
     }
 
+    redirectToRegister = () => {
+        this.props.history.push('/register')
+    }
+
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.loggedIn && nextProps.username && nextProps.auditor === 1) {
             this.props.history.push('/auditpage')
@@ -93,7 +97,7 @@ class LoginForm extends Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                     </Button>
-                    <span> </span>或 <a href="/register">注册</a>
+                    <span>&nbsp;&nbsp;</span> <Button type="primary" onClick={() => this.redirectToRegister()}>注册</Button>
                 </Form.Item>
             </Form>
         )
