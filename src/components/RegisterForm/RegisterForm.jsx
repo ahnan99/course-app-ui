@@ -47,7 +47,7 @@ class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
-        this.state = { kindID: "0" }
+        this.state = { kindID: "0", searchValue: null }
     }
 
     componentWillMount = () => {
@@ -57,6 +57,10 @@ class RegisterForm extends Component {
         this.props.userActions.getEducation({ kindID: 'education' })
 
 
+    }
+
+    onChange = val => {
+        this.setState({ searchValue: val })
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -235,7 +239,7 @@ class RegisterForm extends Component {
                     name="job"
                     label="岗位"
                     rules={[{ required: true, message: '请输入岗位' }]}
-                 >
+                >
                     <Input />
                 </Form.Item>
                 <Form.Item
@@ -279,7 +283,10 @@ class RegisterForm extends Component {
                         },
                     ]}
                 >
-                    {kindID === "0" ? <Select showSearch>
+                    {kindID === "0" ? <Select showSearch
+                        onChange={this.onChange}
+                        searchValue={this.state.searchValue}
+                    >
                         {this.props.user.dept1List.map(dept => (
                             <Option value={dept.deptID}>{dept.deptName}</Option>
                         ))}
@@ -304,7 +311,7 @@ class RegisterForm extends Component {
                 {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
                     name="unit"
                     label="单位"
-                    rules={[{ required: true, message: '请输入单位'}]}
+                    rules={[{ required: true, message: '请输入单位' }]}
                 >
                     <Input />
                 </Form.Item> : null}
@@ -312,7 +319,7 @@ class RegisterForm extends Component {
                     name="dept"
                     label="部门"
                     rules={[{ required: true, message: '请输入部门' }]}
-                 >
+                >
                     <Input />
                 </Form.Item> : null}
                 <Form.Item
