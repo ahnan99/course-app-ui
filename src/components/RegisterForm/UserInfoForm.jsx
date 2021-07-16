@@ -215,6 +215,37 @@ class UserInfoForm extends Component {
                         ))}
                     </Select>
                 </Form.Item>
+                <Form.Item
+                    name="job"
+                    label="岗位"
+                    rules={[{ required: true, message: '请输入岗位' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="mobile"
+                    label="手机号码"
+                    rules={[
+                        {
+                            required: true,
+                            message: '请输入手机号码',
+                        },
+                        {
+
+                            validator: (rule, value) => {
+                                console.log(this.checkIDcard(value))
+                                if (!value || value.length === 11) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject('手机号不合法')
+                                }
+                            },
+
+                        }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
                 {this.props.application.userInfo.host === 'spc' ? <Form.Item
                     name="kindID"
                     label="性质"
@@ -274,37 +305,6 @@ class UserInfoForm extends Component {
                 <Form.Item
                     name="experience"
                     label="工作经历"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="job"
-                    label="岗位"
-                    rules={[{ required: true, message: '请输入岗位' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="mobile"
-                    label="手机号码"
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入手机号码',
-                        },
-                        {
-
-                            validator: (rule, value) => {
-                                console.log(this.checkIDcard(value))
-                                if (!value || value.length === 11) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject('手机号不合法')
-                                }
-                            },
-
-                        }
-                    ]}
                 >
                     <Input />
                 </Form.Item>
