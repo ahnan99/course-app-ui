@@ -83,11 +83,6 @@ class LoginForm extends Component {
                         placeholder="密码"
                     />
                 </Form.Item>
-                <Form.Item name="auditor">
-                    <Checkbox.Group>
-                        <Checkbox value="1" onChange={this.onChange}>督查</Checkbox>
-                    </Checkbox.Group>
-                </Form.Item>
                 <Form.Item>
                     <a className="login-form-forgot" href="/forgetpassword">
                         忘记密码
@@ -98,6 +93,12 @@ class LoginForm extends Component {
                         登录
                     </Button>
                     <span>&nbsp;&nbsp;</span> <Button type="primary" onClick={() => this.redirectToRegister()}>注册</Button>
+                </Form.Item>
+                <div>&nbsp;&nbsp;</div>
+                <Form.Item name="auditor">
+                    <Checkbox.Group>
+                        <Checkbox value="1" onChange={this.onChange}>督查</Checkbox>
+                    </Checkbox.Group>
                 </Form.Item>
             </Form>
         )
