@@ -62,7 +62,7 @@ export default class CertList extends Component {
         renderItem={item => (
           <List.Item
             key={item.ID}
-            actions={item.username === item.registerID && item.checked===0 ? [item.completion > 0 && item.cancelAllow === 0 ? [<Popconfirm
+            actions={item.username === item.registerID && item.checked!==1 ? [item.completion > 0 && item.cancelAllow === 0 ? [<Popconfirm
               title="该课程已有的学习记录将被清空，确认要删除吗？"
               onConfirm={() => this.onRemove(item)}
               onCancel={this.onCancel}
