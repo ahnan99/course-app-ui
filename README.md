@@ -437,6 +437,7 @@ video.js: https://www.jb51.net/article/145346.htm
             "filename": "",
             "completion": 0,    //0 取消时不提示  >0 取消时提示（先判断cancelAllow）
             "cancelAllow": 0,    //0 允许取消  1 不允许取消
+            "checked": 0,    //0 待确认  1 已确认  2 拒绝  本人报名且未确认的，可撤销item.username === item.registerID && item.checked!==1 
             "re": 0,    //如果re=1, 课程名称显示为certName(reexamineName)危化品安全运输(初训)
             "reexamineName": "初训"
          }
