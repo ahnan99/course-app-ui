@@ -35,7 +35,7 @@ class UserInfoForm extends Component {
     componentWillMount() {
         this.props.userActions.getEducation({ kindID: 'education' })
         this.props.userActions.getDept1({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.companyInfo[0].deptID })
-        if (this.props.application.userInfo.dept2 && this.props.application.userInfo.dept2 !== 0) {
+        if (this.props.application.userInfo.dept1 && this.props.application.userInfo.dept1 !== 0) {
             this.props.userActions.getDept2({ kindID: this.props.application.userInfo.kindID, pID: this.props.application.userInfo.dept1 })
         }
 
