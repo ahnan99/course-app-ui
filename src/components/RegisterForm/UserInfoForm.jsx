@@ -216,13 +216,6 @@ class UserInfoForm extends Component {
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    name="job"
-                    label="岗位"
-                    rules={[{ required: true, message: '请输入岗位' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
                     name="mobile"
                     label="手机号码"
                     rules={[
@@ -257,11 +250,11 @@ class UserInfoForm extends Component {
                 </Form.Item> : null}
                 {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
                     name="dept1"
-                    label={kindID === "0" ? "一级部门" : "公司名称"}
+                    label={kindID === "0" ? "部门(单位)" : "公司名称"}
                     rules={[
                         {
                             required: true,
-                            message: '请输入一级部门名称',
+                            message: '请输入部门(单位)名称',
                         },
                     ]}
                 >
@@ -282,7 +275,7 @@ class UserInfoForm extends Component {
                 </Form.Item>}
                 {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
                     name="dept2"
-                    label="二级部门"
+                    label="基层单位"
                 >
                     <Select disabled={kindID !== "0"}
                         filterOption={(input, option) =>
@@ -308,6 +301,13 @@ class UserInfoForm extends Component {
                 >
                     <Input />
                 </Form.Item> : null}
+                <Form.Item
+                    name="job"
+                    label="岗位"
+                    rules={[{ required: true, message: '请输入岗位' }]}
+                >
+                    <Input />
+                </Form.Item>
                 <Form.Item
                     name="experience"
                     label="工作经历"
