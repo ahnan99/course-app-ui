@@ -351,7 +351,35 @@ video.js: https://www.jb51.net/article/145346.htm
     ] 
     ``` 
 
-7. 获取学员课程列表   **GET:/students/getStudentCourseList**
+6c. 获取单位列表   **GET:/public/getDeptByID**
+  * input   **ID: 本单位ID**
+    ```
+    {"ID":8}
+    ``` 
+
+  * output   **dept_status: int, 0 有效  1 关闭**
+    ```
+    [
+        {
+            "deptID": 7,
+            "pID": 8,
+            "deptName": "松金分公司",
+            "kindID": 0,
+            "liniker": "",
+            "phone": "",    //单位电话
+            "address": "",  //联系地址
+            "email": "",
+            "dept_status": 0,
+            "memo": "",
+            "host": "sino",
+            "regDate": "2017-06-06",
+            "registerID": "albert",
+            "statusName": "有效"
+        }
+    ] 
+    ``` 
+
+1. 获取学员课程列表   **GET:/students/getStudentCourseList**
   * input
     ```
     {"username":"120107196604032113"}
