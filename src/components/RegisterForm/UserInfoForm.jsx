@@ -288,6 +288,7 @@ class UserInfoForm extends Component {
                     label="基层单位"
                 >
                     <Select disabled={kindID !== "0"}
+                        showSearch
                         filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }>
