@@ -124,16 +124,15 @@ class RegisterForm extends Component {
             this.props.userActions.getDept2({ kindID: values.kindID, pID: changedValue.dept1 })
             this.formRef.current.setFieldsValue({ dept2: null })
         }
-        if (changedValue.dept2 && changedValue.dept2 != values.dept2) {
+        if (changedValue.dept2) {
             this.props.user.dept2List.map(dept => {
-                if (dept.deptID === changedValue.dept2.deptID) {
-                    this.formRef.setFieldsValue({
+                if (dept.deptID === changedValue.dept2) {
+                    this.formRef.current.setFieldsValue({
                         address: dept.address,
                         phone: dept.phone
                     })
                 }
             })
-
         }
     }
 
