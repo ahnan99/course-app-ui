@@ -36,7 +36,10 @@ class LoginForm extends Component {
             }
         }
         if (nextProps.loginError) {
-            message.error(nextProps.loginError)
+            message.error(nextProps.loginError.msg)
+            if (nextProps.loginError.status === 1) {
+                this.props.history.push('/register')
+            }
         }
     }
 

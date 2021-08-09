@@ -229,7 +229,7 @@ const reducer = (state = initialState, action = {}) => {
             } else {
                 return {
                     ...state,
-                    loginError: action.response.msg
+                    loginError: action.response
                 }
             }
         }
