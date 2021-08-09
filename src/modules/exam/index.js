@@ -11,10 +11,12 @@ const POST_TIME = "post_time"
 const UPDATE_POST_TIME = "update_post_time"
 const POST_SINGLE_QUESION = "post_single_question"
 const UPDATE_POST_SINGLE_QUESTION = "update_post_single_question"
+const UPDATE_LEAVE = "update_leave"
 
-export const types ={
+export const types = {
     GET_EXAM,
     UPDATE_EXAM,
+    UPDATE_LEAVE,
     GET_REAL_EXAM,
     UPDATE_REAL_EXAM,
     POST_EXAM,
@@ -28,42 +30,47 @@ export const types ={
 }
 
 //Action creators
-const getExam = payload =>({
+const getExam = payload => ({
     type: GET_EXAM,
     payload
 })
 
-const updateExam = data =>({
+const updateExam = data => ({
     type: UPDATE_EXAM,
     data
 })
 
-const getRealExam = payload =>({
+const updateLeave = data => ({
+    type: UPDATE_LEAVE,
+    data
+})
+
+const getRealExam = payload => ({
     type: GET_REAL_EXAM,
     payload
 })
 
-const updateRealExam = data =>({
+const updateRealExam = data => ({
     type: UPDATE_REAL_EXAM,
     data
 })
 
-const postExam = payload =>({
+const postExam = payload => ({
     type: POST_EXAM,
     payload
 })
 
-const updatePostExam = response =>({
+const updatePostExam = response => ({
     type: UPDATE_POST_EXAM,
     response
 })
 
-const getExamQuestion = payload =>({
+const getExamQuestion = payload => ({
     type: GET_EXAM_QUESTION,
     payload
 })
 
-const updateExamQuestion = data =>({
+const updateExamQuestion = data => ({
     type: UPDATE_EXAM_QUESTION,
     data
 })
@@ -88,7 +95,7 @@ const updatePostSingleQuestion = response => ({
     response
 })
 
-export const actions ={
+export const actions = {
     getExam,
     getExamQuestion,
     postExam,
@@ -100,7 +107,8 @@ export const actions ={
     postSingleQuestion,
     updatePostSingleQuestion,
     getRealExam,
-    updateRealExam
+    updateRealExam,
+    updateLeave
 }
 
 //reducer
@@ -111,7 +119,8 @@ const initialState = {
     examQuestion: null,
     postExamRes: null,
     postTimeRes: null,
-    postSingleQuestionRes: null
+    postSingleQuestionRes: null,
+    leave: true,
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -146,7 +155,13 @@ const reducer = (state = initialState, action = {}) => {
                 examQuestion: action.data
             }
         }
-        case UPDATE_POST_SINGLE_QUESTION:{
+        case UPDATE_LEAVE: {
+            return {
+                ...state,
+                leave: action.data
+            }
+        }
+        case UPDATE_POST_SINGLE_QUESTION: {
             return {
                 ...state,
                 postSingleQuestionRes: action.response

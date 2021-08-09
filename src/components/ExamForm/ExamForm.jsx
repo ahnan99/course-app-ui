@@ -17,7 +17,7 @@ class ExamForm extends Component {
 
 
     onValuesChange = (changedValue, values) => {
-        if(this.props.exam.exam && this.props.exam.exam[0] && this.props.exam.exam[0].status !== 2){
+        if (this.props.exam.exam && this.props.exam.exam[0] && this.props.exam.exam[0].status !== 2) {
             for (var key in changedValue) {
                 if (Array.isArray(changedValue[key])) {
                     var aggre = ''
@@ -43,7 +43,7 @@ class ExamForm extends Component {
                     } else {
                         res[question.ID] = Array.from(question.myAnswer)
                     }
-                }else{
+                } else {
                     res[question.ID] = null
                 }
 
@@ -80,6 +80,7 @@ class ExamForm extends Component {
     }
 
     leave = () => {
+        this.props.actions.updateLeave(true)
         this.props.history.push('/homepage')
     }
 
@@ -100,6 +101,8 @@ class ExamForm extends Component {
             message.success('提交成功')
             this.setState({ loading: false })
             this.props.actions.updatePostExam(null)
+            this.props.actions.updateLeave(true)
+            this.props.history.push('/homepage')
         }
         if (this.props.exam.exam && this.props.exam.examQuestion && prevProps.exam.examQuestion === null) {
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
@@ -130,7 +133,7 @@ class ExamForm extends Component {
                         <Row gutter={4} style={{ textAlign: 'center' }}>
                             <Col span={10}><Alert message={this.props.exam.exam[0].status === 2 ? '得分: ' + this.props.exam.exam[0].score : '' + moment.utc(this.state.time * 1000).format("H:mm:ss")} type='info' /></Col>
                             <Col span={7}><Button style={{ height: '100%' }} type="primary" htmlType="submit" loading={this.state.loading}>{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button></Col>
-                            <Col span={7}><Button style={{ height: '100%' }} onClick={() => this.leave()}>离开</Button></Col>
+                            {this.props.exam.leave ? <Col span={7}><Button style={{ height: '100%' }} onClick={() => this.leave()}>离开</Button></Col> : null}
                         </Row>
                     </Form.Item>
                 </div>
