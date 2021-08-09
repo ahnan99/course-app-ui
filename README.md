@@ -568,6 +568,46 @@ video.js: https://www.jb51.net/article/145346.htm
     ]
     ```
 
+8c. 获取学员待考试项目列表   **GET:/students/getExamListByUsername**
+  * input
+    ```
+    {"username":"120107196604032113"}
+    ``` 
+
+  * output   ** **
+    ```
+    [
+        {
+            "paperID": 0,
+            "kindID": 0,
+            "kindName": "线下",
+            "status": 0,
+            "statusName": "准备",
+            "certName": "危险化学品从业人员",
+            "startDate": "2021-08-09 15:30",
+            "minutes": 0,
+            "endDate": "2021-08-09 17:00",
+            "address": "黄兴路158号1182幢D103室",
+            "username": "310110199101163223",
+            "name": "陈林芳"
+        },
+        {
+            "paperID": 11405,
+            "kindID": 1,
+            "kindName": "在线",
+            "status": 0,
+            "statusName": "准备",
+            "certName": "危险化学品从业人员",
+            "startDate": "2021-08-09 15:30",//开始时间
+            "minutes": 90,  
+            "endDate": "2021-08-09 17:00",  //收卷时间
+            "address": "黄兴路158号1182幢D103室",
+            "username": "310110199101163223",
+            "name": "陈林芳"
+        }
+    ]
+    ```
+
 9. 获取学员课节列表   **GET:/students/getStudentLessonList**
   * input   **by username**
     ```

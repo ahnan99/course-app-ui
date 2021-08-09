@@ -1,6 +1,8 @@
 //Actions 
 const GET_EXAM = "get_exam"
 const UPDATE_EXAM = "update_exam"
+const GET_REAL_EXAM = "get_real_exam"
+const UPDATE_REAL_EXAM = "update_real_exam"
 const POST_EXAM = "post_exam"
 const UPDATE_POST_EXAM = "update_post_exam"
 const GET_EXAM_QUESTION = "get_exam_question"
@@ -13,6 +15,8 @@ const UPDATE_POST_SINGLE_QUESTION = "update_post_single_question"
 export const types ={
     GET_EXAM,
     UPDATE_EXAM,
+    GET_REAL_EXAM,
+    UPDATE_REAL_EXAM,
     POST_EXAM,
     UPDATE_POST_EXAM,
     POST_TIME,
@@ -31,6 +35,16 @@ const getExam = payload =>({
 
 const updateExam = data =>({
     type: UPDATE_EXAM,
+    data
+})
+
+const getRealExam = payload =>({
+    type: GET_REAL_EXAM,
+    payload
+})
+
+const updateRealExam = data =>({
+    type: UPDATE_REAL_EXAM,
     data
 })
 
@@ -84,13 +98,16 @@ export const actions ={
     updatePostExam,
     updatePostTime,
     postSingleQuestion,
-    updatePostSingleQuestion
+    updatePostSingleQuestion,
+    getRealExam,
+    updateRealExam
 }
 
 //reducer
 
 const initialState = {
     exam: null,
+    realExam: null,
     examQuestion: null,
     postExamRes: null,
     postTimeRes: null,
@@ -109,6 +126,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 exam: action.data
+            }
+        }
+        case UPDATE_REAL_EXAM: {
+            return {
+                ...state,
+                realExam: action.data
             }
         }
         case UPDATE_POST_EXAM: {

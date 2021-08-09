@@ -10,6 +10,7 @@ class HomePage extends Component {
     componentDidMount() {
         this.props.actions.getCourseList({ username: this.props.application.username })
         this.props.actions.getLessonList({ username: this.props.application.username })
+        this.props.actions.getRealExam({ username: this.props.application.username })
     }
 
     componentWillReceiveProps = nextProps => {
@@ -34,9 +35,14 @@ class HomePage extends Component {
         }
         return (
             <div>
-                {courses.map(course => (
-                    <LessonCard key={course.id} exam={exam} key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions} />
-                ))}
+                <div>
+
+                </div>
+                <div>
+                    {courses.map(course => (
+                        <LessonCard key={course.id} exam={exam} key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions} />
+                    ))}
+                </div>
             </div>
         )
     }
