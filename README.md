@@ -818,7 +818,9 @@ video.js: https://www.jb51.net/article/145346.htm
             "scorePass": 80,        //及格分数线
             "scoreTotal": 100,      //试卷总分
             "statusName": "认证",
-            "missingItems": "学历, 单位电话, 手机号码, 单位地址, 工作岗位"
+            "missingItems": "学历, 单位电话, 手机号码, 单位地址, 工作岗位",
+            "kind": 1,              //0 模拟  1 正式
+            "startExamMsg": "考试尚未开始。"  //有>""的值，则给出提示信息，不进入考试。
         }
     ]
     ```    

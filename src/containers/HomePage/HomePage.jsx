@@ -35,8 +35,8 @@ class HomePage extends Component {
             title: '考生须知',
             content: (
                 <div>
-                    <p>1、</p>
-                    <p>some messages...some messages...</p>
+                    <p>1、务必携带身份证原件和准考证。</p>
+                    <p>2、迟到15分钟不得入场。</p>
                 </div>
             ),
             onOk() { },
@@ -58,11 +58,11 @@ class HomePage extends Component {
                 <div>
                     {this.props.exam.realExamList ? <Card title="我的考试">
                         {this.props.exam.realExamList.map(exam => (
-                            <Card.Grid style={{ width: '100%', textAlign: 'left' }}>
-                                <p>{exam.certName}</p>
-                                <p>开始日期：{exam.startDate}</p>
+                            <Card.Grid style={{ width: '100%', textAlign: 'left', background: '#BBFFFF' }}>
+                                <p>科目：{exam.certName}</p>
+                                <p>日期：{exam.startDate}</p>
                                 <p>地点：{exam.address}</p>
-                                <p>类型：{exam.kindName}</p>
+                                <p>姓名：{exam.name} &nbsp;&nbsp;类型：{exam.kindName}</p>
                                 <Button type="primary" onClick={this.onClickRule}>考生须知</Button>&nbsp;&nbsp;
                                 {exam.kindID === 1 ? (exam.status < 2 ? <Button type="primary" onClick={() => this.onClickExam(exam.paperID)}>开始考试</Button> : <span>已完成</span>) : null}
                             </Card.Grid>
