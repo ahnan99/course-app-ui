@@ -56,7 +56,7 @@ class HomePage extends Component {
         return (
             <div>
                 <div>
-                    {this.props.exam.realExamList ? <Card title="我的考试">
+                    {this.props.exam.realExamList.length>0 ? <Card title="我的考试">
                         {this.props.exam.realExamList.map(exam => (
                             <Card.Grid style={{ width: '100%', textAlign: 'left', background: '#BBFFFF' }}>
                                 <p>科目：{exam.certName}</p>
