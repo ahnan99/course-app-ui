@@ -96,13 +96,18 @@ class ExamForm extends Component {
             this.setState({ time: this.props.exam.exam[0].secondRest })
         }
         if (this.props.exam.postExamRes) {
-            this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
-            this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
+            if (this.props.exam.exam[0].kind === 0) {
+                this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
+                this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
+            }
             message.success('提交成功')
             this.setState({ loading: false })
             this.props.actions.updatePostExam(null)
             this.props.actions.updateLeave(true)
-            this.props.history.push('/homepage')
+            if (this.props.exam.exam[0].kind === 1){
+                this.props.history.push('/homepage')
+            }
+            
         }
         if (this.props.exam.exam && this.props.exam.examQuestion && prevProps.exam.examQuestion === null) {
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })

@@ -7,8 +7,8 @@ function* examWatch() {
     yield takeLatest(types.GET_EXAM, getExamWorker)
 }
 
-function* realExamWatch() {
-    yield takeLatest(types.GET_REAL_EXAM, getRealExamWorker)
+function* realExamListWatch() {
+    yield takeLatest(types.GET_REAL_EXAM_LIST, getRealExamListWorker)
 }
 
 function* examQuestionWatch() {
@@ -34,7 +34,7 @@ export function getExamEndpoint(data) {
     })
 }
 
-export function getRealExamEndpoint(data) {
+export function getRealExamListEndpoint(data) {
     return axios.get('/students/getExamListByUsername', {
         params: data
     })
@@ -68,10 +68,10 @@ function* getExamWorker(action) {
     }
 }
 
-function* getRealExamWorker(action) {
+function* getRealExamListWorker(action) {
     try {
-        const response = yield call(getRealExamEndpoint, action.payload)
-        yield put(actions.updateRealExam(response.data))
+        const response = yield call(getRealExamListEndpoint, action.payload)
+        yield put(actions.updateRealExamList(response.data))
     } catch (error) {
         yield console.log(error)
     }
@@ -119,7 +119,7 @@ export const workers = {
     postExamWorker,
     postTimeWorker,
     postSingleQuestionWorker,
-    getRealExamWorker
+    getRealExamListWorker
 }
 
 export default function* saga() {
@@ -129,6 +129,6 @@ export default function* saga() {
         postTimeWatch(),
         examQuestionWatch(),
         postSingleQuestionWatch(),
-        realExamWatch()
+        realExamListWatch()
     ])
 }

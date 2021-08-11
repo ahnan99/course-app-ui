@@ -12,6 +12,8 @@ const UPDATE_POST_TIME = "update_post_time"
 const POST_SINGLE_QUESION = "post_single_question"
 const UPDATE_POST_SINGLE_QUESTION = "update_post_single_question"
 const UPDATE_LEAVE = "update_leave"
+const GET_REAL_EXAM_LIST = "get_real_exam_list"
+const UPDATE_REAL_EXAM_LIST = "update_real_exam_list"
 
 export const types = {
     GET_EXAM,
@@ -19,6 +21,8 @@ export const types = {
     UPDATE_LEAVE,
     GET_REAL_EXAM,
     UPDATE_REAL_EXAM,
+    GET_REAL_EXAM_LIST,
+    UPDATE_REAL_EXAM_LIST,
     POST_EXAM,
     UPDATE_POST_EXAM,
     POST_TIME,
@@ -54,6 +58,17 @@ const updateRealExam = data => ({
     type: UPDATE_REAL_EXAM,
     data
 })
+
+const getRealExamList = payload => ({
+    type: GET_REAL_EXAM_LIST,
+    payload
+})
+
+const updateRealExamList = data => ({
+    type: UPDATE_REAL_EXAM_LIST,
+    data
+})
+
 
 const postExam = payload => ({
     type: POST_EXAM,
@@ -108,7 +123,9 @@ export const actions = {
     updatePostSingleQuestion,
     getRealExam,
     updateRealExam,
-    updateLeave
+    updateLeave,
+    getRealExamList,
+    updateRealExamList
 }
 
 //reducer
@@ -116,6 +133,7 @@ export const actions = {
 const initialState = {
     exam: null,
     realExam: null,
+    realExamList: null,
     examQuestion: null,
     postExamRes: null,
     postTimeRes: null,
@@ -165,6 +183,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 postSingleQuestionRes: action.response
+            }
+        }
+        case UPDATE_REAL_EXAM_LIST: {
+            return {
+                ...state,
+                realExamList: action.data
             }
         }
         default:

@@ -13,11 +13,12 @@ class LessonCard extends Component {
     }
 
     onClickExam = paperID => {
+        this.props.examActions.updateLeave(true)
         this.props.examActions.getExam({ paperID })
     }
 
     componentDidUpdate = prevProps => {
-        if (prevProps.exam.exam !== this.props.exam.exam && this.props.exam.exam) {
+        if (this.props.exam.exam && prevProps.exam.exam !== this.props.exam.exam) {
             if (this.props.exam.exam[0].missingItems) {
                 message.info({
                     content: '请填写' + this.props.exam.exam[0].missingItems,
@@ -29,6 +30,8 @@ class LessonCard extends Component {
                     duration: 10,
                 })
                 this.props.history.push("/userinfo")
+            } else if (this.props.exam.exam[0].startExamMsg !== "") {
+                message.info(this.props.exam.exam[0].startExamMsg)
             } else {
                 this.props.history.push("/exampage")
                 this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
@@ -48,7 +51,7 @@ class LessonCard extends Component {
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
                 <Col span={24}>
-                    <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{[course.type === 0 ? <span style={{color: 'red'}}>{course.checkName}&nbsp;</span> : null]} <a>{course.statusName}</a></div>}>{
+                    <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{[course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null]} <a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             {course.completion ? <Progress percent={course.completion} size="small" /> : null}<p>时长：{course.hours}</p>
                             <p>开始日期：{course.startDate}</p>
