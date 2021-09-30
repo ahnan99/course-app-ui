@@ -7,10 +7,14 @@ import { actions as LoginActions } from '../../modules/application'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import axios from 'axios'
-
+import qs from 'qs'
 class Login extends Component {
 
     componentDidMount() {
+
+        if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
+            this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
+        }
         this.props.actions.getCompanyInfo()
     }
 
@@ -23,7 +27,7 @@ class Login extends Component {
                     {this.props.application.companyInfo ?
                         <div className="title-div">
                             <div>
-                                {<img src={axios.defaults.baseURL + this.props.application.companyInfo[0].logo} width={60} heigth={60}/>}
+                                {<img src={axios.defaults.baseURL + this.props.application.companyInfo[0].logo} width={60} heigth={60} />}
                             </div>
                             <div>
                                 <b className="title">{this.props.application.companyInfo[0].hostName}</b>
@@ -31,16 +35,16 @@ class Login extends Component {
                         </div>
                         : null
                     }
-                        <LoginForm
-                            requestLogin={this.props.actions.requestLogin}
-                            loggedIn={this.props.application.loggedIn}
-                            loginError={this.props.application.loginError}
-                            username={this.props.application.username}
-                            getUserInfo={this.props.actions.getUserInfo}
-                            userInfo={this.props.application.userInfo}
-                            auditorRequestLogin={this.props.actions.auditorRequestLogin}
-                            auditor={this.props.application.auditor} />
-                 
+                    <LoginForm
+                        requestLogin={this.props.actions.requestLogin}
+                        loggedIn={this.props.application.loggedIn}
+                        loginError={this.props.application.loginError}
+                        username={this.props.application.username}
+                        getUserInfo={this.props.actions.getUserInfo}
+                        userInfo={this.props.application.userInfo}
+                        auditorRequestLogin={this.props.actions.auditorRequestLogin}
+                        auditor={this.props.application.auditor} />
+
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>
                 </Col>

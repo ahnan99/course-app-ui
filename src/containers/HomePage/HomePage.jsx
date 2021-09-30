@@ -5,6 +5,7 @@ import { actions as CourseActions } from '../../modules/courses'
 import { actions as ExamActions } from '../../modules/exam'
 import { bindActionCreators } from 'redux'
 import { Button, Card, notification, message, Modal } from 'antd'
+import qs from 'qs'
 
 class HomePage extends Component {
 

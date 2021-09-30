@@ -23,6 +23,7 @@ const AUDITOR_LOGIN = 'auditor_login'
 const AUDITOR_LOGIN_ERROR = 'auditor_login_error'
 const UPDATE_AUDITOR = 'update_auditor'
 const AUDITOR_REQUEST_LOGIN = 'auditor_request_login'
+const UPDATE_FROM_ID = 'update_from_id'
 
 export const types = {
     REQUEST_LOGIN,
@@ -48,7 +49,8 @@ export const types = {
     AUDITOR_LOGIN,
     AUDITOR_LOGIN_ERROR,
     UPDATE_AUDITOR,
-    AUDITOR_REQUEST_LOGIN
+    AUDITOR_REQUEST_LOGIN,
+    UPDATE_FROM_ID
 }
 
 //Action creators
@@ -169,6 +171,11 @@ const auditorRequestLogin = payload => ({
     payload
 })
 
+const updateFromID = data => ({
+    type: UPDATE_FROM_ID,
+    data
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -193,7 +200,8 @@ export const actions = {
     auditorLogin,
     auditorLoginError,
     updateAuditor,
-    auditorRequestLogin
+    auditorRequestLogin,
+    updateFromID
 }
 
 const initialState = {
@@ -208,6 +216,7 @@ const initialState = {
     companyInfo: null,
     newCourse: null,
     auditor: null,
+    fromID: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -310,6 +319,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 companyInfo: action.data
+            }
+        }
+        case UPDATE_FROM_ID: {
+            return {
+                ...state,
+                fromID: action.data
             }
         }
         case USER_LOGOUT: {
