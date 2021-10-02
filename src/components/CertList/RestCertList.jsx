@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message, Modal, Button } from 'antd';
+import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
@@ -7,8 +7,10 @@ import 'antd/dist/antd.css'
 class RestCertList extends Component {
   constructor(props) {
     super(props)
+    this.formRef = React.createRef()
     this.state = {
-      visible: false
+      visible: false,
+      retrain: 0
     }
   }
   componentDidMount() {
@@ -46,8 +48,20 @@ class RestCertList extends Component {
 
 
   handleCancel = () => {
+    console.log(this.formRef.current.getFieldsValue())
     this.setState({ visible: false })
   }
+  handleOK = cert => {
+    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0 })
+    this.setState({ visible: false })
+  }
+
+
+  onChange1 = e => {
+    this.setState({
+      retrain: e.target.value,
+    });
+  };
 
   render() {
     const { loading } = this.props
@@ -73,11 +87,8 @@ class RestCertList extends Component {
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                   footer={[
-                    <Button key="first" onClick={() => this.onAdd(item)} type="primary">
-                      初训
-                    </Button>,
-                    <Button key="retrain" type="primary" onClick={() => this.onAddretrain(item)}>
-                      复训
+                    <Button key="first" onClick={() => this.handleOK(item)} type="primary">
+                      确定
                     </Button>,
                     <Button
                       key="link"
@@ -85,9 +96,41 @@ class RestCertList extends Component {
                       onClick={this.handleCancel}
                     >
                       取消
-                  </Button>,
+                    </Button>,
                   ]}
-                ></Modal>
+                >
+                  <Form
+                    layout="vertical"
+                    name="form_in_modal"
+                    initialValues={{
+                      reexamine: 0,
+                    }}
+                    ref={this.formRef}
+                  >
+                    <Form.Item name="reexamine" className="collection-create-form_last-form-item">
+                      <Radio.Group onChange={this.onChange1}>
+                        <Radio value={0}>初训</Radio>
+                        <Radio value={1}>复训</Radio>
+                      </Radio.Group>
+                    </Form.Item>
+                    {this.state.retrain === 1 ? <Form.Item
+                      name="currDiplomaID"
+                      label="证书编号"
+                      rules={[
+                        {
+                          required: false,
+                          message: '请输入证书编号',
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item> : null}
+                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="证书有效日期">
+                      <DatePicker />
+                    </Form.Item> : null}
+
+                  </Form>
+                </Modal>
                   <a key="list-loadmore-edit" onClick={() => { this.setState({ visible: true }) }} style={{ color: 'darkOrange' }}><PlusOutlined /></a>
                 </ div>]}
           >
