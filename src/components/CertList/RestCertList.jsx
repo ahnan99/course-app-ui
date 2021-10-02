@@ -115,7 +115,7 @@ class RestCertList extends Component {
                     </Form.Item>
                     {this.state.retrain === 1 ? <Form.Item
                       name="currDiplomaID"
-                      label="证书编号"
+                      label="初训证书编号"
                       rules={[
                         {
                           required: false,
