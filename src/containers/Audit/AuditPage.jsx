@@ -89,7 +89,7 @@ class AuditPage extends Component {
                                 <List.Item>
                                     <List.Item.Meta
                                         title={<a onClick={() => this.onClick(item)}>{item.name}</a>}
-                                        description={item.username}
+                                        description={item.username.substr(0,6) + "******" + item.username.substr(12,6)}
                                     />
                                 </List.Item>)}
                         />
