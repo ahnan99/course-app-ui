@@ -53,7 +53,7 @@ class CertImage extends Component {
                 <Row gutter={[16, 32]}>
                     <Col span={24} style={{ textAlign: 'left' }}>
                         <Breadcrumb>
-                            <Breadcrumb.Item>学员证书列表</Breadcrumb.Item>
+                            <Breadcrumb.Item>电子证书</Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
                 </Row>

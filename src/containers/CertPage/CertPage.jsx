@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CertCard from '../../components/CertCard/CertCard'
 import { connect } from 'react-redux'
 import { actions as CertActions } from '../../modules/certificate'
+import { actions as AuditActions } from '../../modules/audit'
 import { bindActionCreators } from 'redux'
 
 

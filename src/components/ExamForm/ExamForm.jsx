@@ -13,7 +13,7 @@ const layout = {
 class ExamForm extends Component {
     formRef = React.createRef()
 
-    state = { time: 0, loading: false }
+    state = { time: 0, loading: false, buttonDisabled: false }
 
 
     onValuesChange = (changedValue, values) => {
@@ -64,11 +64,11 @@ class ExamForm extends Component {
 
     componentDidMount() {
         this.timer = setInterval(() => {
-            
-           if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].status !== 2) {
+
+            if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].status !== 2) {
                 const { time } = this.state
-                
-               
+
+
                 this.props.actions.postTime({ paperID: this.props.exam.exam[0].paperID, secondRest: this.state.time })
             }
         }, 5000)    //exam submission Interval
@@ -94,7 +94,7 @@ class ExamForm extends Component {
     }
 
     componentDidUpdate = prevProps => {
-        if(this.props.exam.postTimeRes && this.props.exam.postTimeRes.status === 1){
+        if (this.props.exam.postTimeRes && this.props.exam.postTimeRes.status === 1) {
             this.onFinish({})
             this.props.actions.updatePostTime(null)
         }
@@ -107,13 +107,13 @@ class ExamForm extends Component {
                 this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
             }
             message.success('提交成功')
-            this.setState({ loading: false })
+            setTimeout(() => { this.setState({ loading: false }) }, 3000);
             this.props.actions.updatePostExam(null)
             this.props.actions.updateLeave(true)
-            if (this.props.exam.exam[0].kind === 1){
+            if (this.props.exam.exam[0].kind === 1) {
                 this.props.history.push('/homepage')
             }
-            
+
         }
         if (this.props.exam.exam && this.props.exam.examQuestion && prevProps.exam.examQuestion === null) {
             this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
