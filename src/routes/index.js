@@ -11,6 +11,7 @@ import ExamPage from '../containers/ExamPage/ExamPage'
 import AuditPage from '../containers/Audit/AuditPage'
 import CertList from '../containers/Audit/CertList'
 import CertImage from '../containers/Audit/CertImage'
+import CertImageStudent from "../containers/CertPage/CertImageStudent"
 
 const routes = [{
     path: '/homepage',
@@ -75,9 +76,9 @@ const routes = [{
 
 },
 {
-    path: '/auditpage/certlist/certimage',
-    pathKey: 'certimage',
-    component: CertImage
+    path: '/certpage/certimage',
+    pathKey: 'certimagestudent',
+    component: CertImageStudent
 }]
 
 

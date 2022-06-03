@@ -23,7 +23,7 @@ class CertPage extends Component {
         return (
             <div>
                 {accomplished.map(cert => (
-                    <CertCard key={cert.ID} cert={cert}/>
+                    <CertCard key={cert.ID} cert={cert} actions={this.props.auditActions} audit={this.props.audit}/>
                 ))}
             </div>
         )
@@ -32,13 +32,14 @@ class CertPage extends Component {
 
 const mapStateToProps = state => ({
     cert: state.cert,
-    application: state.application
+    application: state.application,
+    audit: state.audit  
 })
 
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(CertActions, dispatch),
-
+    auditActions: bindActionCreators(AuditActions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CertPage);

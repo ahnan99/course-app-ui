@@ -12,6 +12,16 @@ class LessonCard extends Component {
         textAlign: 'left',
     };
 
+    onClick = (item) => {
+        this.props.actions.updateSelectedCert(item)
+    }
+
+    componentWillReceiveProps = nextProps => {
+        if (nextProps.audit.selectedCert) {
+            this.props.history.push('/certpage/certimage')
+        }
+    }
+
     render() {
         const { cert } = this.props
 
@@ -21,7 +31,7 @@ class LessonCard extends Component {
                     <Card title={cert.certName} style={cert.status !== 0 ? { textAlign: 'left', background: '#FCFCFC' } : { textAlign: 'left', background: '#FCFFFC' }} extra={<a>{cert.statusName}</a>}>
                         <Card.Grid style={this.gridStyle}>
                             <p>有效期至：{cert.endDate}</p>
-                            {cert.filename !== '' ? <a href={axios.defaults.baseURL + cert.filename} target="blank">查看证书</a> : null}
+                            {cert.filename !== '' ? <a onClick={() => this.onClick(cert)} target="blank">查看证书</a> : null}
                         </Card.Grid>
                     </Card>
                 </Col>
