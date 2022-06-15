@@ -76,6 +76,11 @@ const routes = [{
 
 },
 {
+    path: '/auditpage/certlist/certimage',
+    pathKey: 'certimage',
+    component: CertImage
+},
+{
     path: '/certpage/certimage',
     pathKey: 'certimagestudent',
     component: CertImageStudent

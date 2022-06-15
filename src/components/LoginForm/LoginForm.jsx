@@ -3,7 +3,7 @@ import { Form, Input, Button, message, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import qs from 'qs'
-
+import axios from 'axios'
 
 const layout = {
     labelCol: { span: 8 },
@@ -102,6 +102,9 @@ class LoginForm extends Component {
                     <Checkbox.Group>
                         <Checkbox value="1" onChange={this.onChange}>督查</Checkbox>
                     </Checkbox.Group>
+                </Form.Item>
+                <Form.Item>
+                <a href={axios.defaults.baseURL+"/public/temp/help.mp4"}>系统使用帮助</a>
                 </Form.Item>
             </Form>
         )
