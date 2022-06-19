@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Progress, message } from 'antd'
+import { Card, Row, Col, Progress, message, Button } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { RightOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
@@ -44,6 +44,12 @@ class LessonCard extends Component {
         textAlign: 'left',
     };
 
+
+
+    onClickCommentPage = () => {
+        this.props.history.push(`/classcommentpage?classID=${this.props.course.classID}`);
+    };
+
     render() {
         const { course } = this.props
         const { lessons } = this.props
@@ -57,6 +63,7 @@ class LessonCard extends Component {
                             <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p>
                             <p>完成条件：{course.pass_condition}</p>
+                            <Button type='primary' onClick={() => this.onClickCommentPage()} >课程答疑</Button>
                         </Card.Grid> : null}
                         {course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>
