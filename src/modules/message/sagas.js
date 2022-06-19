@@ -19,6 +19,23 @@ function* singleMessageWatch() {
     yield takeLatest(types.GET_SINGLE_MESSAGE, getSingleMessageWorker)
 }
 
+function* getClassCommentWatch() {
+    yield takeLatest(types.GET_CLASS_COMMENT, getClassCommentWorker)
+}
+
+
+function* postClassCommentWatch() {
+    yield takeLatest(types.POST_CLASS_COMMENT, postClassCommentWorker)
+}
+
+
+function* deleteClassCommentWatch() {
+    yield takeLatest(types.DELETE_CLASS_COMMENT, deleteClassCommentWorker)
+}
+
+
+
+
 //endPoints
 export function getMessageTypeEndpoint(data) {
     return axios.get('/students/getDictionaryList', {
@@ -40,6 +57,20 @@ export function getSingleMessageEndpoint(data) {
     return axios.get('/students/get_student_message_info', {
         params: data
     })
+}
+
+export function getClassCommentEndpoint(data) {
+    return axios.get('/public/get_feedback_class_list', {
+        params: data
+    })
+}
+
+export function postClassCommentEndpoint(data) {
+    return axios.post('/public/submit_feedback_class', data)
+}
+
+export function deleteClassCommentEndpoint(data) {
+    return axios.post('/public/cancel_feedback_class', data)
 }
 
 //workers
@@ -79,13 +110,44 @@ function* getSingleMessageWorker(action) {
     }
 }
 
+function* getClassCommentWorker(action) {
+    try {
+        const response = yield call(getClassCommentEndpoint, action.payload)
+        yield put(actions.updateClassComment(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
+function* postClassCommentWorker(action) {
+    try {
+        const response = yield call(postClassCommentEndpoint, action.payload)
+        yield put(actions.updatePostClassComment(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
+
+function* deleteClassCommentWorker(action) {
+    try {
+        const response = yield call(deleteClassCommentEndpoint, action.payload)
+        yield put(actions.updateDeleteClassComment(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
 export const workers = {
     getMessageTypeWorker,
     postMessageWorker,
     getMessageWorker,
-    getSingleMessageWorker
+    getSingleMessageWorker,
+    getClassCommentWorker,
+    postClassCommentWorker,
+    deleteClassCommentWatch
 }
 
 export default function* saga() {
-    yield all([messageTypeWatch(),postMessageWatch(),messageWatch(),singleMessageWatch()])
+    yield all([messageTypeWatch(), postMessageWatch(), messageWatch(), singleMessageWatch(), getClassCommentWatch(), postClassCommentWatch(), deleteClassCommentWatch()])
 }
