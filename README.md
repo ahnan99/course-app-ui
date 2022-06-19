@@ -1389,3 +1389,98 @@ video.js: https://www.jb51.net/article/145346.htm
     ```
     {"status": 0, "msg": "成功退出。"} 
     ```    
+
+103. 学员提交课堂提问   **POST:/public/submit_feedback_class** 
+  * input   
+    ```
+    {
+        "username": "120107196604031110", //身份证
+        "item": "问个问题", //消息内容
+        "classID": "C30-2203"  //班级编号
+    }
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": 0, "msg": "成功退出。"} 
+    ```    
+
+104. 返回课堂提问列表   **GET:/public/get_feedback_class_list** 
+  * input   
+    ```
+    {
+        "username": "120107196604031110", //身份证
+        "classID": "C30-2203"  //班级编号
+    }
+    ``` 
+
+  * output  **//结果集**
+    ```
+      [
+          {
+              "ID": 1049,
+              "username": "120107196604031110",
+              "title": "我",
+              "classID": "C30-2203",
+              "item": "核酸穿不上",
+              "readerID": "",
+              "readerName": "",
+              "refID": 0,
+              "type": 0,
+              "regDate": "2022-06-19 08:28:31",
+              "cancelAllow": 1
+          },
+          {
+              "ID": 1053,
+              "username": "desk.",
+              "title": "操作员",
+              "classID": "C30-2203",
+              "item": "老师看着你 reader120107196604031110",
+              "readerID": "120107196604031110",
+              "readerName": "",
+              "refID": 0,
+              "type": 1,
+              "regDate": "2022-06-19 08:43:03",
+              "cancelAllow": 0
+          },
+          {
+              "ID": 1054,
+              "username": "desk.",
+              "title": "操作员",
+              "classID": "C30-2203",
+              "item": "老师看着你 ref1049",
+              "readerID": "120107196604031110",
+              "readerName": "",
+              "refID": 1049,
+              "type": 1,
+              "regDate": "2022-06-19 08:43:33",
+              "cancelAllow": 0
+          },
+          {
+              "ID": 1055,
+              "username": "desk.",
+              "title": "操作员",
+              "classID": "C30-2203",
+              "item": "老师看着你  to all",
+              "readerID": "",
+              "readerName": "",
+              "refID": 0,
+              "type": 1,
+              "regDate": "2022-06-19 08:43:47",
+              "cancelAllow": 0
+          }
+      ]
+    ```    
+
+105. 学员撤回课堂提问   **POST:/public/cancel_feedback_class** 
+  * input   
+    ```
+    {
+        "ID": 123 //消息编号
+    }
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+    ```
+    {"status": 0, "msg": "成功。"} 
+    ```    
