@@ -147,6 +147,27 @@ class ClassCommentPage extends Component {
                         />
                     </Col>
                 </Row>
+                <Row>
+                    <Col span={24} style={{ textAlign: 'left' }}>
+                        <Comment
+                            avatar={<Avatar src="https://joeschmoe.io/api/v1/jai" alt="Han Solo"
+                                style={{ "width": "100%" }} />}
+                            content={
+                                <div>
+                                    <Form.Item>
+                                        <TextArea rows={4} onChange={e => this.handleChange(e)} value={value} />
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Button htmlType="submit" loading={submitting} onClick={() => this.handleSubmit()} type="primary" style={{marginLeft:'30px'}}>
+                                            发送
+                                        </Button>
+                                        <Button type='primary' onClick={() => this.onClickBack()} style={{marginLeft:'30px'}}>返回</Button>
+                                    </Form.Item>
+                                </div>
+                            }
+                        />
+                    </Col>
+                </Row>
             </div >
         )
     }
