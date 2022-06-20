@@ -115,7 +115,7 @@ class ClassCommentPage extends Component {
                                     </Form.Item>
                                     <Form.Item>
                                         <Button htmlType="submit" loading={submitting} onClick={() => this.handleSubmit()} type="primary" style={{ marginLeft: '30px' }}>
-                                            发表评论
+                                        发送
                                         </Button>
                                         <Button type='primary' onClick={() => this.onClickBack()} style={{ marginLeft: '30px' }}>返回</Button>
                                     </Form.Item>
