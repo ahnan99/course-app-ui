@@ -909,9 +909,9 @@ video.js: https://www.jb51.net/article/145346.htm
     }
     ```    
 
-  * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
+  * output  **//status：int, 0 正常  1 结束;  secondRest: int, 剩余秒数, 如果为0则沿用本地时间，大于0则用返回值替换本地时间**
     ```
-    {"status": "", "msg": ""} 
+    {"status": 0, "secondRest": 2300} 
     ```    
 
 13. 模拟考试交卷   **POST:/students/submit_student_exam**
