@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Layout, Button, Breadcrumb, Spin, Form, Input } from 'antd'
+import { Row, Col, Layout, Button, Breadcrumb, Spin, Form, Input, message } from 'antd'
 import { Comment, List, Tooltip, Avatar } from 'antd';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom'
@@ -65,6 +65,10 @@ class ClassCommentPage extends Component {
     }
 
     handleSubmit = () => {
+        if(this.state.value.length === 0){
+            message.error('不能发送空消息')
+            return;
+        }
         this.props.actions.postClassComment({ item: this.state.value, classID: qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).classID, username: this.props.application.username });
     }
 
@@ -144,27 +148,6 @@ class ClassCommentPage extends Component {
                                     />
                                 </li>
                             )}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={24} style={{ textAlign: 'left' }}>
-                        <Comment
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/jai" alt="Han Solo"
-                                style={{ "width": "100%" }} />}
-                            content={
-                                <div>
-                                    <Form.Item>
-                                        <TextArea rows={4} onChange={e => this.handleChange(e)} value={value} />
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <Button htmlType="submit" loading={submitting} onClick={() => this.handleSubmit()} type="primary" style={{marginLeft:'30px'}}>
-                                            发送
-                                        </Button>
-                                        <Button type='primary' onClick={() => this.onClickBack()} style={{marginLeft:'30px'}}>返回</Button>
-                                    </Form.Item>
-                                </div>
-                            }
                         />
                     </Col>
                 </Row>

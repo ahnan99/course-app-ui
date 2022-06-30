@@ -94,9 +94,14 @@ class ExamForm extends Component {
     }
 
     componentDidUpdate = prevProps => {
-        if (this.props.exam.postTimeRes && this.props.exam.postTimeRes.status === 1) {
-            this.onFinish({})
-            this.props.actions.updatePostTime(null)
+        if (this.props.exam.postTimeRes) {
+            if (this.props.exam.postTimeRes.status === 1) {
+                this.onFinish({})
+                this.props.actions.updatePostTime(null)
+            } else if (this.props.exam.postTimeRes.secondRest !== 0) {
+                this.setState({ time: this.props.exam.postTimeRes.secondRest })
+                this.props.actions.updatePostTime(null)
+            }
         }
         if (!prevProps.exam.exam && this.props.exam.exam) {
             this.setState({ time: this.props.exam.exam[0].secondRest })
