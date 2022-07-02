@@ -216,7 +216,8 @@ const initialState = {
     companyInfo: null,
     newCourse: null,
     auditor: null,
-    fromID: null
+    fromID: null,
+    teacher: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -244,11 +245,13 @@ const reducer = (state = initialState, action = {}) => {
         }
         case AUDITOR_LOGIN: {
             if (action.response.status === 0) {
+                console.log('response',action.response )
                 return {
                     ...state,
                     loggedIn: true,
                     loginError: null,
                     username: action.response.username,
+                    teacher: action.response.teacher,
                     auditor: action.response.auditor
                 }
             } else if (action.response.sessionExpire === 1) {

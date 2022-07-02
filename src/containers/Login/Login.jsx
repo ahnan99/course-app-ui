@@ -43,7 +43,8 @@ class Login extends Component {
                         getUserInfo={this.props.actions.getUserInfo}
                         userInfo={this.props.application.userInfo}
                         auditorRequestLogin={this.props.actions.auditorRequestLogin}
-                        auditor={this.props.application.auditor} />
+                        auditor={this.props.application.auditor} 
+                        teacher={this.props.application.teacher} />
 
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>

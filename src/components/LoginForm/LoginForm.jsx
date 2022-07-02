@@ -24,7 +24,11 @@ class LoginForm extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.loggedIn && nextProps.username && nextProps.auditor === 1) {
-            this.props.history.push('/auditpage')
+            if(nextProps.teacher){
+                this.props.history.push('/homepage')
+            }else{
+                this.props.history.push('/auditpage')
+            }   
         }
         else if (nextProps.loggedIn && nextProps.username) {
             this.props.getUserInfo({ username: nextProps.username })
