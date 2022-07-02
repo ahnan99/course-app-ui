@@ -1375,7 +1375,8 @@ video.js: https://www.jb51.net/article/145346.htm
         "username": "albert",
         "name": "林冲",
         "hostName": "中石化上海石化公司",
-        "auditor": 1
+        "auditor": 1,
+        "teacher": "alan" //如果>""则为教师，此时将以学员身份登录，学员username='12032312122121200'
     }
     ```    
 
