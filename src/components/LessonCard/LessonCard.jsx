@@ -63,7 +63,7 @@ class LessonCard extends Component {
                             <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p>
                             <p>完成条件：{course.pass_condition}</p>
-                            <Button type='primary' onClick={() => this.onClickCommentPage()} >课程答疑</Button>
+                            {!this.props.application.teacher?<Button type='primary' onClick={() => this.onClickCommentPage()} >课程答疑</Button>:null}
                         </Card.Grid> : null}
                         {course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>

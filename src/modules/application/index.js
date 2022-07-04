@@ -338,7 +338,8 @@ const reducer = (state = initialState, action = {}) => {
                     loginError: null,
                     username: null,
                     userInfo: null,
-                    auditor: null
+                    auditor: null,
+                    teacher: null
                 }
             }
         }
