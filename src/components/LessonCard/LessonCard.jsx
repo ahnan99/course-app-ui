@@ -7,10 +7,9 @@ import 'antd/dist/antd.css'
 class LessonCard extends Component {
 
     onClick = (lesson) => {
-     
-        if (this.props.course.lessons && this.props.course.lessons[0]?.missingItems) {
+        if (this.props.lessons && this.props.lessons[0].missingItems) {
             message.info({
-                content: '请填写' + this.props.course.lessons[0].missingItems,
+                content: '请填写' + this.props.lessons[0].missingItems,
                 style: {
                     marginTop: '50%',
                     color: 'red',
