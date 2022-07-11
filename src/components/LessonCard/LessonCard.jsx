@@ -7,9 +7,24 @@ import 'antd/dist/antd.css'
 class LessonCard extends Component {
 
     onClick = (lesson) => {
+     
+        if (this.props.course.lessons && this.props.course.lessons[0]?.missingItems) {
+            message.info({
+                content: '请填写' + this.props.course.lessons[0].missingItems,
+                style: {
+                    marginTop: '50%',
+                    color: 'red',
+                    textAlign: 'left'
+                },
+                duration: 10,
+            })
+            this.props.history.push("/userinfo")
+        }
+        else {
+            this.props.actions.updateCurrentLesson(lesson)
+            this.props.history.push("/classpage")
+        }
 
-        this.props.actions.updateCurrentLesson(lesson)
-        this.props.history.push("/classpage")
     }
 
     onClickExam = paperID => {
@@ -63,7 +78,7 @@ class LessonCard extends Component {
                             <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p>
                             <p>完成条件：{course.pass_condition}</p>
-                            {!this.props.application.teacher?<Button type='primary' onClick={() => this.onClickCommentPage()} >课程答疑</Button>:null}
+                            {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()} >课程答疑</Button> : null}
                         </Card.Grid> : null}
                         {course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>
