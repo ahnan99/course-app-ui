@@ -36,7 +36,7 @@ class HomePage extends Component {
             title: '考生须知',
             content: (
                 <div>
-                    <p>1、务必携带身份证原件和准考证。</p>
+                    <p>1、仔细检查题目，交卷后将无法进入。</p>
                     <p>2、迟到15分钟不得入场。</p>
                 </div>
             ),
