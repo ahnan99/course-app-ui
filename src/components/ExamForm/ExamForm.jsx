@@ -164,7 +164,7 @@ class ExamForm extends Component {
                             key={question.ID}
                             label={
                                 <div>
-                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.scorePer + '分' + ')'}{question.image !== '' ? <Image src={axios.defaults.baseURL + question.image} /> : null}</span>
+                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.kindName + '题 ' + question.scorePer + '分' + ')'}{question.image !== '' ? <Image src={axios.defaults.baseURL + question.image} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score > 0 ? { color: 'green' } : { color: 'red' }} /> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 ? '正确答案: ' + question.answer : null}</span>
                                 </div>
