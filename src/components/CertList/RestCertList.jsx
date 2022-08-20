@@ -10,7 +10,8 @@ class RestCertList extends Component {
     this.formRef = React.createRef()
     this.state = {
       visible: false,
-      retrain: 0
+      retrain: 0,
+      selectedItem: null
     }
   }
   componentDidMount() {
@@ -49,11 +50,11 @@ class RestCertList extends Component {
 
   handleCancel = () => {
     console.log(this.formRef.current.getFieldsValue())
-    this.setState({ visible: false })
+    this.setState({ visible: false, selectedItem: null })
   }
   handleOK = cert => {
     this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0 })
-    this.setState({ visible: false })
+    this.setState({ visible: false, selectedItem: null })
   }
 
 
@@ -79,6 +80,7 @@ class RestCertList extends Component {
         dataSource={this.props.cert.restCert.filter(restCert => restCert.mark === 0)}
         renderItem={item => (
           <List.Item
+            key={item.certID}
             actions={item.reexamine !== 1 ? [<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{ color: 'darkOrange' }}><PlusOutlined /></a>] :
               [
                 <div><Modal
@@ -87,7 +89,7 @@ class RestCertList extends Component {
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                   footer={[
-                    <Button key="first" onClick={() => this.handleOK(item)} type="primary">
+                    <Button key="first" onClick={() => this.handleOK(this.state.selectedItem)} type="primary">
                       确定
                     </Button>,
                     <Button
@@ -131,7 +133,7 @@ class RestCertList extends Component {
 
                   </Form>
                 </Modal>
-                  <a key="list-loadmore-edit" onClick={() => { this.setState({ visible: true }) }} style={{ color: 'darkOrange' }}><PlusOutlined /></a>
+                  <a key="list-loadmore-edit" onClick={() => { this.setState({ visible: true, selectedItem: item }) }} style={{ color: 'darkOrange' }}><PlusOutlined /></a>
                 </ div>]}
           >
             <Skeleton active loading={loading}>
