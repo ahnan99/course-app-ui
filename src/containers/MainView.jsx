@@ -82,7 +82,7 @@ class MainView extends Component {
         return (
             <Layout>
                 <Sider
-                    breakpoint="md"
+                    breakpoint="xxl"
                     collapsedWidth="0"
                     style={{ height: "100vh", position: "fixed", zIndex: 99 }}
                     collapsed={this.state.collapsed}
