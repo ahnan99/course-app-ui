@@ -225,6 +225,24 @@ video.js: https://www.jb51.net/article/145346.htm
     }
     ```    
 
+5d. 上传学员签名   **POST:/files/uploadBase64img**
+  * input   **只能上传一张签名，重复上传将覆盖前文件.**
+    ```
+    //username（course.ID）及upID需要在body中传递。upID="student_letter_signature"
+    {
+      "username": 123, 
+      "upID": "student_letter_signature",
+      "imgData": "..."  //Base64图像
+    }
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;**
+    ```
+    {
+        "status":0 
+    }
+    ```    
+
 
 6. 学员信息获取   **GET:/students/get_student**
   * input
