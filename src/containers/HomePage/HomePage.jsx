@@ -72,7 +72,7 @@ class HomePage extends Component {
                 </div>
                 <div>
                     {courses.map(course => (
-                        <LessonCard application={this.props.application} exam={exam} key={course.ID} course={course} lessons={lessons} actions={actions} examActions={examActions} />
+                        <LessonCard application={this.props.application} exam={exam} key={course.ID} course={course} courseState={this.props.course} lessons={lessons} actions={actions} examActions={examActions} />
                     ))}
                 </div>
             </div>

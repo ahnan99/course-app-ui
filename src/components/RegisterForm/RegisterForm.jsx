@@ -275,7 +275,7 @@ class RegisterForm extends Component {
                         <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
                 </Form.Item> : null}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? null : <Form.Item
                     name="dept1"
                     label={kindID === "0" ? "部门(单位)" : "公司名称"}
                     rules={[
@@ -300,7 +300,7 @@ class RegisterForm extends Component {
                             } />
                     }
                 </Form.Item>}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? null : <Form.Item
                     name="dept2"
                     label="基层单位"
                 >
@@ -315,14 +315,14 @@ class RegisterForm extends Component {
                         ))}
                     </Select>
                 </Form.Item>}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="unit"
                     label="单位"
                     rules={[{ required: true, message: '请输入单位' }]}
                 >
                     <Input />
                 </Form.Item> : null}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="dept"
                     label="部门"
                     rules={[{ required: true, message: '请输入部门' }]}

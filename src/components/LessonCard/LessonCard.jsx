@@ -1,10 +1,22 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Progress, message, Button } from 'antd'
+import { Card, Row, Col, Progress, message, Button, Checkbox, Modal, Popover } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { RightOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
+import SignatureCanvas from 'react-signature-canvas'
+import { actions as CourseActions } from '../../modules/courses'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class LessonCard extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            signatureAgreementChecked: false,
+            signatureModalVisible: false
+        }
+    }
 
     onClick = (lesson) => {
         if (this.props.lessons && this.props.lessons[0].missingItems) {
@@ -51,6 +63,17 @@ class LessonCard extends Component {
                 this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
             }
         }
+        if (this.props.courseState.postSignature && !prevProps.courseState.postSignature) {
+            this.setState({ signatureModalVisible: false })
+            if (this.props.courseState.postSignature.status === 0) {
+                message.success('签名提交成功')
+                this.props.actions.getCourseList({ username: this.props.application.username })
+            } else {
+                message.error('签名提交失败')
+            }
+            this.sigCanvas.clear()
+            this.props.actions.updateSignature(null)
+        }
     }
 
     gridStyle = {
@@ -58,11 +81,37 @@ class LessonCard extends Component {
         textAlign: 'left',
     };
 
-
+    onChangeCheckBox = (e) => {
+        this.setState({ signatureAgreementChecked: e.target.checked })
+    }
 
     onClickCommentPage = () => {
         this.props.history.push(`/classcommentpage?classID=${this.props.course.classID}`);
     };
+
+    onSubmitSignature = () => {
+        if (this.sigCanvas.isEmpty()) {
+            message.error('请正确签名。')
+            return;
+        }
+        const imgData = this.sigCanvas.toDataURL();
+
+        this.props.actions.postSignature({
+            upID: "student_letter_signature", //固定内容
+            username: this.props.course.ID, //P7. getStudentCourseList.ID
+            currUser: this.props.application.username, //当前用户身份证
+            imgData
+        })
+    }
+
+    onClickSignature = () => {
+        if (!this.state.signatureAgreementChecked) {
+            message.warn('请阅读并勾选同意承诺书')
+            return;
+        }
+        this.setState({ signatureModalVisible: true })
+    }
+
 
     render() {
         const { course } = this.props
@@ -70,6 +119,10 @@ class LessonCard extends Component {
 
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
+                <Modal title="请在下面空白处签名" visible={this.state.signatureModalVisible} footer={[<Button onClick={() => { this.sigCanvas.clear(); this.setState({ signatureModalVisible: false }); }}>取消</Button>, <Button type='primary' onClick={this.onSubmitSignature}>提交签名</Button>]}>
+                    <SignatureCanvas penColor='black' minWidth='0.7'
+                        canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }} ref={(ref) => { this.sigCanvas = ref }} />
+                </Modal>
                 <Col span={24}>
                     <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{[course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null]} <a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
@@ -77,9 +130,19 @@ class LessonCard extends Component {
                             <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p>
                             <p>完成条件：{course.pass_condition}</p>
-                            {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()} >课程答疑</Button> : null}
+                            {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()}>课程答疑</Button> : null}
                         </Card.Grid> : null}
-                        {course.status < 2 ? <Card.Grid style={this.gridStyle}>
+                        {course.signatureType === 1 && course.signature === "" ? <Card.Grid style={this.gridStyle}><Checkbox onChange={this.onChangeCheckBox}></Checkbox>
+                        <text>&nbsp;&nbsp;已阅读</text>
+                            <Popover placement="top" title={<span>承诺书及签字说明</span>} content={<div>
+                                <p>1. 如实填写报名表内容</p>
+                                <p>2. 遵守学校的各项规定</p>
+                                <p>3. 电子签名与手写签名具有同等效力</p>
+                                <p>4. 电子签名将会用在报名表、承诺书、复印材料的确认等处</p>
+                            </div>} trigger="click">
+                                <a>培训承诺书</a>
+                            </Popover>&nbsp;&nbsp;&nbsp;&nbsp;<Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
+                        {course.status < 2 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>
                             <p> </p>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
@@ -123,9 +186,11 @@ class LessonCard extends Component {
 
                     </Card>
                 </Col>
-            </Row>
+            </Row >
         )
     }
 }
+
+
 
 export default withRouter(LessonCard)
