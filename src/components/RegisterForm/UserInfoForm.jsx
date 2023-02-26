@@ -258,7 +258,7 @@ class UserInfoForm extends Component {
                         <Radio value="1">非石化系统员工</Radio>
                     </Radio.Group>
                 </Form.Item> : null}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? null : <Form.Item
                     name="dept1"
                     label={kindID === "0" ? "部门(单位)" : "公司名称"}
                     rules={[
@@ -283,7 +283,7 @@ class UserInfoForm extends Component {
                             } />
                     }
                 </Form.Item>}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? null : <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? null : <Form.Item
                     name="dept2"
                     label="基层单位"
                 >
@@ -298,14 +298,14 @@ class UserInfoForm extends Component {
                     </Select>
                 </Form.Item>}
 
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="unit"
                     label="单位"
                     rules={[{ required: true, message: '请输入单位' }]}
                 >
                     <Input />
                 </Form.Item> : null}
-                {this.props.application.companyInfo[0].hostNo === 'znxf' ? <Form.Item
+                {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="dept"
                     label="部门"
                     rules={[{ required: true, message: '请输入部门' }]}
@@ -406,6 +406,19 @@ class UserInfoForm extends Component {
                     <Row>
                         <Col span={12}>
                             <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
+                </Form.Item>
+                <Form.Item
+                    name="upload4"
+                    label="上传在职证明"
+                >
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.employe_filename ? axios.defaults.baseURL + this.props.application.userInfo.employe_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_employment`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>

@@ -27,6 +27,10 @@ function* maxPageWatch() {
     yield takeLatest(types.POST_MAX_PAGE, updateMaxPageWorker)
 }
 
+function* signatureWatch() {
+    yield takeLatest(types.POST_SIGNATURE, updateSignatureWorker)
+}
+
 export function getCourseList(data) {
     return axios.get('/students/getStudentCourseList', {
         params: data
@@ -57,6 +61,10 @@ export function postMaxTime(data) {
 
 export function postMaxPage(data) {
     return axios.post('/students/update_courseware_currentPage', data)
+}
+
+export function postSignature(data) {
+    return axios.post('/files/uploadBase64img', data)
 }
 
 //workers
@@ -114,15 +122,25 @@ function* updateMaxPageWorker(action) {
     }
 }
 
+function* updateSignatureWorker(action) {
+    try {
+        const response = yield call(postSignature, action.payload)
+        yield put(actions.updateSignature(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
 export const workers = {
     loadCourseWorker,
     loadLessonWorker,
     loadVideoWorker,
     loadPDFWorker,
     updateMaxTimeWorker,
-    updateMaxPageWorker
+    updateMaxPageWorker,
+    updateSignatureWorker
 }
 
 export default function* saga() {
-    yield all([courseWatch(),lessonWatch(),pdfWatch(),videoWatch(),maxTimeWatch(),maxPageWatch()])
+    yield all([courseWatch(),lessonWatch(),pdfWatch(),videoWatch(),maxTimeWatch(),maxPageWatch(),signatureWatch()])
 }

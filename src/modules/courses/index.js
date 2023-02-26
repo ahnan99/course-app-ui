@@ -13,6 +13,8 @@ const POST_MAX_PAGE = 'post_max_page'
 const UPDATE_MAX_PAGE = 'update_max_page'
 const UPDATE_CURRENT_LESSON = 'update_current_lesson'
 const UPDATE_CURRENT_PDF = 'update_current_pdf'
+const POST_SIGNATURE = 'post_signature'
+const UPDATE_SIGNATURE = 'update_signature'
 
 export const types = {
     UPDATE_COURSELIST,
@@ -28,7 +30,9 @@ export const types = {
     POST_MAX_PAGE,
     UPDATE_MAX_PAGE,
     UPDATE_CURRENT_LESSON,
-    UPDATE_CURRENT_PDF
+    UPDATE_CURRENT_PDF,
+    POST_SIGNATURE,
+    UPDATE_SIGNATURE
 }
 
 //Action creators
@@ -102,6 +106,16 @@ const updateCurrentPDF = data =>({
     data
 })
 
+const postSignature = payload => ({
+    type: POST_SIGNATURE,
+    payload
+})
+
+const updateSignature = data => ({
+    type: UPDATE_SIGNATURE,
+    data
+})
+
 export const actions = {
     updateCourseList,
     getCourseList,
@@ -116,7 +130,9 @@ export const actions = {
     postMaxTime,
     updateMaxTime,
     updateCurrentLesson,
-    updateCurrentPDF
+    updateCurrentPDF,
+    postSignature,
+    updateSignature
 }
 
 const initialState = {
@@ -127,7 +143,8 @@ const initialState = {
     maxPageRes: {},
     video: null,
     PDF: null,
-    currentPDF: null
+    currentPDF: null,
+    postSignature: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -178,6 +195,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 currentPDF: action.data
+            }
+        }
+        case UPDATE_SIGNATURE: {
+            return {
+                ...state,
+                postSignature: action.data
             }
         }
         default:
