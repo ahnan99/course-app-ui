@@ -19,7 +19,7 @@ export default class VideoPlayer extends React.Component {
                 autoplay: false,
                 controls: true,
                 sources: [{
-                    src: axios.defaults.baseURL + video.filename,
+                    src: video.vod,
                     type: 'video/mp4'
                 }]
             };
