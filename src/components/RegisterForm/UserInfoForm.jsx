@@ -425,7 +425,6 @@ class UserInfoForm extends Component {
                             </span>
                         </Col></Row>
                 </Form.Item>
-                <Form.Item>
                 <Form.Item
                     name="upload6"
                     label="上传学信网图"
@@ -439,6 +438,20 @@ class UserInfoForm extends Component {
                             </span>
                         </Col></Row>
                 </Form.Item>
+                <Form.Item
+                    name="upload7"
+                    label="上传承诺书"
+                >
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.promise_filename ? axios.defaults.baseURL + this.props.application.userInfo.promise_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_promise`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
+                </Form.Item>
+                <Form.Item>
                     <Button type="primary" htmlType="submit">保存</Button>
                     <span> </span>
                     <span> </span>
