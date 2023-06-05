@@ -225,6 +225,24 @@ video.js: https://www.jb51.net/article/145346.htm
     }
     ```    
 
+5d. 上传学员签名   **POST:/files/uploadBase64img**
+  * input   **只能上传一张签名，重复上传将覆盖前文件.**
+    ```
+    //username（course.ID）及upID需要在body中传递。upID="student_letter_signature"
+    {
+      "username": 123, 
+      "upID": "student_letter_signature",
+      "imgData": "..."  //Base64图像
+    }
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;**
+    ```
+    {
+        "status":0 
+    }
+    ```    
+
 
 6. 学员信息获取   **GET:/students/get_student**
   * input
@@ -379,7 +397,7 @@ video.js: https://www.jb51.net/article/145346.htm
     ] 
     ``` 
 
-1. 获取学员课程列表   **GET:/students/getStudentCourseList**
+7. 获取学员课程列表   **GET:/students/getStudentCourseList**
   * input
     ```
     {"username":"120107196604032113"}
@@ -408,7 +426,9 @@ video.js: https://www.jb51.net/article/145346.htm
                 "courseName": "安全概论",
                 "pass_condition": "考试成绩达到80分",
                 "re": 0,    //如果re=1, 课程名称显示为courseName(reexamineName)格式：安全概论(初训)
-                "reexamineName": "初训"
+                "reexamineName": "初训",
+                "status_signature": 1,  //0 手工签字  1 电子签名
+                "signatureType": 0  //0 未签名  1 已签名
             },
             {
                 "ID": 2,
@@ -429,7 +449,9 @@ video.js: https://www.jb51.net/article/145346.htm
                 "courseName": "危险品",
                 "pass_condition": "完成率达到98%"
                 "re": 1,    
-                "reexamineName": "初训"
+                "reexamineName": "初训",
+                "status_signature": 0,  //0 手工签字  1 电子签名
+                "signatureType": 0  //0 未签名  1 已签名
              }
     ]
     ```
@@ -1484,4 +1506,44 @@ video.js: https://www.jb51.net/article/145346.htm
   * output  **//status：int, 0 成功  9 其他;  msg：string, 提示信息**
     ```
     {"status": 0, "msg": "成功。"} 
+    ```    
+
+106. 提交电子签名   **POST:/files/uploadBase64img** 
+  * input   
+    ```
+    {
+        upID:"student_letter_signature", //固定内容
+        username:123, //P7. getStudentCourseList.ID
+        currUser:"310102199909090021", //当前用户身份证
+        imgData:"PD94bWwgdmVyc2lvbj0iMS4wIi
+//          BlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2Zy
+//          BQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My
+//          5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPS
+//          JodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB3aWR0aD
+//          0iMzEiIGhlaWdodD0iMzQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMD
+//          AwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm
+//          9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0gMSAxIGMgMC4xMiAwLjExIDUuMDEgMy
+//          43NiA3IDYgYyAzLjI1IDMuNjUgNS43MSA4LjM1IDkgMTIgYyAyLjY0IDIuOTMgNi
+//          4zNyA1LjE2IDkgOCBjIDEuNTggMS43IDQgNiA0IDYiLz48L3N2Zz4=" //Base64
+    }
+    ``` 
+
+  * output  **//status：int, 0 成功  9 其他;**
+    ```
+    {"status": 0 //0 成功  <>0 失败} 
+    ```    
+
+107. 查看培训协议   **POST:/files/getTrainingAgreement** 
+  * input   
+    ```
+    {
+        "ID": 123 //P7. getStudentCourseList.ID
+    }
+    ``` 
+
+  * output 
+    ```
+    {
+      "path": "users/upload/students/diplomaPublish/123.pdf"  //pdf路径
+    } 
     ```    
