@@ -142,7 +142,7 @@ class LessonCard extends Component {
                             </div>} trigger="click">
                                 <a>培训承诺书</a>
                             </Popover>&nbsp;&nbsp;&nbsp;&nbsp;<Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
-                        {course.status < 2 && course.pre==0 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
+                        {course.status < 2 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>
                             <p> </p>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
