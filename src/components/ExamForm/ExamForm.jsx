@@ -13,7 +13,12 @@ const layout = {
 class ExamForm extends Component {
     formRef = React.createRef()
 
-    state = { time: 0, loading: false, buttonDisabled: false }
+    state = { 
+        time: 0, 
+        loading: false, 
+        buttonDisabled: false,
+        submitConfirmVisible: false
+    }
 
 
     onValuesChange = (changedValue, values) => {
@@ -60,6 +65,15 @@ class ExamForm extends Component {
             this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID })
             this.setState({ loading: true })
         }
+        this.setState({ submitConfirmVisible: false });
+    }
+    
+    onClickCancel = () => {
+        this.setState({ submitConfirmVisible: false });
+    }
+
+    onSubmit = () => {
+        this.setState({ submitConfirmVisible: true })
     }
 
     componentDidMount() {
@@ -147,6 +161,11 @@ class ExamForm extends Component {
                 <div className='alert-container'>
                     <Form.Item>
                         <Row gutter={4} style={{ textAlign: 'center' }}>
+                            <Modal title={[<Button type='primary' onClick={this.onClickCancel}>取消</Button>, 
+                                <Button onClick={this.onFinish} htmlType="submit">{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button>
+                                , <span style={{color:'red', paddingLeft:'10px'}}>{this.props.exam.exam[0].status !== 2 ? '确定要交卷吗？' : '确定要重新开始吗？'}</span> 
+                                ]} visible={this.state.submitConfirmVisible} footer={[]}>
+                            </Modal>
                             <Col span={10}><Alert message={this.props.exam.exam[0].status === 2 ? '得分: ' + this.props.exam.exam[0].score : '' + moment.utc(this.state.time * 1000).format("H:mm:ss")} type='info' /></Col>
                             <Col span={7}><Button style={{ height: '100%' }} type="primary" htmlType="submit" loading={this.state.loading}>{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button></Col>
                             {this.props.exam.leave ? <Col span={7}><Button style={{ height: '100%' }} onClick={() => this.leave()}>离开</Button></Col> : null}

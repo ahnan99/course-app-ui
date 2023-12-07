@@ -451,6 +451,19 @@ class UserInfoForm extends Component {
                             </span>
                         </Col></Row>
                 </Form.Item>
+                <Form.Item
+                    name="upload8"
+                    label="上传社保证明"
+                >
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.social_filename ? axios.defaults.baseURL + this.props.application.userInfo.social_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_social`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
+                </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">保存</Button>
                     <span> </span>
