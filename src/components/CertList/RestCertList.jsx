@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker } from 'antd';
+import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker, LocaleProvider } from 'antd';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 import { PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
@@ -127,8 +130,8 @@ class RestCertList extends Component {
                     >
                       <Input />
                     </Form.Item> : null}
-                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="证书有效日期">
-                      <DatePicker />
+                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="应复训日期">
+                      <LocaleProvider locale={zh_CN}><DatePicker /></LocaleProvider>
                     </Form.Item> : null}
 
                   </Form>
