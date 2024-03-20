@@ -3,8 +3,9 @@ import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker,
 import { PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
-import locale from 'antd/es/date-picker/locale/zh_CN';
-import 'dayjs/locale/zh-cn';
+import { LocalFormat } from './localHelper';
+// import locale from 'antd/es/date-picker/locale/zh_CN';
+// import 'dayjs/locale/zh-cn';
 
 class RestCertList extends Component {
   constructor(props) {
@@ -130,7 +131,7 @@ class RestCertList extends Component {
                       <Input />
                     </Form.Item> : null}
                     {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="应复训日期">
-                    <DatePicker locale={locale} />
+                    <DatePicker locale={LocalFormat.getDefinedChineseLocal()} />
                     </Form.Item> : null}
 
                   </Form>
