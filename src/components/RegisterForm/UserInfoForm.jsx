@@ -300,7 +300,7 @@ class UserInfoForm extends Component {
 
                 {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="unit"
-                    label="单位"
+                    label="单位名称（全称）"
                     rules={[{ required: true, message: '请输入单位' }]}
                 >
                     <Input />
@@ -334,7 +334,7 @@ class UserInfoForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="address"
-                    label="单位地址"
+                    label="单位地址（上海）"
                     rules={[{ required: true, message: '请输入单位地址' }]}
                 >
                     <Input />
