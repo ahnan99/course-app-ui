@@ -38,7 +38,7 @@ class Avatar extends Component {
       this.setState({ loading: true });
       return;
     }
-    if (info.file.status === 'done' && info.file.response && info.file.response.status === 0) {
+    if (info.file.status === 'done' && info.file.response) {
       // Get this url from response in real world.
       if(info.file.response.status === 0) {
         message.success('上传成功已保存')
