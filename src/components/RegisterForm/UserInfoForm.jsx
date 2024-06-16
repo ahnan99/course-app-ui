@@ -308,7 +308,7 @@ class UserInfoForm extends Component {
                 {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="dept"
                     label="部门"
-                    rules={[{ required: true, message: '请输入部门' }]}
+                    // rules={[{ required: true, message: '请输入部门' }]}
                 >
                     <Input />
                 </Form.Item> : null}

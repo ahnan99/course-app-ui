@@ -8,13 +8,23 @@ import { actions as CourseActions } from '../../modules/courses'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-class LessonCard extends Component {
+// document.addEventListener('visibilitychange', function() { 
+//     var isHidden = document.hidden; 
+//     if (!isHidden) {
+//         window.location.reload() // 强制页面刷新
+//     }
+// });
 
+class LessonCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
             signatureAgreementChecked: false,
-            signatureModalVisible: false
+            signatureModalVisible: false,
+            pay: 0,
+            invoice: 0,
+            showPayBtn: true,
+            showInvoiceBtn: true
         }
     }
 
@@ -30,8 +40,7 @@ class LessonCard extends Component {
                 duration: 10,
             })
             this.props.history.push("/userinfo")
-        }
-        else {
+        }else {
             this.props.actions.updateCurrentLesson(lesson)
             this.props.history.push("/classpage")
         }
@@ -74,6 +83,22 @@ class LessonCard extends Component {
             this.sigCanvas.clear()
             this.props.actions.updateSignature(null)
         }
+        if (this.props.courseState.postPayment && !prevProps.courseState.postPayment) {
+            if (this.props.courseState.postPayment.code === "JH200") {
+                if(this.state.pay === 1){
+                    this.setState({ showPayBtn: false })
+                    window.open(this.props.courseState.postPayment.result.payUtl, "_blank");
+                }
+                if(this.state.invoice === 1){
+                    this.setState({ showInvoiceBtn: false })
+                    window.open(this.props.courseState.postPayment.result.invoiceUrl, "_blank");
+                }
+            } else {
+                message.error('链接失效，请稍后再试。' + this.props.courseState.postPayment.code);
+                this.setState({ pay: 0, invoice: 0 });
+            }
+            this.props.actions.updatePayment(null)
+        }
     }
 
     gridStyle = {
@@ -109,9 +134,24 @@ class LessonCard extends Component {
             message.warn('请阅读并勾选同意承诺书')
             return;
         }
-        this.setState({ signatureModalVisible: true })
+        this.setState({ signatureModalVisible: true });
     }
 
+    onClickPay = () => {
+        this.props.actions.postPayment({
+            enterID: this.props.course.ID, //P7. getStudentCourseList.ID
+            kindID: 0   //支付
+        })
+        this.setState({ pay: 1 });
+    }
+
+    onClickInvoice = () => {
+        this.props.actions.postPayment({
+            enterID: this.props.course.ID, //P7. getStudentCourseList.ID
+            kindID: 2   //开票
+        })
+        this.setState({ invoice: 1 });
+    }
 
     render() {
         const { course } = this.props
@@ -120,7 +160,7 @@ class LessonCard extends Component {
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
                 <Modal title="请在下面空白处签名" visible={this.state.signatureModalVisible} footer={[<Button onClick={() => { this.sigCanvas.clear(); this.setState({ signatureModalVisible: false }); }}>取消</Button>, <Button type='primary' onClick={this.onSubmitSignature}>提交签名</Button>]}>
-                    <SignatureCanvas penColor='black' minWidth='0.7'
+                    <SignatureCanvas penColor='black' minWidth={0.7}
                         canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }} ref={(ref) => { this.sigCanvas = ref }} />
                 </Modal>
                 <Col span={24}>
@@ -142,6 +182,10 @@ class LessonCard extends Component {
                             </div>} trigger="click">
                                 <a>培训承诺书</a>
                             </Popover>&nbsp;&nbsp;&nbsp;&nbsp;<Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
+                        {course.regDate >= "2024-06-13" && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
+                            <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
+                        {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
+                            <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>
                             <p> </p>

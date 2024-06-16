@@ -14,7 +14,10 @@ const UPDATE_MAX_PAGE = 'update_max_page'
 const UPDATE_CURRENT_LESSON = 'update_current_lesson'
 const UPDATE_CURRENT_PDF = 'update_current_pdf'
 const POST_SIGNATURE = 'post_signature'
+const POST_PAYMENT = 'post_payment'
+const POST_INVOICE = 'post_invoice'
 const UPDATE_SIGNATURE = 'update_signature'
+const UPDATE_PAYMENT = 'update_payment'
 
 export const types = {
     UPDATE_COURSELIST,
@@ -32,7 +35,10 @@ export const types = {
     UPDATE_CURRENT_LESSON,
     UPDATE_CURRENT_PDF,
     POST_SIGNATURE,
-    UPDATE_SIGNATURE
+    UPDATE_SIGNATURE,
+    POST_PAYMENT,
+    POST_INVOICE,
+    UPDATE_PAYMENT
 }
 
 //Action creators
@@ -116,6 +122,16 @@ const updateSignature = data => ({
     data
 })
 
+const postPayment = payload => ({
+    type: POST_PAYMENT,
+    payload
+})
+
+const updatePayment = data => ({
+    type: UPDATE_PAYMENT,
+    data
+})
+
 export const actions = {
     updateCourseList,
     getCourseList,
@@ -132,7 +148,9 @@ export const actions = {
     updateCurrentLesson,
     updateCurrentPDF,
     postSignature,
-    updateSignature
+    updateSignature,
+    postPayment,
+    updatePayment
 }
 
 const initialState = {
@@ -144,7 +162,8 @@ const initialState = {
     video: null,
     PDF: null,
     currentPDF: null,
-    postSignature: null
+    postSignature: null,
+    postPayment: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
@@ -201,6 +220,12 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 postSignature: action.data
+            }
+        }
+        case UPDATE_PAYMENT: {
+            return {
+                ...state,
+                postPayment: action.data
             }
         }
         default:

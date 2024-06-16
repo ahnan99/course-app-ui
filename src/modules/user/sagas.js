@@ -19,6 +19,10 @@ function* getEducationWatch() {
     yield takeLatest(types.GET_EDUCATION, getEducationWorker)
 }
 
+function* postFaceDetectOSSWatch() {
+    yield takeLatest(types.POST_FACE_DETECT_OSS, postFaceDetectOSSWorker)
+}
+
 export function getDeptEndpoint(data) {
     console.log(data)
     return axios.get('/public/getDeptListByPID', {
@@ -35,6 +39,10 @@ export function getEducationEndpoint(data) {
     return axios.get('/public/getDicListByKind', {
         params: data
     })
+}
+
+export function postFaceDetectOSSEndpoint(data) {
+    return axios.post('/alis/uploadFaceDetectOSS', data)
 }
 
 //workers
@@ -74,13 +82,23 @@ function* getEducationWorker(action) {
     }
 }
 
+function* postFaceDetectOSSWorker(action) {
+    try {
+        const response = yield call(postFaceDetectOSSEndpoint, action.payload)
+        yield put(actions.updateFaceDetectOSS(response.data))
+    } catch (error) {
+        yield console.log(error)
+    }
+}
+
 export const workers = {
     getDept1Worker,
     getDept2Worker,
     postResetPasswordWorker,
-    getEducationWorker
+    getEducationWorker,
+    postFaceDetectOSSWorker
 }
 
 export default function* saga() {
-    yield all([getDept1Watch(), getDept2Watch(), postResetPasswordWatch(),getEducationWatch()])
+    yield all([getDept1Watch(), getDept2Watch(), postResetPasswordWatch(), getEducationWatch(), postFaceDetectOSSWatch()])
 }

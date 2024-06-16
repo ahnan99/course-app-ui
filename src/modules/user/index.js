@@ -10,6 +10,8 @@ const POST_RESET_PASSWORD = 'post_reset_password'
 const UPDATE_RESET_PASSWORD = 'update_reset_password'
 const GET_EDUCATION = 'get_education'
 const UPDATE_EDUCATION = 'update_education'
+const POST_FACE_DETECT_OSS = 'post_face_detect_oss'
+const UPDATE_FACE_DETECT_OSS = 'update_face_detect_oss'
 
 export const types = {
     SHOW_PASSWORD_RESET_MODAL,
@@ -22,7 +24,9 @@ export const types = {
     POST_RESET_PASSWORD,
     UPDATE_RESET_PASSWORD,
     GET_EDUCATION,
-    UPDATE_EDUCATION
+    UPDATE_EDUCATION,
+    POST_FACE_DETECT_OSS,
+    UPDATE_FACE_DETECT_OSS
 }
 
 //Action creators
@@ -83,6 +87,16 @@ const updateEducation = data => ({
     data
 })
 
+const updateFaceDetectOSS = data => ({
+    type: UPDATE_FACE_DETECT_OSS,
+    data
+})
+
+const postFaceDetectOSS = payload => ({
+    type: POST_FACE_DETECT_OSS,
+    payload
+})
+
 export const actions = {
     setPasswordResetModal,
     getDept1,
@@ -94,7 +108,9 @@ export const actions = {
     updateResetPassword,
     postResetPassword,
     getEducation,
-    updateEducation
+    updateEducation,
+    postFaceDetectOSS,
+    updateFaceDetectOSS
 }
 
 const initialState = {
@@ -104,7 +120,8 @@ const initialState = {
     dept2List: [],
     resetMessage: null,
     resetStatus: null,
-    educationList: []
+    educationList: [],
+    faceDetectOSS: null
 }
 
 //Reducers
@@ -140,11 +157,14 @@ const reducer = (state = initialState, action = {}) => {
                 ...state,
                 educationList: action.data
             }
+        case UPDATE_FACE_DETECT_OSS:
+            return {
+                ...state,
+                faceDetectOSS: action.data
+            }
         default:
             return state;
     }
-
-
 }
 
 export default reducer
