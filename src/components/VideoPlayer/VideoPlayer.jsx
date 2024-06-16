@@ -106,26 +106,27 @@ class VideoPlayer extends Component {
         // console.log("file：", info.target.files[0]);
         this.getBase64(info.target.files[0], (result) => {
             // console.log("dataBase64", result);
-            message.warning("after read");
-            this.props.userActions.postFaceDetectOSS({
-                refID: this.props.video.ID,
-                kindID: 0,
-                base64Data: result,
-                username: this.props.application.username
-            })
+            if(!rusult){
+                message.warning("读取照片失败");
+            }else{
+                this.props.userActions.postFaceDetectOSS({
+                    refID: this.props.video.ID,
+                    kindID: 0,
+                    base64Data: result,
+                    username: this.props.application.username
+                })            }
         });
     };
 
     getBase64(file, cb) {
-        message.warning("before read");
         let reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function () {
+        reader.onloadend = function () {
+            message.warning(reader.result);
             cb(reader.result)
         };
         reader.onerror = function (error) {
-            message.warning(error);
-            console.log('Error: ', );
+            console.log(error);
         };
     }
         

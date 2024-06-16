@@ -87,7 +87,8 @@ function* postFaceDetectOSSWorker(action) {
         const response = yield call(postFaceDetectOSSEndpoint, action.payload)
         yield put(actions.updateFaceDetectOSS(response.data))
     } catch (error) {
-        yield console.log(error)
+        // yield console.log(error)
+        yield put(actions.updateFaceDetectOSS(error))
     }
 }
 
