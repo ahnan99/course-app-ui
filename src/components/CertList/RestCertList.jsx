@@ -56,7 +56,7 @@ class RestCertList extends Component {
     this.setState({ visible: false, selectedItem: null })
   }
   handleOK = cert => {
-    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0 })
+    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID:this.props.application.fromID })
     this.setState({ visible: false, selectedItem: null })
   }
 
