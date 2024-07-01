@@ -124,7 +124,7 @@ class VideoPlayer extends Component {
               // 将图片插入画布并开始绘制
               canvas.getContext('2d').drawImage(image, 0, 0);
               // result
-              let result = canvas.toDataURL('image/png', 0.1);
+              let result = canvas.toDataURL('image/png', 0.05);
               window.URL.revokeObjectURL(image.src);
               resolve(result);
             };

@@ -13,7 +13,7 @@ class RestCourseList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 1, reexamine: 0 })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 1, reexamine: 0, fromID:this.props.application.fromID })
   }
 
   componentWillReceiveProps = (nextProps) => {
