@@ -87,11 +87,11 @@ class LessonCard extends Component {
             if (this.props.courseState.postPayment.code === "JH200") {
                 if(this.state.pay === 1){
                     this.setState({ showPayBtn: false })
-                    window.open(this.props.courseState.postPayment.result.payUtl, "_blank");
+                    window.open(this.props.courseState.postPayment.result.payUtl, "_self");
                 }
                 if(this.state.invoice === 1){
                     this.setState({ showInvoiceBtn: false })
-                    window.open(this.props.courseState.postPayment.result.invoiceUrl, "_blank");
+                    window.open(this.props.courseState.postPayment.result.invoiceUrl, "_self");
                 }
             } else {
                 message.error('链接失效，请稍后再试。' + this.props.courseState.postPayment.code);
