@@ -87,8 +87,13 @@ class LessonCard extends Component {
         if (this.props.courseState.postPayment && !prevProps.courseState.postPayment) {
             if (this.props.courseState.postPayment.code === "JH200") {
                 if(this.state.pay === 1){
-                    this.setState({ showPayBtn: false })
-                    window.open(this.props.courseState.postPayment.result.payUtl, "_blank");
+                    this.setState({ showPayBtn: false });
+                    let redirectUrl = this.props.courseState.postPayment.result.payUtl;
+                    // window.open(this.props.courseState.postPayment.result.payUtl, "_blank");
+                    setTimeout(
+                        function(){
+                            window.location.href = redirectUrl;
+                    }, 0);   
                 }
                 if(this.state.invoice === 1){
                     this.setState({ showInvoiceBtn: false })
