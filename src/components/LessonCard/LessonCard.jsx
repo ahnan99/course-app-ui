@@ -24,8 +24,7 @@ class LessonCard extends Component {
             pay: 0,
             invoice: 0,
             showPayBtn: true,
-            showInvoiceBtn: true,
-            showPayURL: false
+            showInvoiceBtn: true
         }
     }
 
@@ -89,7 +88,6 @@ class LessonCard extends Component {
                 if(this.state.pay === 1){
                     this.setState({ showPayBtn: false });
                     let redirectUrl = this.props.courseState.postPayment.result.payUtl;
-                    // window.open(this.props.courseState.postPayment.result.payUtl, "_blank");
                     setTimeout(
                         function(){
                             window.location.href = redirectUrl;
@@ -97,7 +95,12 @@ class LessonCard extends Component {
                 }
                 if(this.state.invoice === 1){
                     this.setState({ showInvoiceBtn: false })
-                    window.open(this.props.courseState.postPayment.result.invoiceUrl, "_blank");
+                    let redirectUrl = this.props.courseState.postPayment.result.invoiceUrl;
+                    // window.open(this.props.courseState.postPayment.result.invoiceUrl, "_blank");
+                    setTimeout(
+                        function(){
+                            window.location.href = redirectUrl;
+                    }, 0);   
                 }
             } else {
                 message.error('链接失效，请稍后再试。' + this.props.courseState.postPayment.code);
@@ -195,8 +198,6 @@ class LessonCard extends Component {
                             </Popover>&nbsp;&nbsp;&nbsp;&nbsp;<Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
-                        {this.state.showPayURL ? <Card.Grid style={this.gridStyle}>
-                            <Button type='primary' onClick={this.onClickPayNow} >微信支付</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
