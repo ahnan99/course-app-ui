@@ -20,7 +20,8 @@ class VideoPlayer extends Component {
             shoted: 0,
             doCancel: false,
             warning: false,
-            detectMsg: null
+            detectMsg: null,
+            detectStatus: 0
         }
     }
 
@@ -84,11 +85,11 @@ class VideoPlayer extends Component {
             this.player.pause();
         }
         if(this.state.shotVisible && this.props.user.faceDetectOSS){
-            this.setState({ detectMsg: this.props.user.faceDetectOSS.msg });
+            this.setState({ detectMsg: this.props.user.faceDetectOSS.msg, detectStatus: this.props.user.faceDetectOSS.status });
             // message.warning(this.props.user.faceDetectOSS.msg);
             if(this.props.user.faceDetectOSS.status===2 && !this.state.warning){
                 // 比对未通过
-                this.setState({ warning: true });
+                this.setState({ shotVisible: false, warning: true });
             }
             if(this.props.user.faceDetectOSS.status<2){
                 // 比对通过或没有比对
@@ -117,7 +118,7 @@ class VideoPlayer extends Component {
     };
 
     msgClick = () => {
-        this.setState({ detectMsg: null });
+        this.setState({ shotVisible: (this.state.detectStatus==2 ? true : false), detectMsg: null });
     };
  
     getBase64(file) {
