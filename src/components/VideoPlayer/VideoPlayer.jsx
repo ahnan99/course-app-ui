@@ -19,7 +19,8 @@ class VideoPlayer extends Component {
             shotNow: false,
             shoted: 0,
             doCancel: false,
-            warning: false
+            warning: false,
+            detectMsg: null
         }
     }
 
@@ -83,7 +84,7 @@ class VideoPlayer extends Component {
             this.player.pause();
         }
         if(this.state.shotVisible && this.props.user.faceDetectOSS){
-            message.warning(this.props.user.faceDetectOSS.msg);
+            this.setState({ detectMsg: this.props.user.faceDetectOSS.msg });
             if(this.props.user.faceDetectOSS.status===2 && !this.state.warning){
                 // 比对未通过
                 this.setState({ warning: true });
@@ -112,6 +113,10 @@ class VideoPlayer extends Component {
             base64Data: base64Data,
             username: this.props.application.username
         });
+    };
+
+    msgClick = () => {
+        this.setState({ detectMsg: null });
     };
  
     getBase64(file) {
@@ -172,6 +177,14 @@ class VideoPlayer extends Component {
                             <Button type='primary' onClick={this.handleClick}>拍照</Button>]} 
                     >
                     <span style={{'fontSize':'1.3em', 'color':'red'}}>将检测您的正面头像，请平视摄像头</span>
+                </Modal>
+                <Modal
+                    visible={this.state.detectMsg}
+                    title="检测结果"
+                    centered
+                    footer={[<Button type='primary' onClick={this.msgClick}>确定</Button>]} 
+                    >
+                    <span style={{'fontSize':'1.3em', 'color':'blue'}}>{this.state.detectMsg}</span>
                 </Modal>
                 <input
                     id="file"
