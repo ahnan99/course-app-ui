@@ -84,8 +84,8 @@ class VideoPlayer extends Component {
             this.player.pause();
         }
         if(this.state.shotVisible && this.props.user.faceDetectOSS){
-            // this.setState({ detectMsg: this.props.user.faceDetectOSS.msg });
-            message.warning(this.props.user.faceDetectOSS.msg);
+            this.setState({ detectMsg: this.props.user.faceDetectOSS.msg });
+            // message.warning(this.props.user.faceDetectOSS.msg);
             if(this.props.user.faceDetectOSS.status===2 && !this.state.warning){
                 // 比对未通过
                 this.setState({ warning: true });
