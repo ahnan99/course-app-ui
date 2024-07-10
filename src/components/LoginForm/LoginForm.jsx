@@ -52,7 +52,8 @@ class LoginForm extends Component {
         if (values.auditor) {
             this.props.auditorRequestLogin({ username: values.username, password: values.password })
         } else {
-            this.props.requestLogin({ username: values.username, password: values.password })
+            const { fromID } = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+            this.props.requestLogin({ username: values.username, password: values.password, fromID })
         }
     }
 

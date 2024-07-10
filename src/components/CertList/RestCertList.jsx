@@ -22,12 +22,12 @@ class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0 })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID:this.props.application.fromID })
     this.setState({ visible: false })
   }
 
   onAddretrain = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1 })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID:this.props.application.fromID })
     this.setState({ visible: false })
 
   }
