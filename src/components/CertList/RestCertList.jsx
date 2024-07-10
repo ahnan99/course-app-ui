@@ -43,7 +43,7 @@ class RestCertList extends Component {
       message.error({
         content: (<div>
           <p>{nextProps.cert.addCertRes.msg}</p>
-          <a onClick={() => { this.props.history.push('/userinfo') }}>前往个人信息</a>
+          {/* <a onClick={() => { this.props.history.push('/userinfo') }}>前往个人信息</a> */}
         </div>)
       })
       this.props.actions.resetAddCert()
