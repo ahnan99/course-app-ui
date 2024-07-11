@@ -76,6 +76,7 @@ class RegisterForm extends Component {
             message.success("注册成功！")
             this.props.resetRegisterStatus()
             this.props.history.push('/login')
+            const values = this.formRef.current.getFieldsValue();
             const { fromID } = this.props.application;
             this.props.requestLogin({
               username: values.username,
