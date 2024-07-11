@@ -178,10 +178,10 @@ class VideoPlayer extends Component {
                     footer={[<Button onClick={this.onClickCancel}>取消</Button>, 
                             <Button type='primary' onClick={this.handleClick}>拍照</Button>]} 
                     >
-                    <span style={{'fontSize':'1.3em', 'color':'red'}}>将检测您的正面头像，请平视摄像头</span>
+                    <span style={{'fontSize':'1.3em', 'color':'red'}}>将检测您的正面头像，请平视摄像头{this.state.detectMsg}</span>
                 </Modal>
                 <Modal
-                    visible={this.state.detectMsg}
+                    visible={false}
                     title="检测结果"
                     centered
                     footer={[<Button type='primary' onClick={this.msgClick}>确定</Button>]} 
