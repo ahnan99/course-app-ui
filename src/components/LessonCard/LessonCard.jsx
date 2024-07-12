@@ -48,6 +48,7 @@ class LessonCard extends Component {
     }
 
     onClickExam = paperID => {
+        console.log("host is:", this.props.application.userInfo.host, this.props.application.username)
         this.props.examActions.updateLeave(true)
         this.props.examActions.getExam({ paperID })
     }
