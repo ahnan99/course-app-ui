@@ -48,7 +48,6 @@ class LessonCard extends Component {
     }
 
     onClickExam = paperID => {
-        console.log("host is:", this.props.application.userInfo.host, this.props.application.username)
         this.props.examActions.updateLeave(true)
         this.props.examActions.getExam({ paperID })
     }
@@ -197,7 +196,7 @@ class LessonCard extends Component {
                             </div>} trigger="click">
                                 <a>培训承诺书</a>
                             </Popover>&nbsp;&nbsp;&nbsp;&nbsp;<Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
-                        {course.regDate >= "2024-06-13" && course.agencyID != "5" && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
+                        {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host=="znxf" || this.props.application.userInfo.host=="spc" || this.props.application.userInfo.host=="shm") && course.agencyID != "5" && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
