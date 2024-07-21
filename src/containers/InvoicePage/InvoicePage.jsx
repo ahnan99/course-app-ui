@@ -24,7 +24,7 @@ class InvoicePage extends Component {
   };
 
   onLoadError = () => {
-    message.error("文档载入失败");
+    message.error("文档载入失败, 请尝试直接下载。");
     this.setState({ loading: false });
   };
 
@@ -66,7 +66,7 @@ class InvoicePage extends Component {
               <Col flex="auto" style={{ textAlign: "left" }}>
                 <Document
                   file={
-                    (invoice.filename.indexOf("https://")==-1 ? axios.defaults.baseURL : "") + invoice.filename
+                    (invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename
                   } options={{
                     cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
                     cMapPacked: true,
@@ -81,7 +81,7 @@ class InvoicePage extends Component {
               </Col>
               <Col flex="none">
                 <div>
-                  <a href={(invoice.filename.indexOf("https://")==-1 ? axios.defaults.baseURL : "") + invoice.filename + '?response-content-type=application/octet-stream'} download target="_blank" style={{fontSize:'1.4em'}}>下载</a>
+                  <a href={(invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename + '?response-content-type=application/octet-stream'} download target="_blank" style={{fontSize:'1.4em'}}>下载</a>
                 </div>
               </Col>
             </Row>
