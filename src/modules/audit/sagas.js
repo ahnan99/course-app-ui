@@ -1,5 +1,6 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects'
 import { actions, types } from './index'
+import { handleAuthenticationErrors } from '../util/errorHandling'
 import axios from 'axios'
 
 //watchers
@@ -29,7 +30,7 @@ function* getCertListWorker(action) {
         const response = yield call(getCertListEndpoint, action.payload)
         yield put(actions.updateCertList(response.data))
     } catch (error) {
-        console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -38,7 +39,7 @@ function* findStudentWorker(action) {
         const response = yield call(getFindStudentEndpoint, action.payload)
         yield put(actions.updateFindStudent(response.data))
     } catch (error) {
-        console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 

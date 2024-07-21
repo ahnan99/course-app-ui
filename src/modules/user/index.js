@@ -12,6 +12,8 @@ const GET_EDUCATION = 'get_education'
 const UPDATE_EDUCATION = 'update_education'
 const POST_FACE_DETECT_OSS = 'post_face_detect_oss'
 const UPDATE_FACE_DETECT_OSS = 'update_face_detect_oss'
+const GET_INVOICE = 'get_invoice'
+const UPDATE_INVOICE = 'update_invoice'
 
 export const types = {
     SHOW_PASSWORD_RESET_MODAL,
@@ -25,6 +27,8 @@ export const types = {
     UPDATE_RESET_PASSWORD,
     GET_EDUCATION,
     UPDATE_EDUCATION,
+    GET_INVOICE,
+    UPDATE_INVOICE,
     POST_FACE_DETECT_OSS,
     UPDATE_FACE_DETECT_OSS
 }
@@ -87,6 +91,16 @@ const updateEducation = data => ({
     data
 })
 
+const getInvoice = payload => ({
+    type: GET_INVOICE,
+    payload
+})
+
+const updateInvoice = data => ({
+    type: UPDATE_INVOICE,
+    data
+})
+
 const updateFaceDetectOSS = data => ({
     type: UPDATE_FACE_DETECT_OSS,
     data
@@ -109,6 +123,8 @@ export const actions = {
     postResetPassword,
     getEducation,
     updateEducation,
+    getInvoice,
+    updateInvoice,
     postFaceDetectOSS,
     updateFaceDetectOSS
 }
@@ -121,6 +137,7 @@ const initialState = {
     resetMessage: null,
     resetStatus: null,
     educationList: [],
+    invoiceList: [],
     faceDetectOSS: null
 }
 
@@ -156,6 +173,11 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 educationList: action.data
+            }
+        case UPDATE_INVOICE:
+            return {
+                ...state,
+                invoiceList: action.data
             }
         case UPDATE_FACE_DETECT_OSS:
             return {

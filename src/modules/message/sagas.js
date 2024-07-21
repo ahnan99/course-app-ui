@@ -1,5 +1,6 @@
 import { takeLatest, all, call, put } from 'redux-saga/effects'
 import { actions, types } from '../message'
+import { handleAuthenticationErrors } from '../util/errorHandling'
 import axios from 'axios'
 
 //watchers
@@ -79,7 +80,7 @@ function* getMessageTypeWorker(action) {
         const response = yield call(getMessageTypeEndpoint, action.payload)
         yield put(actions.updateMessageType(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -88,7 +89,7 @@ function* postMessageWorker(action) {
         const response = yield call(postMessageEndpoint, action.payload)
         yield put(actions.updatePostMessage(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -97,7 +98,7 @@ function* getMessageWorker(action) {
         const response = yield call(getMessageEndpoint, action.payload)
         yield put(actions.updateMessage(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -106,7 +107,7 @@ function* getSingleMessageWorker(action) {
         const response = yield call(getSingleMessageEndpoint, action.payload)
         yield put(actions.updateSingleMessage(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -115,7 +116,7 @@ function* getClassCommentWorker(action) {
         const response = yield call(getClassCommentEndpoint, action.payload)
         yield put(actions.updateClassComment(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -124,7 +125,7 @@ function* postClassCommentWorker(action) {
         const response = yield call(postClassCommentEndpoint, action.payload)
         yield put(actions.updatePostClassComment(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -134,7 +135,7 @@ function* deleteClassCommentWorker(action) {
         const response = yield call(deleteClassCommentEndpoint, action.payload)
         yield put(actions.updateDeleteClassComment(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 

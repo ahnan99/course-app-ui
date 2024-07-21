@@ -1,5 +1,6 @@
 import { takeLatest, all, call, put } from 'redux-saga/effects'
 import { actions, types } from '../exam'
+import { handleAuthenticationErrors } from '../util/errorHandling'
 import axios from 'axios'
 
 //watchers
@@ -64,7 +65,7 @@ function* getExamWorker(action) {
         const response = yield call(getExamEndpoint, action.payload)
         yield put(actions.updateExam(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -73,7 +74,7 @@ function* getRealExamListWorker(action) {
         const response = yield call(getRealExamListEndpoint, action.payload)
         yield put(actions.updateRealExamList(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -82,7 +83,7 @@ function* getExamQuestionWorker(action) {
         const response = yield call(getExamQuestionEndpoint, action.payload)
         yield put(actions.updateExamQuestion(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -91,7 +92,7 @@ function* postExamWorker(action) {
         const response = yield call(postExamEndpoint, action.payload)
         yield put(actions.updatePostExam(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -100,7 +101,7 @@ function* postTimeWorker(action) {
         const response = yield call(postTimeEndpoint, action.payload)
         yield put(actions.updatePostTime(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
@@ -109,7 +110,7 @@ function* postSingleQuestionWorker(action) {
         const response = yield call(postSingleQuestionEndpoint, action.payload)
         yield put(actions.updatePostSingleQuestion(response.data))
     } catch (error) {
-        yield console.log(error)
+        yield handleAuthenticationErrors(error);
     }
 }
 
