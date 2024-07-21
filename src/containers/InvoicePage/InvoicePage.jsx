@@ -24,7 +24,7 @@ class InvoicePage extends Component {
   };
 
   onLoadError = () => {
-    message.error("文档载入失败");
+    message.error("文档载入失败, 请尝试直接下载。");
     this.setState({ loading: false });
   };
 
