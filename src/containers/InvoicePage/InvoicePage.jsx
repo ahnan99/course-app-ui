@@ -64,9 +64,8 @@ class InvoicePage extends Component {
             this.props.user.invoiceList.map((invoice, index) => (
               <Row>
               <Col flex="auto" style={{ textAlign: "left" }}>
-                <div>{(invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename}</div>
-                <div>{invoice.filename}</div>
-                <Document
+              <iframe src={(val.indexOf("https://")==-1?"users/":"") + val + '?times=' + (new Date().getTime()) + '#view=fit'} style={{border:'0px'}}></iframe>
+                {/*<Document
                   file={
                     (invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename
                   } options={{
@@ -83,7 +82,7 @@ class InvoicePage extends Component {
               </Col>
               <Col flex="none">
                 <div>
-                  <a href={(invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename + '?response-content-type=application/octet-stream'} download target="_blank" style={{fontSize:'1.4em'}}>下载</a>
+                  <a href={(invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename + '?response-content-type=application/octet-stream'} download target="_blank" style={{fontSize:'1.4em'}}>下载发票</a>
                 </div>
               </Col>
             </Row>
