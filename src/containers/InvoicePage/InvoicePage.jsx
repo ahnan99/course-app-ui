@@ -64,7 +64,8 @@ class InvoicePage extends Component {
             this.props.user.invoiceList.map((invoice, index) => (
               <Row>
               <Col flex="auto" style={{ textAlign: "left" }}>
-                <Document
+                <iframe src={(invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename + '?times=' + (new Date().getTime()) + '#view=fit'} style={{border:'0px'}}></iframe>
+                {/* <Document
                   file={
                     (invoice.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + invoice.filename
                   } options={{
@@ -77,7 +78,7 @@ class InvoicePage extends Component {
                   onLoadSuccess={this.onDocumentLoadSuccess}
                 >
                 <Page pageNumber={1} width={this.state.width} onRenderSuccess={this.onRenderSuccess} />
-                </Document>
+                </Document> */}
               </Col>
               <Col flex="none">
                 <div>
