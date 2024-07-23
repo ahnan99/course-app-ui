@@ -33,7 +33,7 @@ class LessonCard extends Component {
             busy: false,
             loading: true,
             numPages: null,
-            pageNumber: 1,
+            pageNumber: 2,
             width: 0,
             displaySignature: false,
             readSec: 5,
@@ -260,7 +260,7 @@ class LessonCard extends Component {
                     {this.state.displaySignature ? <div style={{border:'2px solid blue'}}><SignatureCanvas penColor='black' minWidth='0.7'
                         canvasProps={{ width: 500, height: 200, className: 'sigCanvas', contentBg: '#ddd' }} ref={(ref) => { this.sigCanvas = ref }} /></div>:
                     <div>
-                        <Button type='primary' onClick={() => this.previousPage()}>报名表</Button><Button onClick={() => this.nextPage()}>培训协议</Button>
+                        <Button onClick={() => this.previousPage()}>报名表</Button><Button type='primary' onClick={() => this.nextPage()}>培训协议</Button>
                         <Document
                             file={axios.defaults.baseURL + this.props.course.file4}
                             onLoadSuccess={this.onDocumentLoadSuccess}
