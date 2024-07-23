@@ -7,6 +7,8 @@ import SignatureCanvas from 'react-signature-canvas'
 import { actions as CourseActions } from '../../modules/courses'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import axios from 'axios'
+import { Document, Page, pdfjs } from 'react-pdf';
 
 // document.addEventListener('visibilitychange', function() { 
 //     var isHidden = document.hidden; 
@@ -18,6 +20,7 @@ import { bindActionCreators } from 'redux'
 class LessonCard extends Component {
     constructor(props) {
         super(props)
+        this.divRef = React.createRef()
         this.state = {
             signatureAgreementChecked: false,
             signatureModalVisible: false,
@@ -237,6 +240,7 @@ class LessonCard extends Component {
     render() {
         const { course } = this.props
         const { lessons } = this.props
+        const { pageNumber, numPages } = this.state
 
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
@@ -252,7 +256,7 @@ class LessonCard extends Component {
                     {this.state.displaySignature ? <div style={{border:'2px solid blue'}}><SignatureCanvas penColor='black' minWidth='0.7'
                         canvasProps={{ width: 500, height: 200, className: 'sigCanvas', contentBg: '#ddd' }} ref={(ref) => { this.sigCanvas = ref }} /></div>:
                     <div>
-                        <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
+                        <Button type='primary' onClick={() => this.previousPage()}>报名表</Button><Button onClick={() => this.nextPage()}>培训协议</Button>
                         <Document
                             file={axios.defaults.baseURL + this.props.course.file4}
                             onLoadSuccess={this.onDocumentLoadSuccess}
@@ -271,16 +275,8 @@ class LessonCard extends Component {
                             <p>完成条件：{course.pass_condition}</p>
                             {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()}>课程答疑</Button> : null}
                         </Card.Grid> : null}
-                        {course.signatureType === 1 && course.signature === "" ? <Card.Grid style={this.gridStyle}><Checkbox onChange={this.onChangeCheckBox}></Checkbox>
-                        <text>&nbsp;&nbsp;已阅读</text>
-                            <Popover placement="top" title={<span>承诺书及签字说明</span>} content={<div>
-                                <p>1. 如实填写报名表内容</p>
-                                <p>2. 遵守学校的各项规定</p>
-                                <p>3. 电子签名与手写签名具有同等效力</p>
-                                <p>4. 电子签名将会用在报名表、承诺书、复印材料的确认等处</p>
-                            </div>} trigger="click">
-                                <a>培训承诺书</a>
-                            </Popover>&nbsp;&nbsp;&nbsp;&nbsp;<Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
+                        {course.signatureType === 1 && course.signature === "" ? <Card.Grid style={this.gridStyle}>
+                            <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host=="znxf" || this.props.application.userInfo.host=="spc" || this.props.application.userInfo.host=="shm") && course.agencyID != "5" && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
