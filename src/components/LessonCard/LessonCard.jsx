@@ -21,10 +21,20 @@ class LessonCard extends Component {
         this.state = {
             signatureAgreementChecked: false,
             signatureModalVisible: false,
+            signatureBtnDisable: true,
             pay: 0,
             invoice: 0,
             showPayBtn: true,
-            showInvoiceBtn: true
+            showInvoiceBtn: true,
+            img: null,
+            busy: false,
+            loading: true,
+            numPages: null,
+            pageNumber: 1,
+            width: 0,
+            displaySignature: false,
+            readSec: 5,
+            showItem: 0
         }
     }
 
@@ -72,7 +82,18 @@ class LessonCard extends Component {
                 this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
             }
         }
-        if (this.props.courseState.postSignature && !prevProps.courseState.postSignature) {
+        // if (this.props.courseState.postSignature && !prevProps.courseState.postSignature) {
+        //     this.setState({ signatureModalVisible: false })
+        //     if (this.props.courseState.postSignature.status === 0) {
+        //         message.success('签名提交成功')
+        //         this.props.actions.getCourseList({ username: this.props.application.username })
+        //     } else {
+        //         message.error('签名提交失败')
+        //     }
+        //     this.sigCanvas.clear()
+        //     this.props.actions.updateSignature(null)
+        // }
+        if (this.state.busy && this.props.courseState.postSignature && !prevProps.courseState.postSignature) {
             this.setState({ signatureModalVisible: false })
             if (this.props.courseState.postSignature.status === 0) {
                 message.success('签名提交成功')
@@ -80,8 +101,10 @@ class LessonCard extends Component {
             } else {
                 message.error('签名提交失败')
             }
+            this.setState({ busy: false, displaySignature: false })
             this.sigCanvas.clear()
             this.props.actions.updateSignature(null)
+            this.setState({ signatureModalVisible: false })
         }
         if (this.props.courseState.postPayment && !prevProps.courseState.postPayment) {
             if (this.props.courseState.postPayment.code === "JH200") {
@@ -113,6 +136,7 @@ class LessonCard extends Component {
     gridStyle = {
         width: '100%',
         textAlign: 'left',
+        backgroundColor: '#FCFCFC'
     };
 
     onChangeCheckBox = (e) => {
@@ -136,14 +160,57 @@ class LessonCard extends Component {
             currUser: this.props.application.username, //当前用户身份证
             imgData
         })
+        this.setState({ busy: true })
     }
 
     onClickSignature = () => {
-        if (!this.state.signatureAgreementChecked) {
-            message.warn('请阅读并勾选同意承诺书')
-            return;
+        // if (!this.state.signatureAgreementChecked) {
+        //     message.warn('请阅读并勾选同意承诺书')
+        //     return;
+        // }
+        // this.setState({ signatureModalVisible: true });
+        this.setState({ width: this.divRef.current.offsetWidth })
+        this.setState({ signatureModalVisible: true })
+        //此处函数叫匿名函数
+        const t1 = setInterval(() => {
+            this.setState({ readSec: this.state.readSec - 1 })
+        },1000)
+        
+        setTimeout(() => {
+            this.setState({ signatureBtnDisable: false })
+            clearInterval(t1)
+        },5000)
+    }
+
+    previousPage = () => {
+        const { pageNumber } = this.state
+        if (pageNumber > 1) {
+          this.setState({ pageNumber: pageNumber - 1 })
         }
-        this.setState({ signatureModalVisible: true });
+    }
+    
+    nextPage = () => {
+        const { pageNumber, numPages } = this.state
+        if (pageNumber < numPages) {
+          this.setState({ pageNumber: pageNumber + 1 })
+        }
+    }
+    
+    onClickCancel = () => {
+        if(this.sigCanvas) {
+            this.sigCanvas.clear(); 
+        }
+        
+        this.setState({ signatureModalVisible: false, displaySignature: false, readSec: 5, signatureBtnDisable: true });
+    }
+    
+    onDocumentLoadSuccess = ({ numPages }) => {
+        this.setState({ numPages, loading: false })
+    }
+
+    onLoadError = () => {
+        message.error('文档载入失败')
+        this.setState({ loading: false })
     }
 
     onClickPay = () => {
@@ -173,10 +240,28 @@ class LessonCard extends Component {
 
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
-                <Modal title="请在下面空白处签名" visible={this.state.signatureModalVisible} footer={[<Button onClick={() => { this.sigCanvas.clear(); this.setState({ signatureModalVisible: false }); }}>取消</Button>, <Button type='primary' onClick={this.onSubmitSignature}>提交签名</Button>]}>
+                {/* <Modal title="请在下面空白处签名" visible={this.state.signatureModalVisible} footer={[<Button onClick={() => { this.sigCanvas.clear(); this.setState({ signatureModalVisible: false }); }}>取消</Button>, <Button type='primary' onClick={this.onSubmitSignature}>提交签名</Button>]}>
                     <SignatureCanvas penColor='black' minWidth={0.7}
                         canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }} ref={(ref) => { this.sigCanvas = ref }} />
+                </Modal> */}
+                <div className="document" style={{ width: "100%" }} ref={this.divRef}>
+                <Modal title={[<Button onClick={this.onClickCancel}>取消</Button>, 
+                    <Button type='primary' onClick={this.state.displaySignature ? this.onSubmitSignature: this.onClickNext} disabled={this.state.signatureBtnDisable}>{this.state.displaySignature ? '提交签名':'已阅读并同意'}</Button>
+                    , <span style={{color:'red', paddingLeft:'10px'}}>{this.state.displaySignature || this.state.readSec === 0 ? null : this.state.readSec + '报名表及培训协议'}</span>, 
+                    <span style={{color:'red', paddingLeft:'10px'}}>{this.state.displaySignature ? '请在下面空白处签名' : null}</span>]} visible={this.state.signatureModalVisible} footer={[]}>
+                    {this.state.displaySignature ? <div style={{border:'2px solid blue'}}><SignatureCanvas penColor='black' minWidth='0.7'
+                        canvasProps={{ width: 500, height: 200, className: 'sigCanvas', contentBg: '#ddd' }} ref={(ref) => { this.sigCanvas = ref }} /></div>:
+                    <div>
+                        <Button onClick={() => this.previousPage()}>上一页</Button><Button onClick={() => this.nextPage()}>下一页</Button>
+                        <Document
+                            file={axios.defaults.baseURL + this.props.course.file4}
+                            onLoadSuccess={this.onDocumentLoadSuccess}
+                            onLoadError={this.onLoadError}
+                        ><Page pageNumber={pageNumber} width={this.state.width} onRenderSuccess={this.onRenderSuccess} />
+                        </Document>
+                    </div>}
                 </Modal>
+                </div>
                 <Col span={24}>
                     <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{[course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null]} <a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
