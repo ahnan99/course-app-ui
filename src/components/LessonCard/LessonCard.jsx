@@ -150,6 +150,10 @@ class LessonCard extends Component {
         this.props.history.push(`/classcommentpage?classID=${this.props.course.classID}`);
     };
 
+    onClickNext = () => {
+        this.setState({displaySignature: true});
+    }
+
     onSubmitSignature = () => {
         if (this.sigCanvas.isEmpty()) {
             message.error('请正确签名。')
