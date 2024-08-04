@@ -17,7 +17,9 @@ class ExamForm extends Component {
         time: 0, 
         loading: false, 
         buttonDisabled: false,
-        submitConfirmVisible: false
+        submitBtnDisable: true,
+        submitConfirmVisible: false,
+        readSec: 3
     }
 
 
@@ -65,15 +67,22 @@ class ExamForm extends Component {
             this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID })
             this.setState({ loading: true })
         }
-        this.setState({ submitConfirmVisible: false });
+        this.setState({ submitConfirmVisible: false, submitBtnDisable: true, readSec: 3 });
     }
     
     onClickCancel = () => {
-        this.setState({ submitConfirmVisible: false });
+        this.setState({ submitConfirmVisible: false, submitBtnDisable: true, readSec: 3 });
     }
 
     onSubmit = () => {
         this.setState({ submitConfirmVisible: true })
+        const t1 = setInterval(() => {
+            this.setState({ readSec: this.state.readSec - 1 })
+        },1000)
+        setTimeout(() => {
+            this.setState({ submitBtnDisable: false })
+            clearInterval(t1)
+        },3000)
     }
 
     componentDidMount() {
@@ -162,7 +171,8 @@ class ExamForm extends Component {
                     <Form.Item>
                         <Row gutter={4} style={{ textAlign: 'center' }}>
                             <Modal title={[<Button type='primary' onClick={this.onClickCancel}>取消</Button>, 
-                                <Button onClick={this.onFinish} htmlType="submit">{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button>
+                                // <Button onClick={this.onFinish} htmlType="submit">{this.props.exam.exam[0].status !== 2 ? '交卷' : '重新开始'}</Button>
+                                <Button onClick={this.onFinish} htmlType="submit" disabled={this.state.submitBtnDisable}>{ (this.state.readSec === 0 ? '' : this.state.readSec) + (this.props.exam.exam[0].status !== 2 ?'交卷' : '重新开始')}</Button>
                                 , <span style={{color:'red', paddingLeft:'10px'}}>{this.props.exam.exam[0].status !== 2 ? '确定要交卷吗？' : '确定要重新开始吗？'}</span> 
                                 ]} visible={this.state.submitConfirmVisible} footer={[]}>
                             </Modal>

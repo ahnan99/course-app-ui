@@ -21,6 +21,7 @@ class VideoPlayer extends Component {
             doCancel: false,
             warning: false,
             detectMsg: null,
+            photoSend: false,
             detectStatus: 0
         }
     }
@@ -64,8 +65,8 @@ class VideoPlayer extends Component {
             });
     
             this.timer = setInterval(() => {
-                if (this.player.currentTime() > this.state.maxTime && !this.state.shotNow) {
-                    this.setState({ maxTime: this.player.currentTime() }, () => {
+                if ((this.player.currentTime() > this.state.maxTime && !this.state.shotNow) || this.state.photoSend) {     // 发送对比照片后与服务器通讯，已获取最新的状态（阿里云对比结果可能未及时返回给客户端）
+                        this.setState({ maxTime: this.player.currentTime() }, () => {
                         this.props.courseActions.postMaxTime({ ID: video.ID, currentTime: this.player.currentTime(), shoted: this.state.shoted });
                         this.setState({ shoted: 0 });   // 恢复未检测状态
                     })
@@ -80,19 +81,24 @@ class VideoPlayer extends Component {
             this.setState({ shotNow: true });
             this.props.courseActions.updateMaxTime(null)
         }
+        if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.status === 0 &&  this.state.photoSend){
+            // 比对通过
+            this.setState({ shotVisible: false, shotNow: false, shoted: 1, warning: false, photoSend: false });
+            this.player.play();
+        }
         if(this.state.shotNow && !this.state.shotVisible && !this.state.doCancel){
             this.setState({ shotVisible: true });
             this.player.pause();
         }
         if(this.state.shotVisible && this.props.user.faceDetectOSS){
-            this.setState({ detectMsg: this.props.user.faceDetectOSS.msg, detectStatus: this.props.user.faceDetectOSS.status });
             // message.warning(this.props.user.faceDetectOSS.msg);
-            if(this.props.user.faceDetectOSS.status===2 && !this.state.warning){
-                // 比对未通过
-                this.setState({ shotVisible: false, warning: true });
+            this.setState({ detectMsg: this.props.user.faceDetectOSS.msg, photoSend: false });
+            if(this.props.user.faceDetectOSS.status!==1 && !this.state.warning){
+                // 比对未通过或没有比对
+                this.setState({ warning: true });
             }
-            if(this.props.user.faceDetectOSS.status<2){
-                // 比对通过或没有比对
+            if(this.props.user.faceDetectOSS.status===1){
+                // 比对通过
                 this.setState({ shotVisible: false, shotNow: false, shoted: 1, warning: false });
                 this.player.play();
             }
@@ -115,6 +121,7 @@ class VideoPlayer extends Component {
             base64Data: base64Data,
             username: this.props.application.username
         });
+        this.setState({ photoSend: true, detectMsg: "正在检测，请稍等..." });
     };
 
     msgClick = () => {
