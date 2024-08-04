@@ -80,6 +80,8 @@ class LessonCard extends Component {
                 this.props.history.push("/userinfo")
             } else if (this.props.exam.exam[0].startExamMsg !== "") {
                 message.info(this.props.exam.exam[0].startExamMsg)
+            } else if (this.props.exam.exam[0].allowMockMsg !== "") {
+                message.info(this.props.exam.exam[0].allowMockMsg)
             } else {
                 this.props.history.push("/exampage")
                 this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
