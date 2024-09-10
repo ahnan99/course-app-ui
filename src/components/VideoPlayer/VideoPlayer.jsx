@@ -60,7 +60,7 @@ class VideoPlayer extends Component {
                 })
 
                 // 监听ratechange事件 禁止快放
-                player.on('ratechange', function() {
+                this.player.on('ratechange', function() {
                     // 当播放速率改变时，检查当前速度
                     if (this.playbackRate !== 1.0) {
                         // 如果不是1.0，则将速度设置为1.0
