@@ -60,14 +60,14 @@ class VideoPlayer extends Component {
                 })
 
                 // 监听ratechange事件 禁止快放
-                // player.on('ratechange', function() {
-                //     // 当播放速率改变时，检查当前速度
-                //     if (this.playbackRate !== 1.0) {
-                //         // 如果不是1.0，则将速度设置为1.0
-                //         this.playbackRate = 1.0;
-                //         message.warning('请保持正常播放速度')
-                //     }
-                // });
+                player.on('ratechange', function() {
+                    // 当播放速率改变时，检查当前速度
+                    if (this.playbackRate !== 1.0) {
+                        // 如果不是1.0，则将速度设置为1.0
+                        this.playbackRate = 1.0;
+                        message.warning('请保持正常播放速度')
+                    }
+                });
 
                 //暂停事件监听
                 this.player.on('pause', function () {
