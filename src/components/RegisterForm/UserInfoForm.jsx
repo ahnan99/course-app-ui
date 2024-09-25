@@ -140,25 +140,7 @@ class UserInfoForm extends Component {
                         {
                             required: true,
                             message: '请输入身份证号',
-                        },
-                        {
-                            validator: (rule, value) => {
-                                console.log(this.checkIDcard(value))
-                                if (!value || this.checkIDcard(value) === 1) {
-                                    return Promise.resolve();
-                                } else if (this.checkIDcard(value) === 2) {
-                                    return Promise.reject('身份证号码位数不对');
-                                } else if (this.checkIDcard(value) === 3) {
-                                    return Promise.reject('身份证号码出生日期超出范围或含有非法字符');
-                                } else if (this.checkIDcard(value) === 4) {
-                                    return Promise.reject('身份证号码校验错误');
-                                } else if (this.checkIDcard(value) === 5) {
-                                    return Promise.reject('身份证地区非法');
-                                } else
-                                    return Promise.reject('身份证号码校验错误');
-                            },
                         }
-
                     ]}
                 >
                     <Input disabled />
