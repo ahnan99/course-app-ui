@@ -64,7 +64,7 @@ class App extends Component {
                 <Route key={"resetpassword"} exact path="/forgetpassword" component={ForgetPassword} />
                 <Route key={"login"} exact path="/login" component={Login} />
                 {this.props.application.loggedIn ? <MainView /> : <Redirect to={qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username && qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username !== undefined ?
-                    '/login?username=' + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username : '/login'
+                    '/login?username=' + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).username + '&fromID=' + qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID : '/login'
                 } />}
             </Switch>
         )
