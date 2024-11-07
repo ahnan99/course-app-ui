@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, Button, message, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
+import { actions as LoginActions } from '../../modules/application'
 import qs from 'qs'
 import axios from 'axios'
 
@@ -127,4 +128,13 @@ class LoginForm extends Component {
     }
 }
 
-export default withRouter(LoginForm)
+const mapStateToProps = state => ({
+    application: state.application
+})
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(LoginActions, dispatch)
+})
+
+// export default withRouter(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
