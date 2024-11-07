@@ -14,6 +14,9 @@ class LoginForm extends Component {
 
     componentWillMount = () => {
         if (this.props.loggedIn) {
+            if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
+                this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
+            }
             this.props.history.push('/homepage')
         }
     }
