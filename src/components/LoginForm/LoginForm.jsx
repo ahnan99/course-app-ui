@@ -14,10 +14,14 @@ class LoginForm extends Component {
 
     componentWillMount = () => {
         if (this.props.loggedIn) {
-            if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
-                this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
-            }
+            this.setFromID();
             this.props.history.push('/homepage')
+        }
+    }
+
+    setFromID = () => {
+        if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
+            this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
         }
     }
 
@@ -27,6 +31,7 @@ class LoginForm extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.loggedIn && nextProps.username && nextProps.auditor === 1) {
+            this.setFromID();
             if(nextProps.teacher){
                 this.props.history.push('/homepage')
             }else{
@@ -36,9 +41,12 @@ class LoginForm extends Component {
         else if (nextProps.loggedIn && nextProps.username) {
             this.props.getUserInfo({ username: nextProps.username })
             if (nextProps.userInfo && nextProps.userInfo.newCourse === 0 && nextProps.userInfo.host_kindID === 0) {
+                console.log("goto courseselect")
+                this.setFromID();
                 this.props.history.push('/courseselect')
             } else if (nextProps.userInfo) {
-                console.log(nextProps.userInfo)
+                console.log("goto homepage")
+                this.setFromID();
                 this.props.history.push('/homepage')
             }
         }
