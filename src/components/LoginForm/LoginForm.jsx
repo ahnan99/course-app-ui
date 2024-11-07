@@ -3,6 +3,8 @@ import { Form, Input, Button, message, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import { actions as LoginActions } from '../../modules/application'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import qs from 'qs'
 import axios from 'axios'
 
