@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import axios from 'axios'
 import qs from 'qs'
+import { withRouter } from 'react-router-dom'
 class Login extends Component {
 
     componentDidMount() {
@@ -15,7 +16,11 @@ class Login extends Component {
         if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
             this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
         }
-        this.props.actions.getCompanyInfo()
+        this.props.actions.getCompanyInfo()        
+        if (this.props.application.loggedIn) {
+            // this.setFromID();
+            this.props.history.push('/homepage')
+        }
     }
 
     render() {
@@ -62,4 +67,4 @@ const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(LoginActions, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

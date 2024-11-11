@@ -12,13 +12,6 @@ const layout = {
 
 class LoginForm extends Component {
 
-    componentWillMount = () => {
-        if (this.props.loggedIn) {
-            // this.setFromID();
-            this.props.history.push('/homepage')
-        }
-    }
-
     setFromID = () => {
         if (this.props.fromID) {
             // this.props.actions.updateFromID(this.props.fromID)
