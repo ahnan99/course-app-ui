@@ -358,6 +358,7 @@ const reducer = (state = initialState, action = {}) => {
         case UPDATE_CONFIRM_LOGIN: {
             if (action.response.username !== '') {
                 return {
+                    ...state,
                     loggedIn: true,
                     username: action.response.username,
                     auditor: action.response.auditor
