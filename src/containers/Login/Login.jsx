@@ -15,7 +15,7 @@ class Login extends Component {
 
         if (qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID) {
             this.props.actions.updateFromID(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).fromID)
-            this.props.actions.updateLogurl(this.props.location)
+            this.props.actions.updateLogurl(this.props.location.search)
         }
         this.props.actions.getCompanyInfo()        
         if (this.props.application.loggedIn) {
