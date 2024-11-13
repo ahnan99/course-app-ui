@@ -339,6 +339,12 @@ const reducer = (state = initialState, action = {}) => {
                 fromID: action.data
             }
         }
+        case UPDATE_LOGURL: {
+            return {
+                ...state,
+                logUrl: action.data
+            }
+        }
         case USER_LOGOUT: {
             if (action.response.status === 0) {
                 return {
