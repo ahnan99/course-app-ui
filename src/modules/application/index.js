@@ -24,6 +24,7 @@ const AUDITOR_LOGIN_ERROR = 'auditor_login_error'
 const UPDATE_AUDITOR = 'update_auditor'
 const AUDITOR_REQUEST_LOGIN = 'auditor_request_login'
 const UPDATE_FROM_ID = 'update_from_id'
+const UPDATE_LOGURL = 'update_logurl'
 
 export const types = {
     REQUEST_LOGIN,
@@ -50,7 +51,8 @@ export const types = {
     AUDITOR_LOGIN_ERROR,
     UPDATE_AUDITOR,
     AUDITOR_REQUEST_LOGIN,
-    UPDATE_FROM_ID
+    UPDATE_FROM_ID,
+    UPDATE_LOGURL
 }
 
 //Action creators
@@ -176,6 +178,11 @@ const updateFromID = data => ({
     data
 })
 
+const updateLogurl = data => ({
+    type: UPDATE_LOGURL,
+    data
+})
+
 export const actions = {
     userLogin,
     requestLogin,
@@ -201,7 +208,8 @@ export const actions = {
     auditorLoginError,
     updateAuditor,
     auditorRequestLogin,
-    updateFromID
+    updateFromID,
+    updateLogurl
 }
 
 const initialState = {
@@ -217,7 +225,8 @@ const initialState = {
     newCourse: null,
     auditor: null,
     fromID: null,
-    teacher: null
+    teacher: null,
+    logUrl: null
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {

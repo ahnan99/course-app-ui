@@ -12,19 +12,12 @@ const layout = {
 
 class LoginForm extends Component {
 
-    setFromID = () => {
-        if (this.props.fromID) {
-            // this.props.actions.updateFromID(this.props.fromID)
-        }
-    }
-
     redirectToRegister = () => {
         this.props.history.push('/register')
     }
 
     componentWillReceiveProps = (nextProps) => {
         if (nextProps.loggedIn && nextProps.username && nextProps.auditor === 1) {
-            this.setFromID();
             if(nextProps.teacher){
                 this.props.history.push('/homepage')
             }else{
@@ -35,11 +28,9 @@ class LoginForm extends Component {
             this.props.getUserInfo({ username: nextProps.username })
             if (nextProps.userInfo && nextProps.userInfo.newCourse === 0 && nextProps.userInfo.host_kindID === 0) {
                 console.log("goto courseselect")
-                this.setFromID();
                 this.props.history.push('/courseselect')
             } else if (nextProps.userInfo) {
                 console.log("goto homepage")
-                this.setFromID();
                 this.props.history.push('/homepage')
             }
         }

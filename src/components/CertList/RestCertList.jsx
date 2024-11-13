@@ -22,12 +22,12 @@ class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID:this.props.application.fromID })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID:this.props.application.fromID, url:this.props.application.logUrl })
     this.setState({ visible: false })
   }
 
   onAddretrain = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID:this.props.application.fromID })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID:this.props.application.fromID, url:this.props.application.logUrl })
     this.setState({ visible: false })
 
   }
@@ -56,7 +56,7 @@ class RestCertList extends Component {
     this.setState({ visible: false, selectedItem: null })
   }
   handleOK = cert => {
-    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID:this.props.application.fromID })
+    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID:this.props.application.fromID, url:this.props.application.logUrl })
     this.setState({ visible: false, selectedItem: null })
   }
 
