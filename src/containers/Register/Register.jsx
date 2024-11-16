@@ -22,6 +22,7 @@ class Register extends Component {
                 <Col xs={20} sm={16} md={12} lg={8} xl={8} className="form-container">
                     <RegisterForm
                         requestRegister={this.props.actions.requestRegister}
+                        requestLogin={this.props.actions.requestLogin}
                         userActions={this.props.userActions}
                         loggedIn={this.props.application.loggedIn}
                         registered={this.props.application.registered}
