@@ -287,6 +287,7 @@ class LessonCard extends Component {
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
+                        {this.state.invoice === 1 ? <Card.Grid style={this.gridStyle}><p style={{ color: 'red' }}>将在三个工作日内完成开票，请注意短信通知</p></Card.Grid> : null}
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
                             <b>课程内容</b>
                             <p> </p>
