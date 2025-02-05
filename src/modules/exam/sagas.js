@@ -28,6 +28,14 @@ function* postSingleQuestionWatch() {
     yield takeLatest(types.POST_SINGLE_QUESION, postSingleQuestionWorker)
 }
 
+function* postTotalExamNumWatch() {
+    yield takeLatest(types.POST_TOTALEXAM_NUM, postTotalExamNumWorker)
+}
+
+function* setFavoriteWatch() {
+    yield takeLatest(types.SET_FAVORITE, setFavoriteWorker)
+}
+
 //endPoints
 export function getExamEndpoint(data) {
     return axios.get('/students/getStudentExamInfo', {
@@ -57,6 +65,14 @@ export function postTimeEndpoint(data) {
 
 export function postSingleQuestionEndpoint(data) {
     return axios.post('/students/update_student_question_answer', data)
+}
+
+export function postTotalExamEndpoint(data) {
+    return axios.post('/students/update_student_total_num', data)
+}
+
+export function setFavoriteEndpoint(data) {
+    return axios.post('/students/setFavoriteQuestion', data)
 }
 
 //workers
@@ -114,13 +130,33 @@ function* postSingleQuestionWorker(action) {
     }
 }
 
+function* postTotalExamNumWorker(action) {
+    try {
+        const response = yield call(postTotalExamEndpoint, action.payload)
+        yield put(actions.updatePostTotalExamNum(response.data))
+    } catch (error) {
+        yield handleAuthenticationErrors(error);
+    }
+}
+
+function* setFavoriteWorker(action) {
+    try {
+        const response = yield call(setFavoriteEndpoint, action.payload)
+        yield put(actions.updateSetFavorite(response.data))
+    } catch (error) {
+        yield handleAuthenticationErrors(error);
+    }
+}
+
 export const workers = {
     getExamQuestionWorker,
     getExamWorker,
     postExamWorker,
     postTimeWorker,
     postSingleQuestionWorker,
-    getRealExamListWorker
+    getRealExamListWorker,
+    postTotalExamNumWorker,
+    setFavoriteWorker
 }
 
 export default function* saga() {
@@ -130,6 +166,8 @@ export default function* saga() {
         postTimeWatch(),
         examQuestionWatch(),
         postSingleQuestionWatch(),
-        realExamListWatch()
+        realExamListWatch(),
+        postTotalExamNumWatch(),
+        setFavoriteWatch(),
     ])
 }

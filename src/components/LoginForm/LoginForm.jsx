@@ -11,6 +11,9 @@ const layout = {
 };
 
 class LoginForm extends Component {
+    state = {
+        waiting: true
+    }
 
     redirectToRegister = () => {
         this.props.history.push('/register')
@@ -59,6 +62,11 @@ class LoginForm extends Component {
     onChange = (e) => {
         console.log(`checked = ${e.target.checked}`);
     }
+
+    onChangeID = (value) => {
+        this.setState({ waiting: value==="123" ? false : true });
+    };
+
     render() {
         return (
             <Form
@@ -73,7 +81,7 @@ class LoginForm extends Component {
                     label="用户名"
                     rules={[{ required: true, message: '请输入用户名' }]}
                 >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" />
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="身份证号码" onChange={this.onChangeID} />
                 </Form.Item>
                 <Form.Item
                     name="password"
@@ -92,9 +100,10 @@ class LoginForm extends Component {
                     </a>
                 </Form.Item>
                 <Form.Item>
+                    {this.state.waiting ? "系统正在维护，预计在2.6恢复。" :
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
-                    </Button>
+                    </Button>}
                     <span>&nbsp;&nbsp;</span> <Button type="primary" onClick={() => this.redirectToRegister()}>注册</Button>
                 </Form.Item>
                 <div>&nbsp;&nbsp;</div>

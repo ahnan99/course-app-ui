@@ -37,7 +37,20 @@ class LessonCard extends Component {
             width: 0,
             displaySignature: false,
             readSec: 5,
-            showItem: 0
+            showItem: 0,
+            questionOption: 0,
+            showQuestionOption: false,
+            showQuestionOption4: false,
+            paperID:0, 
+            pkind:0, 
+            examID:'', 
+            username:'',
+            qty1: 0,
+            qty2: 0,
+            qty3: 0,
+            paperItem: '',
+            busyGetExamQuestion:1,
+            chapterList:[]
         }
     }
 
@@ -59,10 +72,37 @@ class LessonCard extends Component {
         }
 
     }
+    
+    onClickOptionCancel = () => {
+        this.setState({ showQuestionOption: false, questionOption: 0 });
+    }
+    
+    onClickOptionCancel4 = () => {
+        this.setState({ showQuestionOption4: false, questionOption: 0 });
+    }
+    
+    setQuestionOption = (kind) => {
+        this.setState({ questionOption: kind, showQuestionOption: false });
+        this.state.questionOption = kind;
+        this.onClickExam(this.state.paperID, this.state.pkind, this.state.examID, this.state.username, kind, 0, 0, 0, '', []);
+    }
+    
+    setQuestionOption4 = (kind) => {
+        this.setState({ questionOption: kind, showQuestionOption4: false });
+        this.state.questionOption = kind;
+        this.onClickExam(this.state.paperID, this.state.pkind, this.state.examID, this.state.username, kind, 0, 0, 0, '', []);
+    }
 
-    onClickExam = paperID => {
-        this.props.examActions.updateLeave(true)
-        this.props.examActions.getExam({ paperID })
+    onClickExam = (paperID, pkind, examID, username, kind, qty1, qty2, qty3, paperItem, chapterList) => {
+        if(pkind ===2 && kind===0){
+            this.setState({showQuestionOption:true, paperID, pkind, examID, username, qty1, qty2, qty3, paperItem})
+        }else if(pkind ===4 && kind===0){ //pkind=4 章节练习
+            this.setState({showQuestionOption4:true, paperID, pkind, examID, username, paperItem, chapterList})
+        }else{
+            this.props.examActions.updateLeave(true)
+            this.props.examActions.getExam({ paperID, pkind, examID, username, kind });
+            this.props.examActions.updateBusyGetExamQuestion(1);
+        }
     }
 
     componentDidUpdate = prevProps => {
@@ -82,22 +122,13 @@ class LessonCard extends Component {
                 message.info(this.props.exam.exam[0].startExamMsg)
             } else if (this.props.exam.exam[0].allowMockMsg !== "") {
                 message.info(this.props.exam.exam[0].allowMockMsg)
-            } else {
+            } else if (this.props.exam.busyGetExamQuestion === 1 && ((this.props.exam.exam[0].pkind !==2 && this.props.exam.exam[0].pkind !==4) || this.state.questionOption>0)) {
                 this.props.history.push("/exampage")
-                this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
+                this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID:this.props.exam.exam[0].examID, kind: this.state.questionOption, page:1, pageSize:20, s:0 })
+                this.props.examActions.updateBusyGetExamQuestion(0);
             }
         }
-        // if (this.props.courseState.postSignature && !prevProps.courseState.postSignature) {
-        //     this.setState({ signatureModalVisible: false })
-        //     if (this.props.courseState.postSignature.status === 0) {
-        //         message.success('签名提交成功')
-        //         this.props.actions.getCourseList({ username: this.props.application.username })
-        //     } else {
-        //         message.error('签名提交失败')
-        //     }
-        //     this.sigCanvas.clear()
-        //     this.props.actions.updateSignature(null)
-        // }
+        
         if (this.state.busy && this.props.courseState.postSignature && !prevProps.courseState.postSignature) {
             this.setState({ signatureModalVisible: false })
             if (this.props.courseState.postSignature.status === 0) {
@@ -111,6 +142,7 @@ class LessonCard extends Component {
             this.props.actions.updateSignature(null)
             this.setState({ signatureModalVisible: false })
         }
+
         if (this.props.courseState.postPayment && !prevProps.courseState.postPayment) {
             if (this.props.courseState.postPayment.code === "JH200") {
                 if(this.state.pay === 1){
@@ -135,6 +167,17 @@ class LessonCard extends Component {
                 this.setState({ pay: 0, invoice: 0 });
             }
             this.props.actions.updatePayment(null)
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.courseState.currentLesson) {
+            const el = document.getElementById(this.props.courseState.currentLesson.refID);
+            if(el){
+                el.scrollIntoView();
+                this.setState({ showItem: this.props.courseState.currentLesson.refID })
+            }
+            this.props.actions.updateCurrentLesson(null);
         }
     }
 
@@ -242,6 +285,10 @@ class LessonCard extends Component {
         this.setState({ showPayURL: false })
         window.open(this.props.courseState.postPayment.result.payUtl, "_blank");
     }
+    
+    onClickShowItem = (courseID) => {
+        this.setState({ showItem: (this.state.showItem === 0 ? courseID : 0) })
+    }
 
     render() {
         const { course } = this.props
@@ -289,42 +336,56 @@ class LessonCard extends Component {
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
                         {this.state.invoice === 1 ? <Card.Grid style={this.gridStyle}><p style={{ color: 'red' }}>将在三个工作日内完成开票，请注意短信通知</p></Card.Grid> : null}
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "") ? <Card.Grid style={this.gridStyle}>
-                            <b>课程内容</b>
+                            <div style={{padding:'5px'}}>
+                                <Button type='primary' onClick={() => this.onClickShowItem(course.ID)} >视频课程</Button>
+                            </div>
                             <p> </p>
-                            <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
+                            <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItem===course.ID ? "block" : "none")}}>
                                 {lessons.filter(lesson => lesson.refID === course.ID).map((lesson, index) => (
                                     <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
                                         <p style={{ float: 'left' }}>
-                                            <a onClick={() => this.onClick(lesson)}>{index + 1}. {lesson.lessonName}&nbsp;&nbsp;</a>
+                                            <a onClick={() => this.onClick(lesson)} id={'x' + lesson.ID}>{index + 1}. {lesson.lessonName}&nbsp;&nbsp;</a>
                                             <span style={{ color: 'lightgray' }}>{lesson.completion}%</span>
                                         </p>
 
                                     </li>
                                 ))}
+                            </ul>
+                            <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
                                 <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
-                                    <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
+                                    <div style={{padding:'5px'}}>
                                     <span>{course.type === 0 ? '模拟考试' : '考试'}</span>
+                                    <span style={{ color: 'lightgray', paddingLeft:'1em' }}>{course.examScore || 0}分&nbsp;&nbsp;{course.examTimes}次</span>
+                                    </div>
                                     <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
                                         {
                                             course.paperID !== null && course.paperID !== '' ? JSON.parse(course.paperID)
                                                 .map(singlePaperID => (
                                                     <li key={singlePaperID.paperID} style={{ listStyleType: 'none', clear: 'both' }}>
-                                                        <p style={{ float: 'left' }}>
-                                                            <a onClick={() => this.onClickExam(singlePaperID.paperID)}>*&nbsp;&nbsp;{singlePaperID.item}&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
-                                                                {singlePaperID.examScore}分&nbsp;&nbsp;</span>
-                                                        </p>
+                                                        <div style={{ padding:'5px' }}>
+                                                        <Button type='primary' onClick={() => this.onClickExam(singlePaperID.paperID, singlePaperID.pkind, singlePaperID.examID, course.username, 0, singlePaperID.qty1, singlePaperID.qty2, singlePaperID.qty3, singlePaperID.item, singlePaperID.list)}>{singlePaperID.item}</Button>
+                                                        <span style={{ color: 'lightgray', paddingLeft:'10px' }}>{singlePaperID.examScore}&nbsp;&nbsp;</span>
+                                                        </div>
                                                     </li>
                                                 ))
-                                                : null}
+                                        : null}
                                     </ul>
+                                    {this.state.showQuestionOption && <div style={{textAlign:'left', backgroundColor:'#f0f0f0', padding: '30px', width:'70%', boxShadow:'initial'}}><Space direction="vertical" align="left" >
+                                        {<div><div style={{ color: 'blue', textAlign:'center', fontSize:'1.2em', width:'100%' }}>{this.state.paperItem}</div><hr style={{margin:'3px 0'}}></hr></div>}
+                                        {this.state.qty1>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption(1)}>单选题</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty1})</span></div>}
+                                        {this.state.qty2>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption(2)}>多选题</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty2})</span></div>}
+                                        {this.state.qty3>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption(3)}>判断题</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty3})</span></div>}
+                                        <Button shape="round" onClick={this.onClickOptionCancel}>&nbsp;关&nbsp;&nbsp;闭&nbsp;</Button>
+                                    </Space></div>}
+                                    {this.state.showQuestionOption4 && <div style={{textAlign:'left', backgroundColor:'#f0f0f0', padding: '30px', width:'70%', boxShadow:'initial'}}><Space direction="vertical" align="left" >
+                                        {<div><div style={{ color: 'blue', textAlign:'center', fontSize:'1.2em', width:'100%' }}>{this.state.paperItem}</div><hr style={{margin:'3px 0'}}></hr></div>}
+                                        {this.state.chapterList.map(chapter => (
+                                            chapter.qty>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption4(chapter.chapterID)}>{chapter.item}</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({chapter.qty})</span></div>
+                                        ))
+                                        }
+                                        <Button shape="round" onClick={this.onClickOptionCancel4}>&nbsp;关&nbsp;&nbsp;闭&nbsp;</Button>
+                                    </Space></div>}
                                 </li>
-                                {/* {course.paperID !== null && course.paperID !== '' ? <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
-                                    <p style={{ float: 'left' }}>
-                                        <a onClick={() => this.onClickExam(course)}>*&nbsp;&nbsp;{course.type === 0 ? '模拟考试' : '考试'}&nbsp;&nbsp;&nbsp;</a><span style={{ color: 'lightgray' }}>
-                                            {course.examScore}分&nbsp;&nbsp;</span>
-                                        <span style={{ color: 'lightgray' }}>{course.examTimes}次</span>
-                                    </p>
-                                </li> : null} */}
                             </ul>
 
                         </Card.Grid> : null}

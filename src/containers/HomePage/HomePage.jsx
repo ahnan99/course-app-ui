@@ -27,8 +27,9 @@ class HomePage extends Component {
 
 
     onClickExam = paperID => {
-        this.props.examActions.updateLeave(false)
-        this.props.examActions.getExam({ paperID: paperID })
+        this.props.examActions.updateLeave(false);
+        this.props.examActions.getExam({ paperID: paperID });
+        this.props.examActions.updateBusyGetExamQuestion(1);
     }
 
     onClickRule = () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Radio, message, Checkbox, Spin, Alert, Affix, Row, Col, Image, Modal } from 'antd'
+import { Form, Button, Radio, message, Checkbox, Spin, Alert, Affix, Row, Col, Image, Space, Modal, Pagination, InputNumber } from 'antd'
 import moment from 'moment'
 import './ExamForm.css'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
@@ -10,6 +10,10 @@ const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
 };
+const font = '1.2em'
+const font1 = '1.5em'
+const pageSize = 20;
+
 class ExamForm extends Component {
     formRef = React.createRef()
 
@@ -19,23 +23,73 @@ class ExamForm extends Component {
         buttonDisabled: false,
         submitBtnDisable: true,
         submitConfirmVisible: false,
-        readSec: 3
+        showMsg: false, 
+        currQID: 0, 
+        answer: false, 
+        myAnswer: null,
+        numPages: null,
+        pageNumber: 0,
+        currQuestion: null,
+        readSec: 3,
+        page: 1,
+        goPage: 0,
+        loadExam: 0,
+        answerQty: this.props.exam?.exam[0]?.answerQty || 0
     }
 
 
     onValuesChange = (changedValue, values) => {
-        if (this.props.exam.exam && this.props.exam.exam[0] && this.props.exam.exam[0].status !== 2) {
+        // if (this.props.exam.exam && this.props.exam.exam[0] && this.props.exam.exam[0].status !== 2) {
+        //     for (var key in changedValue) {
+        //         if (Array.isArray(changedValue[key])) {
+        //             var aggre = ''
+        //             for (var i = 0; i < changedValue[key].length; i++) {
+        //                 aggre += changedValue[key][i]
+        //             }
+        //             this.props.actions.postSingleQuestion({ ID: key, answer: aggre })
+        //         } else {
+        //             this.props.actions.postSingleQuestion({ ID: key, answer: changedValue[key] })
+        //         }
+        //     }
+        // }
+        if(this.props.exam.exam[0].pkind === 0){  // 考试
+            if (this.props.exam.exam && this.props.exam.exam[0] && this.props.exam.exam[0].status !== 2) {// && this.props.exam.exam[0].pkind !== 2
+                if (this.props.exam.exam[0].pkind === 1){
+                    message.destroy();
+                    this.setState({showMsg: true})
+                }
+                let myAnswer = ""
+                for (var key in changedValue) {
+                    if (Array.isArray(changedValue[key])) {
+                        var aggre = ''
+                        for (var i = 0; i < changedValue[key].length; i++) {
+                            aggre += changedValue[key][i]
+                        }
+                        myAnswer = this.answerSort(aggre)
+                        aggre = myAnswer
+                        this.props.actions.postSingleQuestion({ ID: key, answer: aggre, pkind: this.props.exam.exam[0].pkind})
+                    } else {
+                        this.props.actions.postSingleQuestion({ ID: key, answer: changedValue[key], pkind: this.props.exam.exam[0].pkind })
+                        myAnswer = changedValue[key]
+                    }
+                }
+                this.setState({answer: true, myAnswer: myAnswer})
+            }
+        }else{
+            // 总题库，错题集，收藏夹
+            let myAnswer = ""
             for (var key in changedValue) {
                 if (Array.isArray(changedValue[key])) {
                     var aggre = ''
                     for (var i = 0; i < changedValue[key].length; i++) {
                         aggre += changedValue[key][i]
                     }
-                    this.props.actions.postSingleQuestion({ ID: key, answer: aggre })
+                    myAnswer = this.answerSort(aggre)
                 } else {
-                    this.props.actions.postSingleQuestion({ ID: key, answer: changedValue[key] })
+                    myAnswer = changedValue[key]
                 }
             }
+            this.setState({answer: true, myAnswer: myAnswer})
         }
     }
 
@@ -62,7 +116,8 @@ class ExamForm extends Component {
     onFinish = values => {
         if (this.props.exam.exam[0].status === 2) {
             this.props.actions.updateExamQuestion(null)
-            this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, mark: 1 })
+            // this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, mark: 1 })
+            this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, mark: 1, pkind: 0, examID:this.props.exam.exam[0].examID, kind:this.props.exam.exam[0].kind1, page:1, pageSize, s:1 })
         } else {
             this.props.actions.postExam({ paperID: this.props.exam.exam[0].paperID })
             this.setState({ loading: true })
@@ -132,7 +187,8 @@ class ExamForm extends Component {
         if (this.props.exam.postExamRes) {
             if (this.props.exam.exam[0].kind === 0) {
                 this.props.actions.getExam({ paperID: this.props.exam.exam[0].paperID })
-                this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
+                // this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID })
+                this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID:'', kind:this.props.exam.exam[0].kind1, page: this.state.page, pageSize, s:3 })
             }
             message.success('提交成功')
             setTimeout(() => { this.setState({ loading: false }) }, 3000);
@@ -150,6 +206,76 @@ class ExamForm extends Component {
             this.setState({ time: this.props.exam.exam[0].secondRest })
         }
 
+    }
+
+    onPageChange = (page) => {
+        this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID:'', kind:this.props.exam.exam[0].kind1, page, pageSize, s:2 });
+        this.setState({page});
+    }
+
+    onChangeGoPage = (value) => {
+        this.setState({ pageNumber: value - 1 });
+    };
+
+    previousPage = () => {
+        const { pageNumber } = this.state
+        let p = 0
+        if (pageNumber > 0) {
+          this.setState({ pageNumber: pageNumber - 1 }, () => {
+            this.setState({answer: false, myAnswer: null, currQuestion: this.props.exam.examQuestion[pageNumber - 1]})
+          })
+          p = pageNumber - 1
+        }
+        this.props.actions.postTotalExamNum({ num: p, username: this.props.exam.exam[0].username, examID: (this.props.exam.exam[0].kind1==='4'?this.props.exam.exam[0].paperID:this.props.exam.exam[0].examID), kind:this.props.exam.exam[0].kind1 })
+    }
+    
+    nextPage = () => {
+        const { pageNumber, numPages } = this.state
+        let p = pageNumber
+        if (pageNumber < numPages - 1) {
+            this.setState({ pageNumber: pageNumber + 1 }, () => {
+            this.setState({answer: false, myAnswer: null, currQuestion: this.props.exam.examQuestion[pageNumber + 1]})
+            })
+            p = pageNumber + 1
+        }
+        if(p>0){    //防止意外导致当前页数数据丢失
+            this.props.actions.postTotalExamNum({ num: p, username: this.props.exam.exam[0].username, examID: (this.props.exam.exam[0].kind1==='4'?this.props.exam.exam[0].paperID:this.props.exam.exam[0].examID), kind:this.props.exam.exam[0].kind1 })
+        }
+    }
+    
+    firstPage = () => {
+        const { pageNumber, numPages } = this.state
+        let p = pageNumber
+        this.setState({ pageNumber: 0 }, () => {
+        this.setState({answer: false, myAnswer: null, currQuestion: this.props.exam.examQuestion[0]})
+        })
+        p = 0
+        this.props.actions.postTotalExamNum({ num: p, username: this.props.exam.exam[0].username, examID: (this.props.exam.exam[0].kind1==='4'?this.props.exam.exam[0].paperID:this.props.exam.exam[0].examID), kind:this.props.exam.exam[0].kind1 })
+    }
+    
+    leave = () => {
+        this.props.actions.updateLeave(true)
+        this.props.history.push('/homepage')
+    }
+    
+    answerSort = (str) => {
+        const arr = str.split(''); //将字符串转换成数组
+        arr.sort(); //对数组进行排序
+        return arr.join(''); //将数组转换回字符串
+    }
+    
+    setFavorite = (enterID, questionID, mark) => {
+        const { pageNumber, numPages } = this.state
+        this.props.actions.setFavorite({enterID, questionID, mark});
+        message.success(mark===0 ? '已添加到收藏夹' : '已取消收藏');
+        if(mark===1){
+            //取消收藏后，将该题目从当前列表中删除，向后翻页。
+            this.props.exam.examQuestion.splice(pageNumber, 1);
+            this.setState({numPages: numPages-1, answer: false, myAnswer: null})
+            if (pageNumber < numPages - 1){
+                this.setState({currQuestion: this.props.exam.examQuestion[pageNumber]})
+            }
+        }
     }
 
     render() {
@@ -186,16 +312,18 @@ class ExamForm extends Component {
             <p> </p>
             <div>
 
-                {
-                    this.props.exam.examQuestion.map((question, index) => (
+            {this.props.exam.exam[0].pkind === 0 ?
+                <div>
+                    {this.props.exam.examQuestion.map((question, index) => (
                         <Form.Item style={{ textAlign: 'left' }}
                             name={question.ID}
                             key={question.ID}
                             label={
                                 <div>
-                                    <span>{(index + 1) + '. ' + question.questionName + '(' + question.kindName + '题 ' + question.scorePer + '分' + ')'}{question.image !== '' ? <Image src={axios.defaults.baseURL + question.image} /> : null}</span>
+                                    <span dangerouslySetInnerHTML={{__html: ((this.state.page-1)*pageSize + index + 1) + '. ' + '(' + question.kindName + '题 ' + (this.props.exam.exam[0].pkind === 0 ? question.scorePer + '分' : "") + ')' + question.questionName}} /><span>{question.image !== '' ? <Image src={axios.defaults.baseURL + question.image} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 && question.score > 0 ? <CheckOutlined style={question.score > 0 ? { color: 'green' } : { color: 'red' }} /> : null}{this.props.exam.exam[0].status === 2 && question.score === 0 ? <CloseOutlined style={question.score > 1 ? { color: 'green' } : { color: 'red' }} /> : null}</span>
                                     &nbsp;<span>{this.props.exam.exam[0].status === 2 ? '正确答案: ' + question.answer : null}</span>
+                                    &nbsp;<Button type="primary" size="small" shape="round" style={{ height: '80%' }} onClick={() => this.setFavorite(this.props.exam.exam[0].paperID, question.questionID, 0)}><span style={{ fontSize: font1 }}>{(this.props.exam.exam[0].pkind === 3 ? '取消收藏' : '收藏此题')}</span></Button>
                                 </div>
                             }>
                             {
@@ -207,10 +335,6 @@ class ExamForm extends Component {
                                         <Row>{question.D !== '' || question.imageD !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D}</Radio> : null}{question.imageD !== '' ? <Image src={axios.defaults.baseURL + question.imageD} /> : null}</Row>
                                         <Row>{question.E !== '' || question.imageE !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Radio> : null}{question.imageE !== '' ? <Image src={axios.defaults.baseURL + question.imageE} /> : null}</Row>
                                         <Row>{question.F !== '' || question.imageF !== '' ? <Radio key={question.ID + 'F'} value='F'>{'F. ' + question.F}</Radio> : null}{question.imageF !== '' ? <Image src={axios.defaults.baseURL + question.imageF} /> : null}</Row>
-                                        {/* <Row>{question.C !== '' || question.imageC !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C + question.imageC !== '' ? <Image src={question.imageC} /> : null}</Radio> : null}</Row>
-                                        <Row>{question.D !== '' || question.imageD !== '' ? <Radio key={question.ID + 'D'} value='D'>{'D. ' + question.D + question.imageD !== '' ? <Image src={question.imageD} /> : null}</Radio> : null}</Row>
-                                        <Row>{question.E !== '' || question.imageE !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E + question.imageE !== '' ? <Image src={question.imageE} /> : null}</Radio> : null}</Row>
-                                        <Row>{question.F !== '' || question.imageF !== '' ? <Radio key={question.ID + 'F'} value='F'>{'F. ' + question.F + question.imageF !== '' ? <Image src={question.imageF} /> : null}</Radio> : null}</Row> */}
                                     </Radio.Group> :
                                     <Checkbox.Group>
                                         <Row>{question.A !== '' || question.imageA !== '' ? <Checkbox key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Checkbox> : null}{question.imageA !== '' ? <Image src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
@@ -222,10 +346,64 @@ class ExamForm extends Component {
                                     </Checkbox.Group>
                             }
                         </Form.Item>
-                    ))
-                }
-
-
+                    ))}
+                    <hr style={{margin:'3px 0'}} noshadow />
+                    <div style={{ fontSize: font, color: 'red' }}> 共{this.props.exam?.exam[0]?.questionQty || 0}已答{this.state.answerQty}题 翻页查看其它题目</div>
+                    <Pagination total={this.props.exam?.exam[0]?.questionQty || 0} showTotal={''} itemRender={this.itemRender} pageSize={pageSize} showSizeChanger={false} onChange={this.onPageChange}/>
+                </div>
+            :
+                this.state.currQuestion ?
+                    <div>
+                    <Row style={{ textAlign: 'center', margin: '10px' }}>
+                        <Space>
+                            {this.state.currQuestion.ID>0 ? 
+                            <div style={{ margin: '10px' }}><span style={{ fontSize: font }}>共{this.state.numPages}题</span>
+                            &nbsp;<InputNumber addonBefore="跳到" style={{ width: '45%', fontSize: font }} addonAfter="题" size="small" controls={false} min={1} max={this.state.numPages} defaultValue={0} onChange={this.onChangeGoPage} />
+                            &nbsp;<Button danger size="small" onClick={() => this.firstPage()}><span style={{ fontSize: font }}>重做</span></Button>
+                            <br /><Button type="primary" onClick={() => this.previousPage()}><span style={{ fontSize: font }}>上一题</span></Button>
+                            &nbsp;<Button type="primary" onClick={() => this.nextPage()}><span style={{ fontSize: font }}>下一题</span></Button>
+                            &nbsp;<Button danger style={{ height: '100%' }} onClick={() => this.leave()}><span style={{ fontSize: font }}>离开</span></Button></div>
+                            :
+                            <div style={{ margin: '10px' }}><Button danger style={{ height: '100%' }} onClick={() => this.leave()}><span style={{ fontSize: font }}>离开</span></Button></div>
+                            }
+                        </Space>
+                    </Row>
+                    <Form.Item style={{ fontSize: '16px', textAlign: 'left' }}
+                        name={this.state.currQuestion.ID}
+                        key={this.state.currQuestion.ID}
+                        label={
+                            <div>
+                                <div style={{ fontSize: font1 }}>
+                                    <span>{(this.state.currQuestion.ID > 0 ? (this.state.pageNumber + 1) + '. ' + '(' + this.state.currQuestion.kindName + '题 ' + ')' : '') + this.state.currQuestion.questionName}{this.state.currQuestion.image !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.image} /> : null}</span>
+                                    &nbsp;<span>{this.state.myAnswer ? (this.state.myAnswer === this.state.currQuestion.answer ? <CheckOutlined style={{ color: 'green' }} /> : <CloseOutlined style={{ color: 'red' }} />) : null}</span>
+                                    &nbsp;<span>{this.state.myAnswer ? '正确答案: ' + this.state.currQuestion.answer : null}</span>
+                                    {this.state.currQuestion.ID > 0 ? <Button type="primary" size="small" shape="round" style={{ height: '80%' }} onClick={() => this.setFavorite(this.props.exam.exam[0].paperID, this.state.currQuestion.questionID, (this.props.exam.exam[0].pkind === 3 ? 1 : 0))}><span style={{ fontSize: font1 }}>{(this.props.exam.exam[0].pkind === 3 ? '取消收藏' : '收藏此题')}</span></Button> : null}
+                                </div>
+                            </div>
+                        }>
+                        {
+                            this.state.currQuestion.kindID !== 2 ?
+                            <Radio.Group value=''>
+                                <Row>{this.state.currQuestion.A !== '' || this.state.currQuestion.imageA !== '' ? <Radio key={this.state.currQuestion.ID + 'A'} value='A'>{'A. ' + this.state.currQuestion.A}</Radio> : null}{this.state.currQuestion.imageA !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageA} /> : null}</Row>
+                                <Row>{this.state.currQuestion.B !== '' || this.state.currQuestion.imageB !== '' ? <Radio key={this.state.currQuestion.ID + 'B'} value='B'>{'B. ' + this.state.currQuestion.B}</Radio> : null}{this.state.currQuestion.imageB !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageB} /> : null}</Row>
+                                <Row>{this.state.currQuestion.C !== '' || this.state.currQuestion.imageC !== '' ? <Radio key={this.state.currQuestion.ID + 'C'} value='C'>{'C. ' + this.state.currQuestion.C}</Radio> : null}{this.state.currQuestion.imageC !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageC} /> : null}</Row>
+                                <Row>{this.state.currQuestion.D !== '' || this.state.currQuestion.imageD !== '' ? <Radio key={this.state.currQuestion.ID + 'D'} value='D'>{'D. ' + this.state.currQuestion.D}</Radio> : null}{this.state.currQuestion.imageD !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageD} /> : null}</Row>
+                                <Row>{this.state.currQuestion.E !== '' || this.state.currQuestion.imageE !== '' ? <Radio key={this.state.currQuestion.ID + 'E'} value='E'>{'E. ' + this.state.currQuestion.E}</Radio> : null}{this.state.currQuestion.imageE !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageE} /> : null}</Row>
+                                <Row>{this.state.currQuestion.F !== '' || this.state.currQuestion.imageF !== '' ? <Radio key={this.state.currQuestion.ID + 'F'} value='F'>{'F. ' + this.state.currQuestion.F}</Radio> : null}{this.state.currQuestion.imageF !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageF} /> : null}</Row>
+                            </Radio.Group> :
+                            <Checkbox.Group value=''>
+                                <Row>{this.state.currQuestion.A !== '' || this.state.currQuestion.imageA !== '' ? <Checkbox key={this.state.currQuestion.ID + 'A'} value='A'>{'A. ' + this.state.currQuestion.A}</Checkbox> : null}{this.state.currQuestion.imageA !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageA} /> : null}</Row>
+                                <Row>{this.state.currQuestion.B !== '' || this.state.currQuestion.imageB !== '' ? <Checkbox key={this.state.currQuestion.ID + 'B'} value='B'>{'B. ' + this.state.currQuestion.B}</Checkbox> : null}{this.state.currQuestion.imageB !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageB} /> : null}</Row>
+                                <Row>{this.state.currQuestion.C !== '' || this.state.currQuestion.imageC !== '' ? <Checkbox key={this.state.currQuestion.ID + 'C'} value='C'>{'C. ' + this.state.currQuestion.C}</Checkbox> : null}{this.state.currQuestion.imageC !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageC} /> : null}</Row>
+                                <Row>{this.state.currQuestion.D !== '' || this.state.currQuestion.imageD !== '' ? <Checkbox key={this.state.currQuestion.ID + 'D'} value='D'>{'D. ' + this.state.currQuestion.D}</Checkbox> : null}{this.state.currQuestion.imageD !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageD} /> : null}</Row>
+                                <Row>{this.state.currQuestion.E !== '' || this.state.currQuestion.imageE !== '' ? <Checkbox key={this.state.currQuestion.ID + 'E'} value='E'>{'E. ' + this.state.currQuestion.E}</Checkbox> : null}{this.state.currQuestion.imageE !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageE} /> : null}</Row>
+                                <Row>{this.state.currQuestion.F !== '' || this.state.currQuestion.imageF !== '' ? <Checkbox key={this.state.currQuestion.ID + 'F'} value='F'>{'F. ' + this.state.currQuestion.F}</Checkbox> : null}{this.state.currQuestion.imageF !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageF} /> : null}</Row>
+                            </Checkbox.Group>
+                        }
+                    </Form.Item>
+                    </div>
+                : null
+            }
             </div>
         </Form>
         )
