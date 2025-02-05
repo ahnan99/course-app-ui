@@ -34,7 +34,7 @@ class ExamForm extends Component {
         page: 1,
         goPage: 0,
         loadExam: 0,
-        answerQty: this.props.exam?.exam[0]?.answerQty || 0
+        answerQty: this.props.exam.exam[0].answerQty || 0
     }
 
 
@@ -348,8 +348,8 @@ class ExamForm extends Component {
                         </Form.Item>
                     ))}
                     <hr style={{margin:'3px 0'}} noshadow />
-                    <div style={{ fontSize: font, color: 'red' }}> 共{this.props.exam?.exam[0]?.questionQty || 0}已答{this.state.answerQty}题 翻页查看其它题目</div>
-                    <Pagination total={this.props.exam?.exam[0]?.questionQty || 0} showTotal={''} itemRender={this.itemRender} pageSize={pageSize} showSizeChanger={false} onChange={this.onPageChange}/>
+                    <div style={{ fontSize: font, color: 'red' }}> 共{this.props.exam.exam[0].questionQty || 0}已答{this.state.answerQty}题 翻页查看其它题目</div>
+                    <Pagination total={this.props.exam.exam[0].questionQty || 0} showTotal={''} itemRender={this.itemRender} pageSize={pageSize} showSizeChanger={false} onChange={this.onPageChange}/>
                 </div>
             :
                 this.state.currQuestion ?

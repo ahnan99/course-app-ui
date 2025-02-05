@@ -63,8 +63,9 @@ class LoginForm extends Component {
         console.log(`checked = ${e.target.checked}`);
     }
 
-    onChangeID = (value) => {
-        this.setState({ waiting: value==="123" ? false : true });
+    onChangeID = (e) => {
+        console.log('ID value:', e.target.value)
+        this.setState({ waiting: e.target.value==="123" ? false : true });
     };
 
     render() {
@@ -100,7 +101,7 @@ class LoginForm extends Component {
                     </a>
                 </Form.Item>
                 <Form.Item>
-                    {this.state.waiting ? "系统正在维护，预计在2.6恢复。" :
+                    {this.state.waiting ? <span style={{color:'red', paddingLeft:'10px', fontSize:'1.5em'}}>系统正在维护，预计在2.6恢复</span> :
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                     </Button>}

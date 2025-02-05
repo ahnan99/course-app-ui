@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Progress, message, Button, Checkbox, Modal, Popover } from 'antd'
+import { Card, Row, Col, Progress, message, Button, Modal, Space, notification } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { RightOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
