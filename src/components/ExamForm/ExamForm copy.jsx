@@ -334,7 +334,7 @@ class ExamForm extends Component {
                 {this.props.exam.exam[0].pkind === 0 ?
                     <div>
                         {this.props.exam.examQuestion.map((question, index) => (
-                            <div><Form.Item style={{ textAlign: 'left' }}
+                            <Form.Item style={{ textAlign: 'left' }}
                                 name={question.ID}
                                 key={question.ID}
                                 label={
@@ -345,6 +345,7 @@ class ExamForm extends Component {
                                         &nbsp;&nbsp;<Button type="primary" size="small" shape="round" style={{ height: '80%' }} onClick={() => this.setFavorite(this.props.exam.exam[0].refID, question.questionID, 0)}><span style={{ fontSize: '1em' }}>{(this.props.exam.exam[0].pkind === 3 ? '取消收藏' : '收藏此题')}</span></Button>
                                     </div>
                                 }>
+                                <div>
                                     {question.kindID !== 2 ?
                                         <Radio.Group>
                                             <Row>{question.A !== '' || question.imageA !== '' ? <Radio key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Radio> : null}{question.imageA !== '' ? <Image src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
@@ -364,9 +365,9 @@ class ExamForm extends Component {
                                         </Checkbox.Group>
 
                                     }
+                                    {this.props.exam.exam[0].status === 2 && question.memo > '' ? <div><span style={{ color: 'green', fontSize: '1em' }}>解析: </span><span style={{ color: 'red', fontSize: '1em' }}>{question.memo}</span></div> : null}
+                                </div>
                             </Form.Item>
-                                {this.props.exam.exam[0].status === 2 && question.memo > '' ? <div style={{ textAlign: 'left' }}><span style={{ color: 'green', fontSize: '1em' }}>解析: </span><span style={{ color: 'red', fontSize: '1em' }}>{question.memo}</span></div> : null}
-                            </div>
                         ))}
                         <hr style={{ margin: '3px 0' }} noshadow="true" />
                         <div style={{ fontSize: font, color: 'red' }}> 共{this.props.exam.exam[0].questionQty || 0}已答{this.state.answerQty}题 翻页查看其它题目</div>
@@ -379,7 +380,7 @@ class ExamForm extends Component {
                                 <Space>
                                     {this.state.currQuestion.ID > 0 ?
                                         <div style={{ margin: '10px' }}><span style={{ fontSize: font }}>共{this.state.numPages}题</span>
-                                            &nbsp;<InputNumber addonbefore="跳到" style={{ width: '30%', fontSize: font, margin: '3px' }} addonafter="题" size="small" controls={false} min={1} max={this.state.numPages} defaultValue={1} value={this.state.pageNumber + 1} onChange={this.onChangeGoPage} />
+                                            &nbsp;<InputNumber addonbefore="跳到" style={{ width: '45%', fontSize: font }} addonafter="题" size="small" controls={false} min={1} max={this.state.numPages} defaultValue={1} value={this.state.pageNumber + 1} onChange={this.onChangeGoPage} />
                                             &nbsp;<Button danger size="small" onClick={() => this.firstPage()}><span style={{ fontSize: font }}>重做</span></Button>
                                             <br /><Button type="primary" onClick={() => this.previousPage()}><span style={{ fontSize: font }}>上一题</span></Button>
                                             &nbsp;<Button type="primary" onClick={() => this.nextPage()}><span style={{ fontSize: font }}>下一题</span></Button>
@@ -389,7 +390,7 @@ class ExamForm extends Component {
                                     }
                                 </Space>
                             </Row>
-                            <div><Form.Item style={{ fontSize: '16px', textAlign: 'left' }}
+                            <Form.Item style={{ fontSize: '16px', textAlign: 'left' }}
                                 name={this.state.currQuestion.ID}
                                 key={this.state.currQuestion.ID}
                                 label={
@@ -398,13 +399,12 @@ class ExamForm extends Component {
                                             <span>{(this.state.currQuestion.ID > 0 ? (this.state.pageNumber + 1) + '. ' + '(' + this.state.currQuestion.kindName + '题 ' + ')' : '') + this.state.currQuestion.questionName}{this.state.currQuestion.image !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.image} /> : null}</span>
                                             {/* &nbsp;<span>{this.state.myAnswer ? (this.state.myAnswer === this.state.currQuestion.answer ? <CheckOutlined style={{ color: 'green' }} /> : <CloseOutlined style={{ color: 'red' }} />) : null}</span> */}
                                             &nbsp;<span style={{ color: 'orange' }}>{this.state.showAnswer ? '正确答案: ' + this.state.currQuestion.answer : null}</span>
-                                            <div>
                                             {this.state.currQuestion.ID > 0 ? <Button type="primary" size="small" shape="round" style={{ height: '80%', marginLeft: '5px' }} onClick={() => this.setFavorite(this.props.exam.exam[0].paperID, this.state.currQuestion.questionID, (this.props.exam.exam[0].pkind === 3 ? 1 : 0))}><span style={{ fontSize: font }}>{(this.props.exam.exam[0].pkind === 3 ? '取消收藏' : '收藏此题')}</span></Button> : null}
                                             {this.state.showAnswer ? null : <Button type="primary" size="small" shape="round" style={{ height: '80%', marginLeft: '5px' }} onClick={() => this.showAnswer()}><span style={{ fontSize: font }}>答案</span></Button>}
-                                            </div>
                                         </div>
                                     </div>
                                 }>
+                                <div>
                                     {this.state.currQuestion.kindID !== 2 ?
                                         <Radio.Group value=''>
                                             <Row>{this.state.currQuestion.A !== '' || this.state.currQuestion.imageA !== '' ? <Radio key={this.state.currQuestion.ID + 'A'} value='A'><span style={{ fontSize: font1 }} dangerouslySetInnerHTML={{ __html: 'A. ' + this.state.currQuestion.A }} /></Radio> : null}{this.state.currQuestion.imageA !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageA} /> : null}</Row>
@@ -423,9 +423,9 @@ class ExamForm extends Component {
                                             <Row>{this.state.currQuestion.F !== '' || this.state.currQuestion.imageF !== '' ? <Checkbox key={this.state.currQuestion.ID + 'F'} value='F'><span style={{ fontSize: font1 }} dangerouslySetInnerHTML={{ __html: 'F. ' + this.state.currQuestion.F }} /></Checkbox> : null}{this.state.currQuestion.imageF !== '' ? <Image src={axios.defaults.baseURL + this.state.currQuestion.imageF} /> : null}</Row>
                                         </Checkbox.Group>
                                     }
+                                    {this.state.showAnswer && this.state.currQuestion.memo > '' ? <div><span style={{ color: 'green', fontSize: font }}>解析: </span><span style={{ color: 'red', fontSize: font }}>{this.state.currQuestion.memo}</span></div> : null}
+                                </div>
                             </Form.Item>
-                                {this.state.showAnswer && this.state.currQuestion.memo > '' ? <div style={{ textAlign: 'left' }}><span style={{ color: 'green', fontSize: font1 }}>解析: </span><span style={{ color: 'red', fontSize: font1 }}>{this.state.currQuestion.memo}</span></div> : null}
-                            </div>
                         </div>
                     : null
                 }

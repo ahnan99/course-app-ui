@@ -12,7 +12,7 @@ const layout = {
 
 class LoginForm extends Component {
     state = {
-        waiting: true
+        waiting: false
     }
 
     redirectToRegister = () => {
@@ -64,8 +64,8 @@ class LoginForm extends Component {
     }
 
     onChangeID = (e) => {
-        console.log('ID value:', e.target.value)
-        this.setState({ waiting: e.target.value==="123" ? false : true });
+        // console.log('ID value:', e.target.value)
+        // this.setState({ waiting: e.target.value==="123" ? false : true });
     };
 
     render() {
@@ -101,7 +101,7 @@ class LoginForm extends Component {
                     </a>
                 </Form.Item>
                 <Form.Item>
-                    {this.state.waiting ? <span style={{color:'red', paddingLeft:'10px', fontSize:'1.5em'}}>系统正在维护，预计在2.6恢复</span> :
+                    {this.state.waiting ? <span style={{color:'red', paddingLeft:'10px', fontSize:'1.5em'}}>系统正在维护，预计在2.6日20:00恢复</span> :
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                     </Button>}

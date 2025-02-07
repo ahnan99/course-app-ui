@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Progress, message, Button, Modal, Space, notification } from 'antd'
+import { Card, Row, Col, Progress, message, Button, Modal, Space } from 'antd'
 import { withRouter } from 'react-router-dom'
-import { RightOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import SignatureCanvas from 'react-signature-canvas'
-import { actions as CourseActions } from '../../modules/courses'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import axios from 'axios'
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
 
 // document.addEventListener('visibilitychange', function() { 
 //     var isHidden = document.hidden; 
@@ -49,7 +45,7 @@ class LessonCard extends Component {
             qty2: 0,
             qty3: 0,
             paperItem: '',
-            busyGetExamQuestion:1,
+            busyGetExamQuestion:0,
             chapterList:[]
         }
     }
@@ -102,6 +98,7 @@ class LessonCard extends Component {
             this.props.examActions.updateLeave(true)
             this.props.examActions.getExam({ paperID, pkind, examID, username, kind });
             this.props.examActions.updateBusyGetExamQuestion(1);
+            this.setState({ busyGetExamQuestion: 1 });
         }
     }
 
@@ -122,10 +119,11 @@ class LessonCard extends Component {
                 message.info(this.props.exam.exam[0].startExamMsg)
             } else if (this.props.exam.exam[0].allowMockMsg !== "") {
                 message.info(this.props.exam.exam[0].allowMockMsg)
-            } else if (this.props.exam.busyGetExamQuestion === 1 && ((this.props.exam.exam[0].pkind !==2 && this.props.exam.exam[0].pkind !==4) || this.state.questionOption>0)) {
+            } else if (this.state.busyGetExamQuestion === 1 && this.props.exam.busyGetExamQuestion === 1 && ((this.props.exam.exam[0].pkind !==2 && this.props.exam.exam[0].pkind !==4) || this.state.questionOption>0)) {
                 this.props.history.push("/exampage")
                 this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID:this.props.exam.exam[0].examID, kind: this.state.questionOption, page:1, pageSize:20, s:0 })
                 this.props.examActions.updateBusyGetExamQuestion(0);
+                this.setState({ busyGetExamQuestion: 0 });
             }
         }
         
@@ -293,7 +291,7 @@ class LessonCard extends Component {
     render() {
         const { course } = this.props
         const { lessons } = this.props
-        const { pageNumber, numPages } = this.state
+        const { pageNumber } = this.state
 
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
@@ -320,7 +318,7 @@ class LessonCard extends Component {
                 </Modal>
                 </div>
                 <Col span={24}>
-                    <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{[course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null]} <a>{course.statusName}</a></div>}>{
+                    <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             {course.completion ? <Progress percent={course.completion} size="small" /> : null}<p>时长：{course.hours}</p>
                             <p>开始日期：{course.startDate}</p>
@@ -330,7 +328,7 @@ class LessonCard extends Component {
                         </Card.Grid> : null}
                         {course.signatureType === 1 && course.signature === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
-                        {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host=="znxf" || this.props.application.userInfo.host=="spc" || this.props.application.userInfo.host=="shm") && course.agencyID != "5" && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
+                        {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host==="znxf" || this.props.application.userInfo.host==="spc" || this.props.application.userInfo.host==="shm") && course.agencyID !== 5 && this.state.showPayBtn && this.state.pay === 0 && course.payNow === 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
@@ -352,7 +350,7 @@ class LessonCard extends Component {
                                 ))}
                             </ul>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
-                                <li key={999} style={{ listStyleType: 'none', clear: 'both' }}>
+                                <li style={{ listStyleType: 'none', clear: 'both' }}>
                                     <div style={{padding:'5px'}}>
                                     <span>{course.type === 0 ? '模拟考试' : '考试'}</span>
                                     <span style={{ color: 'lightgray', paddingLeft:'1em' }}>{course.examScore || 0}分&nbsp;&nbsp;{course.examTimes}次</span>
@@ -361,7 +359,7 @@ class LessonCard extends Component {
                                         {
                                             course.paperID !== null && course.paperID !== '' ? JSON.parse(course.paperID)
                                                 .map(singlePaperID => (
-                                                    <li key={singlePaperID.paperID} style={{ listStyleType: 'none', clear: 'both' }}>
+                                                    <li key={singlePaperID.paperID + singlePaperID.pkind + singlePaperID.examID} style={{ listStyleType: 'none', clear: 'both' }}>
                                                         <div style={{ padding:'5px' }}>
                                                         <Button type='primary' onClick={() => this.onClickExam(singlePaperID.paperID, singlePaperID.pkind, singlePaperID.examID, course.username, 0, singlePaperID.qty1, singlePaperID.qty2, singlePaperID.qty3, singlePaperID.item, singlePaperID.list)}>{singlePaperID.item}</Button>
                                                         <span style={{ color: 'lightgray', paddingLeft:'10px' }}>{singlePaperID.examScore}&nbsp;&nbsp;</span>
