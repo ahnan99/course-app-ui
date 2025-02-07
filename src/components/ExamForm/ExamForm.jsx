@@ -229,8 +229,8 @@ class ExamForm extends Component {
 
     onChangeGoPage = (value) => {
         // this.setState({ pageNumber: value - 1 });
-        const { pageNumber, numPages } = this.state
-        let p = value - 1
+        const { numPages } = this.state
+        let p = (value || 1) - 1
         if (p > numPages - 1) {
             p = numPages - 1;
         }
