@@ -145,7 +145,7 @@ class ExamForm extends Component {
     componentDidMount() {
         this.timer = setInterval(() => {
 
-            if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].status !== 2) {
+            if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].pkind === 0 && this.props.exam.exam[0].status !== 2) {
                 const { time } = this.state
 
 
@@ -154,9 +154,11 @@ class ExamForm extends Component {
         }, 5000)    //exam submission Interval
 
         this.timer2 = setInterval(() => {
-            this.setState({ time: this.state.time - 1 })
-            if (this.state.time === 1 && this.props.exam.exam[0].kind === 1) {
-                this.onFinish({})
+            if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].pkind === 0 && this.props.exam.exam[0].status !== 2) {
+                this.setState({ time: this.state.time - 1 })
+                if (this.state.time === 1 && this.props.exam.exam[0].kind === 1) {
+                    this.onFinish({})
+                }
             }
         }, 1000)
     }
@@ -212,7 +214,7 @@ class ExamForm extends Component {
             this.props.actions.updatePostSingleQuestion(null)
         }
         if (this.props.exam.exam[0].pkind > 0 && prevProps.exam.examQuestion === null && this.props.exam.examQuestion) {
-            let p = (this.props.exam.exam[0].lastNum >= this.props.exam.examQuestion.length ? this.props.exam.examQuestion.length - 1 : this.props.exam.exam[0].lastNum) || 0;
+            let p = (this.props.exam.exam[0].lastNum >= this.props.exam.examQuestion.length ? this.props.exam.examQuestion.length - 1 : this.props.exam.exam[0].lastNum<0?0:this.props.exam.exam[0].lastNum) || 0;
             this.setState({ currQuestion: this.props.exam.examQuestion[p], numPages: this.props.exam.examQuestion.length, pageNumber: p }, () => { })
         }
     }
