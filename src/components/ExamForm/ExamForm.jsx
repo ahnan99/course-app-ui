@@ -381,8 +381,8 @@ class ExamForm extends Component {
                                         <div style={{ margin: '10px' }}><span style={{ fontSize: font }}>共{this.state.numPages}题</span>
                                             &nbsp;<InputNumber addonbefore="跳到" style={{ width: '30%', fontSize: font, margin: '3px' }} addonafter="题" size="small" controls={false} min={1} max={this.state.numPages} defaultValue={1} value={this.state.pageNumber + 1} onChange={this.onChangeGoPage} />
                                             &nbsp;<Button danger size="small" onClick={() => this.firstPage()}><span style={{ fontSize: font }}>重做</span></Button>
-                                            <br /><Button type="primary" onClick={() => this.previousPage()}><span style={{ fontSize: font }}>上一题</span></Button>
-                                            &nbsp;<Button type="primary" onClick={() => this.nextPage()}><span style={{ fontSize: font }}>下一题</span></Button>
+                                            <br />{this.state.pageNumber>0?<Button type="primary" onClick={() => this.previousPage()}><span style={{ fontSize: font }}>上一题</span></Button>:null}
+                                            &nbsp;{this.state.pageNumber<this.state.numPages?<Button type="primary" onClick={() => this.nextPage()}><span style={{ fontSize: font }}>下一题</span></Button>:null}
                                             &nbsp;<Button danger size="small" onClick={() => this.leave()}><span style={{ fontSize: font }}>离开</span></Button></div>
                                         :
                                         <div style={{ margin: '10px' }}><Button danger size="small" onClick={() => this.leave()}><span style={{ fontSize: font }}>离开</span></Button></div>
