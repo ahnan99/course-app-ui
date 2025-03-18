@@ -17,17 +17,17 @@ class RestCertList extends Component {
       selectedItem: null
     }
   }
-  componentDidMount() {
+  componentDidMount() {postAddCert
     this.props.actions.getRestCert({ username: this.props.application.username })
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID:this.props.application.fromID, url:this.props.application.logUrl })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID:this.props.application.fromID, url:this.getSubdomain() })
     this.setState({ visible: false })
   }
 
   onAddretrain = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID:this.props.application.fromID, url:this.props.application.logUrl })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID:this.props.application.fromID, url:this.getSubdomain() })
     this.setState({ visible: false })
 
   }
@@ -51,12 +51,22 @@ class RestCertList extends Component {
   }
 
 
+  getSubdomain = () => {
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
+    if (parts.length > 2) {
+      return parts[0]; // 这里返回的是二级域名
+    } else {
+      return ''; // 或者抛出错误，取决于你的需求
+    }
+  }
+
   handleCancel = () => {
     console.log(this.formRef.current.getFieldsValue())
     this.setState({ visible: false, selectedItem: null })
   }
   handleOK = cert => {
-    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID:this.props.application.fromID, url:this.props.application.logUrl })
+    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID:this.props.application.fromID, url:getSubdomain() })
     this.setState({ visible: false, selectedItem: null })
   }
 
