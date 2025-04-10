@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Progress, message, Button, Modal, Space } from 'antd'
+import { Card, Row, Col, Progress, message, Button, Checkbox, Modal, Space } from 'antd'
 import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import SignatureCanvas from 'react-signature-canvas'
@@ -46,7 +46,8 @@ class LessonCard extends Component {
             qty3: 0,
             paperItem: '',
             busyGetExamQuestion:1,
-            chapterList:[]
+            chapterList:[],
+            checkWrong: 0
         }
     }
 
@@ -121,7 +122,7 @@ class LessonCard extends Component {
                 message.info(this.props.exam.exam[0].allowMockMsg)
             } else if (this.state.busyGetExamQuestion === 1 && this.props.exam.busyGetExamQuestion === 1 && ((this.props.exam.exam[0].pkind !==2 && this.props.exam.exam[0].pkind !==4) || this.state.questionOption>0)) {
                 this.props.history.push("/exampage")
-                this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID:this.props.exam.exam[0].examID, kind: this.state.questionOption, page:1, pageSize:20, s:0 })
+                this.props.examActions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID:this.props.exam.exam[0].examID, kind: this.state.questionOption, page:1, pageSize:20, onlyWrong:this.state.checkWrong, s:0 })
                 this.props.examActions.updateBusyGetExamQuestion(0);
                 this.setState({ busyGetExamQuestion: 0 });
             }
@@ -187,6 +188,10 @@ class LessonCard extends Component {
 
     onChangeCheckBox = (e) => {
         this.setState({ signatureAgreementChecked: e.target.checked })
+    }
+
+    onChangeCheckWrong = (e) => {
+        this.setState({ checkWrong: e.target.checked?1:0 })
     }
 
     onClickCommentPage = () => {
@@ -372,7 +377,11 @@ class LessonCard extends Component {
                                         {<div><div style={{ color: 'blue', textAlign:'center', fontSize:'1.2em', width:'100%' }}>{this.state.paperItem}</div><hr style={{margin:'3px 0'}}></hr></div>}
                                         {this.state.qty1>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption(1)}>单选题</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty1})</span></div>}
                                         {this.state.qty2>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption(2)}>多选题</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty2})</span></div>}
-                                        {this.state.qty3>0 && <div><Button shape="round" type='primary' onClick={() => this.setQuestionOption(3)}>判断题</Button><span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty3})</span></div>}
+                                        {this.state.qty3>0 && <div>
+                                            <Button shape="round" type='primary' onClick={() => this.setQuestionOption(3)}>判断题</Button>
+                                            <span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty3})</span>
+                                            <span style={{ color: 'lightgray', paddingLeft:'1em' }}><Checkbox key='A' value='只看错题' onChange={this.onChangeCheckWrong} checked={true}></Checkbox></span>
+                                        </div>}
                                         <Button shape="round" onClick={this.onClickOptionCancel}>&nbsp;关&nbsp;&nbsp;闭&nbsp;</Button>
                                     </Space></div>}
                                     {this.state.showQuestionOption4 && <div style={{textAlign:'left', backgroundColor:'#f0f0f0', padding: '30px', width:'70%', boxShadow:'initial'}}><Space direction="vertical" align="left" >
