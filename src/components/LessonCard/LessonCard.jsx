@@ -47,7 +47,7 @@ class LessonCard extends Component {
             paperItem: '',
             busyGetExamQuestion:1,
             chapterList:[],
-            checkWrong: 0
+            checkWrong: 1
         }
     }
 
@@ -380,7 +380,7 @@ class LessonCard extends Component {
                                         {this.state.qty3>0 && <div>
                                             <Button shape="round" type='primary' onClick={() => this.setQuestionOption(3)}>判断题</Button>
                                             <span style={{ color: 'lightgray', paddingLeft:'1em' }}>({this.state.qty3})</span>
-                                            <span style={{ color: 'lightgray', paddingLeft:'1em' }}><Checkbox key='A' value='只看错题' onChange={this.onChangeCheckWrong} checked={true}></Checkbox></span>
+                                            <span style={{ color: 'lightgray', paddingLeft:'1em' }}><Checkbox key='A' value='只看错题' onChange={this.onChangeCheckWrong} checked={this.state.checkWrong}>只看错题</Checkbox></span>
                                         </div>}
                                         <Button shape="round" onClick={this.onClickOptionCancel}>&nbsp;关&nbsp;&nbsp;闭&nbsp;</Button>
                                     </Space></div>}
