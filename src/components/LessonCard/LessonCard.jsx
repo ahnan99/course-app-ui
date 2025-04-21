@@ -323,7 +323,7 @@ class LessonCard extends Component {
                 </Modal>
                 </div>
                 <Col span={24}>
-                    <Card title={course.courseName + [course.re != 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type == 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
+                    <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             {course.completion ? <Progress percent={course.completion} size="small" /> : null}<p>时长：{course.hours}</p>
                             <p>开始日期：{course.startDate}</p>
@@ -331,11 +331,11 @@ class LessonCard extends Component {
                             <p>完成条件：{course.pass_condition}</p>
                             {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()}>课程答疑</Button> : null}
                         </Card.Grid> : null}
-                        {course.signatureType == 1 && course.signature == "" ? <Card.Grid style={this.gridStyle}>
+                        {course.signatureType === 1 && course.signature === "" && course.agencyID !== "5" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
-                        {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host==="znxf" || this.props.application.userInfo.host==="spc" || this.props.application.userInfo.host==="shm") && course.agencyID != 5 && this.state.showPayBtn && this.state.pay == 0 && course.payNow == 0 && course.pay_status == 0 ? <Card.Grid style={this.gridStyle}>
+                        {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host==="znxf" || this.props.application.userInfo.host==="spc" || this.props.application.userInfo.host==="shm") && course.agencyID !== "5" && this.state.showPayBtn && this.state.pay == 0 && course.payNow == 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
-                        {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice == 0 && course.autoPay == 1 && course.pay_status == 1 && course.invoice == "" ? <Card.Grid style={this.gridStyle}>
+                        {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
                         {this.state.invoice === 1 ? <Card.Grid style={this.gridStyle}><p style={{ color: 'red' }}>将在三个工作日内完成开票，请注意短信通知</p></Card.Grid> : null}
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "") && (course.pre===0 || course.pay_status===1 || course.payNow===1) ? <Card.Grid style={this.gridStyle}>
