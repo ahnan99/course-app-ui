@@ -331,7 +331,7 @@ class LessonCard extends Component {
                             <p>完成条件：{course.pass_condition}</p>
                             {!this.props.application.teacher ? <Button type='primary' onClick={() => this.onClickCommentPage()}>课程答疑</Button> : null}
                         </Card.Grid> : null}
-                        {course.signatureType === 1 && course.signature === "" ? <Card.Grid style={this.gridStyle}>
+                        {course.signatureType == 1 && course.signature == "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host==="znxf" || this.props.application.userInfo.host==="spc" || this.props.application.userInfo.host==="shm") && course.agencyID != 5 && this.state.showPayBtn && this.state.pay == 0 && course.payNow == 0 && course.pay_status == 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
