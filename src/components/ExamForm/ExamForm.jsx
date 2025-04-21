@@ -225,7 +225,7 @@ class ExamForm extends Component {
 
     onPageChange = (page) => {
         this.props.actions.getExamQuestion({ paperID: this.props.exam.exam[0].paperID, pkind: this.props.exam.exam[0].pkind, examID: '', kind: this.props.exam.exam[0].kind1, page, pageSize, s: 2 });
-        this.setState({ getQuestion: true })
+        this.setState({ getQuestion: true });
         this.setState({ page });
     }
 
@@ -372,7 +372,7 @@ class ExamForm extends Component {
                         ))}
                         <hr style={{ margin: '3px 0' }} noshadow="true" />
                         <div style={{ fontSize: font, color: 'red' }}> 共{this.props.exam.exam[0].questionQty || 0}已答{this.state.answerQty}题 翻页查看其它题目</div>
-                        <Pagination total={this.props.exam.exam[0].questionQty || 0} showTotal={''} itemRender={this.itemRender} pageSize={pageSize} showSizeChanger={false} onChange={this.onPageChange} />
+                        <Pagination total={this.props.exam.exam[0].questionQty || 0} current={this.state.page} showTotal={''} itemRender={this.itemRender} pageSize={pageSize} showSizeChanger={false} onChange={this.onPageChange} />
                     </div>
                     :
                     this.state.currQuestion ?
