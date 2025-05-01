@@ -12,9 +12,9 @@ import { Document, Page } from 'react-pdf';
 //         window.location.reload() // 强制页面刷新
 //     }
 // });
-console.log("_host:", _host, _fromID);
 
 class LessonCard extends Component {
+
     constructor(props) {
         super(props)
         this.divRef = React.createRef()
