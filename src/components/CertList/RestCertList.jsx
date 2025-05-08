@@ -22,12 +22,14 @@ class RestCertList extends Component {
   }
 
   onAdd = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID:this.props.application.fromID, url:this.getSubdomain() })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID: window._sales, url:this.getSubdomain() });
+    console.log("_host1:", window._host, window._sales);
     this.setState({ visible: false })
   }
 
   onAddretrain = cert => {
-    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID:this.props.application.fromID, url:this.getSubdomain() })
+    this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID: window._sales, url:this.getSubdomain() });
+    console.log("_host2:", window._host, window._sales);
     this.setState({ visible: false })
 
   }
@@ -66,7 +68,8 @@ class RestCertList extends Component {
     this.setState({ visible: false, selectedItem: null })
   }
   handleOK = cert => {
-    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID:this.props.application.fromID, url:this.getSubdomain() })
+    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID: window._sales, url:this.getSubdomain() });
+    console.log("_host3:", window._host, window._sales);
     this.setState({ visible: false, selectedItem: null })
   }
 

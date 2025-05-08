@@ -13,6 +13,9 @@ import { actions as UserActions } from '../modules/user'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import qs from 'qs'
+window._host = qs.parse(location.search, { ignoreQueryPrefix: true }).host || "";
+window._sales = qs.parse(location.search, { ignoreQueryPrefix: true }).fromID || "";
+console.log("_host:", window._host, window._sales);
 
 axios.defaults.baseURL = process.env.REACT_APP_ALIYUNHOST ? process.env.REACT_APP_ALIYUNHOST + ":8081" : "http://127.0.0.1:8081"
 //axios.defaults.baseURL = "http://spc.shznxfxx.cn:8081"

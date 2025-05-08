@@ -116,7 +116,7 @@ class RegisterForm extends Component {
             unit: values.unit,
             experience: values.experience,
             dept: values.dept,
-            fromID: this.props.application.fromID
+            fromID: window._sales
         })
     }
 
