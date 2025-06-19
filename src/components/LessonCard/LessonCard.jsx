@@ -324,7 +324,7 @@ class LessonCard extends Component {
                 </Modal>
                 </div>
                 <Col span={24}>
-                    <Card title={course.courseName + [course.re !== 0 ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
+                    <Card title={course.courseName + [course.agencyID === "1" ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
                             {course.completion ? <Progress percent={course.completion} size="small" /> : null}<p>时长：{course.hours}</p>
                             <p>开始日期：{course.startDate}</p>
