@@ -144,6 +144,20 @@ class RegisterForm extends Component {
         }
     }
 
+    validatePassword = (_, value) => {
+        if (!value) {
+          return Promise.reject(new Error('请输入密码'));
+        }
+        const regex = /^.{6,}$/;
+        if(window._host==="spc"){
+            regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        }
+        if (!regex.test(value)) {
+          return Promise.reject(new Error(window._host==="spc"?'密码至少8位，包含数字、大写字母和小写字母':"密码至少6位"));
+        }
+        return Promise.resolve();
+    };
+
     render() {
         const { kindID } = this.state
         if (!this.props.application.companyInfo) {
@@ -209,10 +223,7 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入密码',
                         },
-                        {
-                            min: 6,
-                            message: '密码至少六位'
-                        }
+                        { validator: validatePassword },
                     ]}
                     hasFeedback
                 >
