@@ -13,7 +13,8 @@ import { actions as UserActions } from '../modules/user'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import qs from 'qs'
-window._host = qs.parse(location.search, { ignoreQueryPrefix: true }).host || "";
+// window._host = qs.parse(location.search, { ignoreQueryPrefix: true }).host || "";
+window._host = window.location.hostname.split('.')[0];
 window._sales = qs.parse(location.search, { ignoreQueryPrefix: true }).fromID || "";
 console.log("_host:", window._host, window._sales);
 

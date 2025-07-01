@@ -148,6 +148,7 @@ class RegisterForm extends Component {
         if (!value) {
           return Promise.reject(new Error('请输入密码'));
         }
+        console.log("window._host",window._host);
         let regex = /^.{6,}$/;
         if(window._host==="spc"){
             regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
