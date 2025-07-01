@@ -148,7 +148,7 @@ class RegisterForm extends Component {
         if (!value) {
           return Promise.reject(new Error('请输入密码'));
         }
-        const regex = /^.{6,}$/;
+        let regex = /^.{6,}$/;
         if(window._host==="spc"){
             regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         }
@@ -223,7 +223,7 @@ class RegisterForm extends Component {
                             required: true,
                             message: '请输入密码',
                         },
-                        { validator: validatePassword },
+                        { validator: this.validatePassword },
                     ]}
                     hasFeedback
                 >
