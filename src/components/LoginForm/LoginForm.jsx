@@ -101,7 +101,7 @@ class LoginForm extends Component {
                     </a>
                 </Form.Item>
                 <Form.Item>
-                    {this.state.waiting ? <span style={{color:'red', paddingLeft:'10px', fontSize:'1.5em'}}>系统正在维护，预计在2.6日20:00恢复</span> :
+                    {this.state.waiting ? <span style={{color:'red', paddingLeft:'10px', fontSize:'1.5em'}}>系统正在维护，预计在20:00恢复</span> :
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                     </Button>}
