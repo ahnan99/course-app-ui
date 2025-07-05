@@ -35,6 +35,7 @@ class LessonCard extends Component {
             displaySignature: false,
             readSec: 5,
             showItem: 0,
+            showItemHelp: 0,
             questionOption: 0,
             showQuestionOption: false,
             showQuestionOption4: false,
@@ -293,6 +294,10 @@ class LessonCard extends Component {
     onClickShowItem = (courseID) => {
         this.setState({ showItem: (this.state.showItem === 0 ? courseID : 0) })
     }
+    
+    onClickShowItemHelp = (courseID) => {
+        this.setState({ showItemHelp: (this.state.showItemHelp === 0 ? courseID : 0) })
+    }
 
     render() {
         const { course } = this.props
@@ -355,6 +360,24 @@ class LessonCard extends Component {
                                     </li>
                                 ))}
                             </ul>
+                            {course.helps?<div><div style={{padding:'5px'}}>
+                                <Button type='primary' onClick={() => this.onClickShowItemHelp(course.ID)} >解题技巧</Button>
+                            </div>
+                            <p> </p>
+                            <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItemHelp===course.ID ? "block" : "none")}}>
+                                {
+                                    course.helps !== null && course.helps !== '' ? JSON.parse(course.helps)
+                                        .map(video => (
+                                            <li key={video.ID} style={{ listStyleType: 'none', clear: 'both' }}>
+                                                <h3>{video.title}</h3>
+                                                <video controls width="90%">
+                                                    <source src={video.vod} type="video/mp4" />
+                                                    浏览器不支持本地播放视频
+                                                </video>
+                                            </li>
+                                        ))
+                                : null}
+                            </ul></div>:null}
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
                                 <li style={{ listStyleType: 'none', clear: 'both' }}>
                                     <div style={{padding:'5px'}}>
