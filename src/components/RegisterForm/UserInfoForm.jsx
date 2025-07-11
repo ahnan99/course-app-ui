@@ -137,7 +137,8 @@ class UserInfoForm extends Component {
                 initialValues={this.props.application.userInfo ?
                     {
                         ...this.props.application.userInfo,
-                        password: null,
+                        password: this.props.application.userInfo.password,
+                        confirm: this.props.application.userInfo.password,
                         kindID: this.props.application.userInfo.kindID.toString(),
                         education: this.props.application.userInfo.education.toString(),
                         dept1: this.props.application.userInfo.kindID.toString() === "1" ? this.props.application.userInfo.dept1Name : this.props.application.userInfo.dept1,
