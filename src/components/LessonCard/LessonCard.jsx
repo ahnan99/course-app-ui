@@ -370,7 +370,7 @@ class LessonCard extends Component {
                                         .map(video => (
                                             <li key={video.ID} style={{ listStyleType: 'none', clear: 'both' }}>
                                                 <h3>{video.title}</h3>
-                                                <video controls width="90%">
+                                                <video controls width="50%">
                                                     <source src={video.vod} type="video/mp4" />
                                                     浏览器不支持本地播放视频
                                                 </video>
