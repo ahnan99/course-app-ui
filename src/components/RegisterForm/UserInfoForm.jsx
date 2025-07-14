@@ -80,11 +80,11 @@ class UserInfoForm extends Component {
             job: values.job,
             mobile: values.mobile,
             phone: values.phone,
-            email: values.email,   //*
-            memo: values.memo,
+            email: '',   //*
+            memo: '',
             address: values.address,
             unit: values.unit,
-            experience: values.experience,
+            experience: '',
             dept: values.dept
         })
     }
