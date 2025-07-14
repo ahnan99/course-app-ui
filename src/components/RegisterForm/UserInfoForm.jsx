@@ -313,12 +313,12 @@ class UserInfoForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     name="experience"
                     label="工作经历"
                 >
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item
                     name="phone"
                     label="单位电话"
@@ -333,7 +333,7 @@ class UserInfoForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     name="email"
                     label="E-mail"
                     rules={[
@@ -350,7 +350,7 @@ class UserInfoForm extends Component {
                     label="备注"
                 >
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item
                     name="upload"
                     label="上传照片(仅供制作证件)"

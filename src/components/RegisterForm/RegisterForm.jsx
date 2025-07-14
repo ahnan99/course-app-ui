@@ -110,11 +110,11 @@ class RegisterForm extends Component {
             job: values.job,
             mobile: values.mobile,
             phone: values.phone,
-            email: values.email,   //*
-            memo: values.memo,
+            email: '',   //*
+            memo: '',
             address: values.address,
             unit: values.unit,
-            experience: values.experience,
+            experience: '',
             dept: values.dept,
             fromID: window._sales
         })
@@ -355,12 +355,12 @@ class RegisterForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     name="experience"
                     label="工作经历"
                 >
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item
                     name="phone"
                     label="单位电话"
@@ -375,7 +375,7 @@ class RegisterForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     name="email"
                     label="E-mail"
                     rules={[
@@ -386,13 +386,13 @@ class RegisterForm extends Component {
                     ]}
                 >
                     <Input />
-                </Form.Item>
-                <Form.Item
+                </Form.Item> */}
+                {/* <Form.Item
                     name="memo"
                     label="备注"
                 >
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
                 {false ? <Form.Item
                     name="upload"
                     label="上传照片"
