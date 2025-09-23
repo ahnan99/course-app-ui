@@ -81,6 +81,7 @@ class UserInfoForm extends Component {
             mobile: values.mobile,
             phone: values.phone,
             email: '',   //*
+            tax: values.tax,   //*单位统一编码
             memo: '',
             address: values.address,
             unit: values.unit,
@@ -228,7 +229,6 @@ class UserInfoForm extends Component {
                             message: '请输入手机号码',
                         },
                         {
-
                             validator: (rule, value) => {
                                 console.log(this.checkIDcard(value))
                                 if (!value || value.length === 11) {
@@ -299,6 +299,28 @@ class UserInfoForm extends Component {
                 >
                     <Input />
                 </Form.Item> : null}
+                <Form.Item
+                    name="tax"
+                    label="社会统一编码"
+                    rules={[
+                        {
+                            message: '请输入社会统一编码',
+                        },
+                        {
+                            validator: (rule, value) => {
+                                console.log(this.checkIDcard(value))
+                                if (!value || value.length === 18) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject('编码长度应该是18位');
+                                }
+                            },
+
+                        }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
                 {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="dept"
                     label="部门"
@@ -333,18 +355,7 @@ class UserInfoForm extends Component {
                 >
                     <Input />
                 </Form.Item>
-                {/* <Form.Item
-                    name="email"
-                    label="E-mail"
-                    rules={[
-                        {
-                            type: 'email',
-                            message: 'E-mail地址不合法',
-                        }
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
+                {/* 
                 <Form.Item
                     name="memo"
                     label="备注"
@@ -408,11 +419,37 @@ class UserInfoForm extends Component {
                 </Form.Item>
                 <Form.Item
                     name="upload5"
-                    label="上传在职证明"
+                    label="上传工作证明"
                 >
                     <Row>
                         <Col span={12}>
                             <Avatar imageUrl={this.props.application.userInfo.employe_filename ? axios.defaults.baseURL + this.props.application.userInfo.employe_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_employment`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
+                </Form.Item>
+                <Form.Item
+                    name="upload8"
+                    label="上传社保证明"
+                >
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.social_filename ? axios.defaults.baseURL + this.props.application.userInfo.social_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_social`} />
+                        </Col>
+                        <Col span={12} style={{ textalign: "left" }}>
+                            <span>
+                            </span>
+                        </Col></Row>
+                </Form.Item>
+                <Form.Item
+                    name="upload9"
+                    label="上传居住证"
+                >
+                    <Row>
+                        <Col span={12}>
+                            <Avatar imageUrl={this.props.application.userInfo.job_filename ? axios.defaults.baseURL + this.props.application.userInfo.job_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_jobCertificate`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -439,19 +476,6 @@ class UserInfoForm extends Component {
                     <Row>
                         <Col span={12}>
                             <Avatar imageUrl={this.props.application.userInfo.promise_filename ? axios.defaults.baseURL + this.props.application.userInfo.promise_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_promise`} />
-                        </Col>
-                        <Col span={12} style={{ textalign: "left" }}>
-                            <span>
-                            </span>
-                        </Col></Row>
-                </Form.Item>
-                <Form.Item
-                    name="upload8"
-                    label="上传社保证明"
-                >
-                    <Row>
-                        <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.social_filename ? axios.defaults.baseURL + this.props.application.userInfo.social_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_social`} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
