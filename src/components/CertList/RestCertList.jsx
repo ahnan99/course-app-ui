@@ -6,10 +6,10 @@ import 'antd/dist/antd.css'
 // import { LocalFormat } from './localHelper';
 // import locale from 'antd/es/date-picker/locale/zh_CN';
 // import 'dayjs/locale/zh-cn';
-import locale from 'antd/locale/zh_CN';
+// import locale from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-dayjs.locale('zh-cn');
+// import 'dayjs/locale/zh-cn';
+// dayjs.locale('zh-cn');
 
 class RestCertList extends Component {
   constructor(props) {
@@ -148,9 +148,7 @@ class RestCertList extends Component {
                       <Input />
                     </Form.Item> : null}
                     {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="应复训日期">
-                    <ConfigProvider locale={locale}>
                       <DatePicker />
-                    </ConfigProvider>
                     </Form.Item> : null}
 
                   </Form>

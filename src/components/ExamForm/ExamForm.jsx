@@ -109,6 +109,7 @@ class ExamForm extends Component {
                 }
 
             }
+            console.log("res:",res);
             this.setState({ getQuestion: false, showQuestion: 1 })
             return res
         }
@@ -304,7 +305,7 @@ class ExamForm extends Component {
         return (<Form
             name="exam_form"
             className="login-form"
-            // initialValues={this.state.getQuestion && this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
+            initialValues={this.state.getQuestion && this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
             onFinish={this.onFinish}
             {...layout}
             layout={"vertical"}
@@ -348,7 +349,7 @@ class ExamForm extends Component {
                                     </div>
                                 }>
                                     {question.kindID !== 2 ?
-                                        <Radio.Group value={question.myAnswer}>
+                                        <Radio.Group>
                                             <Row>{question.A !== '' || question.imageA !== '' ? <Radio key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Radio> : null}{question.imageA !== '' ? <Image src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
                                             <Row>{question.B !== '' || question.imageB !== '' ? <Radio key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Radio> : null}{question.imageB !== '' ? <Image src={axios.defaults.baseURL + question.imageB} /> : null}</Row>
                                             <Row>{question.C !== '' || question.imageC !== '' ? <Radio key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Radio> : null}{question.imageC !== '' ? <Image src={axios.defaults.baseURL + question.imageC} /> : null}</Row>
@@ -356,7 +357,7 @@ class ExamForm extends Component {
                                             <Row>{question.E !== '' || question.imageE !== '' ? <Radio key={question.ID + 'E'} value='E'>{'E. ' + question.E}</Radio> : null}{question.imageE !== '' ? <Image src={axios.defaults.baseURL + question.imageE} /> : null}</Row>
                                             <Row>{question.F !== '' || question.imageF !== '' ? <Radio key={question.ID + 'F'} value='F'>{'F. ' + question.F}</Radio> : null}{question.imageF !== '' ? <Image src={axios.defaults.baseURL + question.imageF} /> : null}</Row>
                                         </Radio.Group> :
-                                        <Checkbox.Group value={[...question.myAnswer]}>
+                                        <Checkbox.Group>
                                             <Row>{question.A !== '' || question.imageA !== '' ? <Checkbox key={question.ID + 'A'} value='A'>{'A. ' + question.A}</Checkbox> : null}{question.imageA !== '' ? <Image src={axios.defaults.baseURL + question.imageA} /> : null}</Row>
                                             <Row>{question.B !== '' || question.imageB !== '' ? <Checkbox key={question.ID + 'B'} value='B'>{'B. ' + question.B}</Checkbox> : null}{question.imageB !== '' ? <Image src={axios.defaults.baseURL + question.imageB} /> : null}</Row>
                                             <Row>{question.C !== '' || question.imageC !== '' ? <Checkbox key={question.ID + 'C'} value='C'>{'C. ' + question.C}</Checkbox> : null}{question.imageC !== '' ? <Image src={axios.defaults.baseURL + question.imageC} /> : null}</Row>
