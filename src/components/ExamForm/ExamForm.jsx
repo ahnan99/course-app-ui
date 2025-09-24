@@ -16,6 +16,7 @@ const pageSize = 20;
 
 class ExamForm extends Component {
     formRef = React.createRef()
+    form = Form.useForm();
 
     state = {
         time: 0,
@@ -303,6 +304,7 @@ class ExamForm extends Component {
             return (<div style={{ height: '100vh', verticalAlign: 'middle', lineHeight: '100vh' }}><Spin spinning></Spin></div>)
         }
         return (<Form
+            form = {form}
             name="exam_form"
             className="login-form"
             initialValues={this.state.getQuestion && this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
