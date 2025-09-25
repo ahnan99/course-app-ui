@@ -13,7 +13,7 @@ const layout = {
 const font = '1.2em'
 const font1 = '1.5em'
 const pageSize = 20;
-const [form] = Form.useForm();
+// const [form] = Form.useForm();
 
 class ExamForm extends Component {
     formRef = React.createRef()
@@ -220,12 +220,14 @@ class ExamForm extends Component {
             let p = (this.props.exam.exam[0].lastNum >= this.props.exam.examQuestion.length ? this.props.exam.examQuestion.length - 1 : this.props.exam.exam[0].lastNum<0?0:this.props.exam.exam[0].lastNum) || 0;
             this.setState({ currQuestion: this.props.exam.examQuestion[p], numPages: this.props.exam.examQuestion.length, pageNumber: p }, () => { })
         }
+        /*
         if (this.props.exam.examQuestionRes) {  //20250926
             let vs = toInitialValues(this.props.exam.examQuestion);
             console.log("setFieldsValue:", vs);
             // form.setFieldsValue(vs);
             this.props.actions.updateExamQuestion(null)
         }
+        */
     }
 
     showAnswer = () => {

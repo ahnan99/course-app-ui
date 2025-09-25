@@ -213,7 +213,7 @@ const reducer = (state = initialState, action = {}) => {
         case UPDATE_EXAM_QUESTION: {
             return {
                 ...state,
-                examQuestionRes: action.data    //20250926
+                examQuestion: action.data
             }
         }
         case UPDATE_LEAVE: {
