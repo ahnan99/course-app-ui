@@ -174,6 +174,7 @@ const initialState = {
     realExam: null,
     realExamList: null,
     examQuestion: null,
+    examQuestionRes: null,
     postExamRes: null,
     postTimeRes: null,
     postSingleQuestionRes: null,
@@ -212,7 +213,7 @@ const reducer = (state = initialState, action = {}) => {
         case UPDATE_EXAM_QUESTION: {
             return {
                 ...state,
-                examQuestion: action.data
+                examQuestionRes: action.data    //20250926
             }
         }
         case UPDATE_LEAVE: {
