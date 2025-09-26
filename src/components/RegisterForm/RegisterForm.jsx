@@ -111,6 +111,7 @@ class RegisterForm extends Component {
             mobile: values.mobile,
             phone: values.phone,
             email: '',   //*
+            tax: values.tax,   //*单位统一编码
             memo: '',
             address: values.address,
             unit: values.unit,
@@ -341,6 +342,27 @@ class RegisterForm extends Component {
                 >
                     <Input />
                 </Form.Item> : null}
+                <Form.Item
+                    name="tax"
+                    label="社会统一编码"
+                    rules={[
+                        {
+                            message: '请输入社会统一编码',
+                        },
+                        {
+                            validator: (rule, value) => {
+                                if (!value || value.length === 18) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject('编码长度应该是18位');
+                                }
+                            },
+
+                        }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
                 {this.props.application.companyInfo[0].hostNo !== 'spc' && this.props.application.companyInfo[0].hostNo !== 'shm' ? <Form.Item
                     name="dept"
                     label="部门"
