@@ -13,11 +13,9 @@ const layout = {
 const font = '1.2em'
 const font1 = '1.5em'
 const pageSize = 20;
-// const [form] = Form.useForm();
 
 class ExamForm extends Component {
-    formRef = React.createRef()
-    // form = Form.useForm();
+    formRef = React.createRef();
 
     state = {
         time: 0,
@@ -220,12 +218,11 @@ class ExamForm extends Component {
             let p = (this.props.exam.exam[0].lastNum >= this.props.exam.examQuestion.length ? this.props.exam.examQuestion.length - 1 : this.props.exam.exam[0].lastNum<0?0:this.props.exam.exam[0].lastNum) || 0;
             this.setState({ currQuestion: this.props.exam.examQuestion[p], numPages: this.props.exam.examQuestion.length, pageNumber: p }, () => { })
         }
-        if (this.getQuestion) {  //20250926
-            let vs = toInitialValues(this.props.exam.examQuestion);
+        if (this.state.getQuestion && this.props.exam.examQuestion !== prevProps.exam.examQuestion) {  //20250926
+            let vs = this.toInitialValues(this.props.exam.examQuestion);
             console.log("setFieldsValue:", vs);
             this.formRef.current.setFieldsValue(vs);
             this.setState({ getQuestion: false});
-            // this.props.actions.updateExamQuestion(null)
         }
     }
 
@@ -312,8 +309,6 @@ class ExamForm extends Component {
             return (<div style={{ height: '100vh', verticalAlign: 'middle', lineHeight: '100vh' }}><Spin spinning></Spin></div>)
         }
         return (<Form
-            // form = {this.form}
-            // form = {form}
             name="exam_form"
             className="login-form"
             // initialValues={this.state.getQuestion && this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
