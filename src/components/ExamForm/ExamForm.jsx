@@ -220,14 +220,13 @@ class ExamForm extends Component {
             let p = (this.props.exam.exam[0].lastNum >= this.props.exam.examQuestion.length ? this.props.exam.examQuestion.length - 1 : this.props.exam.exam[0].lastNum<0?0:this.props.exam.exam[0].lastNum) || 0;
             this.setState({ currQuestion: this.props.exam.examQuestion[p], numPages: this.props.exam.examQuestion.length, pageNumber: p }, () => { })
         }
-        /*
-        if (this.props.exam.examQuestionRes) {  //20250926
+        if (this.getQuestion) {  //20250926
             let vs = toInitialValues(this.props.exam.examQuestion);
             console.log("setFieldsValue:", vs);
-            // form.setFieldsValue(vs);
-            this.props.actions.updateExamQuestion(null)
+            this.formRef.current.setFieldsValue(vs);
+            this.setState({ getQuestion: false});
+            // this.props.actions.updateExamQuestion(null)
         }
-        */
     }
 
     showAnswer = () => {
@@ -317,7 +316,7 @@ class ExamForm extends Component {
             // form = {form}
             name="exam_form"
             className="login-form"
-            initialValues={this.state.getQuestion && this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
+            // initialValues={this.state.getQuestion && this.props.exam.examQuestion ? this.toInitialValues(this.props.exam.examQuestion) : null}
             onFinish={this.onFinish}
             {...layout}
             layout={"vertical"}
