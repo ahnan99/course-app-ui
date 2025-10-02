@@ -220,7 +220,7 @@ class ExamForm extends Component {
         }
         if (this.state.getQuestion && this.props.exam.examQuestion !== prevProps.exam.examQuestion) {  //20250926
             let vs = this.toInitialValues(this.props.exam.examQuestion);
-            console.log("setFieldsValue:", vs);
+            // console.log("setFieldsValue:", vs);
             this.formRef.current.setFieldsValue(vs);
             this.setState({ getQuestion: false});
         }
