@@ -230,7 +230,6 @@ class UserInfoForm extends Component {
                         },
                         {
                             validator: (rule, value) => {
-                                console.log(this.checkIDcard(value))
                                 if (!value || value.length === 11) {
                                     return Promise.resolve();
                                 } else {
@@ -301,21 +300,21 @@ class UserInfoForm extends Component {
                 </Form.Item> : null}
                 <Form.Item
                     name="tax"
-                    label="社会统一编码"
+                    label="单位代码"
                     rules={[
                         {
-                            message: '请输入社会统一编码',
+                            message: '请输入社会统一信用代码',
                         },
                         {
                             validator: (rule, value) => {
-                                console.log(this.checkIDcard(value))
-                                if (!value || value.length === 18) {
+                                console.log(this.checkUSCI(value))
+                                if (!value || this.checkUSCI(value)) {
                                     return Promise.resolve();
-                                } else {
+                                } else if (value.length !== 18) {
                                     return Promise.reject('编码长度应该是18位');
-                                }
-                            },
-
+                                } else
+                                    return Promise.reject('单位代码校验错误');
+                            }
                         }
                     ]}
                 >
