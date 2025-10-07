@@ -343,16 +343,16 @@ class UserInfoForm extends Component {
                     <Input />
                 </Form.Item> */}
                 <Form.Item
-                    name="phone"
-                    label="单位电话"
-                    rules={[{ required: true, message: '请输入单位电话' }]}
+                    name="address"
+                    label="单位地址（上海）"
+                    rules={[{ required: true, message: '请输入单位地址' }]}
                 >
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    name="address"
-                    label="单位地址（上海）"
-                    rules={[{ required: true, message: '请输入单位地址' }]}
+                    name="phone"
+                    label="单位电话"
+                    rules={[{ required: true, message: '请输入单位电话' }]}
                 >
                     <Input />
                 </Form.Item>
