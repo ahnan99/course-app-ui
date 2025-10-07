@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
+import checkUSCI from '../../modules/function/checkUSCI'
 import { withRouter } from 'react-router-dom'
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -47,6 +48,7 @@ class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
+        this.checkUSCI = checkUSCI
         this.state = { kindID: "0" }
     }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Select, Radio, message, Upload, AutoComplete, Row, Col } from 'antd'
 import checkIDcard from '../../modules/function/checkID'
+import checkUSCI from '../../modules/function/checkUSCI'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Avatar from './Avatar'
@@ -29,6 +30,7 @@ class UserInfoForm extends Component {
     constructor(props) {
         super(props)
         this.checkIDcard = checkIDcard
+        this.checkUSCI = checkUSCI
         this.state = { kindID: "0" }
     }
 
