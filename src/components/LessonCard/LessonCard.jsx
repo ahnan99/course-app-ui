@@ -331,7 +331,7 @@ class LessonCard extends Component {
                 <Col span={24}>
                     <Card title={course.courseName + [course.agencyID === "1" ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
-                            {course.completion ? <Progress percent={course.completion} size="small" /> : null}<p>时长：{(course.hours*course.completion/100) + " / " + course.hours}</p>
+                            {course.completion ? <Progress percent={course.completion} size="small" /> : null}<p>课时：{(course.hours*course.completion/100).toFixed(1) + " / " + course.hours}</p>
                             {/* <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p> */}
                             <p>完成条件：{course.pass_condition}</p>
