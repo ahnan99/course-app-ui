@@ -19,7 +19,7 @@ class HomePage extends Component {
             notification.info({
                 message: `你有${nextProps.application.userInfo.newMessage}条新信息`,
                 placement: 'topRight',
-                duration: 2
+                duration: 5
             })
         }
     }

@@ -303,6 +303,7 @@ class LessonCard extends Component {
         const { course } = this.props
         const { lessons } = this.props
         const { pageNumber } = this.state
+        const hosts = ['znxf','shm','spc'];
 
         return (
             <Row key={course.lessonID} gutter={[16, 32]}>
@@ -339,7 +340,7 @@ class LessonCard extends Component {
                         </Card.Grid> : null}
                         {course.signatureType === 1 && course.signature === "" && course.agencyID !== "5" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickSignature} >签名</Button></Card.Grid> : null}
-                        {course.regDate >= "2024-06-13" && (this.props.application.userInfo.host==="znxf" || this.props.application.userInfo.host==="spc" || this.props.application.userInfo.host==="shm") && course.agencyID !== "5" && this.state.showPayBtn && this.state.pay == 0 && course.payNow == 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
+                        {course.regDate >= "2024-06-13" && hosts.includes(course.host) && course.agencyID !== "5" && this.state.showPayBtn && this.state.pay == 0 && course.payNow == 0 && course.pay_status === 0 ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickPay} >付款</Button></Card.Grid> : null}
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
