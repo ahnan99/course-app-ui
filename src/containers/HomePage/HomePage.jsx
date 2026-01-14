@@ -102,6 +102,7 @@ class HomePage extends Component {
     render() {
         const { courses, lessons } = this.props.course
         const { actions, examActions, exam } = this.props
+        const { TextArea } = Input;
         if (courses.length === 0) {
             return <div>
                 <h3>还未选择课程</h3>
@@ -131,7 +132,7 @@ class HomePage extends Component {
                 <div>
                     <Modal
                     title="课程评议表"
-                    open={this.state.visible}
+                    visible={this.state.visible}
                     // onOk={this.handleOk}
                     // onCancel={this.handleCancel}
                     // okText="提交"
@@ -146,7 +147,7 @@ class HomePage extends Component {
                     >
                         <Form.Item
                             name="name"
-                            label={this.e}
+                            label={this.state.evalution_course}
                         >
                         </Form.Item>
                         <Form.Item
@@ -230,12 +231,10 @@ class HomePage extends Component {
                             name="memo"
                             label="意见与建议："
                         >
-                            <Input rows={4} placeholder="感谢您的支持" />
+                            <TextArea rows={4} placeholder="感谢您的支持" />
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">保存</Button>
-                            <span> </span>
-                            <span> </span>
+                            <Button type="primary" htmlType="submit">提交</Button>
                         </Form.Item>
                     </Form>
                     </Modal>
