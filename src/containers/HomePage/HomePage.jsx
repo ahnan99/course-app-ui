@@ -131,7 +131,7 @@ class HomePage extends Component {
                 </div>
                 <div>
                     <Modal
-                    title="课程评议表"
+                    title={"课程评议表：" + this.evalution_course}
                     visible={this.state.visible}
                     // onOk={this.handleOk}
                     // onCancel={this.handleCancel}
@@ -145,11 +145,6 @@ class HomePage extends Component {
                         scrollToFirstError
                         ref={this.formRef}
                     >
-                        <Form.Item
-                            name="name"
-                            label={this.state.evalution_course}
-                        >
-                        </Form.Item>
                         <Form.Item
                             name="F1"
                             label="教学态度："
@@ -234,6 +229,8 @@ class HomePage extends Component {
                             <TextArea rows={4} placeholder="感谢您的支持" />
                         </Form.Item>
                         <Form.Item>
+                            <span></span>
+                            <span></span>
                             <Button type="primary" htmlType="submit">提交</Button>
                         </Form.Item>
                     </Form>
