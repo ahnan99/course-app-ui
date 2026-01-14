@@ -74,7 +74,7 @@ class HomePage extends Component {
         });
     }
 
-    handleOk = e => {
+    handleOk = values => {
         this.props.postEvalution({
             ID: this.state.evalution_ID,
             enterID: 0,
