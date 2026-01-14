@@ -3,8 +3,10 @@ const REQUEST_LOGIN = 'request_login'
 const USER_LOGIN = 'user_login'
 const USER_LOGIN_ERROR = 'request_login_error'
 const REQUEST_REGISTER = 'request_register'//submit form
+const POST_EVALUTION = 'post_evalution'//submit form
 const USER_REGISTER = 'user_register' //receive repsonse
 const USER_REGISTER_ERROR = 'request_register_error'//receive error
+const POST_EVALUTION_ERROR = 'post_evalution_error'//receive error
 const RESET_REGISTER_STATUS = 'reset_register_status'
 const GET_USER_INFO = 'get_user_info'
 const UPDATE_USER_INFO = 'update_user_info'
@@ -31,8 +33,10 @@ export const types = {
     USER_LOGIN,
     USER_LOGIN_ERROR,
     REQUEST_REGISTER,
+    POST_EVALUTION,
     USER_REGISTER,
     USER_REGISTER_ERROR,
+    POST_EVALUTION_ERROR,
     RESET_REGISTER_STATUS,
     GET_USER_INFO,
     UPDATE_USER_INFO,
@@ -87,6 +91,11 @@ const requestRegister = payload => ({
     payload
 })
 
+const postEvalution = payload => ({
+    type: POST_EVALUTION,
+    payload
+})
+
 const userRegister = response => ({
     type: USER_REGISTER,
     response
@@ -94,6 +103,11 @@ const userRegister = response => ({
 
 const userRegisterError = response => ({
     type: USER_REGISTER_ERROR,
+    response
+})
+
+const postEvalutionError = response => ({
+    type: POST_EVALUTION_ERROR,
     response
 })
 
@@ -188,8 +202,10 @@ export const actions = {
     requestLogin,
     userLoginError,
     requestRegister,
+    postEvalution,
     userRegister,
     userRegisterError,
+    postEvalutionError,
     resetRegisterStatus,
     getUserInfo,
     postUserInfo,

@@ -15,6 +15,10 @@ function* registerWatch() {
     yield takeLatest(types.REQUEST_REGISTER, userRegisterWorker)
 }
 
+function* evalutionWatch() {
+    yield takeLatest(types.POST_EVALUTION, postEvalutionWorker)
+}
+
 function* getUserInfoWatch() {
     yield takeLatest(types.GET_USER_INFO, getUserInfoWorker)
 }
@@ -41,6 +45,10 @@ export function userLoginEndpoint(data) {
 
 export function userRegisterEndpoint(data) {
     return axios.post('/students/new_student', data)
+}
+
+export function postEvalutionEndpoint(data) {
+    return axios.post('/public/postCommInfo', data)
 }
 
 export function confirmLoginEndpoint() {
@@ -97,6 +105,15 @@ function* userRegisterWorker(action) {
     }
 }
 
+function* postEvalutionWorker(action) {
+    try {
+        const response = yield call(postEvalutionEndpoint, action.payload)
+        yield put(actions.postEvalution(response.data))
+    } catch (error) {
+        yield put(actions.postEvalutionError(error))
+    }
+}
+
 function* getUserInfoWorker(action) {
     try {
         const response = yield call(getUserInfoEndpoint, action.payload)
@@ -146,6 +163,7 @@ function* auditorLoginWorker(action) {
 export const workers = {
     userLoginWorker,
     userRegisterWorker,
+    postEvalutionWorker,
     getUserInfoWorker,
     postUserInfoWorker,
     userLogoutWorker,
@@ -158,6 +176,7 @@ export default function* saga() {
         loginWatch(),
         confirmLoginWatch(),
         registerWatch(),
+        evalutionWatch(),
         getUserInfoWatch(),
         postUserInfoWatch(),
         logoutWatch(),

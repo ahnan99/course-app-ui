@@ -29,7 +29,7 @@ export default class CertList extends Component {
   componentWillReceiveProps = (nextProps) => {
     if (this.props.cert.delCertRes === null && nextProps.cert.delCertRes && nextProps.cert.delCertRes.status === 0) {
       message.success('移除成功')
-      this.props.actions.getRestCert({ username: this.props.application.username })
+      this.props.actions.getRestCert({ username: this.props.application.username, host: window._host })
       this.props.actions.getSelectedCert({ username: this.props.application.username })
       this.props.actions.getCertCourse({ username: this.props.application.username })
       this.props.actions.resetDelCert()

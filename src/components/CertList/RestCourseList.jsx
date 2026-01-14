@@ -9,7 +9,7 @@ class RestCourseList extends Component {
     super(props)
   }
   componentDidMount() {
-    this.props.actions.getRestCert({ username: this.props.application.username })
+    this.props.actions.getRestCert({ username: this.props.application.username, host: window._host })
   }
 
   onAdd = cert => {
@@ -18,7 +18,7 @@ class RestCourseList extends Component {
 
   componentWillReceiveProps = (nextProps) => {
     if (this.props.cert.addCertRes === null && nextProps.cert.addCertRes && nextProps.cert.addCertRes.status === 0) {
-      this.props.actions.getRestCert({ username: this.props.application.username })
+      this.props.actions.getRestCert({ username: this.props.application.username, host: window._host })
       this.props.actions.getSelectedCert({ username: this.props.application.username })
       this.props.actions.getCertCourse({ username: this.props.application.username })
       this.props.actions.resetAddCert()

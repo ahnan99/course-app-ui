@@ -3,10 +3,36 @@ import LessonCard from '../../components/LessonCard/LessonCard'
 import { connect } from 'react-redux'
 import { actions as CourseActions } from '../../modules/courses'
 import { actions as ExamActions } from '../../modules/exam'
+import { actions as RegisterActions } from '../../modules/application'
 import { bindActionCreators } from 'redux'
-import { Button, Card, notification, message, Modal } from 'antd'
+import { Button, Card, notification, message, Modal, Radio, Form, Input } from 'antd'
 
+
+const formItemLayout = {
+    labelCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 8,
+        },
+    },
+    wrapperCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 16,
+        },
+    },
+};
 class HomePage extends Component {
+    formRef = React.createRef()
+    state = {
+        visible: false,
+        evalution_ID: 0,
+        evalution_course: ""
+    }
 
     componentDidMount() {
         this.props.actions.getCourseList({ username: this.props.application.username })
@@ -21,6 +47,10 @@ class HomePage extends Component {
                 placement: 'topRight',
                 duration: 5
             })
+        }
+        if (nextProps.application.userInfo && this.props.application.userInfo !== nextProps.application.userInfo && nextProps.application.userInfo.newEvalution > '') {
+            let ar = nextProps.application.userInfo.newEvalution.split("|");
+            this.setState({ visible: true, evalution_ID: ar[0], evalution_course: ar[1] })
         }
     }
 
@@ -44,7 +74,30 @@ class HomePage extends Component {
         });
     }
 
-
+    handleOk = e => {
+        this.props.postEvalution({
+            ID: this.state.evalution_ID,
+            enterID: 0,
+            F1: values.F1,
+            F2: values.F2,
+            F3: values.F3,
+            F4: values.F4,
+            F5: values.F5,
+            F6: values.F6,
+            F7: values.F7,
+            memo: values.memo,
+            registerID: ""
+        });
+        this.setState({
+          visible: false,
+        });
+    };
+    
+    handleCancel = e => {
+        this.setState({
+          visible: false,
+        });
+    };
 
     render() {
         const { courses, lessons } = this.props.course
@@ -75,6 +128,118 @@ class HomePage extends Component {
                         <LessonCard application={this.props.application} exam={exam} key={course.ID} course={course} courseState={this.props.course} lessons={lessons} actions={actions} examActions={examActions} />
                     ))}
                 </div>
+                <div>
+                    <Modal
+                    title="课程评议表"
+                    open={this.state.visible}
+                    // onOk={this.handleOk}
+                    // onCancel={this.handleCancel}
+                    // okText="提交"
+                    // cancelText="取消"
+                    footer={[]}
+                    >
+                    <Form
+                        {...formItemLayout}
+                        onFinish={this.handleOk}
+                        scrollToFirstError
+                        ref={this.formRef}
+                    >
+                        <Form.Item
+                            name="name"
+                            label={this.e}
+                        >
+                        </Form.Item>
+                        <Form.Item
+                            name="F1"
+                            label="教学态度："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="F2"
+                            label="教学内容："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="F3"
+                            label="教学方法："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="F4"
+                            label="教学手段："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="F5"
+                            label="讲解示范："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="F6"
+                            label="巡回指导："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="F7"
+                            label="课时完成："
+                        >
+                            <Radio.Group value={0}>
+                                <Radio value="0">好</Radio>
+                                <Radio value="1">较好</Radio>
+                                <Radio value="2">尚可</Radio>
+                                <Radio value="3">差</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        <Form.Item
+                            name="memo"
+                            label="意见与建议："
+                        >
+                            <Input rows={4} placeholder="感谢您的支持" />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">保存</Button>
+                            <span> </span>
+                            <span> </span>
+                        </Form.Item>
+                    </Form>
+                    </Modal>
+                </div>
             </div>
         )
     }
@@ -88,6 +253,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
+    registerActions: bindActionCreators(RegisterActions, dispatch),
     actions: bindActionCreators(CourseActions, dispatch),
     examActions: bindActionCreators(ExamActions, dispatch)
 })
