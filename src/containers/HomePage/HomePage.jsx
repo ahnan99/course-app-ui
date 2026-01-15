@@ -88,6 +88,11 @@ class HomePage extends Component {
             memo: values.memo,
             registerID: ""
         }});
+        notification.info({
+            message: `提交成功，谢谢配合。`,
+            placement: 'topRight',
+            duration: 5
+        })
         this.setState({
           visible: false,
         });
