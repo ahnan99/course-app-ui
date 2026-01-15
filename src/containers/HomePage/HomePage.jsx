@@ -142,6 +142,7 @@ class HomePage extends Component {
                     <Form
                         {...formItemLayout}
                         onFinish={this.handleOk}
+                        initialValues={{ F1:'0', F2:'0', F3:'0', F4:'0', F5:'0', F6:'0', F7:'0' }}
                         scrollToFirstError
                         ref={this.formRef}
                     >
@@ -149,7 +150,7 @@ class HomePage extends Component {
                             name="F1"
                             label="教学态度："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
@@ -160,7 +161,7 @@ class HomePage extends Component {
                             name="F2"
                             label="教学内容："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
@@ -171,7 +172,7 @@ class HomePage extends Component {
                             name="F3"
                             label="教学方法："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
@@ -182,7 +183,7 @@ class HomePage extends Component {
                             name="F4"
                             label="教学手段："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
@@ -193,7 +194,7 @@ class HomePage extends Component {
                             name="F5"
                             label="讲解示范："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
@@ -204,7 +205,7 @@ class HomePage extends Component {
                             name="F6"
                             label="巡回指导："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
@@ -215,7 +216,7 @@ class HomePage extends Component {
                             name="F7"
                             label="课时完成："
                         >
-                            <Radio.Group defaultValue={"0"}>
+                            <Radio.Group>
                                 <Radio value="0">好</Radio>
                                 <Radio value="1">较好</Radio>
                                 <Radio value="2">尚可</Radio>
