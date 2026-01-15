@@ -75,7 +75,7 @@ class HomePage extends Component {
     }
 
     handleOk = values => {
-        this.props.postEvalution({
+        this.props.postEvalution({proc:"updateEvalutionFormInfo", params:{
             ID: this.state.evalution_ID,
             enterID: 0,
             F1: values.F1,
@@ -87,7 +87,7 @@ class HomePage extends Component {
             F7: values.F7,
             memo: values.memo,
             registerID: ""
-        });
+        }});
         this.setState({
           visible: false,
         });
