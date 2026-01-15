@@ -234,7 +234,7 @@ class HomePage extends Component {
                         >
                             <TextArea rows={4} placeholder="感谢您的支持" />
                         </Form.Item>
-                        <Form.Item>
+                        <Form.Item label=" ">
                             <span></span>
                             <span></span>
                             <Button type="primary" htmlType="submit">提交</Button>
