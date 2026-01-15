@@ -75,7 +75,7 @@ class HomePage extends Component {
     }
 
     handleOk = values => {
-        this.props.postEvalution({proc:"updateEvalutionFormInfo", params:{
+        this.props.registerActions.postEvalution({proc:"updateEvalutionFormInfo", params:{
             ID: this.state.evalution_ID,
             enterID: 0,
             F1: values.F1,
