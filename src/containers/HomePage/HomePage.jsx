@@ -8,23 +8,14 @@ import { bindActionCreators } from 'redux'
 import { Button, Card, notification, message, Modal, Radio, Form, Input } from 'antd'
 
 
+
 const formItemLayout = {
-    labelCol: {
-        xs: {
-            span: 24,
-        },
-        sm: {
-            span: 8,
-        },
+    labelCol:{
+        span: 5
     },
-    wrapperCol: {
-        xs: {
-            span: 24,
-        },
-        sm: {
-            span: 16,
-        },
-    },
+    wrapperCol:{
+        span: 16,
+    }
 };
 class HomePage extends Component {
     formRef = React.createRef()
@@ -142,6 +133,7 @@ class HomePage extends Component {
                     // onCancel={this.handleCancel}
                     // okText="提交"
                     // cancelText="取消"
+                    closable = {false}
                     footer={[]}
                     >
                     <Form
@@ -154,6 +146,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F1"
                             label="教学态度："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -165,6 +158,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F2"
                             label="教学内容："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -176,6 +170,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F3"
                             label="教学方法："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -187,6 +182,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F4"
                             label="教学手段："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -198,6 +194,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F5"
                             label="讲解示范："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -209,6 +206,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F6"
                             label="巡回指导："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -220,6 +218,7 @@ class HomePage extends Component {
                         <Form.Item
                             name="F7"
                             label="课时完成："
+                            style={{ marginTop: '1px', marginBottom: '1px' }}
                         >
                             <Radio.Group>
                                 <Radio value="0">好</Radio>
@@ -231,10 +230,14 @@ class HomePage extends Component {
                         <Form.Item
                             name="memo"
                             label="意见与建议："
+                            style={{ marginTop: '1px', marginBottom: '5px' }}
                         >
-                            <TextArea rows={4} placeholder="感谢您的支持" />
+                            <TextArea rows={3} placeholder="感谢您的支持" />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ span: 16, offset: 12 }}>
+                        <Form.Item
+                            wrapperCol={{ span: 10, offset: 10 }}
+                            style={{ marginTop: '5px', marginBottom: '0px' }}
+                        >
                             <Button type="primary" htmlType="submit">提交</Button>
                         </Form.Item>
                     </Form>
