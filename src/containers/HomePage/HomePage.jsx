@@ -127,7 +127,7 @@ class HomePage extends Component {
                 </div>
                 <div>
                     <Modal
-                    title={"课程评议表：" + this.state.evalution_course}
+                    title={"学员评议表：" + this.state.evalution_course}
                     visible={this.state.visible}
                     // onOk={this.handleOk}
                     // onCancel={this.handleCancel}
