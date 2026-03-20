@@ -66,7 +66,7 @@ class HomePage extends Component {
     }
 
     handleOk = values => {
-        this.props.registerActions.postEvalution({proc:"updateEvalutionFormInfo", params:{
+        let params = {
             ID: this.state.evalution_ID,
             enterID: 0,
             F1: values.F1,
@@ -78,7 +78,9 @@ class HomePage extends Component {
             F7: values.F7,
             memo: values.memo || "",
             registerID: ""
-        }});
+        };
+        // console.log("updateEvalutionFormInfo:", params)
+        this.props.registerActions.postEvalution({proc:"updateEvalutionFormInfo", params:params});
         notification.info({
             message: `提交成功，谢谢配合。`,
             placement: 'topRight',
