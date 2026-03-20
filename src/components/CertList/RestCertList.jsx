@@ -135,7 +135,7 @@ class RestCertList extends Component {
                         <Radio value={1}>复训</Radio>
                       </Radio.Group>
                     </Form.Item>
-                    {this.state.retrain === 1 ? <Form.Item
+                    {/* {this.state.retrain === 1 ? <Form.Item
                       name="currDiplomaID"
                       label="初训证书编号"
                       rules={[
@@ -146,7 +146,7 @@ class RestCertList extends Component {
                       ]}
                     >
                       <Input />
-                    </Form.Item> : null}
+                    </Form.Item> : null} */}
                     {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="应复训日期">
                       <DatePicker />
                     </Form.Item> : null}
