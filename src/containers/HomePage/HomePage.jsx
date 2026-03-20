@@ -76,7 +76,7 @@ class HomePage extends Component {
             F5: values.F5,
             F6: values.F6,
             F7: values.F7,
-            memo: values.memo,
+            memo: values.memo || "",
             registerID: ""
         }});
         notification.info({
