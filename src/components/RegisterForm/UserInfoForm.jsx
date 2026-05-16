@@ -369,7 +369,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} />
+                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={this.props.application.userInfo.photo_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} disabled={this.props.application.userInfo.photo_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textAlign: "left" }}>
                             <span>
@@ -383,7 +383,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} />
+                            <Avatar imageUrl={this.props.application.userInfo.IDa_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDa_filename : null} action={this.props.application.userInfo.IDa_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardA`} disabled={this.props.application.userInfo.IDa_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -397,7 +397,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} />
+                            <Avatar imageUrl={this.props.application.userInfo.IDb_filename ? axios.defaults.baseURL + this.props.application.userInfo.IDb_filename : null} action={this.props.application.userInfo.IDb_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_IDcardB`} disabled={this.props.application.userInfo.IDb_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -411,7 +411,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} />
+                            <Avatar imageUrl={this.props.application.userInfo.edu_filename ? axios.defaults.baseURL + this.props.application.userInfo.edu_filename : null} action={this.props.application.userInfo.edu_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_education`} disabled={this.props.application.userInfo.edu_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -424,7 +424,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.employe_filename ? axios.defaults.baseURL + this.props.application.userInfo.employe_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_employment`} />
+                            <Avatar imageUrl={this.props.application.userInfo.employe_filename ? axios.defaults.baseURL + this.props.application.userInfo.employe_filename : null} action={this.props.application.userInfo.employe_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_employment`} disabled={this.props.application.userInfo.employe_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -437,7 +437,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.social_filename ? axios.defaults.baseURL + this.props.application.userInfo.social_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_social`} />
+                            <Avatar imageUrl={this.props.application.userInfo.social_filename ? axios.defaults.baseURL + this.props.application.userInfo.social_filename : null} action={this.props.application.userInfo.social_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_social`} disabled={this.props.application.userInfo.social_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -450,7 +450,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.job_filename ? axios.defaults.baseURL + this.props.application.userInfo.job_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_jobCertificate`} />
+                            <Avatar imageUrl={this.props.application.userInfo.job_filename ? axios.defaults.baseURL + this.props.application.userInfo.job_filename : null} action={this.props.application.userInfo.job_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_jobCertificate`} disabled={this.props.application.userInfo.job_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -463,7 +463,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.CHESICC_filename ? axios.defaults.baseURL + this.props.application.userInfo.CHESICC_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_CHESICC`} />
+                            <Avatar imageUrl={this.props.application.userInfo.CHESICC_filename ? axios.defaults.baseURL + this.props.application.userInfo.CHESICC_filename : null} action={this.props.application.userInfo.CHESICC_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_CHESICC`} disabled={this.props.application.userInfo.CHESICC_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
@@ -476,7 +476,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.promise_filename ? axios.defaults.baseURL + this.props.application.userInfo.promise_filename : null} action={`${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_promise`} />
+                            <Avatar imageUrl={this.props.application.userInfo.promise_filename ? axios.defaults.baseURL + this.props.application.userInfo.promise_filename : null} action={this.props.application.userInfo.promise_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_promise`} disabled={this.props.application.userInfo.promise_filename !== "" ? true : false} />
                         </Col>
                         <Col span={12} style={{ textalign: "left" }}>
                             <span>
