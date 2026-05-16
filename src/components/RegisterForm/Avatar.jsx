@@ -75,6 +75,7 @@ class Avatar extends Component {
         action={this.props.action}
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
+        disabled={this.props.disabled}
       >
         {imageUrl ? <img key={imageHash} src={`${imageUrl}?${imageHash}`} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
