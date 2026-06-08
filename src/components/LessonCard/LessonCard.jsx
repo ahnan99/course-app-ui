@@ -345,13 +345,13 @@ class LessonCard extends Component {
                         {course.regDate >= "2024-06-13" && this.state.showInvoiceBtn && this.state.invoice === 0 && course.autoPay === 1 && course.pay_status === 1 && course.invoice === "" ? <Card.Grid style={this.gridStyle}>
                             <Button type='primary' onClick={this.onClickInvoice} >开发票</Button></Card.Grid> : null}
                         {this.state.invoice === 1 ? <Card.Grid style={this.gridStyle}><p style={{ color: 'red' }}>将在三个工作日内完成开票，请注意短信通知</p></Card.Grid> : null}
-                        {course.status < 2 && (course.signatureType === 0 || course.signature > "") && (course.pre===0 || course.pay_status===1 || course.payNow===1) ? <Card.Grid style={this.gridStyle}>
+                        {course.status < 2 && (course.signatureType === 0 || course.signature > "") && (course.agencyID==="5" || course.pay_status===1 || course.payNow===1) ? <Card.Grid style={this.gridStyle}>
                             <div style={{padding:'5px'}}>
                                 <Button type='primary' onClick={() => this.onClickShowItem(course.ID)} >视频课程</Button>
                             </div>
                             <p> </p>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItem===course.ID ? "block" : "none")}}>
-                                {lessons.filter(lesson => lesson.refID === course.ID).map((lesson, index) => (
+                                {lessons.filter(lesson => lesson.refID === course.ID && lesson.lessonKindID===0).map((lesson, index) => (
                                     <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
                                         <p style={{ float: 'left' }}>
                                             <a onClick={() => this.onClick(lesson)} id={'x' + lesson.ID}>{index + 1}. {lesson.lessonName}&nbsp;&nbsp;</a>
@@ -361,24 +361,36 @@ class LessonCard extends Component {
                                     </li>
                                 ))}
                             </ul>
-                            {course.helps?<div><div style={{padding:'5px'}}>
-                                <Button type='primary' onClick={() => this.onClickShowItemHelp(course.ID)} >解题技巧</Button>
-                            </div>
-                            <p> </p>
-                            <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItemHelp===course.ID ? "block" : "none")}}>
-                                {
-                                    course.helps !== null && course.helps !== '' ? JSON.parse(course.helps)
-                                        .map(video => (
-                                            <li key={video.ID} style={{ listStyleType: 'none', clear: 'both' }}>
-                                                <h3>{video.title}</h3>
-                                                <video controls width="50%">
-                                                    <source src={video.vod} type="video/mp4" />
-                                                    浏览器不支持本地播放视频
-                                                </video>
-                                            </li>
-                                        ))
-                                : null}
-                            </ul></div>:null}
+                            {course.helps?<div>
+                                <p> </p>
+                                <div style={{padding:'5px'}}>
+                                    <Button type='primary' onClick={() => this.onClickShowItemHelp(course.ID)} >实操教程</Button>
+                                    <Progress percent={course.completion1} size="small" />
+                                </div>
+                                <p> </p>
+                                <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItemHelp===course.ID ? "block" : "none")}}>
+                                    {lessons.filter(lesson => lesson.refID === course.ID && lesson.lessonKindID===1).map((lesson, index) => (
+                                        <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
+                                            <p style={{ float: 'left' }}>
+                                                <a onClick={() => this.onClick(lesson)} id={'x' + lesson.ID}>{index + 1}. {lesson.lessonName}&nbsp;&nbsp;</a>
+                                                <span style={{ color: 'lightgray' }}>{lesson.completion}%</span>
+                                            </p>
+
+                                        </li>
+                                    ))}
+                                    {/* {course.helps !== null && course.helps !== '' ? JSON.parse(course.helps)
+                                            .map(video => (
+                                                <li key={video.ID} style={{ listStyleType: 'none', clear: 'both' }}>
+                                                    <h3>{video.title}</h3>
+                                                    <video controls width="50%">
+                                                        <source src={video.vod} type="video/mp4" />
+                                                        浏览器不支持本地播放视频
+                                                    </video>
+                                                </li>
+                                            ))
+                                    : null} */}
+                                </ul>
+                            </div>:null}
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
                                 <li style={{ listStyleType: 'none', clear: 'both' }}>
                                     <div style={{padding:'5px'}}>
