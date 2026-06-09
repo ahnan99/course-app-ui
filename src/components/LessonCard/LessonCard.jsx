@@ -349,7 +349,7 @@ class LessonCard extends Component {
                             <div style={{padding:'5px'}}>
                                 <Button type='primary' onClick={() => this.onClickShowItem(course.ID)} >视频课程</Button>
                             </div>
-                            <p> </p>
+                            <p> </p><div>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItem===course.ID ? "block" : "none")}}>
                                 {lessons.filter(lesson => lesson.refID === course.ID && lesson.lessonKindID===0).map((lesson, index) => (
                                     <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
@@ -360,14 +360,14 @@ class LessonCard extends Component {
 
                                     </li>
                                 ))}
-                            </ul>
+                            </ul></div>
                             {course.helps>0 ? <div>
                                 <p> </p>
                                 <div style={{padding:'5px'}}>
                                     <Button type='primary' onClick={() => this.onClickShowItemHelp(course.ID)} >实操教程</Button>
                                     <Progress percent={course.completion1} size="small" />
                                 </div>
-                                <p> </p>
+                                <p> </p><div>
                                 <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItemHelp===course.ID ? "block" : "none")}}>
                                     {lessons.filter(lesson => lesson.refID === course.ID && lesson.lessonKindID===1).map((lesson, index) => (
                                         <li style={{ listStyleType: 'none', clear: 'both' }} key={lesson.ID}>
@@ -389,7 +389,7 @@ class LessonCard extends Component {
                                                 </li>
                                             ))
                                     : null} */}
-                                </ul>
+                                </ul></div>
                             </div>:null}
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0 }}>
                                 <li style={{ listStyleType: 'none', clear: 'both' }}>
