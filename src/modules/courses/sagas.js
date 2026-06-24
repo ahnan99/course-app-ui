@@ -119,6 +119,8 @@ function* updateMaxTimeWorker(action) {
         yield put(actions.updateMaxTime(response.data))
     } catch (error) {
         yield handleAuthenticationErrors(error);
+        // 通讯失败：通过 maxTimeRes 通知 VideoPlayer 关闭视频页
+        yield put(actions.updateMaxTime({ error: true, message: '视频进度上报失败，请检查网络后重试' }))
     }
 }
 

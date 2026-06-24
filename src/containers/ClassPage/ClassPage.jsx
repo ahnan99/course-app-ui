@@ -74,7 +74,7 @@ class ClassPage extends Component {
                     </Row>
                     <Row gutter={[16, 32]}>
                         <Col span={24}>
-                            <VideoPlayer actions={this.props.actions} video={this.props.course.video[0]} />
+                            <VideoPlayer actions={this.props.actions} video={this.props.course.video[0]} onError={this.onClickBack} />
                         </Col>
                     </Row>
                     <Row gutter={[16, 32]}>

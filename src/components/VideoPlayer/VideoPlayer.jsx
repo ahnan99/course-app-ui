@@ -88,6 +88,21 @@ class VideoPlayer extends Component {
     }
 
     componentDidUpdate () {
+        if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.error && !this.errorHandled){
+            // 进度上报通讯失败：提示并关闭视频页
+            this.errorHandled = true;
+            clearInterval(this.timer);
+            this.timer = null;
+            if (this.player) {
+                try { this.player.pause(); } catch (e) { /* player 可能已被释放 */ }
+            }
+            message.error(this.props.course.maxTimeRes.message || '视频进度上报失败，请检查网络后重试');
+            this.props.courseActions.updateMaxTime(null);
+            if (typeof this.props.onError === 'function') {
+                this.props.onError();
+            }
+            return;
+        }
         if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.status === 1 && !this.state.shotVisible){
             this.setState({ shotNow: true });
             this.props.courseActions.updateMaxTime(null)
