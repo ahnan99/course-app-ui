@@ -6,6 +6,7 @@ import 'video.js/dist/video-js.min.css'
 import { message, Button, Modal } from 'antd'
 import { actions as UserActions } from "../../modules/user";
 import { actions as CourseActions } from "../../modules/courses";
+import { postMaxTime } from "../../modules/courses/sagas";
 import { bindActionCreators } from "redux";
 
 // export default class VideoPlayer extends React.Component {
@@ -76,11 +77,30 @@ class VideoPlayer extends Component {
             });
     
             this.timer = setInterval(() => {
-                if ((this.player.currentTime() > this.state.maxTime && !this.state.shotNow) || this.state.photoSend) {     // 发送对比照片后与服务器通讯，已获取最新的状态（阿里云对比结果可能未及时返回给客户端）
-                        this.setState({ maxTime: this.player.currentTime() }, () => {
-                        this.props.courseActions.postMaxTime({ ID: video.ID, currentTime: this.player.currentTime(), shoted: this.state.shoted });
+                // 视频正在播放时（包括复看已观看部分）都向服务端心跳，
+                // 以便及时发现通讯中断。原本的 maxTime 推进逻辑保留。
+                const playing = this.player && !this.player.paused() && !this.player.ended();
+                const advancing = this.player.currentTime() > this.state.maxTime && !this.state.shotNow;
+                const shouldUpdateMax = advancing || this.state.photoSend;
+
+                if (playing || shouldUpdateMax) {
+                    if (shouldUpdateMax) {
+                        this.setState({ maxTime: this.player.currentTime() });
+                    }
+                    const payload = { ID: video.ID, currentTime: this.player.currentTime(), shoted: this.state.shoted };
+                    console.log('[VideoPlayer] reporting progress', payload);
+                    // 直接发请求，确保通讯失败时能在前端直接捕获并提示
+                    postMaxTime(payload, { timeout: 8000 })
+                        .then((response) => {
+                            this.props.courseActions.updateMaxTime(response.data);
+                        })
+                        .catch((error) => {
+                            console.error('[VideoPlayer] postMaxTime failed:', error);
+                            this.handleReportError();
+                        });
+                    if (shouldUpdateMax) {
                         this.setState({ shoted: 0 });   // 恢复未检测状态
-                    })
+                    }
                 }
             }, 1000 * 10)
             this.player.currentTime(video.lastTime)
@@ -88,6 +108,11 @@ class VideoPlayer extends Component {
     }
 
     componentDidUpdate () {
+        if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.error && !this.errorHandled){
+            // saga 路径触发的错误（兜底）
+            this.handleReportError();
+            return;
+        }
         if(this.props.course.maxTimeRes && this.props.course.maxTimeRes.status === 1 && !this.state.shotVisible){
             this.setState({ shotNow: true });
             this.props.courseActions.updateMaxTime(null)
@@ -114,6 +139,22 @@ class VideoPlayer extends Component {
                 this.player.play();
             }
             this.props.userActions.updateFaceDetectOSS(null);
+        }
+    }
+
+    handleReportError = (msg) => {
+        if (this.errorHandled) return;
+        this.errorHandled = true;
+        console.error('[VideoPlayer] 进度上报通讯失败，关闭视频页');
+        clearInterval(this.timer);
+        this.timer = null;
+        if (this.player) {
+            try { this.player.pause(); } catch (e) { /* player 可能已被释放 */ }
+        }
+        message.error(msg || (this.props.course.maxTimeRes && this.props.course.maxTimeRes.message) || '视频进度上报失败，请检查网络后重试');
+        this.props.courseActions.updateMaxTime(null);
+        if (typeof this.props.onError === 'function') {
+            this.props.onError();
         }
     }
 
