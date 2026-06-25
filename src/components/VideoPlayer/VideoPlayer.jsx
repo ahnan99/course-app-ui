@@ -77,20 +77,30 @@ class VideoPlayer extends Component {
             });
     
             this.timer = setInterval(() => {
-                if ((this.player.currentTime() > this.state.maxTime && !this.state.shotNow) || this.state.photoSend) {     // 发送对比照片后与服务器通讯，已获取最新的状态（阿里云对比结果可能未及时返回给客户端）
-                        this.setState({ maxTime: this.player.currentTime() }, () => {
-                        const payload = { ID: video.ID, currentTime: this.player.currentTime(), shoted: this.state.shoted };
-                        // 直接发请求，确保通讯失败时能在前端直接捕获并提示
-                        postMaxTime(payload, { timeout: 8000 })
-                            .then((response) => {
-                                this.props.courseActions.updateMaxTime(response.data);
-                            })
-                            .catch((error) => {
-                                console.error('[VideoPlayer] postMaxTime failed:', error);
-                                this.handleReportError();
-                            });
+                // 视频正在播放时（包括复看已观看部分）都向服务端心跳，
+                // 以便及时发现通讯中断。原本的 maxTime 推进逻辑保留。
+                const playing = this.player && !this.player.paused() && !this.player.ended();
+                const advancing = this.player.currentTime() > this.state.maxTime && !this.state.shotNow;
+                const shouldUpdateMax = advancing || this.state.photoSend;
+
+                if (playing || shouldUpdateMax) {
+                    if (shouldUpdateMax) {
+                        this.setState({ maxTime: this.player.currentTime() });
+                    }
+                    const payload = { ID: video.ID, currentTime: this.player.currentTime(), shoted: this.state.shoted };
+                    console.log('[VideoPlayer] reporting progress', payload);
+                    // 直接发请求，确保通讯失败时能在前端直接捕获并提示
+                    postMaxTime(payload, { timeout: 8000 })
+                        .then((response) => {
+                            this.props.courseActions.updateMaxTime(response.data);
+                        })
+                        .catch((error) => {
+                            console.error('[VideoPlayer] postMaxTime failed:', error);
+                            this.handleReportError();
+                        });
+                    if (shouldUpdateMax) {
                         this.setState({ shoted: 0 });   // 恢复未检测状态
-                    })
+                    }
                 }
             }, 1000 * 10)
             this.player.currentTime(video.lastTime)
