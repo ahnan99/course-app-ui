@@ -332,7 +332,7 @@ class LessonCard extends Component {
                 <Col span={24}>
                     <Card title={course.courseName + [course.agencyID === "1" ? '(' + course.reexamineName + ')' : null]} style={{ textAlign: 'left' }} extra={<div>{course.type === 0 ? <span style={{ color: 'red' }}>{course.checkName}&nbsp;</span> : null}<a>{course.statusName}</a></div>}>{
                         course.status < 2 ? <Card.Grid style={this.gridStyle}>
-                            <Progress percent={course.completion} size="small" /><p>课时：{(course.hours*course.completion/100).toFixed(1) + " / " + course.hours}</p>
+                            <Progress percent={course.completion} size="small" /><p>课时：{course.attendance + " / " + course.hours}</p>
                             {/* <p>开始日期：{course.startDate}</p>
                             <p>结束日期：{course.endDate}</p> */}
                             <p>完成条件：{course.pass_condition}</p>
@@ -348,6 +348,7 @@ class LessonCard extends Component {
                         {course.status < 2 && (course.signatureType === 0 || course.signature > "") && (course.agencyID==="5" || course.pay_status>=1 || course.payNow===1) ? <Card.Grid style={this.gridStyle}>
                             <div style={{padding:'5px'}}>
                                 <Button type='primary' onClick={() => this.onClickShowItem(course.ID)} >视频课程</Button>
+                                <Progress percent={course.completion} size="small" />
                             </div>
                             <p> </p><div>
                             <ul style={{ textAlign: 'left', margin: 0, padding: 0, display:(this.state.showItem===course.ID ? "block" : "none")}}>
