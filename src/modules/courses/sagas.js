@@ -60,8 +60,8 @@ export function getPDF(data) {
     })
 }
 
-export function postMaxTime(data) {
-    return axios.post('/students/update_video_currentTime', data)
+export function postMaxTime(data, config) {
+    return axios.post('/students/update_video_currentTime', data, config)
 }
 
 export function postMaxPage(data) {
