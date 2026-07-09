@@ -14,6 +14,7 @@ import CertImage from '../containers/Audit/CertImage'
 import CertImageStudent from "../containers/CertPage/CertImageStudent"
 import ClassCommentPage from "../containers/ClassPage/ClassCommentPage"
 import InvoicePage from "../containers/InvoicePage/InvoicePage"
+import AgreementPage from "../containers/AgreementPage/AgreementPage"
 
 const routes = [{
     path: '/homepage',
@@ -60,6 +61,11 @@ const routes = [{
     pathKey: 'invoicepage',
     component: InvoicePage
 
+},
+{
+    path: '/agreementpage',
+    pathKey: 'agreementpage',
+    component: AgreementPage
 },
 {
     path: '/helppage',
