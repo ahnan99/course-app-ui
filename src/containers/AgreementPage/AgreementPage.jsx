@@ -64,7 +64,13 @@ class AgreementPage extends Component {
             this.props.user.agreementList.map((agreement, index) => (
               <Row>
               <Col flex="auto" style={{ textAlign: "left" }}>
-              <iframe src={(agreement.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + agreement.filename + '?times=' + (new Date().getTime()) + '#view=fit'} style={{border:'0px'}}></iframe>
+              {/* <iframe src={(agreement.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + agreement.filename + '?times=' + (new Date().getTime()) + '#view=fit'} style={{border:'0px'}}></iframe> */}
+                        <Document
+                            file={(agreement.filename.indexOf("https://")===-1 ? axios.defaults.baseURL : "") + agreement.filename + '?times=' + (new Date().getTime()) + '#view=fit'}
+                            onLoadSuccess={this.onDocumentLoadSuccess}
+                            onLoadError={this.onLoadError}
+                        >
+                        </Document>
               </Col>
               <Col flex="none">
                 <div>
