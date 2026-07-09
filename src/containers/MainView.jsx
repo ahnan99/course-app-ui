@@ -56,6 +56,9 @@ class MainView extends Component {
             case "9":
                 this.props.history.push("/invoicepage");
                 break;
+            case "10":
+                this.props.history.push("/agreementpage");
+                break;
             case "7":
                 this.props.history.push("/helppage")
                 break
@@ -106,6 +109,9 @@ class MainView extends Component {
                         </Menu.Item> : null}
                         {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="9" icon={<ScheduleOutlined />} title={""}>
                             我的发票
+                        </Menu.Item> : null}
+                        {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="10" icon={<ScheduleOutlined />} title={""}>
+                            我的协议
                         </Menu.Item> : null}
                         {this.props.application.userInfo && !this.props.application.auditor ? <Menu.Item key="4" icon={<UserOutlined />} title={""}>
                             个人信息
