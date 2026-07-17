@@ -152,7 +152,7 @@ class ExamForm extends Component {
 
                 this.props.actions.postTime({ paperID: this.props.exam.exam[0].paperID, secondRest: this.state.time })
             }
-        }, 5000)    //exam submission Interval
+        }, 10000)    //exam submission Interval
 
         this.timer2 = setInterval(() => {
             if (this.state.time > 0 && this.props.exam.exam && this.props.exam.exam[0].pkind === 0 && this.props.exam.exam[0].status !== 2) {
