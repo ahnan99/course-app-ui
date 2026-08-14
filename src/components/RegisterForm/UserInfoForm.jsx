@@ -369,7 +369,7 @@ class UserInfoForm extends Component {
                 >
                     <Row>
                         <Col span={12}>
-                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={this.props.application.userInfo.photo_filename !== "" ? null : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} disabled={this.props.application.userInfo.photo_filename !== "" ? true : false} />
+                            <Avatar imageUrl={this.props.application.userInfo.photo_filename !== "" ? axios.defaults.baseURL + this.props.application.userInfo.photo_filename : axios.defaults.baseURL + '/public/images/guy.png'} action={this.props.application.userInfo.photo_filename !== "" ? `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo` : `${axios.defaults.baseURL}/files/uploadSingle?username=${this.props.application.username}&upID=student_photo`} disabled={this.props.application.userInfo.photo_filename !== "" ? false : false} />
                         </Col>
                         <Col span={12} style={{ textAlign: "left" }}>
                             <span>
