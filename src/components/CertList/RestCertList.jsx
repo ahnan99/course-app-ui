@@ -129,13 +129,8 @@ class RestCertList extends Component {
                     }}
                     ref={this.formRef}
                   >
-                    <Form.Item name="reexamine" className="collection-create-form_last-form-item">
-                      <Radio.Group onChange={this.onChange1}>
-                        <Radio value={0}>初训</Radio>
-                        <Radio value={1}>换证</Radio>
-                      </Radio.Group>
-                    </Form.Item>
-                    {item.certID === "C14" ? <Form.Item
+                  {
+                    item.certID === "C14" ? <Form.Item
                       name="SEID"
                       label="复审项目"
                       rules={[{ required: true, message: '请选择复审项目' }]}  // 只需非空校验
@@ -155,7 +150,14 @@ class RestCertList extends Component {
                           </Select.Option>
                         )): null}
                       </Select>
-                    </Form.Item> : null}
+                      </Form.Item> : 
+                      <Form.Item name="reexamine" className="collection-create-form_last-form-item">
+                        <Radio.Group onChange={this.onChange1}>
+                          <Radio value={0}>初训</Radio>
+                          <Radio value={1}>换证</Radio>
+                        </Radio.Group>
+                      </Form.Item>
+                    }
                     {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="换证日期">
                       <DatePicker />
                     </Form.Item> : null}
