@@ -52,7 +52,7 @@ export function postEvalutionEndpoint(data) {
 }
 
 export function confirmLoginEndpoint() {
-    return axios.post('/knock_door')
+    return axios.post('/public/knock_door')
 }
 
 export function getUserInfoEndpoint(data) {

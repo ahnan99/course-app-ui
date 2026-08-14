@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker, ConfigProvider } from 'antd';
+import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker, ConfigProvider, AutoComplete, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
@@ -27,13 +27,13 @@ class RestCertList extends Component {
 
   onAdd = cert => {
     this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 0, fromID: window._sales, url:this.getSubdomain() });
-    console.log("_host1:", window._host, window._sales);
+    // console.log("_host1:", window._host, window._sales);
     this.setState({ visible: false })
   }
 
   onAddretrain = cert => {
     this.props.actions.postAddCert({ username: this.props.application.username, certID: cert.certID, mark: 0, reexamine: 1, fromID: window._sales, url:this.getSubdomain() });
-    console.log("_host2:", window._host, window._sales);
+    // console.log("_host2:", window._host, window._sales);
     this.setState({ visible: false })
 
   }
@@ -132,22 +132,31 @@ class RestCertList extends Component {
                     <Form.Item name="reexamine" className="collection-create-form_last-form-item">
                       <Radio.Group onChange={this.onChange1}>
                         <Radio value={0}>初训</Radio>
-                        <Radio value={1}>复训</Radio>
+                        <Radio value={1}>换证</Radio>
                       </Radio.Group>
                     </Form.Item>
-                    {/* {this.state.retrain === 1 ? <Form.Item
-                      name="currDiplomaID"
-                      label="初训证书编号"
-                      rules={[
-                        {
-                          required: false,
-                          message: '请输入证书编号',
-                        },
-                      ]}
+                    {item.certID === "C14" ? <Form.Item
+                      name="SEID"
+                      label="复审项目"
+                      rules={[{ required: true, message: '请选择复审项目' }]}  // 只需非空校验
                     >
-                      <Input />
-                    </Form.Item> : null} */}
-                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="应复训日期">
+                      <Select
+                        showSearch                    // 启用搜索
+                        placeholder="选择项目"
+                        optionFilterProp="children"   // 按显示文本搜索（默认即 children）
+                        options={item.memo !== null && item.memo !== '' ? JSON.parse(item.memo).map(it => ({ value: it.title, label: it.title })) : []}
+                        filterOption={(input, option) =>
+                          option.children.toLowerCase().includes(input.toLowerCase())
+                        }
+                      >
+                        {item.memo !== null && item.memo !== '' ? JSON.parse(item.memo).map(title => (
+                          <Select.Option key={title.ID} value={title.title}>
+                            {title.title}
+                          </Select.Option>
+                        )): null}
+                      </Select>
+                    </Form.Item> : null}
+                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="换证日期">
                       <DatePicker />
                     </Form.Item> : null}
 
