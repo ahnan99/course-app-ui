@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import { List, Skeleton, message, Modal, Button, Input, Radio, Form, DatePicker, ConfigProvider, AutoComplete, Select } from 'antd';
+import { List, Skeleton, message, Modal, Button, Radio, Form, DatePicker, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router-dom'
 import 'antd/dist/antd.css'
-// import { LocalFormat } from './localHelper';
+import moment from 'moment'
+import 'moment/locale/zh-cn'
 // import locale from 'antd/es/date-picker/locale/zh_CN';
-// import 'dayjs/locale/zh-cn';
-// import locale from 'antd/locale/zh_CN';
-import dayjs from 'dayjs';
-// import 'dayjs/locale/zh-cn';
-// dayjs.locale('zh-cn');
+import locale from 'antd/lib/date-picker/locale/zh_CN'
+moment.locale('zh-cn')
 
 class RestCertList extends Component {
   constructor(props) {
@@ -68,13 +66,38 @@ class RestCertList extends Component {
   }
 
   handleCancel = () => {
-    console.log(this.formRef.current.getFieldsValue())
+    this.formRef.current && this.formRef.current.resetFields()
     this.setState({ visible: false, selectedItem: null })
   }
-  handleOK = cert => {
-    this.props.actions.postAddCert({ ...this.formRef.current.getFieldsValue(), username: this.props.application.username, certID: cert.certID, mark: 0, fromID: window._sales, url:this.getSubdomain() });
+  handleOK = async () => {
+    const { selectedItem } = this.state
+    if (!selectedItem || !this.formRef.current) return
+
+    const values = await this.formRef.current.validateFields()
+    this.props.actions.postAddCert({ ...values, username: this.props.application.username, certID: selectedItem.certID, mark: 0, fromID: window._sales, url:this.getSubdomain() });
     console.log("_host3:", window._host, window._sales);
+    this.formRef.current.resetFields()
     this.setState({ visible: false, selectedItem: null })
+  }
+
+  handleOpen = item => {
+    this.setState({ visible: true, selectedItem: item, retrain: 0 }, () => {
+      this.formRef.current && this.formRef.current.resetFields()
+    })
+  }
+
+  getSelectOptions = item => {
+    if (!item || !item.memo) return []
+
+    try {
+      const memo = JSON.parse(item.memo)
+      return Array.isArray(memo)
+        ? memo.map(option => ({ value: option.ID, label: option.title }))
+        : []
+    } catch (error) {
+      console.error('Invalid certificate memo:', error)
+      return []
+    }
   }
 
 
@@ -86,7 +109,7 @@ class RestCertList extends Component {
 
   render() {
     const { loading } = this.props
-    const { visible } = this.state
+    const { visible, selectedItem } = this.state
     return (
       <List
         header={
@@ -103,13 +126,13 @@ class RestCertList extends Component {
             key={item.certID}
             actions={item.reexamine !== 1 ? [<a key="list-loadmore-edit" onClick={() => this.onAdd(item)} style={{ color: 'darkOrange' }}><PlusOutlined /></a>] :
               [
-                <div><Modal
+                <div>{selectedItem && selectedItem.certID === item.certID ? <Modal
                   visible={visible}
                   title=""
-                  onOk={this.handleOk}
+                  onOk={this.handleOK}
                   onCancel={this.handleCancel}
                   footer={[
-                    <Button key="first" onClick={() => this.handleOK(this.state.selectedItem)} type="primary">
+                    <Button key="first" onClick={this.handleOK} type="primary">
                       确定
                     </Button>,
                     <Button
@@ -130,7 +153,7 @@ class RestCertList extends Component {
                     ref={this.formRef}
                   >
                   {
-                    item.certID === "C14" ? <Form.Item
+                    this.state.selectedItem && this.state.selectedItem.certID === 'C14' ? <Form.Item
                       name="SEID"
                       label="复审项目"
                       rules={[{ required: true, message: '请选择复审项目' }]}  // 只需非空校验
@@ -138,18 +161,12 @@ class RestCertList extends Component {
                       <Select
                         showSearch                    // 启用搜索
                         placeholder="选择项目"
-                        optionFilterProp="children"   // 按显示文本搜索（默认即 children）
-                        options={item.memo !== null && item.memo !== '' ? JSON.parse(item.memo).map(it => ({ value: it.title, label: it.title })) : []}
+                        optionFilterProp="label"
+                        options={this.getSelectOptions(selectedItem)}
                         filterOption={(input, option) =>
-                          option.children.toLowerCase().includes(input.toLowerCase())
+                          String(option && option.label || '').toLowerCase().includes(input.toLowerCase())
                         }
-                      >
-                        {item.memo !== null && item.memo !== '' ? JSON.parse(item.memo).map(title => (
-                          <Select.Option key={title.ID} value={title.title}>
-                            {title.title}
-                          </Select.Option>
-                        )): null}
-                      </Select>
+                      />
                       </Form.Item> : 
                       <Form.Item name="reexamine" className="collection-create-form_last-form-item">
                         <Radio.Group onChange={this.onChange1}>
@@ -158,13 +175,13 @@ class RestCertList extends Component {
                         </Radio.Group>
                       </Form.Item>
                     }
-                    {this.state.retrain === 1 ? <Form.Item name="currDiplomaDate" label="换证日期">
-                      <DatePicker />
+                    {this.state.retrain === 1 || this.state.selectedItem.certID === 'C14' ? <Form.Item name="currDiplomaDate" label="应换证/复审日期">
+                      <DatePicker locale={locale} />
                     </Form.Item> : null}
 
                   </Form>
-                </Modal>
-                  <a key="list-loadmore-edit" onClick={() => { this.setState({ visible: true, selectedItem: item }) }} style={{ color: 'darkOrange' }}><PlusOutlined /></a>
+                </Modal> : null}
+                  <a key="list-loadmore-edit" onClick={() => this.handleOpen(item)} style={{ color: 'darkOrange' }}><PlusOutlined /></a>
                 </ div>]}
           >
             <Skeleton active loading={loading}>

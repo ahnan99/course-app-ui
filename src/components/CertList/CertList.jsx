@@ -77,7 +77,7 @@ export default class CertList extends Component {
           >
             <Skeleton active loading={loading}>
               <List.Item.Meta
-                title={<a>{item.certName + [item.re !== 0 ? '(' + item.reexamineName + ')' : null]}</a>}
+                title={<a>{item.certName + [item.re !== 0 && item.certID !== 'C14' ? '(' + item.reexamineName + ')' : null]}</a>}
                 description={this.listItems(item)}
               />
             </Skeleton>
