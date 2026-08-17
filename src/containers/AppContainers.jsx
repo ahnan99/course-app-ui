@@ -39,12 +39,14 @@ class App extends Component {
             message.success('登录成功')
         }
         if (
+          this.props.application.loggedIn === true &&
           this.props.application.loginStatusCode !== 401 &&
           nextProps.application.loginStatusCode === 401
         ) {
           message.error("登录已超时，自动退出。");
         }
         if (
+          this.props.application.loggedIn === true &&
           this.props.application.loginStatusCode !== 501 &&
           nextProps.application.loginStatusCode === 501
         ) {
