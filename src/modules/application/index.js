@@ -231,6 +231,7 @@ export const actions = {
 const initialState = {
     loggedIn: false,
     loginStatusCode: null,
+    loginSource: null,
     username: null,
     isFetching: false,
     loginError: null,
@@ -254,6 +255,7 @@ const reducer = (state = initialState, action = {}) => {
                     ...state,
                     loggedIn: true,
                     loginStatusCode: null,
+                    loginSource: 'credentials',
                     loginError: null,
                     username: action.response.username,
                     newCourse: action.response.newCourse
@@ -277,6 +279,7 @@ const reducer = (state = initialState, action = {}) => {
                     ...state,
                     loggedIn: true,
                     loginStatusCode: null,
+                    loginSource: 'credentials',
                     loginError: null,
                     username: action.response.username,
                     teacher: action.response.teacher,
@@ -345,7 +348,8 @@ const reducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 loggedIn: isAuthenticationError ? false : action.data,
-                loginStatusCode: isAuthenticationError ? action.data : null
+                loginStatusCode: isAuthenticationError ? action.data : null,
+                loginSource: isAuthenticationError ? null : state.loginSource
             }
         }
         case UPDATE_COMPANY_INFO: {
@@ -372,6 +376,7 @@ const reducer = (state = initialState, action = {}) => {
                     ...state,
                     loggedIn: false,
                     loginStatusCode: null,
+                    loginSource: null,
                     loginError: null,
                     username: null,
                     userInfo: null,
@@ -398,11 +403,12 @@ const reducer = (state = initialState, action = {}) => {
                     ...state,
                     loggedIn: true,
                     loginStatusCode: null,
+                    loginSource: 'session',
                     username: action.response.username,
                     auditor: action.response.auditor
                 }
             } else {
-                return { ...state, loggedIn: false, loginStatusCode: null }
+                return { ...state, loggedIn: false, loginStatusCode: null, loginSource: null }
             }
         }
         default:

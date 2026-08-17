@@ -21,10 +21,15 @@ console.log("_host:", window._host, window._sales);
 axios.defaults.baseURL = process.env.REACT_APP_ALIYUNHOST ? process.env.REACT_APP_ALIYUNHOST + ":8081" : "http://127.0.0.1:8081"
 //axios.defaults.baseURL = "http://spc.shznxfxx.cn:8081"
 axios.defaults.withCredentials = true
+const forcedLogoutKey = 'courseAppForcedLogout'
 class App extends Component {
 
     componentDidMount() {
-        this.props.actions.confirmLogin()
+        const publicPaths = ['/login', '/register', '/forgetpassword']
+        const isPublicPath = publicPaths.indexOf(this.props.location.pathname) !== -1
+        if (!isPublicPath && !window.sessionStorage.getItem(forcedLogoutKey)) {
+            this.props.actions.confirmLogin()
+        }
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -35,7 +40,12 @@ class App extends Component {
         ) {
             message.success('登出成功')
         }
-        if (this.props.application.loggedIn === false && nextProps.application.loggedIn === true) {
+        if (
+          this.props.application.loggedIn === false &&
+          nextProps.application.loggedIn === true &&
+          nextProps.application.loginSource === 'credentials'
+        ) {
+            window.sessionStorage.removeItem(forcedLogoutKey)
             message.success('登录成功')
         }
         if (
@@ -43,6 +53,7 @@ class App extends Component {
           this.props.application.loginStatusCode !== 401 &&
           nextProps.application.loginStatusCode === 401
         ) {
+          window.sessionStorage.setItem(forcedLogoutKey, '401')
           message.error("登录已超时，自动退出。");
         }
         if (
@@ -50,6 +61,7 @@ class App extends Component {
           this.props.application.loginStatusCode !== 501 &&
           nextProps.application.loginStatusCode === 501
         ) {
+          window.sessionStorage.setItem(forcedLogoutKey, '501')
           message.error("已在其他设备登录，自动退出。");
         }
         if (this.props.application.loggedIn === false && nextProps.user.resetStatus !== null) {
