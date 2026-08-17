@@ -28,25 +28,27 @@ class App extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (this.props.application.loggedIn === true && nextProps.application.loggedIn === false) {
+        if (
+          this.props.application.loggedIn === true &&
+          nextProps.application.loggedIn === false &&
+          nextProps.application.loginStatusCode === null
+        ) {
             message.success('登出成功')
         }
         if (this.props.application.loggedIn === false && nextProps.application.loggedIn === true) {
             message.success('登录成功')
         }
         if (
-          this.props.application.loggedIn === true &&
-          nextProps.application.loggedIn === 401
+          this.props.application.loginStatusCode !== 401 &&
+          nextProps.application.loginStatusCode === 401
         ) {
           message.error("登录已超时，自动退出。");
-          this.props.actions.updateLoginStatus(false);
         }
         if (
-          this.props.application.loggedIn === true &&
-          nextProps.application.loggedIn === 501
+          this.props.application.loginStatusCode !== 501 &&
+          nextProps.application.loginStatusCode === 501
         ) {
           message.error("已在其他设备登录，自动退出。");
-          this.props.actions.updateLoginStatus(false);
         }
         if (this.props.application.loggedIn === false && nextProps.user.resetStatus !== null) {
             if (nextProps.user.resetStatus === 0) {
