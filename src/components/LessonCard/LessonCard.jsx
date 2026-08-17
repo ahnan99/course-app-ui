@@ -47,7 +47,7 @@ class LessonCard extends Component {
             qty2: 0,
             qty3: 0,
             paperItem: '',
-            busyGetExamQuestion:1,
+            busyGetExamQuestion: 0,
             chapterList:[],
             checkWrong: 1
         }

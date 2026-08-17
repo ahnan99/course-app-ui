@@ -22,6 +22,7 @@ class HomePage extends Component {
     state = {
         visible: false,
         evalution_ID: 0,
+        startingExam: false,
         evalution_course: ""
     }
 
@@ -47,9 +48,44 @@ class HomePage extends Component {
 
 
     onClickExam = paperID => {
-        this.props.examActions.updateLeave(false);
-        this.props.examActions.getExam({ paperID: paperID });
-        this.props.examActions.updateBusyGetExamQuestion(1);
+        if (this.state.startingExam) {
+            return
+        }
+        this.setState({ startingExam: true }, () => {
+            this.props.examActions.updateLeave(false)
+            this.props.examActions.getExam({ paperID })
+        })
+    }
+
+    componentDidUpdate = prevProps => {
+        if (
+            this.state.startingExam &&
+            this.props.exam.exam &&
+            prevProps.exam.exam !== this.props.exam.exam
+        ) {
+            const exam = this.props.exam.exam[0]
+            if (exam.missingItems) {
+                message.info('请填写' + exam.missingItems)
+                this.props.history.push('/userinfo')
+            } else if (exam.startExamMsg !== '') {
+                message.info(exam.startExamMsg)
+            } else if (exam.allowMockMsg !== '') {
+                message.info(exam.allowMockMsg)
+            } else {
+                this.props.examActions.getExamQuestion({
+                    paperID: exam.paperID,
+                    pkind: exam.pkind,
+                    examID: exam.examID,
+                    kind: 0,
+                    page: 1,
+                    pageSize: 20,
+                    onlyWrong: 1,
+                    s: 0
+                })
+                this.props.history.push('/exampage')
+            }
+            this.setState({ startingExam: false })
+        }
     }
 
     onClickRule = () => {
