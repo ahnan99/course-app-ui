@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects'
+import { put, select } from 'redux-saga/effects'
 import { actions } from '../application'
 
 function* handleAuthenticationErrors(error) {
@@ -7,7 +7,8 @@ function* handleAuthenticationErrors(error) {
         return;
     }
     const errorCode = error.response.status;
-    if (errorCode === 401 || errorCode === 501) {
+    const loggedIn = yield select(state => state.application.loggedIn);
+    if (loggedIn === true && (errorCode === 401 || errorCode === 501)) {
         yield put(actions.updateLoginStatus(errorCode));
     }
 }
