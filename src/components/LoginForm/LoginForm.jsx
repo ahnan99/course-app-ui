@@ -19,35 +19,18 @@ class LoginForm extends Component {
         this.props.history.push('/register')
     }
 
-    componentWillReceiveProps = (nextProps) => {
-        if (nextProps.loggedIn && nextProps.username && nextProps.auditor === 1) {
-            if(nextProps.teacher){
-                this.props.history.push('/homepage')
-            }else{
-                this.props.history.push('/auditpage')
-            }   
-        }
-        else if (nextProps.loggedIn && nextProps.username) {
-            this.props.getUserInfo({ username: nextProps.username })
-            if (nextProps.userInfo && nextProps.userInfo.newCourse === 0 && nextProps.userInfo.host_kindID === 0) {
-                console.log("goto courseselect")
-                this.props.history.push('/courseselect')
-            } else if (nextProps.userInfo) {
-                console.log("goto homepage")
-                this.props.history.push('/homepage')
-            }
-        }
-        if (nextProps.loginError) {
-            message.error(nextProps.loginError.msg)
-            if (nextProps.loginError.status === 1) {
+    componentDidUpdate = (prevProps) => {
+        if (this.props.loginError && this.props.loginError !== prevProps.loginError) {
+            message.error(this.props.loginError.msg || '登录失败，请重试')
+            if (this.props.loginError.status === 1) {
                 this.props.history.push('/register')
             }
         }
     }
 
     onFinish = values => {
-        console.log('Success:', values)
-        if (values.auditor) {
+        if (this.props.isFetching) return
+        if (values.auditor && values.auditor.length > 0) {
             this.props.auditorRequestLogin({ username: values.username, password: values.password })
         } else {
             // const { fromID } = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
@@ -103,7 +86,7 @@ class LoginForm extends Component {
                 </Form.Item>
                 <Form.Item>
                     {this.state.waiting ? <span style={{color:'red', paddingLeft:'10px', fontSize:'1.5em'}}>系统正在维护，预计在20:00恢复</span> :
-                    <Button type="primary" htmlType="submit" className="login-form-button">
+                    <Button type="primary" htmlType="submit" className="login-form-button" loading={this.props.isFetching}>
                         登录
                     </Button>}
                     <span>&nbsp;&nbsp;</span> <Button type="primary" onClick={() => this.redirectToRegister()}>注册</Button>

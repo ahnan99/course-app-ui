@@ -1,14 +1,14 @@
-import { takeLatest, call, put, all } from 'redux-saga/effects'
+import { takeLatest, call, put, all, select } from 'redux-saga/effects'
 import { actions, types } from './index'
 import axios from 'axios'
 
 //watchers
 function* loginWatch() {
-    yield takeLatest(types.REQUEST_LOGIN, userLoginWorker)
-}
-
-function* confirmLoginWatch() {
-    yield takeLatest(types.CONFIRM_LOGIN, confirmLoginWorker)
+    // A new authentication operation cancels any older authentication task.
+    yield takeLatest([
+        types.REQUEST_LOGIN, types.AUDITOR_REQUEST_LOGIN,
+        types.CONFIRM_LOGIN, types.REQUEST_LOGOUT
+    ], authenticationWorker)
 }
 
 function* registerWatch() {
@@ -27,16 +27,8 @@ function* postUserInfoWatch() {
     yield takeLatest(types.POST_USER_INFO, postUserInfoWorker)
 }
 
-function* logoutWatch() {
-    yield takeLatest(types.REQUEST_LOGOUT, userLogoutWorker)
-}
-
 function* companyInfoWatch() {
     yield takeLatest(types.GET_COMPANY_INFO, getCompanyInfoWorker)
-}
-
-function* auditorLoginWatch() {
-    yield takeLatest(types.AUDITOR_REQUEST_LOGIN, auditorLoginWorker)
 }
 
 export function userLoginEndpoint(data) {
@@ -78,21 +70,71 @@ export function auditorLoginEndpoint(data) {
 }
 
 //workers
+function* authenticationWorker(action) {
+    switch (action.type) {
+        case types.REQUEST_LOGIN:
+            yield call(userLoginWorker, action)
+            break
+        case types.AUDITOR_REQUEST_LOGIN:
+            yield call(auditorLoginWorker, action)
+            break
+        case types.CONFIRM_LOGIN:
+            yield call(confirmLoginWorker, action)
+            break
+        case types.REQUEST_LOGOUT:
+            yield call(userLogoutWorker, action)
+            break
+        default:
+            break
+    }
+}
+
+const sessionFailure = { msg: '登录状态未能保持，请重试；若持续出现，请尝试其他浏览器' }
+
+// Password acceptance alone is insufficient: verify the browser's session cookie
+// and load the student profile before publishing a single login-success action.
+function* verifySession(loginData, auditor) {
+    const session = yield call(confirmLoginEndpoint)
+    if (!session.data || !session.data.username ||
+        (loginData.username && session.data.username !== loginData.username)) {
+        throw new Error('Invalid session')
+    }
+    const data = { ...loginData, ...session.data }
+    if (!auditor || data.auditor !== 1) {
+        const profile = yield call(getUserInfoEndpoint, { username: data.username })
+        if (!Array.isArray(profile.data) || !profile.data[0] ||
+            !profile.data[0].username || profile.data[0].username !== data.username) {
+            throw new Error('Invalid student profile')
+        }
+        data.userInfo = profile.data[0]
+    }
+    return data
+}
+
 function* userLoginWorker(action) {
+    const authEpoch = yield select(state => state.application.authEpoch)
     try {
         const response = yield call(userLoginEndpoint, action.payload)
-        yield put(actions.userLogin(response.data))
+        if (!response.data || response.data.status !== 0) {
+            yield put(actions.userLogin(response.data || sessionFailure, authEpoch))
+            return
+        }
+        const data = yield call(verifySession, {
+            ...response.data, username: response.data.username || action.payload.username
+        }, false)
+        yield put(actions.userLogin({ ...data, status: 0 }, authEpoch))
     } catch (error) {
-        yield put(actions.userLoginError(error))
+        yield put(actions.userLoginError(sessionFailure, authEpoch))
     }
 }
 
 function* confirmLoginWorker(action) {
+    const authEpoch = yield select(state => state.application.authEpoch)
     try {
-        const response = yield call(confirmLoginEndpoint)
-        yield put(actions.updateConfirmLogin(response.data))
+        const data = yield call(verifySession, {}, true)
+        yield put(actions.updateConfirmLogin(data, authEpoch))
     } catch (error) {
-        yield console.log(error)
+        yield put(actions.updateConfirmLogin({ username: '' }, authEpoch))
     }
 }
 
@@ -115,9 +157,10 @@ function* postEvalutionWorker(action) {
 }
 
 function* getUserInfoWorker(action) {
+    const authEpoch = yield select(state => state.application.authEpoch)
     try {
         const response = yield call(getUserInfoEndpoint, action.payload)
-        yield put(actions.updateUserInfo(response.data))
+        yield put(actions.updateUserInfo(response.data, authEpoch))
     } catch (error) {
         console.log(error)
     }
@@ -143,20 +186,30 @@ function* postUserInfoWorker(action) {
 }
 
 function* userLogoutWorker() {
+    const authEpoch = yield select(state => state.application.authEpoch)
     try {
         const response = yield call(userLogoutEndpoint)
-        yield put(actions.userLogout(response.data))
+        yield put(actions.userLogout(response.data, authEpoch))
     } catch (error) {
+        yield put(actions.userLogout({ status: -1 }, authEpoch))
         console.log(error)
     }
 }
 
 function* auditorLoginWorker(action) {
+    const authEpoch = yield select(state => state.application.authEpoch)
     try {
         const response = yield call(auditorLoginEndpoint, action.payload)
-        yield put(actions.auditorLogin(response.data))
+        if (!response.data || response.data.status !== 0) {
+            yield put(actions.auditorLogin(response.data || sessionFailure, authEpoch))
+            return
+        }
+        const data = yield call(verifySession, {
+            ...response.data, username: response.data.username || action.payload.username
+        }, true)
+        yield put(actions.auditorLogin({ ...data, status: 0 }, authEpoch))
     } catch (error) {
-        yield put(actions.auditorLoginError(error))
+        yield put(actions.auditorLoginError(sessionFailure, authEpoch))
     }
 }
 
@@ -174,13 +227,10 @@ export const workers = {
 export default function* saga() {
     yield all([
         loginWatch(),
-        confirmLoginWatch(),
         registerWatch(),
         evalutionWatch(),
         getUserInfoWatch(),
         postUserInfoWatch(),
-        logoutWatch(),
-        companyInfoWatch(),
-        auditorLoginWatch()
+        companyInfoWatch()
     ])
 }

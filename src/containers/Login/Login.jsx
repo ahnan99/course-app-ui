@@ -18,9 +18,21 @@ class Login extends Component {
             this.props.actions.updateLogurl(this.props.location.search)
         }
         this.props.actions.getCompanyInfo()        
-        if (this.props.application.loggedIn) {
-            this.props.history.push('/homepage')
+        this.redirectAfterLogin()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!prevProps.application.loggedIn && this.props.application.loggedIn) {
+            this.redirectAfterLogin()
         }
+    }
+
+    redirectAfterLogin = () => {
+        const { loggedIn, auditor, teacher, userInfo } = this.props.application
+        if (!loggedIn) return
+        const target = auditor === 1 ? (teacher ? '/homepage' : '/auditpage') :
+            (userInfo && userInfo.newCourse === 0 && userInfo.host_kindID === 0 ? '/courseselect' : '/homepage')
+        this.props.history.replace(target)
     }
 
     render() {
@@ -42,14 +54,10 @@ class Login extends Component {
                     }
                     <LoginForm
                         requestLogin={this.props.actions.requestLogin}
-                        loggedIn={this.props.application.loggedIn}
+                        isFetching={this.props.application.isFetching}
                         loginError={this.props.application.loginError}
-                        username={this.props.application.username}
-                        getUserInfo={this.props.actions.getUserInfo}
-                        userInfo={this.props.application.userInfo}
                         auditorRequestLogin={this.props.actions.auditorRequestLogin}
-                        auditor={this.props.application.auditor} 
-                        teacher={this.props.application.teacher} />
+                        />
 
                 </Col>
                 <Col xs={2} sm={4} md={6} lg={8} xl={8}>

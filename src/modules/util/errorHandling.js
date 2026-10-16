@@ -7,9 +7,12 @@ function* handleAuthenticationErrors(error) {
         return;
     }
     const errorCode = error.response.status;
-    const loggedIn = yield select(state => state.application.loggedIn);
-    if (loggedIn === true && (errorCode === 401 || errorCode === 501)) {
-        yield put(actions.updateLoginStatus(errorCode));
+    const application = yield select(state => state.application);
+    const config = error.config || error.response.config;
+    const authEpoch = config && config.courseAppAuthEpoch;
+    if (application.loggedIn === true && authEpoch === application.authEpoch &&
+        (errorCode === 401 || errorCode === 501)) {
+        yield put(actions.updateLoginStatus(errorCode, authEpoch));
     }
 }
 export  { handleAuthenticationErrors };

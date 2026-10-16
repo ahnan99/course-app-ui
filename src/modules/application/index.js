@@ -66,23 +66,27 @@ const requestLogin = payload => ({
 })
 
 
-const userLogin = response => ({
+const userLogin = (response, authEpoch) => ({
     type: USER_LOGIN,
+    authEpoch,
     response
 });
 
-const auditorLogin = response => ({
+const auditorLogin = (response, authEpoch) => ({
     type: AUDITOR_LOGIN,
+    authEpoch,
     response
 });
 
-const auditorLoginError = response => ({
+const auditorLoginError = (response, authEpoch) => ({
     type: AUDITOR_LOGIN_ERROR,
+    authEpoch,
     response
 })
 
-const userLoginError = response => ({
+const userLoginError = (response, authEpoch) => ({
     type: USER_LOGIN_ERROR,
+    authEpoch,
     response
 })
 
@@ -120,8 +124,9 @@ const getUserInfo = payload => ({
     payload
 })
 
-const updateUserInfo = data => ({
+const updateUserInfo = (data, authEpoch) => ({
     type: UPDATE_USER_INFO,
+    authEpoch,
     data
 })
 
@@ -139,8 +144,9 @@ const resetPostUserInfo = () => ({
     type: RESET_POST_USER_INFO
 })
 
-const updateLoginStatus = data => ({
+const updateLoginStatus = (data, authEpoch) => ({
     type: UPDATE_LOGIN_STATUS,
+    authEpoch,
     data
 })
 
@@ -148,8 +154,9 @@ const requestLogout = () => ({
     type: REQUEST_LOGOUT
 })
 
-const userLogout = response => ({
+const userLogout = (response, authEpoch) => ({
     type: USER_LOGOUT,
+    authEpoch,
     response
 })
 
@@ -177,8 +184,9 @@ const confirmLogin = () => ({
     type: CONFIRM_LOGIN
 })
 
-const updateConfirmLogin = response => ({
+const updateConfirmLogin = (response, authEpoch) => ({
     type: UPDATE_CONFIRM_LOGIN,
+    authEpoch,
     response
 })
 
@@ -229,6 +237,7 @@ export const actions = {
 }
 
 const initialState = {
+    authEpoch: 0,
     loggedIn: false,
     loginStatusCode: null,
     loginSource: null,
@@ -248,26 +257,61 @@ const initialState = {
 }
 //Reducers
 const reducer = (state = initialState, action = {}) => {
+    // Responses from an older login/session must not change the current session.
+    if (action.authEpoch !== undefined && action.authEpoch !== state.authEpoch) {
+        return state
+    }
     switch (action.type) {
+        case REQUEST_LOGIN:
+        case AUDITOR_REQUEST_LOGIN:
+        case CONFIRM_LOGIN:
+            return {
+                ...state,
+                authEpoch: state.authEpoch + 1,
+                isFetching: true,
+                loginError: null,
+                userInfo: null
+            }
+        case REQUEST_LOGOUT:
+            return { ...state, authEpoch: state.authEpoch + 1, isFetching: true }
+        case USER_LOGIN_ERROR:
+        case AUDITOR_LOGIN_ERROR:
+            return {
+                ...state,
+                isFetching: false,
+                loggedIn: false,
+                loginSource: null,
+                username: null,
+                userInfo: null,
+                loginError: action.response
+            }
         case USER_LOGIN: {
             if (action.response.status === 0) {
                 return {
                     ...state,
                     loggedIn: true,
+                    isFetching: false,
                     loginStatusCode: null,
                     loginSource: 'credentials',
                     loginError: null,
                     username: action.response.username,
-                    newCourse: action.response.newCourse
+                    newCourse: action.response.newCourse,
+                    userInfo: action.response.userInfo,
+                    auditor: null,
+                    teacher: null
                 }
             } else if (action.response.sessionExpire === 1) {
                 return {
                     ...state,
-                    loggedIn: false
+                    loggedIn: false,
+                    isFetching: false,
+                    loginError: { msg: '登录状态未能保持，请重新登录' }
                 }
             } else {
                 return {
                     ...state,
+                    loggedIn: false,
+                    isFetching: false,
                     loginError: action.response
                 }
             }
@@ -278,22 +322,28 @@ const reducer = (state = initialState, action = {}) => {
                 return {
                     ...state,
                     loggedIn: true,
+                    isFetching: false,
                     loginStatusCode: null,
                     loginSource: 'credentials',
                     loginError: null,
                     username: action.response.username,
+                    userInfo: action.response.userInfo || null,
                     teacher: action.response.teacher,
                     auditor: action.response.auditor
                 }
             } else if (action.response.sessionExpire === 1) {
                 return {
                     ...state,
-                    loggedIn: false
+                    loggedIn: false,
+                    isFetching: false,
+                    loginError: { msg: '登录状态未能保持，请重新登录' }
                 }
             } else {
                 return {
                     ...state,
-                    loginError: action.response.msg
+                    loggedIn: false,
+                    isFetching: false,
+                    loginError: action.response
                 }
             }
         }
@@ -347,7 +397,9 @@ const reducer = (state = initialState, action = {}) => {
             const isAuthenticationError = action.data === 401 || action.data === 501
             return {
                 ...state,
+                authEpoch: isAuthenticationError ? state.authEpoch + 1 : state.authEpoch,
                 loggedIn: isAuthenticationError ? false : action.data,
+                isFetching: isAuthenticationError ? false : state.isFetching,
                 loginStatusCode: isAuthenticationError ? action.data : null,
                 loginSource: isAuthenticationError ? null : state.loginSource
             }
@@ -375,6 +427,7 @@ const reducer = (state = initialState, action = {}) => {
                 return {
                     ...state,
                     loggedIn: false,
+                    isFetching: false,
                     loginStatusCode: null,
                     loginSource: null,
                     loginError: null,
@@ -384,6 +437,7 @@ const reducer = (state = initialState, action = {}) => {
                     teacher: null
                 }
             }
+            return { ...state, isFetching: false }
         }
         case UPDATE_NEW_COURSE: {
             return {
@@ -398,17 +452,20 @@ const reducer = (state = initialState, action = {}) => {
             }
         }
         case UPDATE_CONFIRM_LOGIN: {
-            if (action.response.username !== '') {
+            if (action.response && action.response.username) {
                 return {
                     ...state,
                     loggedIn: true,
+                    isFetching: false,
                     loginStatusCode: null,
                     loginSource: 'session',
                     username: action.response.username,
-                    auditor: action.response.auditor
+                    auditor: action.response.auditor,
+                    teacher: action.response.teacher,
+                    userInfo: action.response.userInfo || null
                 }
             } else {
-                return { ...state, loggedIn: false, loginStatusCode: null, loginSource: null }
+                return { ...state, loggedIn: false, isFetching: false, username: null, userInfo: null, loginStatusCode: null, loginSource: null }
             }
         }
         default:
